@@ -126,3 +126,10 @@ data/
 /**/[0-9]* # any subfolder starting with a number
 
 table/any
+image/2019
+image/2020
+image/2021
+image/2022
+image/any
+
+image/*.png~
