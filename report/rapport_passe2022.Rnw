@@ -136,7 +136,7 @@ citecolor=orange_EV,
 filecolor=bleu_EV, 
 urlcolor=bleu_EV, 
 pdftitle= {Suivi scientifique des migrations de poissons de la passe à bassins
-du barrage d'Arzal, Rapport 2021)}, 
+du barrage d'Arzal, Rapport 2022)}, 
 pdfauthor={Brice Sauvaget},
 pdfsubject={mulet}, 
 pdfkeywords={passe} {lamproies} {alose} {stacomi}
@@ -241,7 +241,7 @@ pdfkeywords={passe} {lamproies} {alose} {stacomi}
 \fancyhf{} \fancyfoot[C]{\sffamily\normalsize\thepage} % Font setting for
 % the page number in the header
 \fancyhead[LE,RO]{\sffamily \rightmark}
-\fancyhead[LO,RE]{\slshape \normalsize Rapport passe à bassins 2021}
+\fancyhead[LO,RE]{\slshape \normalsize Rapport passe à bassins 2022}
 
 
 
@@ -396,7 +396,7 @@ keepaspectratio]{/frontpage.png}%
 \Large 
     {\titlefont Suivi scientifique des migrations de poissons 
     de la passe à bassins du barrage d'Arzal.
-    Rapport 2021.}\\
+    Rapport 2022.}\\
 \vspace{2cm}
 
 \includegraphics[width=\textwidth]{/logo_EV} 
@@ -467,7 +467,7 @@ Gérard Eriau\par
     de la passe à bassins du barrage d'Arzal,\\
     }}
 \bigskip
-{\titlefont  \LARGE rapport 2021\par }
+{\titlefont  \LARGE rapport 2022\par }
 \vspace{4mm}\noindent
 {\color{turquoise_EV}\rule{0.9\textwidth}{1.8pt}}\par
 \vspace{5mm}
@@ -577,7 +577,7 @@ load_package('glue')
 load_package('getPass')
 load_package('stringr')
 # l'annee en cours (c'est la valeur à changer en début de script
-CY<-2021
+CY<-2022
 # le repertoire contenant les données
 datawdy<-str_c(datawd,CY,"/")
 datawdym1<-str_c(datawd,CY-1,"/")
@@ -830,7 +830,7 @@ ont été comptabilisées sur l'ensemble de l'année. Entre 1998 et 2012, seule 
 
 Ce rapport décrit le fonctionnement de la passe à fentes verticales du barrage
 et de son système de vidéosurveillance associé. Il fait également la synthèse des passages de 
-poissons migrateurs par la passe à bassins en 2021 \footnote{la migration sur
+poissons migrateurs par la passe à bassins en 2022 \footnote{la migration sur
 les passes à anguilles est traitée dans un autre rapport :
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EcGiQiXYob5AhBZwXXY2zk0B-mRcDpfq8uo0_f-1p4pCoA?e=3I4Nah}{Gestion
 de l'anguille sur le bassin versant de la Vilaine}.}.
@@ -1138,12 +1138,12 @@ l’évaluation des stocks de migrateurs doivent donc être considérés comme u
 \subsection{Fonctionnement de la passe à bassins}
 \paragraph{Résumé du fonctionnement.}
 
-Le fonctionnement de la passe en 2021 a été plutôt bon. Il y a eu des arrêts en
+Le fonctionnement de la passe en 2022 a été plutôt bon. Il y a eu des arrêts en
 janvier et février lors des crues. La passe est en effet fermée
 en débit de crue pour empêcher la descente d'objets flottants et car la baisse
 de la ligne d'eau amont limite fortement les débits évacués. En pratique, la
 passe est très peu attractive en conditions de crue. En février il y a eu une
-intervention sur les capteurs de la vanne aval. En 2021, les débits sont restés soutenus et la passe n'est pas passée en
+intervention sur les capteurs de la vanne aval. En 2022, les débits sont restés soutenus et la passe n'est pas passée en
 mode étiage, il n'y a pas eu non plus de mise en place de battardage du débit
 d'appoint.
 Plusieurs interventions techniques ont eu lieu avec un problème de
@@ -1152,7 +1152,7 @@ réglés en octobre novembre avec le remplacement des joints.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/fonctionnement_passe.png}
+\includegraphics[width=0.45\textwidth]{2022/fonctionnement_passe.png}
 \caption{Fonctionnement de la passe en \Sexpr{CY}, niveaux Vilaine, mer, sas
 (dernier bassin en aval de la passe), et niveaux de la vanne aval. Chaque point correspond aux niveaux
 enregistrés lors d'une période de 10 minutes. Les données ont été corrigées des
@@ -1169,7 +1169,7 @@ partir de ces niveaux, dont le détail est présenté en annexe (Figures
 de la passe est calculé par période de 10 minutes (Figure \ref{report_df_annee}
 en annexe).
 
-En figure \ref{report_df_fct_2003_2021}, l'analyse des durées mensuelles
+En figure \ref{report_df_fct_2003_2022}, l'analyse des durées mensuelles
 cumulées de chaque type de fonctionnement permet de se donner une idée des
 périodes auxquelles la passe a été arrêtée (en orange
 \textcolor{orange_EV}{\rule[-0.2mm]{3mm}{2mm}}) - arrêt lors des crues), mais également des périodes où elle a fonctionné de manière plus limitée, 
@@ -1178,7 +1178,7 @@ augmentation de la durée des dysfonctionnements
 (en orange \textcolor{orange_EV}{\rule[-0.2mm]{3mm}{2mm}}) ou par des arrêts
 nocturnes (en jaune \textcolor{jaune_EV}{\rule[-0.2mm]{3mm}{2mm}}). Les mêmes
 graphiques sont présentés pour la période 2003-2011 (Figure
-\ref{report_df_2003_2021}) en mettant juste en avant les périodes où la passe est fonctionnelle
+\ref{report_df_2003_2022}) en mettant juste en avant les périodes où la passe est fonctionnelle
 (en bleu \textcolor{bleu_EV}{\rule[-0.2mm]{3mm}{2mm}}) et les périodes où elle
 ne l'est pas (en orange \textcolor{orange_EV}{\rule[-0.2mm]{3mm}{2mm}}).
 
@@ -1189,7 +1189,7 @@ compte des corrections de valeurs abérrantes et du coefficient de noyage de la 
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/debit_passe_comp.png}
+\includegraphics[width=0.45\textwidth]{2022/debit_passe_comp.png}
 \caption{Débits de la passe en \Sexpr{CY}. Débits produits par l'automate du
 barrage et recalculés en prenant compte du noyage de la chute à l'aval et des
 valeurs abérrantes de niveaux.}
@@ -1199,19 +1199,19 @@ valeurs abérrantes de niveaux.}
 %
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/report_df_fct_2003_2021.png}
-\caption{Fonctionnement de la passe de 2003 à 2021, avec les détails par type
+\includegraphics[width=0.45\textwidth]{2022/report_df_fct_2003_2022.png}
+\caption{Fonctionnement de la passe de 2003 à 2022, avec les détails par type
 de fonctionnement.}
-\label{report_df_fct_2003_2021}
+\label{report_df_fct_2003_2022}
 \end{figure}%
 %
 
 %
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/report_df_2003_2021.png}
-\caption{Fonctionnement de la passe de 2003 à 2021.}
-\label{report_df_2003_2021}
+\includegraphics[width=0.45\textwidth]{2022/report_df_2003_2022.png}
+\caption{Fonctionnement de la passe de 2003 à 2022.}
+\label{report_df_2003_2022}
 \end{figure}%
 %
 
@@ -1220,28 +1220,28 @@ de fonctionnement.}
 Le dispositif de comptage 
 a été mis en service le
 \Sexpr{vvv$ref_dc$date_debut} et arrêté le
-\Sexpr{vvv$ref_dc$date_fin} (Figure \ref{report_dc_2021}).
+\Sexpr{vvv$ref_dc$date_fin} (Figure \ref{report_dc_2022}).
 Les arrêts techniques pendant la période de suivi sont relativement rares
-(Figure \ref{report_dc_1998_2021}). 
+(Figure \ref{report_dc_1998_2022}). 
 La caméra a été déplacée lors
 du lavage des vitres ce qui entraine un décalage de l'image avec perte de la
-partie basse en Juillet (voir Figure \ref{report_dc_2021}). Les néons de la
+partie basse en Juillet (voir Figure \ref{report_dc_2022}). Les néons de la
 passe ont été remplacés par des néons à leds mais l'intervention a duré moins
 d'une journée (en août). La période d'arrêt du DC en octobre est liée à un défaut de
 la RAM de l'ordinateur qui a du être remplacée.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/report_dc_2021.png} 
+\includegraphics[width=0.45\textwidth]{2022/report_dc_2022.png} 
 \caption{Bilan du fonctionnement du dispositif de comptage en \Sexpr{CY}.}
-\label{report_dc_2021}
+\label{report_dc_2022}
 \end{figure}
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/report_dc_1998_2021.png} 
-\caption{Bilan du fonctionnement du dispositif de comptage de 1998 à 2021.}
-\label{report_dc_1998_2021}
+\includegraphics[width=0.45\textwidth]{2022/report_dc_1998_2022.png} 
+\caption{Bilan du fonctionnement du dispositif de comptage de 1998 à 2022.}
+\label{report_dc_1998_2022}
 \end{figure}
 
 <<fonctions_passe, echo=FALSE, eval=TRUE ,include=FALSE>>=
@@ -1815,15 +1815,15 @@ load(file=file.path(datawd,CY,"fonct_pass.Rdata"))	# ll
 
 ll <- calc_debit_passe(ll,vvv)
 data_DF <- ll$dat
-# 2021 pb de codeur pour la vanne aval
+# 2022 pb de codeur pour la vanne aval
 
 
 png(filename=file.path(imgwd,CY,"detail_fonct_passe_1.png"),7,7,units="in",res=300)
-graph_DF_detail(data_DF, from="08/04/2021")
+graph_DF_detail(data_DF, from="08/04/2022")
 dev.off()
 
 png(filename=file.path(imgwd,CY,"detail_fonct_passe_2.png"),7,7,units="in",res=300)
-graph_DF_detail(data_DF=data_DF, from="15-05-2021", to="19-05-2021")
+graph_DF_detail(data_DF=data_DF, from="15-05-2022", to="19-05-2022")
 dev.off()
 
 ##############################################################
@@ -2000,14 +2000,14 @@ DBI::dbExecute(req@connection, "INSERT INTO iav.t_periodefonctdispositif_per (
 r_df=new("report_df")
 r_df<-choice_c(r_df,
 		1,
-		horodatedebut="2021-01-01",
-		horodatefin="2021-12-31",
+		horodatedebut="2022-01-01",
+		horodatefin="2022-12-31",
 		silent=TRUE)
 Sys.setenv(TZ='GMT')
 r_df<-connect(r_df)
 
 # normalement on doit pouvoir sortir ça directement dans le chunk calcul_debit_passe
-# mais ici j'ai fait des modifications manuelles en sql/traitementç2021
+# mais ici j'ai fait des modifications manuelles en sql/traitementç2022
 #png(filename=file.path(imgwd,CY,"temps_fonctionnement_passe.png"),7,7,units="in",res=300)
 #g <- graph_DF(r_df@data)
 #print(g)
@@ -2045,7 +2045,7 @@ r_df_hist<-connect(r_df_hist)
 
 # Je fais rentrer tout le graphe sur une demie colonne ça rend bien.
 
-png(filename=paste0(imgwdy,"report_df_2003_2021.png"),width=6,height=12, units="in",res=300)
+png(filename=paste0(imgwdy,"report_df_2003_2022.png"),width=6,height=12, units="in",res=300)
 plot(r_df_hist,plot.type=1,
 		color_type_oper = 	c(
 				"Fonc normal" = bleu_EV,
@@ -2058,7 +2058,7 @@ plot(r_df_hist,plot.type=1,
 				"FALSE"=orange_EV))
 dev.off()
 
-png(filename=paste0(imgwdy,"report_df_fct_2003_2021.png"),width=6,height=12, units="in",res=300)
+png(filename=paste0(imgwdy,"report_df_fct_2003_2022.png"),width=6,height=12, units="in",res=300)
 plot(r_df_hist,plot.type=2,
 		color_type_oper = 	c(
 				"Fonc normal" = bleu_EV,
@@ -2073,13 +2073,13 @@ dev.off()
 r_df_2<-choice_c(r_df,
 		1,
 		horodatedebut="2011-01-01",
-		horodatefin="2021-12-31",
+		horodatefin="2022-12-31",
 		silent=TRUE)
 r_df_2<-connect(r_df_2)
 
 
 # attention très très long
-#png(filename=paste0(imgwdy,"report_df_2011_2021.png"),width=8,height=12, units="in",res=300)
+#png(filename=paste0(imgwdy,"report_df_2011_2022.png"),width=8,height=12, units="in",res=300)
 #plot(r_df_2,plot.type=1,
 #		color_type_oper = 	c(
 #				"Fonc normal" = bleu_EV,
@@ -2092,7 +2092,7 @@ r_df_2<-connect(r_df_2)
 #				"FALSE"=orange_EV))
 #dev.off()
 #
-#png(filename=paste0(imgwdy,"report_df_fct_2011_2021.png"),width=8,height=12, units="in",res=300)
+#png(filename=paste0(imgwdy,"report_df_fct_2011_2022.png"),width=8,height=12, units="in",res=300)
 #plot(r_df_2,plot.type=2,
 #		color_type_oper = 	c(
 #				"Fonc normal" = bleu_EV,
@@ -2126,7 +2126,7 @@ plot(r_dc1,plot.type="1",
 		color_etat=c("TRUE"=turquoise_EV, 
 				"FALSE"=jaune_EV)) 
 g_report_dc_1=get('g_report_dc_1',envir_stacomi)
-png(filename=paste0(imgwdy,"report_dc_1998_2021.png"),width=6,height=12, units="in",res=300)
+png(filename=paste0(imgwdy,"report_dc_1998_2022.png"),width=6,height=12, units="in",res=300)
 g_report_dc_1 +
 		theme(strip.background = element_rect(colour = "grey", fill = "grey20")		
 		) + 
@@ -2192,7 +2192,7 @@ fin d'année et des débits globalement plus importants que les débits de
 référence de la banque hydro (Figure \ref{fig_debit}).
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/fig_debit.png} 
+\includegraphics[width=0.45\textwidth]{2022/fig_debit.png} 
 \caption{Débits de la Vilaine en \Sexpr{CY}. En bleu les débits mesurés au Pont
 de Cran, à l'aide d'une sonde à ultrasons, en orange les débits instantanés au
 barrage d'Arzal (volets et vannes). Chaque point représente la valeur moyenne calculée toute les
@@ -2280,7 +2280,7 @@ ramada} remonte l’estuaire pour migrer en eau douce \citep{briand_suivi_2018b}
 Compte tenu des effectifs très importants de mulets franchissant le barrage
 d'Arzal chaque année, les comptages n'ont pas été effectués sur l'ensemble de la
 période de suivi historique de la passe. Ils ont été effectués en 1996 et
-1997, en 2013 et de 2015 à 2021. Lors des pics de migration, le comptage des
+1997, en 2013 et de 2015 à 2022. Lors des pics de migration, le comptage des
 mulets est effectué par lots (dizaine) et la taille des poissons est analysée
 sur un échantillon.
 La structure en
@@ -2294,7 +2294,7 @@ de la passe puisse expliquer cette absence.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/graphe_taille_mulets.pdf} 
+\includegraphics[width=0.45\textwidth]{2022/graphe_taille_mulets.pdf} 
 \caption{Tendance saisonnière d'évolution des
 tailles de mulets depuis 2013. A. Graphiques de densités (distributions) des
 tailles par mois, en jaune mois estivaux, en violet mois printaniers, en rose
@@ -2308,14 +2308,14 @@ ajusté sur les valeurs de taille (au centre modèle et intervalle de confiance
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/bilan_annuel_mup} 
+\includegraphics[width=0.45\textwidth]{2022/bilan_annuel_mup} 
 \caption{Bilan annuel des migrations de mulets au barrage d'Arzal.}
 \label{bilan_annuel_mup}
 \end{figure}
 
-Les effectifs de mulets de 2021
+Les effectifs de mulets de 2022
 N=\Sexpr{format(vvv[["MUP"]][["NCY"]], digits=1, nsmall =0, big.mark=" ",scientific=FALSE)}
-sont comparables à ceux de la période 2014-2021 avec des variations entre des effectifs de 200~000 à 600~000 mulets. 
+sont comparables à ceux de la période 2014-2022 avec des variations entre des effectifs de 200~000 à 600~000 mulets. 
 Les variations des effectifs de petits mulets sont en 
 grande partie liée à l'abondance des mulets de classe de taille de 200 à 300 mm
 \citep{lemonnier_dynamique_2019} (Tableau \ref{table_bilanannuel_mulets_0108}, Figure
@@ -2345,7 +2345,7 @@ dépend également du niveau mer avec une grande part des passages pour des nive
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/horaires_mulet} 
+\includegraphics[width=0.45\textwidth]{2022/horaires_mulet} 
 \caption{Horaires de migration des mulets en \Sexpr{CY}.}
 \label{horaires_mulet}
 \end{figure}
@@ -2354,7 +2354,7 @@ dépend également du niveau mer avec une grande part des passages pour des nive
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/bmm_horaires_maree} 
+\includegraphics[width=0.45\textwidth]{2022/bmm_horaires_maree} 
 \caption{Passage des mulets en fonction de l'heure et du niveau mer en
 \Sexpr{CY}.}
 \label{horaires_maree_mulet}
@@ -2367,7 +2367,7 @@ dépend également du niveau mer avec une grande part des passages pour des nive
 \begin{landscape}
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.9\linewidth,keepaspectratio]{2021/rmi_journalier_mup.png} 
+\includegraphics[width=0.9\linewidth,keepaspectratio]{2022/rmi_journalier_mup.png} 
 \caption{Bilan annuel des migrations de mulets \textit{Chelon ramada} au barrage
 d'Arzal.}
 \label{rmi_journalier_mup}
@@ -2624,7 +2624,7 @@ dev.off()
 # creation du tableau de prédiciton
 pred <-
 		data.frame("date"=
-						as.POSIXct(seq(from=as.POSIXct(dmy("01012013")), to = as.POSIXct(dmy("30072021")), by="1 day")))
+						as.POSIXct(seq(from=as.POSIXct(dmy("01012013")), to = as.POSIXct(dmy("30072022")), by="1 day")))
 pred <- fndate(pred)
 pred <- pred[pred$yday>59&pred$yday<319,]
 pred <- pred[pred$year!="2014",]
@@ -2931,8 +2931,8 @@ bmi <- choice_c(bmi,
 bmi <- charge(bmi,silent=TRUE)
 bmi <- connect(bmi,silent=FALSE)
 bmi <- calcule(bmi)
-#save(bmi,file=str_c(datawd,'bmimup2021.Rdata'))
-#load(file=str_c(datawd,'bmi2021.Rdata'))
+#save(bmi,file=str_c(datawd,'bmimup2022.Rdata'))
+#load(file=str_c(datawd,'bmi2022.Rdata'))
 #str(bmi)
 
 plot(bmi)
@@ -2987,9 +2987,9 @@ dev.off()
 mmm <- summary(bmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
 options(encoding = "UTF-8")
-colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2021)")
+colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2022)")
 xtmmm <- xtable(mmm,caption="Migrations mensuelles des mulets dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-				la période 1996-2021. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+				la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
 		label="table_lpm_mois",
 		digits=c(0,0,0,0,0,0),
 		display = c("s","s","f","f", "f", "f"))
@@ -3042,7 +3042,7 @@ Au niveau national, la tendance des abondances est à la baisse, surtout sur les
 sites qui étaient les plus fréquentés (Gironde, Loire), alors qu'en Bretagne, la chute est moins marquée. 
 La contribution de la Vilaine à l'échelle de la France, très faible aux débuts des années 2000, 
 est aujourd'hui non négligeable. Sur la Vilaine, les migrations de 2016 à 2019 
-ont été très mauvaises, mais les saisons 2020 et 2021 marque un retour à la
+ont été très mauvaises, mais les saisons 2020 et 2022 marque un retour à la
 normale.
 L'espèce est classée en danger en France sur la liste rouge UICN.}
 \end{minipage}}
@@ -3062,7 +3062,7 @@ Les raisons des variations d'effectif restent mal comprises.
 		
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/barplot_report_annual_lpm.png} 
+\includegraphics[width=0.45\textwidth]{2022/barplot_report_annual_lpm.png} 
 \caption{Histogramme des effectifs annuels de lamproies marines comptabilisés
 au barrage d'Arzal.}
 \label{barplot_report_annual_lpm}
@@ -3076,7 +3076,7 @@ période 1996-2020 sauf en mars (Figure \ref{barchart_bmi_lpm}, Tableau
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/barchart_bmi_lpm.png} 
+\includegraphics[width=0.45\textwidth]{2022/barchart_bmi_lpm.png} 
 \caption{Comparaison de la migration de lamproies marines de \Sexpr{CY} avec la
 série interannuelle de données 1996-\Sexpr{CY-1}.}
 \label{barchart_bmi_lpm}
@@ -3103,7 +3103,7 @@ lamproie.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/rmi_density_lpm.png} 
+\includegraphics[width=0.45\textwidth]{2022/rmi_density_lpm.png} 
 \caption{Saisonnalité de la migration des lamproies marines, les pourcentages
 par quinzaine sont cumulés.}
 \label{rmi_density_lpm}
@@ -3112,7 +3112,7 @@ par quinzaine sont cumulés.}
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.49\textwidth]{2021/plot_seasonal_lpm.png} 
+\includegraphics[width=0.49\textwidth]{2022/plot_seasonal_lpm.png} 
 \caption{Saisonnalité de la migration des lamproies marines, effectifs
 hebdomadaires. Les
 barres représentent le 5 ème et le 95 ème percentile de la migration. Le
@@ -3132,9 +3132,9 @@ sont pas connues (Figure \ref{size_lpm}).
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/size_lpm.png} 
+\includegraphics[width=0.45\textwidth]{2022/size_lpm.png} 
 \caption{Comparaison des structure en taille des lamproies marines. Les tailles
-de 2019 et 2021 ont été calculées en prenant en compte la déformation des distances dans les
+de 2019 et 2022 ont été calculées en prenant en compte la déformation des distances dans les
 différentes zones de la vitre.}
 \label{size_lpm}
 \end{figure}
@@ -3216,9 +3216,9 @@ dev.off()
 
 mmm <- summary(rmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
-colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2021)")
+colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2022)")
 xtmmm <- xtable(mmm,caption="Migrations mensuelles des lamproies marines dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-				la période 1996-2021. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+				la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
 		label="table_lpm_mois",
 		digits=c(0,0,0,0,0,0),
 		display = c("s","s","f","f", "f", "f"))
@@ -3390,7 +3390,7 @@ alose \textit{Alosa alosa} et alose feinte \textit{Alosa fallax}.
 
 %\begin{figure}[htpb]
 %\centering
-%\includegraphics[width=0.45\textwidth]{2021/bilan_annuel_ala.png} 
+%\includegraphics[width=0.45\textwidth]{2022/bilan_annuel_ala.png} 
 %\caption{Histogramme des effectifs annuels d'aloses comptabilisés
 %au barrage d'Arzal.}
 %\label{bilan_annuel_ala}
@@ -3401,7 +3401,7 @@ alose \textit{Alosa alosa} et alose feinte \textit{Alosa fallax}.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/rmi_journalier_ala.png} 
+\includegraphics[width=0.45\textwidth]{2022/rmi_journalier_ala.png} 
 \caption{Comparaison de la migration d'aloses de \Sexpr{CY} avec la série
 interannuelle de données 1996-\Sexpr{CY-1}.}
 \label{rmi_journalier_ala}
@@ -3414,7 +3414,7 @@ moyenne interannuelle (Figures
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/barchart_bmi_ala.png} 
+\includegraphics[width=0.45\textwidth]{2022/barchart_bmi_ala.png} 
 \caption{Comparaison de la migration d'aloses de \Sexpr{CY} avec la série
 interannuelle de données 1996-\Sexpr{CY-1}.}
 \label{barchart_bmi_ala}
@@ -3424,7 +3424,7 @@ La comparaison des structures en taille vidéo de cette année laisse apparaîtr
 une forte diminution de la taille moyenne après une tendance sur plusieurs
 années à l'augmentation des effectifs.
 A compter de 2019, la taille a été mesurée relativement à 9 sections de la vitre de comptage pour prendre en compte les
-déformations de la lentille de la caméra. Ainsi les tailles avant 2019 et 2021
+déformations de la lentille de la caméra. Ainsi les tailles avant 2019 et 2022
 sont peut être légèrement plus petites (Figure \ref{size_alose}).
 La diminution de la taille moyenne en 2020 semblait cohérente avec un retour des
 premières aloses ayant fait l'objet de mesures de protection 5 ans auparavant en
@@ -3432,7 +3432,7 @@ premières aloses ayant fait l'objet de mesures de protection 5 ans auparavant e
 surexploitation en 2012-2014. Cette année les tailles ont clairement ré-augmenté.
 Le scénario pourrait être le suivant, pas assez de reproducteurs entre 2013 et
 2014, quelques reproductions en 2015 arrivent en 2020 à l'âge 5 (petites
-aloses.). Cette même cohorte se retrouve en 2021. Celà signifierait un succès
+aloses.). Cette même cohorte se retrouve en 2022. Celà signifierait un succès
 reproducteur très faible des alose ayant migré en 2016, c'est plutôt inquiétant
 car les effectifs auraient du commencer à ré-augmenter.
 
@@ -3440,7 +3440,7 @@ car les effectifs auraient du commencer à ré-augmenter.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/size_alose.png}
+\includegraphics[width=0.45\textwidth]{2022/size_alose.png}
 \caption{Taille des aloses mesurées à Arzal. Densité (graphique en violon),
 moyenne et +- 2 fois l'écart type (en bleu foncé). La couleur des points dépend
 du mois de passage.}
@@ -3456,7 +3456,7 @@ précoce (Figure \ref{plot_seasonal_ala}).
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.49\textwidth]{2021/plot_seasonal_ala.png} 
+\includegraphics[width=0.49\textwidth]{2022/plot_seasonal_ala.png} 
 \caption{Saisonnalité de la migration des aloses, effectifs hebdomadaires. Les
 barres représentent le 5 ème et le 95 ème percentile de la migration. Le point
 la médiane. L'importance des effectifs est représentée par la couleur.}
@@ -3490,7 +3490,7 @@ prochaine si les effectifs n'augmentent pas.}
 \vfill
 \begin{figure}[pbt]
 \centering
-\includegraphics[width=0.5\textwidth]{2021/tx_exploit.png} 
+\includegraphics[width=0.5\textwidth]{2022/tx_exploit.png} 
 \caption{Migration et taux d'exploitation des aloses en estuaire de Vilaine,
 illustration de l'effet des mesures prises à partir de 2015 pour limiter
 l'exploitation de l'espèce en estuaire. Interdictions par zones et saisonnières
@@ -3505,7 +3505,7 @@ de 2015 à 2017, puis interdiction totale saisonnière de pêche à partir de 20
 \begin{landscape}
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.9\linewidth]{2021/preco_diagram.png} 
+\includegraphics[width=0.9\linewidth]{2022/preco_diagram.png} 
 \caption{Diagramme de précaution pour la gestion des aloses en Vilaine, 
 les données indiquent la position du stock par rapport à la règle de gestion proposée 
 par le groupe de travail du cogepomi sur les aloses. 
@@ -3652,8 +3652,8 @@ bmi<-choice_c(bmi,
 bmi<-charge(bmi,silent=TRUE)
 bmi<-connect(bmi,silent=FALSE)
 bmi<-calcule(bmi)
-save(bmi,file=str_c(datawd,'bmiala2021.Rdata'))
-#load(file=str_c(datawd,'bmi2021.Rdata'))
+save(bmi,file=str_c(datawd,'bmiala2022.Rdata'))
+#load(file=str_c(datawd,'bmi2022.Rdata'))
 str(bmi)
 ####################
 # graphique de stacomi (2018 pas de captures)
@@ -3708,9 +3708,9 @@ dev.off()
 
 mmm <- summary(bmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
-colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2021)")
+colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2022)")
 xtmmm<-xtable(mmm,caption="Migrations mensuelles des lamproies marines dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-				la période 1996-2021. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+				la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
 		label="table_lpm_mois",
 		digits=c(0,0,0,0,0,0),
 		display = c("s","s","f","f", "f", "f"))
@@ -3738,7 +3738,7 @@ ra<-choice_c(ra,
 		taxa=c("Alosa"),
 		stage=c("11"),
 		start_year=1996,
-		end_year=2021,
+		end_year=2022,
 		silent=TRUE)
 
 
@@ -3871,13 +3871,14 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # ATTENTION BIEN LIRE IL FAUT SELECTIONNER A LA MAIN LES ANNEES COMME CI DESSOUS
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-load(file=str_c(datawd,'bmiala2021.Rdata'))
+load(file=str_c(datawd,'bmiala2022.Rdata'))
 bmi2016 <- summary(bmi,year_choice=2016,silent=FALSE) 
 bmi2017 <- summary(bmi,year_choice=2017,silent=FALSE)
 bmi2018 <- summary(bmi,year_choice=2018,silent=FALSE) 
 bmi2019 <- summary(bmi,year_choice=2019,silent=FALSE) 
 bmi2020 <- summary(bmi,year_choice=2020,silent=FALSE) 
 bmi2021 <- summary(bmi,year_choice=2021,silent=FALSE)
+bmi2022 <- summary(bmi,year_choice=2022,silent=FALSE)
 datmens <- data.frame("2016"=c("capture (nb)"=round(sum(datpech2016$nb)),
 				"capture (kg)"=round(sum(datpech2016$capture/1000)),
 				"migration(03)"=0,
@@ -3913,7 +3914,13 @@ datmens <- data.frame("2016"=c("capture (nb)"=round(sum(datpech2016$nb)),
 				"migration(03)"=bmi2021[["5"]][1,6],
 				"migration(04)"=bmi2021[["5"]][2,6],
 				"migration(05)"=bmi2021[["5"]][3,6],
-				"migration(06-07)"=NA) 
+				"migration(06-07)"=NA), 
+   "2022"=c("capture (nb)"=0,
+    "capture (kg)"=0,
+    "migration(03)"=bmi2022[["5"]][1,6],
+    "migration(04)"=bmi2022[["5"]][2,6],
+    "migration(05)"=bmi2022[["5"]][3,6],
+    "migration(06-07)"=NA) 
 )
 save(datmens, file=str_c(datawdy,"datmens.Rdata"))
 
@@ -3961,7 +3968,7 @@ save(vvv, file=str_c(datawdy,"vvv.Rdata"))
 #############################
 
 
-dat <- data.frame("annee"=2002:2021,
+dat <- data.frame("annee"=2002:2022,
 		"effectif_capture"=c(177,127,60,293,360,93,134,82,549,376,2499,2994,2633,1330,271,1009,0,0,0,0),
 		"poids_capture"=c(rep(NA,10),4112,4993,4105,2617,456,1707,0,0,0,0))
 dat$poids_capture/dat$effectif_capture
@@ -4082,7 +4089,7 @@ dev.off()
 ##Rpred=alpha3*N^d/(beta3^d+N^d)
 #
 #ala<-rbind(ala[1:5,],ala)
-#ala$annee<-1991:2021
+#ala$annee<-1991:2022
 len <- length(ala$annee)
 #ala$migration[1:5]<-0
 #mean(ala$migration[6:7]) # 111
@@ -4349,7 +4356,7 @@ par rapport à l'ensemble des années de migration (Figures
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/barplot_report_annual_sat.png} 
+\includegraphics[width=0.45\textwidth]{2022/barplot_report_annual_sat.png} 
 \caption{Histogramme des effectifs annuels de saumons comptabilisés
 au barrage d'Arzal.}
 \label{barplot_report_annual_sat}
@@ -4357,7 +4364,7 @@ au barrage d'Arzal.}
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/barchart_bmi_sat.png} 
+\includegraphics[width=0.45\textwidth]{2022/barchart_bmi_sat.png} 
 \caption{Comparaison de la migration de saumons de \Sexpr{CY} avec la
 série interannuelle de données 1996-\Sexpr{CY-1}.}
 \label{barchart_bmi_sat}
@@ -4373,7 +4380,7 @@ en juillet (Figure \ref{barchart_bmi_sat}).
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/rmi_density_sat.png} 
+\includegraphics[width=0.45\textwidth]{2022/rmi_density_sat.png} 
 \caption{Saisonnalité des migrations de saumons atlantiques sur la Vilaine.}
 \label{rmi_density_sat}
 \end{figure}
@@ -4384,7 +4391,7 @@ en Figure \ref{size_sat}.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/size_sat.png} 
+\includegraphics[width=0.45\textwidth]{2022/size_sat.png} 
 \caption{Taille des saumons mesurés au niveau du dispositif de vidéocontrôle
 d'Arzal.}
 \label{size_sat}
@@ -4468,9 +4475,9 @@ dev.off()
 
 mmm <- summary(rmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
-colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2021)")
+colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2022)")
 xtmmm<-xtable(mmm,caption="Migrations mensuelles des saumons dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-				la période 1996-2021. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+				la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
 		label="table_sat_mois",
 		digits=c(0,0,0,0,0,0),
 		display = c("s","s","f","f", "f", "f"))
@@ -4647,9 +4654,9 @@ dev.off()
 
 mmm <- summary(rmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
-colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2021)")
+colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2022)")
 xtmmm<-xtable(mmm,caption="Migrations mensuelles de truites dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-				la période 1996-2021. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+				la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
 		label="table_sat_genre_mois",
 		digits=c(0,0,0,0,0,0),
 		display = c("s","s","f","f", "f", "f"))
@@ -4753,7 +4760,7 @@ comptée en \Sexpr{CY} (Figure \ref{barplot_report_annual_trm}) %,  Tableau
 %\ref{table_trm_mois}).
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/barplot_report_annual_trm.png} 
+\includegraphics[width=0.45\textwidth]{2022/barplot_report_annual_trm.png} 
 \caption{Histogramme des effectifs annuels de truites de mer comptabilisés
 au barrage d'Arzal.}
 \label{barplot_report_annual_trm}
@@ -4764,7 +4771,7 @@ au barrage d'Arzal.}
 
 %\begin{figure}[htpb]
 %\centering
-%\includegraphics[width=0.45\textwidth]{2021/barchart_bmi_trm.png} 
+%\includegraphics[width=0.45\textwidth]{2022/barchart_bmi_trm.png} 
 %\caption{Comparaison de la migration de truite de mer de \Sexpr{CY} avec la
 %série interannuelle de données 1996-\Sexpr{CY-1}.}
 %\label{barchart_bmi_trm}
@@ -4782,7 +4789,7 @@ La migration des truites de mer intervient toute l'année avec un pic estival
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/rmi_density_trm.png} 
+\includegraphics[width=0.45\textwidth]{2022/rmi_density_trm.png} 
 \caption{Saisonnalité des migrations de truites de mer sur la Vilaine.}
 \label{rmi_density_trm}
 \end{figure}
@@ -4793,7 +4800,7 @@ en Figure \ref{size_trm}.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/size_trm.png} 
+\includegraphics[width=0.45\textwidth]{2022/size_trm.png} 
 \caption{Taille des truites de mer mesurées au niveau du dispositif de
 vidéocontrôle d'Arzal.}
 \label{size_trm}
@@ -4907,9 +4914,9 @@ dev.off()
 
 mmm <- summary(rmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
-colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2021)")
+colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2022)")
 xtmmm<-xtable(mmm,caption="Migrations mensuelles des truites de mer dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-				la période 1996-2021. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+				la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
 		label="table_trm_mois",
 		digits=c(0,0,0,0,0,0),
 		display = c("s","s","f","f", "f", "f"))
@@ -5039,11 +5046,11 @@ espèces recensées sont peu
 nombreuses, silure, sandre, black bass, cyprinidés et brème (Figure
 \ref{autres_especes}). 
 La fréquentation des autres espèces depuis 2000 est illustrée de manière
-graphique à la Figure \ref{autres_especes_2000_2021}. 
+graphique à la Figure \ref{autres_especes_2000_2022}. 
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/autres_especes.png} 
+\includegraphics[width=0.45\textwidth]{2022/autres_especes.png} 
 \caption{Effectif des autres espèces recensées en \Sexpr{CY} dans la passe,
 \textit{Abramis brama} brème, \textit{Sander lucioperca} sandre,
 \textit{Cyprinus} cyprinidés sans détermination (genre), \textit{Micropterus
@@ -5055,16 +5062,16 @@ salmoides} black bass à grande bouche, \textit{Silurus glanis} silure.}
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/autres_especes_2000_2021.png} 
+\includegraphics[width=0.45\textwidth]{2022/autres_especes_2000_2022.png} 
 \caption{Effectif des autres espèces rencontrées dans la passe d'Arzal depuis
 2000.}
-\label{autres_especes_2000_2021}
+\label{autres_especes_2000_2022}
 \end{figure}
 
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/bilan_annuel_sil.png} 
+\includegraphics[width=0.45\textwidth]{2022/bilan_annuel_sil.png} 
 \caption{Effectif des silures ayant migré par la passe d'Arzal depuis
 2000.}
 \label{bilan_annuel_sil}
@@ -5075,7 +5082,7 @@ sont en très nette augmentation Figures (\ref{size_sil}\ref{bilan_annuel_sil}) 
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2021/size_sil.png} 
+\includegraphics[width=0.45\textwidth]{2022/size_sil.png} 
 \caption{Taille des silures mesurés au niveau du dispositif de vidéocontrôle
 d'Arzal.}
 \label{size_sil}
@@ -5140,7 +5147,7 @@ png(file=str_c(imgwdy,"autres_especes_2000_",CY,".png"),8,8,units="in",res=300)
 print(g)
 dev.off()
 #############
-# Bilan des espèces 2021
+# Bilan des espèces 2022
 ###############
 
 bilesp<-choice_c(bilesp,
@@ -5217,9 +5224,9 @@ dev.off()
 
 mmm <- summary(rmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
-colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2021)")
+colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2022)")
 xtmmm<-xtable(mmm,caption="Migrations mensuelles des silures dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-				la période 1996-2021. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+				la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
 		label="table_trm_mois",
 		digits=c(0,0,0,0,0,0),
 		display = c("s","s","f","f", "f", "f"))
@@ -5374,7 +5381,7 @@ fonctionnement réintégré dans stacomiR comporte
 \Sexpr{num(vvv$fonct_pass$nb_lignes_t_periodefonct)} lignes.
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=\textwidth]{2021/detail_fonct_passe_2.png}
+\includegraphics[width=\textwidth]{2022/detail_fonct_passe_2.png}
 \caption{Illustration du fonctionnement de la passe lors d'un fonctionnement
 normal en mai. A chaque cycle de marée, le niveau de la mer varie entre +2 m et
 -2m environ (en noir). Le niveau Vilaine (.- bleu) varie peu et reste
@@ -5393,7 +5400,7 @@ régulation par l'automate.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.8\textwidth]{2021/detail_fonct_passe_1.png}
+\includegraphics[width=0.8\textwidth]{2022/detail_fonct_passe_1.png}
 \caption{Illustration du fonctionnement de la passe après la remise en route
 de la passe en avril. En ordonnée les niveaux mer (noir), vilaine
 (.-), sas (en bleu), niveau vanne mer (pointillés violet), niveau vanne Vilaine (ligne marron
@@ -5406,16 +5413,16 @@ indique une fermeture de la passe.}
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.6\textwidth]{2021/debit_passe_mesure.png}
-\caption{Débit calculé dans la passe en 2021, mesures de l'automate du barrage.}
+\includegraphics[width=0.6\textwidth]{2022/debit_passe_mesure.png}
+\caption{Débit calculé dans la passe en 2022, mesures de l'automate du barrage.}
 \label{debit_passe_mesure}
 \end{figure}
 
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.6\textwidth]{2021/debit_passe_calcul.png}
-\caption{Débit recalculé dans la passe en 2021, après correction des valeurs
+\includegraphics[width=0.6\textwidth]{2022/debit_passe_calcul.png}
+\caption{Débit recalculé dans la passe en 2022, après correction des valeurs
 aberrantes et prise en compte du noyage aval de la passe.}
 \label{debit_passe_calcul}
 \end{figure}
@@ -5423,8 +5430,8 @@ aberrantes et prise en compte du noyage aval de la passe.}
 
 \begin{figure}[hp]
 \centering
-\includegraphics[width=0.9\textwidth]{2021/report_df_annee.png} 
-\caption{Bilan du fonctionnement de la passe lors de l'année 2021. En orange
+\includegraphics[width=0.9\textwidth]{2022/report_df_annee.png} 
+\caption{Bilan du fonctionnement de la passe lors de l'année 2022. En orange
 il est possible de suivre les périodes de haute mer où la passe est fermée, les
 périodes où les bandes sont les plus larges correspondent à des périodes de
 vives eaux et également en hiver aux périodes où la gestion de la
@@ -5437,7 +5444,7 @@ haute. En hiver, en période de crue, la passe est à l'arrêt.}
 
 \begin{figure}[hp]
 \centering
-\includegraphics[width=0.95\textwidth]{2021/report_df_fct_2003_2010.png} 
+\includegraphics[width=0.95\textwidth]{2022/report_df_fct_2003_2010.png} 
 \caption{Bilan mensuel du fonctionnement de la passe à bassins d'Arzal de 2003
 à 2010.}
 \label{report_df_fct_2003_2010}
@@ -5448,16 +5455,16 @@ haute. En hiver, en période de crue, la passe est à l'arrêt.}
 
 \begin{figure}[hp]
 \centering
-\includegraphics[width=\textwidth]{2021/bmm_alose.png}
-\caption{Bilan de la migration des aloses en 2021. Effectifs journaliers et
+\includegraphics[width=\textwidth]{2022/bmm_alose.png}
+\caption{Bilan de la migration des aloses en 2022. Effectifs journaliers et
 fonctionnement des dispositifs de franchissement et de comptage.}
 \label{bmm_alose}
 \end{figure}
 
 \begin{figure}[hp]
 \centering
-\includegraphics[width=\textwidth]{2021/bmm_mulet.png}
-\caption{Bilan de la migration des mulets en 2021. Effectifs journaliers et
+\includegraphics[width=\textwidth]{2022/bmm_mulet.png}
+\caption{Bilan de la migration des mulets en 2022. Effectifs journaliers et
 fonctionnement des dispositifs de franchissement et de comptage.}
 \label{bmm_mulet}
 \end{figure}
@@ -5465,8 +5472,8 @@ fonctionnement des dispositifs de franchissement et de comptage.}
 
 \begin{figure}[hp]
 \centering
-\includegraphics[width=\textwidth]{2021/bmm_lpm.png}
-\caption{Bilan de la migration des lamproies marines en 2021. Effectifs
+\includegraphics[width=\textwidth]{2022/bmm_lpm.png}
+\caption{Bilan de la migration des lamproies marines en 2022. Effectifs
 journaliers et fonctionnement des dispositifs de franchissement et de comptage.}
 \label{bmm_lpm}
 \end{figure}
@@ -5508,6 +5515,7 @@ leds.\\
 2020 & Changement de pièces sur les vérins de la porte aval.\\
 2021 & Renforcement des structure du capteur de fin de course aval, Remplacement
 des joints de la vanne intermédiaire.\\
+2022 & TODOTODO\\
 \bottomrule
 \end{tabular}
 \caption{Entretien historique de la passe à poissons.}
@@ -5529,6 +5537,9 @@ Versions précédentes des rapports annuels (table \ref{table_references}).
 \toprule
 Année & Rapport \\
 \midrule
+2022 &
+\href{TODO}{Suivi
+de la passe à bassins, 2021} \\
 2021 &
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EX0SnyoGmBlMsO-6-Il8wugBCHYxha3l2A-5tA9yTCqwbg?e=XukC2d}{Suivi
 de la passe à bassins, 2020} \\
