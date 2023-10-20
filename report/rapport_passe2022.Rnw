@@ -3858,7 +3858,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 <<graph_table_suppl, echo=FALSE, eval=FALSE, include=FALSE >>=
 
-########################################""
+########################################
 # Bilan
 #######################################
 
