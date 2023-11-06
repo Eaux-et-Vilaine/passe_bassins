@@ -1,0 +1,631 @@
+---
+title: "Analyse et correction des tailles"
+author: "Cédric Briand, Brice Sauvaget"
+date: 06/11/2023
+output: html_document
+toc: true
+toc_float: true
+---
+
+> essai avec Markdown
+
+options pour markdown
+
+
+```{r init, eval=TRUE,echo=FALSE} 
+options(Encoding="UTF-8")
+
+library("pool")
+library("stringr")
+library("dplyr")
+library("ggplot2")
+library('getPass')
+# TEST AVEC POOL
+if (exists("userdistant") & exists("passworddistant") & exists("hostdistant")) {
+	if (!exists("mainpass")) pois <- getPass(msg="main password")
+	pool <- dbPool(
+			drv = Postgres(),
+			dbname = "bd_contmig_nat_iav",
+			host =  decrypt_string(hostdistant,pois),
+			user = decrypt_string(userdistant,pois),
+			password = decrypt_string(passworddistant,pois)
+	)
+	conn <- poolCheckout(pool)
+} 
+test <- dbGetQuery(conn,"select count (*) from iav.vue_ope_lot_ech_parquan")
+#dbExecute...
+poolReturn(conn)
+poolClose(pool)
+
+```
+		
+```{r treatmentssm, eval=TRUE,echo=FALSE} 
+file <- "T:\\12-PoleMAB\\Socle\\Migrateurs\\poissons\\suivi_pab\\2022\\Concat22_jusqua80958.txt"
+#file <- "C:/workspace/pdata/traitement_stacomi/rapport_passe/data/2019/AZ20_0001-44765_corrige.SSM"
+# des erreurs dans le SSM avec des champs non fermés, il faut relire le fichier dans notepad++
+ssm <- read.table(file, quote = "\"", sep= " ")
+#c = character, i = integer, n = number, d = double, l = logical, f = factor, D = date, T = date time, t = time, ? = guess, or _/- to skip the column.
+#ssm <- readr::read_table2(file,col_names = FALSE,col_types="cdcdctdcdc")
+colnames(ssm) <- c("fichierVideo",
+		"ligne",
+		"taxonvideo",
+		"sens",
+		"date",
+		"time",
+		"numeroimage",
+		"distance",
+		"taillepixel",
+		"remarque")
+ssm$sens <- as.character(ssm$sens)
+unique(ssm$sens)
+ssm$sens[ssm$sens==1] <- "+1"
+hist(ssm$taillepixel)
+#Encoding(ssm$remarque)<-"UTF-8"
+# Tailles en pixel sans zone
+table(ssm$taillepixel[ssm$remarque==""])
+#ssm$remarque <- stringi::stri_trans_general(ssm$remarque, "Latin-ASCII")
+
+# po1 avec taille
+ssm[ssm$taillepixel>0&ssm$taxonvideo=='po1',]
+
+# Données de taille sans indication de la zone
+ssm[ssm$taillepixel>0 & is.na(ssm$co_zone), ]
+
+
+# Vérification à la main des commentaires du fichier SSM
+unique(ssm$remarque)
+table(ssm$remarque)
+#ssm$remarque[ssm$remarque=='mm2mm+']<- 'mm2mm'
+#ssm$remarque[ssm$remarque=='mm2mmm']<- 'mm2mm'
+#ssm$remarque[ssm$remarque==' micro coupure caisson']<- 'micro coupure caisson'
+#ssm$remarque[grep("mm1mm, parasit",ssm$remarque)]<- "mm1mm, parasite"
+#ssm$remarque[grep("mm2mm, parasit",ssm$remarque)]<-"mm2mm, parasite"
+#ssm$remarque[grep("mm5mm, parasit",ssm$remarque)]<-"mm5mm, parasite"
+#ssm$remarque[grep("mm6mm, parasit",ssm$remarque)]<-"mm6mm, parasite"
+#ssm$remarque[grep("les carpeaux non mesur",ssm$remarque)]<-"les carpeaux non mesures font en moyenne 20cm"
+#ssm$remarque[ssm$remarque==' arret nettoyage vitres']<- 'arret nettoyage vitres'
+#ssm$remarque[ssm$remarque=='micro coupre caisson']
+load(file =str_c("C:/workspace/pdata/traitement_stacomi/rapport_passe/data/co_2022.Rdata"))
+
+ssm$co_profondeur[ssm$distance=='P']<-"profondeurproche"
+ssm$co_profondeur[ssm$distance=='I']<-"profondeurmoyen"
+ssm$co_profondeur[ssm$distance=='L']<-"profondeurloin"
+co <- c(co,'profondeurloin'= 0)
+ssm$co_zone <-str_c("zone",str_extract(ssm$remarque,'(?<=mm)[0-9]*(?=mm)'))
+ssm$taille <- (as.numeric(ssm$taillepixel) -co[ssm$co_zone]-co[ssm$co_profondeur])/co["taille_theorique"]
+#ssm$taille <- as.numeric(ssm$taille)
+
+ssm$taille <- round(ssm$taille)
+ssm$taillepixel[ssm$taillepixel=="0"] <- NA
+
+# check des tailles
+ssm[ssm$taille>1000& !is.na(ssm$taille),]
+# correction 2022 d'une taille sur les bars
+ssm[ssm$taxonvideo=='bar' & ssm$taille>1000 &!is.na(ssm$taille) ,"taillepixel"] <- 87
+
+
+hist(ssm$taille,100)
+unique(ssm$taxonvideo)
+
+ssm %>% group_by(taxonvideo)%>%
+		summarize("N"=n())
+#x11()
+ggplot(ssm) + geom_histogram(aes(x=taille))+facet_wrap(~ taxonvideo, scale="free_y")
+
+ssm %>% filter(taxonvideo=='lpm')%>%
+		ggplot()+geom_histogram(aes(x=taille))
+
+ssm %>% filter(taxonvideo=='lpm')%>%
+		ggplot()+geom_violin(aes(x=taxonvideo,y=taille))
+
+ssm %>% filter(taxonvideo=='ala')%>%
+		ggplot()+geom_violin(aes(x=taxonvideo,y=taille))
+# On garde zone/ distance vitre / pixel dans remarque
+ssm$remarque[!is.na(ssm$co_zone)] <- str_c(ssm$remarque[!is.na(ssm$co_zone)],
+		"@",ssm$distance[!is.na(ssm$co_zone)],"@",
+		ssm$taillepixel[!is.na(ssm$co_zone)],"@")
+ssm$taillepixel[is.na(ssm$taillepixel)] <- "0"
+ssmf <- ssm[,c("fichierVideo",
+				"ligne",
+				"taxonvideo",
+				"sens",
+				"date",
+				"time",
+				"numeroimage",
+				"distance",
+				"taille",
+				"remarque")]
+file <- "C:/workspace/pdata/traitement_stacomi/rapport_passe/data/2021/fichiers_traite_2021.SSM"
+#  des erreurs dans le SSM avec des champs non fermés, il faut relire lefichier dans notepad++
+write.table(x=ssmf,row.names = FALSE,file=file, quote = 10, sep= " ")
+
+```
+
+```{r verif_2020, eval=TRUE,echo=FALSE} 
+test <- dbGetQuery(conn,"SELECT t_operation_ope.ope_identifiant,
+    t_lot_lot.lot_identifiant,
+    t_operation_ope.ope_dic_identifiant,
+    t_lot_lot.lot_lot_identifiant AS lot_pere,
+    t_operation_ope.ope_date_debut,
+    t_operation_ope.ope_date_fin,
+    t_lot_lot.lot_effectif,
+    t_lot_lot.lot_quantite,
+    t_lot_lot.lot_tax_code,
+    t_lot_lot.lot_std_code,
+    t_lot_lot.lot_commentaires,
+    tr_taxon_tax.tax_nom_latin,
+    tr_stadedeveloppement_std.std_libelle,
+    tr_devenirlot_dev.dev_code,
+    tr_devenirlot_dev.dev_libelle,
+    tg_parametre_par.par_nom,
+    tj_caracteristiquelot_car.car_par_code,
+    tj_caracteristiquelot_car.car_methode_obtention,
+    tj_caracteristiquelot_car.car_val_identifiant,
+    tj_caracteristiquelot_car.car_valeur_quantitatif,
+    tr_valeurparametrequalitatif_val.val_libelle
+   FROM iav.t_operation_ope
+     JOIN iav.t_lot_lot ON t_lot_lot.lot_ope_identifiant = t_operation_ope.ope_identifiant
+     LEFT JOIN ref.tr_typequantitelot_qte ON tr_typequantitelot_qte.qte_code::text = t_lot_lot.lot_qte_code::text
+     LEFT JOIN ref.tr_devenirlot_dev ON tr_devenirlot_dev.dev_code::text = t_lot_lot.lot_dev_code::text
+     JOIN ref.tr_taxon_tax ON tr_taxon_tax.tax_code::text = t_lot_lot.lot_tax_code::text
+     JOIN ref.tr_stadedeveloppement_std ON tr_stadedeveloppement_std.std_code::text = t_lot_lot.lot_std_code::text
+     JOIN iav.tj_caracteristiquelot_car ON tj_caracteristiquelot_car.car_lot_identifiant = t_lot_lot.lot_identifiant
+     LEFT JOIN ref.tg_parametre_par ON tj_caracteristiquelot_car.car_par_code::text = tg_parametre_par.par_code::text
+     LEFT JOIN ref.tr_parametrequalitatif_qal ON tr_parametrequalitatif_qal.qal_par_code::text = tg_parametre_par.par_code::text
+     LEFT JOIN ref.tr_valeurparametrequalitatif_val ON tj_caracteristiquelot_car.car_val_identifiant = tr_valeurparametrequalitatif_val.val_identifiant
+ where ope_dic_identifiant=5
+ and ope_date_debut >'2020-01-01 00:00:00'
+ ORDER BY t_operation_ope.ope_date_debut")
+dt <-test
+dt[grepl("@",dt$lot_commentaires) & is.na(dt$car_valeur_quantitatif),]
+# pas de valeurs manquantes
+```
+```{r stacomirtailleslpm, eval=TRUE,echo=FALSE} 
+library("stacomiR")
+
+# launching stacomi without selecting the scheme or interface
+stacomi(gr_interface=FALSE,
+		login_window=FALSE,
+		database_expected=TRUE)
+
+r_sample_char<-new("report_sample_char")
+r_sample_char<-choice_c(r_sample_char,
+		dc=c("5"),
+		taxa=c("Petromyzon marinus"),
+		stage=c("11"),
+		par=c("C001"),
+		horodatedebut="2013-01-01",
+		horodatefin="2020-01-01",
+		silent=FALSE)
+r_sample_char<-connect(r_sample_char)
+r_sample_char<-calcule(r_sample_char,silent=TRUE)
+# A "violin" plot
+plot(r_sample_char,plot.type="1",silent=TRUE)
+
+
+
+```
+
+```{r stacomirtaillesala, eval=TRUE,echo=FALSE} 
+library("stacomiR")
+
+# launching stacomi without selecting the scheme or interface
+stacomi(gr_interface=FALSE,
+		login_window=FALSE,
+		database_expected=TRUE)
+
+r_sample_char<-new("report_sample_char")
+r_sample_char<-choice_c(r_sample_char,
+		dc=c("5"),
+		taxa=c("Alosa"),
+		stage=c("11"),
+		par=c("C001"),
+		horodatedebut="2013-01-01",
+		horodatefin="2020-01-01",
+		silent=FALSE)
+r_sample_char<-connect(r_sample_char)
+r_sample_char<-calcule(r_sample_char,silent=TRUE)
+# A "violin" plot
+plot(r_sample_char,plot.type="1",silent=TRUE)
+
+```
+En 2021 les mesures ont été effectuées avec une seule taille dans la zone
+intermédiaire. Les coefficient des zones sont ajustés pour prendre en compte la
+différence et prédire correctement les valeurs de la zone intermédaire. Il n'y a
+pas moyen de valider les données proche ou loin. En pratique la correction est
+de l'ordre de 1 cm pour la rangée du bas, 5 cm pour la rangée intermédaire, et 3
+cm en haut. Il y a donc à la fois un effet de loupe et un positionnement
+vertical différent de la caméra.
+
+```{r model, eval=FALSE,echo=FALSE} 
+####################################################################################################################
+## Construction du modèle de précision pour les mesures vidéo > estimation de la déformation des 
+## mesures par rapport à l'emplacement de la vitre et la profondeur de la passe
+#####################################################################################################################
+
+library(ade4)
+library(ape)
+library(car)
+#library(emmeans) test fin du glm
+library(lme4)
+library(MASS)
+library(MuMIn)
+#library(pvclust)
+library(dplyr)
+
+# library(vegan) tests
+# library(RVAideMemoire) formules de cours
+
+
+# Jeu de données : Taille mesurée par rapport à taille théorique suivant la zone et la profondeur de la passe
+# Ya t'il une diférence de mesures d'objet à la vidéo suivant la zone et la profondeur dans la vitre ?
+
+
+data <- read.table("T:\\12-PoleMAB\\Socle\\Migrateurs\\poissons\\suivi_pab\\2022\\data_precision_2022.txt", h = T)
+
+
+summary(data)
+
+## Ici, zone et taille théorique sont considérées comme quantitatives >>> il faut les passer en facteurs
+
+
+
+data$taille_theorique<- data$taille_theorique*10
+
+summary(data)
+data$zone <- as.factor(data$zone)
+
+
+#pour mettre la zone 5 en premier pour la prendre comme ref dans le modèle
+
+data$zone <- factor(as.character(data$zone), levels = 
+				c("5", "1", "2", "3","4","6","7","8","9"))
+# facteur de référence au centre
+levels(data$zone) #c'est bon le 5 est en premier
+# 1 en bas à gauche, 2 centre, 3 droite
+#4 milieu gauche , 5 centre, 6 centre droit....
+
+
+
+##########################################
+##########################################
+######## Correction des rapports de Brice 
+
+#data[data$profondeur=="proche","taille_mesuree"]<-data[data$profondeur=="proche","taille_mesuree"]*10/6.2
+#data[data$profondeur=="moyen","taille_mesuree"]<-data[data$profondeur=="moyen","taille_mesuree"]*10/6.75
+#data[data$profondeur=="loin","taille_mesuree"]<-data[data$profondeur=="loin","taille_mesuree"]*10/6.2
+
+summary(data)
+## Etape 1 de la construction du modèle : Choix du cadre général
+## Modèle paramétrique
+## Variables explicatives : Taille_théorique (3 modalités) Profondeur (3 modalités > qualitative) et Zone (9 modalités > qualitative) et taille théorique (3 modalités)
+## Variables Ã  expliquer : Taille_mesuree
+
+##############################################################
+##############################################################
+####Ici, ANOVA à 3 facteurs > donc glm tout simplement
+
+
+
+
+
+GLM3<- glm(taille_mesuree~zone+profondeur+taille_theorique+ 0,family=gaussian(link=identity),data=data)
+# Dans glm3 taille theorique est un numérique, les autres sont des facteurs donc
+#taille_pixel=co_taille*taille + co_profondeur + co_zone
+# taille = (taille_pixel-co_zone-co_profondeur)/co_taille
+# taille pixel ~ zone + profondeur + taille* coeff_taille + 0
+summary(GLM3)
+anova(GLM3,test="Chisq") # tout significatif
+# 
+
+# au centre le coeff est zero
+(77 -0 - 3.28)/0.135
+(73.3 + 3.08 -3.28)/0.135
+co <- coefficients(GLM3)
+save(co, file =str_c("C:/workspace/pdata/traitement_stacomi/rapport_passe/data/co_2022.Rdata"))
+# co.Rdata est dans 
+# "https://eptbvilaine56.sharepoint.com/sites/Mulets/Documents%20partages/General/brouillons/coefficients/co.Rdata"
+
+load(file =str_c("C:/workspace/pdata/traitement_stacomi/rapport_passe/data/co_2022.Rdata"))
+
+
+
+#1- deviance(GLM3)/GLM3$null.deviance
+# 0.9995452
+plot(GLM3)
+#############################################################
+
+#C'est good > maintenant on check la linéarité du modèle
+
+library(stringr)
+
+### on est pas mal
+
+
+plot(GLM3)
+
+
+#Etape 8: Vérification de la relation entre mu et v
+
+summary(GLM3)
+co<-coefficients(GLM3)
+co["taille_theorique"]*360
+co["zone1"]
+co["profondeurmoyen"]
+GLM0<-glm(taille_mesuree ~ profondeur:taille_theorique+0,family=gaussian(link=identity),data=data)
+1/coefficients(GLM0)
+
+
+#taille_pixel   ~ taille_theorique : profondeur
+
+# taille_pixel  ~  0.135 * taille_mm + zone + profondeur (0 si loin)
+#taillepixel * 7.28 = taille en mm
+# taille théorique = taille réelle
+####################################################################################################
+## Correction > Addition de standard error pour avoir le coeff de correction > intercept+zone+prof##
+####################################################################################################
+
+#Les formules à utiliser sont
+
+
+
+############## 36
+
+## 0.213282*360
+
+########### Eloignée
+
+# Z1=( 0.2132818*36)-15.91963-14.53633=279.1937
+# Z2=(8.60138*36)-15.91963-11.57832=282.1517
+# Z3=(8.60138*36)-15.91963-22.45741=271.2726
+# Z4=(8.60138*36)-15.91963-3.79388=289.9362
+# Z5=(8.60138*36)-15.91963-0=293.7301
+# Z6=(8.60138*36)-15.91963-10.94823=282.7818
+# Z7=(8.60138*36)-15.91963-3.79342=289.9366
+# Z8=(8.60138*36)-15.91963-1.81064=291.9194
+# Z9=(8.60138*36)-15.91963-10.32631=283.4037
+
+
+########### Moyen
+
+# Z1=(8.60138*36)-15.91963-14.53633+58.11703=337.3108
+# Z2=(8.60138*36)-15.91963-11.57832+58.11703=340.2688
+# Z3=(8.60138*36)-15.91963-22.45741+58.11703=329.3897
+# Z4=(8.60138*36)-15.91963-3.79388+58.11703=348.0532
+# Z5=(8.60138*36)-15.91963+58.11703-0=351.8471
+# Z6=(8.60138*36)-15.91963-10.94823+58.11703=340.8989
+# Z7=(8.60138*36)-15.91963-3.79342+58.11703=348.0537
+# Z8=(8.60138*36)-15.91963-1.81064+58.11703=350.0364
+# Z9=(8.60138*36)-15.91963-10.32631+58.11703=341.5208
+
+
+########### Proche
+
+
+# Z1=(8.60138*36)-15.91963-14.53633+43.70084=322.8946
+# Z2=(8.60138*36)-15.91963-11.57832+43.70084=325.8526
+# Z3=(8.60138*36)-15.91963-22.45741+43.70084=314.9735
+# Z4=(8.60138*36)-15.91963-3.79388+43.70084=333.637
+# Z5=(8.60138*36)-15.91963+43.70084-0=337.4309
+# Z6=(8.60138*36)-15.91963-10.94823+43.70084=326.4827
+# Z7=(8.60138*36)-15.91963-3.79342+43.70084=333.6375
+# Z8=(8.60138*36)-15.91963-1.81064+43.70084=335.6203
+# Z9=(8.60138*36)-15.91963-10.32631+43.70084=327.1046
+
+
+############## 53.8
+
+## 8.60138*53.8
+
+########### Eloignée
+
+# Z1=(8.60138*53.8)-15.91963-14.53633=432.2983
+# Z2=(8.60138*53.8)-15.91963-11.57832=435.2563
+# Z3=(8.60138*53.8)-15.91963-22.45741=424.3772
+# Z4=(8.60138*53.8)-15.91963-3.79388=443.0407
+# Z5=(8.60138*53.8)-15.91963-0=446.8346
+# Z6=(8.60138*53.8)-15.91963-10.94823=435.8864
+# Z7=(8.60138*53.8)-15.91963-3.79342=443.0412
+# Z8=(8.60138*53.8)-15.91963-1.81064=445.024
+# Z9=(8.60138*53.8)-15.91963-10.32631=436.5083
+
+
+########### Moyen
+
+# Z1=(8.60138*53.8)-15.91963-14.53633+58.11703=337.3108
+# Z2=(8.60138*53.8)-15.91963-11.57832+58.11703=340.2688
+# Z3=(8.60138*53.8)-15.91963-22.45741+58.11703=329.3897
+# Z4=(8.60138*53.8)-15.91963-3.79388+58.11703=348.0532
+# Z5=(8.60138*53.8)-15.91963+58.11703-0=351.8471
+# Z6=(8.60138*53.8)-15.91963-10.94823+58.11703=340.8989
+# Z7=(8.60138*53.8)-15.91963-3.79342+58.11703=348.0537
+# Z8=(8.60138*53.8)-15.91963-1.81064+58.11703=350.0364
+# Z9=(8.60138*53.8)-15.91963-10.32631+58.11703=341.5208
+
+
+########### Proche
+
+
+# Z1=(8.60138*53.8)-15.91963-14.53633+43.70084=475.9991
+# Z2=(8.60138*53.8)-15.91963-11.57832+43.70084=478.9571
+# Z3=(8.60138*53.8)-15.91963-22.45741+43.70084=468.078
+# Z4=(8.60138*53.8)-15.91963-3.79388+43.70084=486.7416
+# Z5=(8.60138*53.8)-15.91963+43.70084-0=490.5355
+# Z6=(8.60138*53.8)-15.91963-10.94823+43.70084=479.5872
+# Z7=(8.60138*53.8)-15.91963-3.79342+43.70084=486.742
+# Z8=(8.60138*53.8)-15.91963-1.81064+43.70084=488.7248
+# Z9=(8.60138*53.8)-15.91963-10.32631+43.70084=480.2091
+
+
+############## 87.1
+
+## 8.60138*87.1
+
+########### Eloignée
+
+# Z1=(8.60138*87.1)-15.91963-14.53633=718.7242
+# Z2=(8.60138*87.1)-15.91963-11.57832=721.6822
+# Z3=(8.60138*87.1)-15.91963-22.45741=710.8032
+# Z4=(8.60138*87.1)-15.91963-3.79388=729.4667
+# Z5=(8.60138*87.1)-15.91963-0=733.2606
+# Z6=(8.60138*87.1)-15.91963-10.94823=722.3123
+# Z7=(8.60138*87.1)-15.91963-3.79342=729.4671
+# Z8=(8.60138*87.1)-15.91963-1.81064=731.4499
+# Z9=(8.60138*87.1)-15.91963-10.32631=722.9343
+
+
+########### Moyen
+
+# Z1=(8.60138*87.1)-15.91963-14.53633+58.11703=776.8413
+# Z2=(8.60138*87.1)-15.91963-11.57832+58.11703=779.7993
+# Z3=(8.60138*87.1)-15.91963-22.45741+58.11703=768.9202
+# Z4=(8.60138*87.1)-15.91963-3.79388+58.11703=787.5837
+# Z5=(8.60138*87.1)-15.91963+58.11703-0=791.3776
+# Z6=(8.60138*87.1)-15.91963-10.94823+58.11703=780.4294
+# Z7=(8.60138*87.1)-15.91963-3.79342+58.11703=787.5842
+# Z8=(8.60138*87.1)-15.91963-1.81064+58.11703=789.567
+# Z9=(8.60138*87.1)-15.91963-10.32631+58.11703=781.0513
+
+
+########### Proche
+
+
+# Z1=(8.60138*87.1)-15.91963-14.53633+43.70084=762.4251
+# Z2=(8.60138*87.1)-15.91963-11.57832+43.70084=765.3831
+# Z3=(8.60138*87.1)-15.91963-22.45741+43.70084=754.504
+# Z4=(8.60138*87.1)-15.91963-3.79388+43.70084=773.1675
+# Z5=(8.60138*87.1)-15.91963+43.70084-0=337.4309
+# Z6=(8.60138*87.1)-15.91963-10.94823+43.70084=326.4827
+# Z7=(8.60138*87.1)-15.91963-3.79342+43.70084=333.6375
+# Z8=(8.60138*87.1)-15.91963-1.81064+43.70084=335.6203
+# Z9=(8.60138*87.1)-15.91963-10.32631+43.70084=327.1046
+
+Anova(GLM3,type="II")
+
+
+
+# correction 2022
+load(file =str_c("C:/workspace/pdata/traitement_stacomi/rapport_passe/data/co.Rdata"))
+# les données mesures pour les differentes zones sont (mail Brice 28/10)
+
+# 7 8 9
+# 4 5 6
+# 1 2 3
+
+# 66 67 66
+# 68 68 67
+# 62 63 61 
+
+df <- data.frame(
+		taille_modele =
+				450*co["taille_theorique"]+co[1:9]+co["profondeurmoyen"], # 6.29
+		taille_mesuree =
+				c(68,62,63,61,68,67,66,67,66)
+)
+df$zone=names(co[1:9])
+
+
+# pour revenir aux données j'ajoute sur chacune des zones
+# J'ai de gros doutes pour ce qui se passe sur la distance proche et loin.....
+# l'année prochaine reprendre l'ensemble du jeu de mesures
+
+co1 <- co
+co1[1:9] <-co[1:9] +df$taille_mesure- df$taille_modele
+
+450*co1["taille_theorique"]+co1[1:9]+co["profondeurmoyen"]
+
+ggplot(df)+ geom_point(aes(x=taille_modele, y=taille_mesuree,color=zone)) +
+		ylim(58,70) +
+		xlim(58,70) + 
+		geom_abline(slope=1)
+		
+save(co1, file =str_c("C:/workspace/pdata/traitement_stacomi/rapport_passe/data/co1.Rdata"))
+```
+
+
+
+```{r corrections_base, eval=FALSE,echo=FALSE} 
+
+
+# TEST AVEC POOL
+#library(getPass)
+#key<-getPass("key")
+#pwd <- decrypt_string(passworddistant,key)
+#usr <- decrypt_string(userdistant,key)
+#con <- dbConnect(
+#		drv = dbDriver("PostgreSQL"),
+#		dbname = "bd_contmig_nat_iav",
+#		host = "185.135.126.250",
+#		user = usr,
+#		password = pwd
+#)
+##dbGetQuery
+#dbExecute(con,"
+#				with to_delete AS(
+#				select * FROM iav.t_operation_ope 
+#				JOIN iav.t_lot_lot ON lot_ope_identifiant=ope_identifiant
+#				where ope_dic_identifiant=5
+#				and ope_date_debut>'2020-01-01 00:00:00')
+#				DELETE FROM iav.tj_caracteristiquelot_car USING to_delete WHERE car_lot_identifiant=to_delete.lot_identifiant
+#				")#3546
+#dbExecute(con,"
+#				with to_delete AS(
+#				select * FROM iav.t_operation_ope 
+#				JOIN iav.t_lot_lot ON lot_ope_identifiant=ope_identifiant
+#				where ope_dic_identifiant=5
+#				and ope_date_debut>'2020-01-01 00:00:00')
+#				DELETE FROM iav.t_lot_lot USING to_delete WHERE t_lot_lot.lot_identifiant=to_delete.lot_identifiant
+#				")#11058
+#dbExecute(con,"
+#				with to_delete AS(
+#				select * FROM iav.t_operation_ope 
+#				where ope_dic_identifiant=5
+#				and ope_date_debut>'2020-01-01 00:00:00')
+#				DELETE FROM iav.t_operation_ope USING to_delete WHERE t_operation_ope.ope_identifiant=to_delete.ope_identifiant
+#				")#6462
+
+#dbExecute...
+close(con)
+dbDisconnect(con)
+
+
+### Mesures pour les SAISONS 2022 et 2023, pour les differentes zones (Brice et Gerard, 20/04/2023) :
+
+# 7 8 9
+# 4 5 6
+# 1 2 3
+
+########### 42 cm ###########
+
+########### Loin
+# 59 61 59
+# 60 61 59
+# 57 58 57 
+
+########### Intermediaire
+# 63 63 64
+# 62 64 63
+# 59 60 59 
+
+########### Proche
+# 65 68 66
+# 66 68 66
+# 62 64 64 
+
+########### 60 cm ###########
+
+########### Loin
+# 85 87 85
+# 86 87 86
+# 84 84 82 
+
+########### Intermediaire
+# 90 91 90
+# 92 92 91
+# 89 86 mauvaise position 88 
+
+########### Proche
+# 95 96 95
+# 94 95 96
+# 90 93 92 
+```
