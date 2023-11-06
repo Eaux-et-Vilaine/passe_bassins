@@ -20,23 +20,103 @@ library("stringr")
 library("dplyr")
 library("ggplot2")
 library('getPass')
+library('RPostgres')
 # TEST AVEC POOL
 if (exists("userdistant") & exists("passworddistant") & exists("hostdistant")) {
-	if (!exists("mainpass")) pois <- getPass(msg="main password")
+	if (!exists("mainpass")) mainpass <- getPass(msg="main password")
 	pool <- dbPool(
 			drv = Postgres(),
 			dbname = "bd_contmig_nat_iav",
-			host =  decrypt_string(hostdistant,pois),
-			user = decrypt_string(userdistant,pois),
-			password = decrypt_string(passworddistant,pois)
+			host =  decrypt_string(hostdistant,mainpass),
+			user = decrypt_string(userdistant,mainpass),
+			password = decrypt_string(passworddistant,mainpass)
 	)
 	conn <- poolCheckout(pool)
 } 
 test <- dbGetQuery(conn,"select count (*) from iav.vue_ope_lot_ech_parquan")
 #dbExecute...
 poolReturn(conn)
-poolClose(pool)
+#poolClose(pool)
 
+
+	host <- decrypt_string(hostdistant,mainpass)
+	user <- decrypt_string(userdistant,mainpass)
+	password <- decrypt_string(passworddistant,mainpass)
+
+options(list(
+				stacomiR.dbname = "bd_contmig_nat_iav",
+				stacomiR.host = host,
+				stacomiR.port = "5432",
+				stacomiR.user = user,
+				stacomiR.password = password,
+				stacomiR.printqueries =FALSE
+		))
+library(stacomiR)
+stacomi(TRUE,sch="iav")
+```
+
+```{r model, eval=FALSE,echo=FALSE} 
+#------- construction modèle ------------
+## Construction du modèle de précision pour les mesures vidéo > estimation de la déformation des 
+## mesures par rapport à l'emplacement de la vitre et la profondeur de la passe
+
+
+
+library(ape)
+library(car)
+#library(emmeans) test fin du glm
+library(lme4)
+library(MASS)
+#library(MuMIn)
+#library(pvclust)
+library(dplyr)
+
+# library(vegan) tests
+# library(RVAideMemoire) formules de cours
+
+
+# Jeu de données : Taille mesurée par rapport à taille théorique suivant la zone et la profondeur de la passe
+# Ya t'il une diférence de mesures d'objet à la vidéo suivant la zone et la profondeur dans la vitre ?
+
+
+data <- read.table("T:\\12-PoleMAB\\Socle\\Migrateurs\\poissons\\suivi_pab\\2022\\data_precision_2022.txt", h = T)
+
+
+summary(data)
+
+## Ici, zone et taille théorique sont considérées comme quantitatives >>> il faut les passer en facteurs
+
+
+
+data$taille_theorique<- data$taille_theorique*10
+
+summary(data)
+data$zone <- as.factor(data$zone)
+
+
+#pour mettre la zone 5 en premier pour la prendre comme ref dans le modèle
+
+data$zone <- factor(as.character(data$zone), levels = 
+				c("5", "1", "2", "3","4","6","7","8","9"))
+# facteur de référence au centre
+levels(data$zone) #c'est bon le 5 est en premier
+# 1 en bas à gauche, 2 centre, 3 droite
+#4 milieu gauche , 5 centre, 6 centre droit....
+
+summary(data)
+
+# ------------ GLM ---------------------
+
+GLM3 <- glm(taille_mesuree~zone+profondeur+taille_theorique+ 0,family=gaussian(link=identity),data=data)
+summary(GLM3)
+anova(GLM3,test="Chisq") # tout significatif
+
+co <- coefficients(GLM3)
+save(co, file =str_c("C:/workspace/pdata/traitement_stacomi/rapport_passe/data/co_2022.Rdata"))
+load(file =str_c("C:/workspace/pdata/traitement_stacomi/rapport_passe/data/co_2022.Rdata"))
+
+1- deviance(GLM3)/GLM3$null.deviance
+plot(GLM3)
 ```
 		
 ```{r treatmentssm, eval=TRUE,echo=FALSE} 
@@ -92,7 +172,7 @@ ssm$co_profondeur[ssm$distance=='I']<-"profondeurmoyen"
 ssm$co_profondeur[ssm$distance=='L']<-"profondeurloin"
 co <- c(co,'profondeurloin'= 0)
 ssm$co_zone <-str_c("zone",str_extract(ssm$remarque,'(?<=mm)[0-9]*(?=mm)'))
-ssm$taille <- (as.numeric(ssm$taillepixel) -co[ssm$co_zone]-co[ssm$co_profondeur])/co["taille_theorique"]
+ssm$taille <- (as.numeric(ssm$taillepixel)-co[ssm$co_zone]-co[ssm$co_profondeur])/co["taille_theorique"]
 #ssm$taille <- as.numeric(ssm$taille)
 
 ssm$taille <- round(ssm$taille)
@@ -101,13 +181,16 @@ ssm$taillepixel[ssm$taillepixel=="0"] <- NA
 # check des tailles
 ssm[ssm$taille>1000& !is.na(ssm$taille),]
 # correction 2022 d'une taille sur les bars
-ssm[ssm$taxonvideo=='bar' & ssm$taille>1000 &!is.na(ssm$taille) ,"taillepixel"] <- 87
+# ssm[ssm$taxonvideo=='bar' & ssm$taille>1000 &!is.na(ssm$taille) ,"taillepixel"] <- 87
 
 
 hist(ssm$taille,100)
 unique(ssm$taxonvideo)
 
 ssm %>% group_by(taxonvideo)%>%
+		summarize("N"=n())
+
+ssm %>% group_by(taxonvideo)%>% filter(!is.na(taille)) %>%
 		summarize("N"=n())
 #x11()
 ggplot(ssm) + geom_histogram(aes(x=taille))+facet_wrap(~ taxonvideo, scale="free_y")
@@ -135,7 +218,8 @@ ssmf <- ssm[,c("fichierVideo",
 				"distance",
 				"taille",
 				"remarque")]
-file <- "C:/workspace/pdata/traitement_stacomi/rapport_passe/data/2021/fichiers_traite_2021.SSM"
+file <- "C:/workspace/pdata/traitement_stacomi/rapport_passe/data/2022/fichiers_traite_2022.SSM"
+dir.create("C:/workspace/pdata/traitement_stacomi/rapport_passe/data/2022/")
 #  des erreurs dans le SSM avec des champs non fermés, il faut relire lefichier dans notepad++
 write.table(x=ssmf,row.names = FALSE,file=file, quote = 10, sep= " ")
 
@@ -184,8 +268,7 @@ dt[grepl("@",dt$lot_commentaires) & is.na(dt$car_valeur_quantitatif),]
 library("stacomiR")
 
 # launching stacomi without selecting the scheme or interface
-stacomi(gr_interface=FALSE,
-		login_window=FALSE,
+stacomi(datawd = "~", sch = "iav",
 		database_expected=TRUE)
 
 r_sample_char<-new("report_sample_char")
@@ -195,7 +278,7 @@ r_sample_char<-choice_c(r_sample_char,
 		stage=c("11"),
 		par=c("C001"),
 		horodatedebut="2013-01-01",
-		horodatefin="2020-01-01",
+		horodatefin="2022-01-01",
 		silent=FALSE)
 r_sample_char<-connect(r_sample_char)
 r_sample_char<-calcule(r_sample_char,silent=TRUE)
@@ -207,12 +290,6 @@ plot(r_sample_char,plot.type="1",silent=TRUE)
 ```
 
 ```{r stacomirtaillesala, eval=TRUE,echo=FALSE} 
-library("stacomiR")
-
-# launching stacomi without selecting the scheme or interface
-stacomi(gr_interface=FALSE,
-		login_window=FALSE,
-		database_expected=TRUE)
 
 r_sample_char<-new("report_sample_char")
 r_sample_char<-choice_c(r_sample_char,
@@ -221,7 +298,7 @@ r_sample_char<-choice_c(r_sample_char,
 		stage=c("11"),
 		par=c("C001"),
 		horodatedebut="2013-01-01",
-		horodatefin="2020-01-01",
+		horodatefin="2022-01-01",
 		silent=FALSE)
 r_sample_char<-connect(r_sample_char)
 r_sample_char<-calcule(r_sample_char,silent=TRUE)
@@ -237,19 +314,19 @@ de l'ordre de 1 cm pour la rangée du bas, 5 cm pour la rangée intermédaire, e
 cm en haut. Il y a donc à la fois un effet de loupe et un positionnement
 vertical différent de la caméra.
 
-```{r model, eval=FALSE,echo=FALSE} 
-####################################################################################################################
+```{r model_2021, eval=FALSE,echo=FALSE} 
+#------- construction modèle ------------
 ## Construction du modèle de précision pour les mesures vidéo > estimation de la déformation des 
 ## mesures par rapport à l'emplacement de la vitre et la profondeur de la passe
-#####################################################################################################################
 
-library(ade4)
+
+
 library(ape)
 library(car)
 #library(emmeans) test fin du glm
 library(lme4)
 library(MASS)
-library(MuMIn)
+#library(MuMIn)
 #library(pvclust)
 library(dplyr)
 
@@ -287,9 +364,8 @@ levels(data$zone) #c'est bon le 5 est en premier
 
 
 
-##########################################
-##########################################
-######## Correction des rapports de Brice 
+
+#--------- Correction des rapports de Brice ----------
 
 #data[data$profondeur=="proche","taille_mesuree"]<-data[data$profondeur=="proche","taille_mesuree"]*10/6.2
 #data[data$profondeur=="moyen","taille_mesuree"]<-data[data$profondeur=="moyen","taille_mesuree"]*10/6.75
@@ -301,15 +377,14 @@ summary(data)
 ## Variables explicatives : Taille_théorique (3 modalités) Profondeur (3 modalités > qualitative) et Zone (9 modalités > qualitative) et taille théorique (3 modalités)
 ## Variables Ã  expliquer : Taille_mesuree
 
-##############################################################
-##############################################################
-####Ici, ANOVA à 3 facteurs > donc glm tout simplement
+
+#Ici, ANOVA à 3 facteurs > donc glm tout simplement 
+
+# ------------ GLM ---------------------
 
 
 
-
-
-GLM3<- glm(taille_mesuree~zone+profondeur+taille_theorique+ 0,family=gaussian(link=identity),data=data)
+GLM3 <- glm(taille_mesuree~zone+profondeur+taille_theorique+ 0,family=gaussian(link=identity),data=data)
 # Dans glm3 taille theorique est un numérique, les autres sont des facteurs donc
 #taille_pixel=co_taille*taille + co_profondeur + co_zone
 # taille = (taille_pixel-co_zone-co_profondeur)/co_taille
@@ -333,7 +408,8 @@ load(file =str_c("C:/workspace/pdata/traitement_stacomi/rapport_passe/data/co_20
 #1- deviance(GLM3)/GLM3$null.deviance
 # 0.9995452
 plot(GLM3)
-#############################################################
+
+
 
 #C'est good > maintenant on check la linéarité du modèle
 
@@ -349,7 +425,7 @@ plot(GLM3)
 
 summary(GLM3)
 co<-coefficients(GLM3)
-co["taille_theorique"]*360
+co["taille_theorique"]
 co["zone1"]
 co["profondeurmoyen"]
 GLM0<-glm(taille_mesuree ~ profondeur:taille_theorique+0,family=gaussian(link=identity),data=data)
@@ -361,9 +437,8 @@ GLM0<-glm(taille_mesuree ~ profondeur:taille_theorique+0,family=gaussian(link=id
 # taille_pixel  ~  0.135 * taille_mm + zone + profondeur (0 si loin)
 #taillepixel * 7.28 = taille en mm
 # taille théorique = taille réelle
-####################################################################################################
-## Correction > Addition de standard error pour avoir le coeff de correction > intercept+zone+prof##
-####################################################################################################
+
+# ----- Correction > Addition de standard error pour avoir le coeff de correction > intercept+zone+prof ---------------------
 
 #Les formules à utiliser sont
 
@@ -503,43 +578,43 @@ GLM0<-glm(taille_mesuree ~ profondeur:taille_theorique+0,family=gaussian(link=id
 Anova(GLM3,type="II")
 
 
-
-# correction 2022
-load(file =str_c("C:/workspace/pdata/traitement_stacomi/rapport_passe/data/co.Rdata"))
-# les données mesures pour les differentes zones sont (mail Brice 28/10)
-
-# 7 8 9
-# 4 5 6
-# 1 2 3
-
-# 66 67 66
-# 68 68 67
-# 62 63 61 
-
-df <- data.frame(
-		taille_modele =
-				450*co["taille_theorique"]+co[1:9]+co["profondeurmoyen"], # 6.29
-		taille_mesuree =
-				c(68,62,63,61,68,67,66,67,66)
-)
-df$zone=names(co[1:9])
-
-
-# pour revenir aux données j'ajoute sur chacune des zones
-# J'ai de gros doutes pour ce qui se passe sur la distance proche et loin.....
-# l'année prochaine reprendre l'ensemble du jeu de mesures
-
-co1 <- co
-co1[1:9] <-co[1:9] +df$taille_mesure- df$taille_modele
-
-450*co1["taille_theorique"]+co1[1:9]+co["profondeurmoyen"]
-
-ggplot(df)+ geom_point(aes(x=taille_modele, y=taille_mesuree,color=zone)) +
-		ylim(58,70) +
-		xlim(58,70) + 
-		geom_abline(slope=1)
-		
-save(co1, file =str_c("C:/workspace/pdata/traitement_stacomi/rapport_passe/data/co1.Rdata"))
+# 
+# # correction 2022
+# load(file =str_c("C:/workspace/pdata/traitement_stacomi/rapport_passe/data/co.Rdata"))
+# # les données mesures pour les differentes zones sont (mail Brice 28/10)
+# 
+# # 7 8 9
+# # 4 5 6
+# # 1 2 3
+# 
+# # 66 67 66
+# # 68 68 67
+# # 62 63 61 
+# 
+# df <- data.frame(
+# 		taille_modele =
+# 				450*co["taille_theorique"]+co[1:9]+co["profondeurmoyen"], # 6.29
+# 		taille_mesuree =
+# 				c(68,62,63,61,68,67,66,67,66)
+# )
+# df$zone=names(co[1:9])
+# 
+# 
+# # pour revenir aux données j'ajoute sur chacune des zones
+# # J'ai de gros doutes pour ce qui se passe sur la distance proche et loin.....
+# # l'année prochaine reprendre l'ensemble du jeu de mesures
+# 
+# co1 <- co
+# co1[1:9] <-co[1:9] +df$taille_mesure- df$taille_modele
+# 
+# 450*co1["taille_theorique"]+co1[1:9]+co["profondeurmoyen"]
+# 
+# ggplot(df)+ geom_point(aes(x=taille_modele, y=taille_mesuree,color=zone)) +
+# 		ylim(58,70) +
+# 		xlim(58,70) + 
+# 		geom_abline(slope=1)
+# 		
+# save(co1, file =str_c("C:/workspace/pdata/traitement_stacomi/rapport_passe/data/co1.Rdata"))
 ```
 
 
@@ -585,8 +660,8 @@ save(co1, file =str_c("C:/workspace/pdata/traitement_stacomi/rapport_passe/data/
 #				")#6462
 
 #dbExecute...
-close(con)
-dbDisconnect(con)
+#close(con)
+#dbDisconnect(con)
 
 
 ### Mesures pour les SAISONS 2022 et 2023, pour les differentes zones (Brice et Gerard, 20/04/2023) :
