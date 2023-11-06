@@ -9,13 +9,7 @@
 %%   L'encodage de ce fichier doit être UTF-8
 %%	 lancer avec Knitr + Xelatex
 %%   Liste des choses à faire pour mettre à jour le rapport en nouvelle version
-%%   1- copier sous un nouveau nom le Rnw
-%%   2- dans pdata/traitement_stacomi/rapport_passeY créer des sous répertoires
-%%   avec l'année en cours dans data, image, et table. Y coller les valeurs de l'année 
-%%   précédente pour data (pour pouvoir lancer)
-%%   3 - changer la valeur de CY dans le chunk init
-%%   4 - Lancer les chunks, si des données externes sont à charger voir avec cédric, lancer avec knitr.
-%%   
+%%   voir issue #1 https://github.com/Eaux-et-Vilaine/passe_bassins/issues/1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -548,8 +542,8 @@ rm(list=obj) # nettoyage complet sauf passwords
 # fermeture de tous les graphiques
 graphics.off()
 
-setwd("C:/workspace/passe_bassins/report/rapport_passe")
-dir.create()
+setwd("C:/workspace/passe_bassins/report/")
+
 datawd<-"C:/workspace/passe_bassins/data/"
 load_package <- function(x)
 {
@@ -1770,7 +1764,7 @@ data_DF_init[data_DF_init$hauteur_vanne_mer< -1  &
 				,"niveau_mer_passe"]+0.3
 
 
-ll <- calc_fonct_pass(dat = data_DF_init)
+ll <- calc_fonct_pass(dat = data_DF_init, vvv=vvv)
 data_DF <- ll$dat
 # SIVA 2023 (I deleted the vvv parm)
 vvv$coeff_noyage_sup_0.9 <- ll$coeff_noyage_sup_0.9
@@ -1813,7 +1807,7 @@ write.table(ll$t_periodefonctdispositif_per,file=path,
 save(vvv,file=file.path(datawd,CY,"vvv.Rdata"))
 @
 
-<<calcul_debit_passe, echo=FALSE, eval=FALSE, include=FALSE>>=
+<<calcul_debit_passe, echo=FALSE, eval=TRUE, include=FALSE>>=
 #	liste ll avec dat, le dataframe des données corrigées, et t_periodefonctionnementdispositif_dis,
 #   le fichier des périodes de fonctionnement
 load(file=file.path(datawd,CY,"fonct_pass.Rdata"))	# ll
@@ -1874,7 +1868,7 @@ plot(data_DF$time,
 		cex=3/4)
 dev.off()
 # graphique avec residus 
-x11()
+
 qp<-ggplot(data_DF) + geom_point(aes(x=time,debit_passe_recalcule,colour=resdeb))
 print(qp)
 
@@ -1884,21 +1878,25 @@ print(qp)
 ################################################
 
 #jour de l'annee
-debit_jour_recalcul<-tapply(data_DF$debit_passe_recalcule*600,list(as.factor(data_DF$jour)),sum,na.rm = TRUE)
-debit_jour_automate<-tapply(data_DF$debit_passe*600,list(as.factor(data_DF$jour)),sum,na.rm = TRUE)
+data_DF_jour <- data_DF %>% group_by(jour) %>% 
+    summarise(debit_jour_recalcul = sum(debit_passe_recalcule*600),
+        debit_jour_automate = sum(debit_passe*600))
+
 debit_mois_recalcul<-tapply(data_DF$debit_passe_recalcule*600,list(as.factor(data_DF$mois)),sum,na.rm = TRUE)
 
 barplot(debit_mois_recalcul)
-barplot(debit_jour_recalcul)
+barplot(data_DF_jour$debit_jour_recalcul)
 
+# Ici on fait en sorte de n'avoir pas de jours manquants dans la séquence
+# Pas sûr que ce soit nécessaire
 #seqdate=strftime(as.POSIXlt(seq(from=ledebut,to=lafin,by="day")),"%d-%m")
 seqdate=seq(from=ledebut,to=lafin,by="day")
 #seqdate=seqdate[1:366]
-table_jour=data.frame("seqdate"=seqdate)
-index_jour_recalcul=match(strftime(as.POSIXlt(seqdate),"%j"),rownames(debit_jour_recalcul))
-index_jour_automate=match(rownames(debit_jour_automate),strftime(as.POSIXlt(seqdate),"%j"))
-table_jour$debit_jour_recalcul[index_jour_recalcul] <- debit_jour_recalcul
-table_jour$debit_jour_automate[index_jour_automate] <- debit_jour_automate
+table_jour <- data.frame("seqdate"=seqdate)
+table_jour <- left_join(table_jour%>% mutate(jour=strftime(seqdate,"%j")), 
+    data_DF_jour,
+     by="jour")
+
 # "graphique de synthese des deux debits sur l'annee
 png(filename=file.path(imgwd,CY,"debit_passe_comp.png"),10,7,units="in",res=300)
 plot(table_jour$seqdate,table_jour$debit_jour_automate,
@@ -1955,6 +1953,7 @@ if (nrow(res)!=0){
 	cat('Attention il y a déjà des données dans la base')	
 }
 # ATTENTION ECRITURE EN BASE !!!!
+con <- dbConnect(RPostgres::Postgres(), dbname="bd_contmig_nat_iav",host=host,port=5432,user=user, password=password)
 load(file=file.path(datawd,CY,"fonct_pass.Rdata"))
 DBI::dbExecute(con, "DROP TABLE IF EXISTS t_periodefonctdispositif_per_temp")
 
@@ -2000,7 +1999,7 @@ DBI::dbExecute(req@connection, "INSERT INTO iav.t_periodefonctdispositif_per (
 #AND per_date_fin <='2019-10-27 04:00:00'; --4
 @
 
-<<report_df, echo=FALSE, eval=FALSE, include=FALSE>>=
+<<report_df, echo=FALSE, eval=TRUE, include=FALSE>>=
 
 r_df=new("report_df")
 r_df<-choice_c(r_df,
@@ -2112,7 +2111,7 @@ r_df_2<-connect(r_df_2)
 
 @
 
-<<report_dc, echo=FALSE, eval=FALSE, include=FALSE>>=
+<<report_dc, echo=FALSE, eval=TRUE, include=FALSE>>=
 r_dc=new("report_dc")
 r_dc<-choice_c(r_dc,
 		5,
