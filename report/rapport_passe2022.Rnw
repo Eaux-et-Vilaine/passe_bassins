@@ -727,6 +727,7 @@ num <- function(x, round_precision =  NULL, color=color_num_text)
 		
 	}
 }
+
 ###########################
 # définition du thème de couleurs
 ###########################
