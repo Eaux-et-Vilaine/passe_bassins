@@ -548,8 +548,9 @@ rm(list=obj) # nettoyage complet sauf passwords
 # fermeture de tous les graphiques
 graphics.off()
 
-setwd("C:/workspace/p/traitement_stacomi/rapport_passe")
-datawd<-"C:/workspace/pdata/traitement_stacomi/rapport_passe/data/"
+setwd("C:/workspace/passe_bassins/report/rapport_passe")
+dir.create()
+datawd<-"C:/workspace/passe_bassins/data/"
 load_package <- function(x)
 {
 	if (!is.character(x)) stop("Package should be a string")
@@ -577,17 +578,20 @@ load_package('glue')
 load_package('getPass')
 load_package('stringr')
 # l'annee en cours (c'est la valeur à changer en début de script
-CY<-2022
+CY <- 2022
 # le repertoire contenant les données
-datawdy<-str_c(datawd,CY,"/")
-datawdym1<-str_c(datawd,CY-1,"/")
+datawdy <- str_c(datawd,CY,"/")
+dir.create(datawdy,showWarnings = FALSE)
+datawdym1 <- str_c(datawd,CY-1,"/")
 # le repertoire contenant mes images (très important pour sweave)
-imgwd<-"C:/workspace/pdata/traitement_stacomi/rapport_passe/image/"
+imgwd <- "C:/workspace/passe_bassins/image/"
 # le répertoire contenant les tableaux en latex
-tabwd<-"C:/workspace/pdata/traitement_stacomi/rapport_passe/table/"
+tabwd <- "C:/workspace/passe_bassins/table/"
 # en vrai les données annuelles sont dans des sous répertoires par année
-imgwdy<-str_c(imgwd,CY,"/")
-tabwdy<-str_c(tabwd,CY,"/")
+imgwdy <- str_c(imgwd,CY,"/")
+dir.create(imgwdy, showWarnings = FALSE)
+tabwdy <- str_c(tabwd,CY,"/")
+dir.create(tabwdy, showWarnings = FALSE)
 # une petite option pour simplifier la construction des tableaux en latex
 # avec xtable, par défaut je ne veux pas des titres des lignes
 options("xtable.include.rownames"=FALSE)
