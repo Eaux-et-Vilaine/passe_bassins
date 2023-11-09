@@ -254,7 +254,7 @@ pdfkeywords={passe} {lamproies} {alose} {stacomi}
 %% your report.
 
 %% Makes a path to your graphics' folder.
-\graphicspath{{../../../pdata/traitement_stacomi/rapport_passe/image/}}
+\graphicspath{{../image/}}
 
 \newcommand{\tab}{\hspace*{2em}}
 \newcommand{\DD}{D\&D}
@@ -496,12 +496,12 @@ Gérard Eriau\par
 #' @param x name of the library/ries to be loaded
 load_package <- function(x)
 {
-	if (!is.character(x)) stop("Package should be a string")
-	if (!require(x,character.only = TRUE))
-	{
-		install.packages(x, lib=.libPaths()[1],repos="http://cran.us.r-project.org", dep=TRUE)
-		if(!require(x,character.only = TRUE)) stop("Package not found")
-	}
+  if (!is.character(x)) stop("Package should be a string")
+  if (!require(x,character.only = TRUE))
+  {
+    install.packages(x, lib=.libPaths()[1],repos="http://cran.us.r-project.org", dep=TRUE)
+    if(!require(x,character.only = TRUE)) stop("Package not found")
+  }
 }
 load_package("knitr")
 opts_knit$set(base.dir="C:/workspace/pdata/traitement_stacomi/rapport_passe/image")
@@ -547,14 +547,15 @@ setwd("C:/workspace/passe_bassins/report/")
 datawd<-"C:/workspace/passe_bassins/data/"
 load_package <- function(x)
 {
-	if (!is.character(x)) stop("Package should be a string")
-	if (!require(x,character.only = TRUE))
-	{
-		install.packages(x, lib=.libPaths()[1],repos="http://cran.us.r-project.org", dep=TRUE)
-		if(!require(x,character.only = TRUE)) stop("Package not found")
-	}
+  if (!is.character(x)) stop("Package should be a string")
+  if (!require(x,character.only = TRUE))
+  {
+    install.packages(x, lib=.libPaths()[1],repos="http://cran.us.r-project.org", dep=TRUE)
+    if(!require(x,character.only = TRUE)) stop("Package not found")
+  }
 }
 load_package('getPass')
+load_package('magrittr')
 load_package('Hmisc')
 load_package('xtable')
 load_package('stacomirtools')
@@ -571,6 +572,9 @@ load_package('RPostgres')
 load_package('glue')
 load_package('getPass')
 load_package('stringr')
+load_package('hubeau')
+
+
 # l'annee en cours (c'est la valeur à changer en début de script
 CY <- 2022
 # le repertoire contenant les données
@@ -595,54 +599,54 @@ options("xtable.include.rownames"=FALSE)
 #'==========================================================
 sn <- function(x,digits=0,scientific=FALSE)
 {
-	if (class(x)=="character") {                
-		warning("sn appliqué a un character")
-		return(x)
-	}
-	if (is.infinite(x)) {                
-		warning("sn appliqué à Inf")
-		return(x)
-	}
-	if (length(x)==0) {                
-		warning("sn length 0")
-		return("???")
-	}
-	if (x==0) return("0")
-	ord <- floor(log(abs(x),10))
-	if (scientific==FALSE&ord<9){
-		if (digits==0) {
-			digits=max(1,ord) # digits must be >0
-			nsmall=0
-		}else {
-			nsmall=digits
-		}
-		x<-format(x,big.mark="~",small.mark="~",digits=digits,nsmall=nsmall)
-		return(str_c("$",as.character(x),"$"))                
-	} else {
-		x <- x / 10^ord
-		if (!missing(digits)) x <- format(x,digits=digits)
-		if (ord==0) return(as.character(x))
-		return(str_c("$",x,"\\\\times 10^{",ord,"}$"))
-	}
+  if (class(x)=="character") {                
+    warning("sn appliqué a un character")
+    return(x)
+  }
+  if (is.infinite(x)) {                
+    warning("sn appliqué à Inf")
+    return(x)
+  }
+  if (length(x)==0) {                
+    warning("sn length 0")
+    return("???")
+  }
+  if (x==0) return("0")
+  ord <- floor(log(abs(x),10))
+  if (scientific==FALSE&ord<9){
+    if (digits==0) {
+      digits=max(1,ord) # digits must be >0
+      nsmall=0
+    }else {
+      nsmall=digits
+    }
+    x<-format(x,big.mark="~",small.mark="~",digits=digits,nsmall=nsmall)
+    return(str_c("$",as.character(x),"$"))                
+  } else {
+    x <- x / 10^ord
+    if (!missing(digits)) x <- format(x,digits=digits)
+    if (ord==0) return(as.character(x))
+    return(str_c("$",x,"\\\\times 10^{",ord,"}$"))
+  }
 }
 #'==========================================================
 #' fonction d'application de la transparence à des couleurs.
 #'==========================================================
 makeTransparent = function(..., alpha=0.5) {
-	
-	if(alpha<0 | alpha>1) stop("alpha must be between 0 and 1")
-	
-	alpha = floor(255*alpha)  
-	newColor = col2rgb(col=unlist(list(...)), alpha=FALSE)
-	
-	.makeTransparent = function(col, alpha) {
-		rgb(red=col[1], green=col[2], blue=col[3], alpha=alpha, maxColorValue=255)
-	}
-	
-	newColor = apply(newColor, 2, .makeTransparent, alpha=alpha)
-	
-	return(newColor)
-	
+  
+  if(alpha<0 | alpha>1) stop("alpha must be between 0 and 1")
+  
+  alpha = floor(255*alpha)  
+  newColor = col2rgb(col=unlist(list(...)), alpha=FALSE)
+  
+  .makeTransparent = function(col, alpha) {
+    rgb(red=col[1], green=col[2], blue=col[3], alpha=alpha, maxColorValue=255)
+  }
+  
+  newColor = apply(newColor, 2, .makeTransparent, alpha=alpha)
+  
+  return(newColor)
+  
 }
 #'==========================================================
 #' Fonction de nettoyage
@@ -653,15 +657,15 @@ makeTransparent = function(..., alpha=0.5) {
 # sanitize(str)
 # NOTE THIS FUNCTION WILL WORK WITH KNITR NOT SWEAVE !
 sanitize <- function(str) {
-	str <- gsub("\\r\\n","",str)
+  str <- gsub("\\r\\n","",str)
 #	str <- stringi::stri_replace_all_fixed(str, c("\\"),
 #			c("\\\\"),vectorize_all=FALSE)	
-	
+  
 #	str <- stringi::stri_replace_all_fixed(str, c("{","}"),
 #			c("\\{","\\}"),vectorize_all=FALSE)	
-	str <- stringi::stri_replace_all_fixed(str, c("#","$","%","&","~","_","^"),
-			c("\\#","\\$","\\%","\\&","\\~{}","\\_","\\^{}"),vectorize_all=FALSE)
-	return(str)
+  str <- stringi::stri_replace_all_fixed(str, c("#","$","%","&","~","_","^"),
+      c("\\#","\\$","\\%","\\&","\\~{}","\\_","\\^{}"),vectorize_all=FALSE)
+  return(str)
 }
 
 #'==========================================================
@@ -695,8 +699,8 @@ turquoise_EVf <- "#007873"
 
 col <- c("#17364E","moccasin","#B68B52","#765223","grey")
 image(1:length(col), 1, as.matrix(1:length(col)), 
-		col=col,
-		xlab="", ylab = "", xaxt = "n", yaxt = "n", bty = "n")
+    col=col,
+    xlab="", ylab = "", xaxt = "n", yaxt = "n", bty = "n")
 
 
 #'==========================================================
@@ -706,37 +710,37 @@ image(1:length(col), 1, as.matrix(1:length(col)),
 color_num_text <- "orange_EV"
 num <- function(x, round_precision =  NULL, color=color_num_text)
 {
-	if (is.null(color)){
-		if (is.null(round_precision)) {
-			return(sprintf("\\num{%s}", x))
-		} else {
-			return(sprintf("\\num[round-precision=%s]{%s}",round_precision+1, x))
-		}
-	} else {
-		if (is.null(round_precision)) {
-			return(sprintf("\\textcolor{%s}{\\num{%s}}", color, x))
-		} else {
-			return(sprintf("\\textcolor{%s}\\num[round-precision=%s]{%s}",color, round_precision+1, x))
-		}
-		
-	}
+  if (is.null(color)){
+    if (is.null(round_precision)) {
+      return(sprintf("\\num{%s}", x))
+    } else {
+      return(sprintf("\\num[round-precision=%s]{%s}",round_precision+1, x))
+    }
+  } else {
+    if (is.null(round_precision)) {
+      return(sprintf("\\textcolor{%s}{\\num{%s}}", color, x))
+    } else {
+      return(sprintf("\\textcolor{%s}\\num[round-precision=%s]{%s}",color, round_precision+1, x))
+    }
+    
+  }
 }
 
 ###########################
 # définition du thème de couleurs
 ###########################
 color=c(
-		"#052945",#working
-		"#ECDAC0",#stopped
-		bleu_EV,#normal "#3071A2"
-		turquoise_EV, # arret ponctuel
-		orange_EV,# arret maintenance "#462800"
-		jaune_EV,#dysfunction "#B68B52"
-		"#A66F24", # inconnu
-		"#012746",#eff
-		"#6C3E00",#weight
-		"blue",
-		"blue"
+    "#052945",#working
+    "#ECDAC0",#stopped
+    bleu_EV,#normal "#3071A2"
+    turquoise_EV, # arret ponctuel
+    orange_EV,# arret maintenance "#462800"
+    jaune_EV,#dysfunction "#B68B52"
+    "#A66F24", # inconnu
+    "#012746",#eff
+    "#6C3E00",#weight
+    "blue",
+    "blue"
 )
 
 
@@ -751,10 +755,10 @@ color=c(
 #' nouvelle année de traitement.
 #'==========================================================
 if (file.exists(file=str_c(datawdy,"vvv.Rdata"))){
-	load(file=str_c(datawdy,"vvv.Rdata"))
+  load(file=str_c(datawdy,"vvv.Rdata"))
 } else {
-	#crétation de la variable vvv
-	vvv<-list()
+  #crétation de la variable vvv
+  vvv<-list()
 }
 #'==========================================================
 #' Option de base donnée
@@ -762,24 +766,24 @@ if (file.exists(file=str_c(datawdy,"vvv.Rdata"))){
 
 
 if (exists("userdistant") & exists("passworddistant") & exists("hostdistant")) {
-	if( !exists("pois")) pois <- getPass(msg="main password")
-	host <- decrypt_string(hostdistant,pois)
-	user <- decrypt_string(userdistant,pois)
-	password<- decrypt_string(passworddistant,pois)
+  if( !exists("pois")) pois <- getPass(msg="main password")
+  host <- decrypt_string(hostdistant,pois)
+  user <- decrypt_string(userdistant,pois)
+  password<- decrypt_string(passworddistant,pois)
 } else {
-	host <- getPass(msg="host")
-	user <- getPass(msg="user")
-	password <- getPass(msg="password")
+  host <- getPass(msg="host")
+  user <- getPass(msg="user")
+  password <- getPass(msg="password")
 }
 
 options(list(
-				stacomiR.dbname = "bd_contmig_nat_iav",
-				stacomiR.host = host,
-				stacomiR.port = "5432",
-				stacomiR.user = user,
-				stacomiR.password = password,
-				stacomiR.printqueries =FALSE
-		))
+        stacomiR.dbname = "bd_contmig_nat_iav",
+        stacomiR.host = host,
+        stacomiR.port = "5432",
+        stacomiR.user = user,
+        stacomiR.password = password,
+        stacomiR.printqueries =FALSE
+    ))
 stacomi(TRUE,sch="iav", datawd=datawd)
 
 @
@@ -931,63 +935,63 @@ Les limitations de fonctionnement en période d’étiage sont inclues dans cett
 library(DiagrammeR)
 library(magrittr)
 node_list <- create_node_df(n=8,		
-		type=c("Niveau",
-				"Niveau",
-				"Type fonctionnement",
-				"Type fonctionnement",
-				"niveau",
-				"Type fonctionnement",
-				"Type fonctionnement",
-				"Type fonctionnement"
-		),
-		label=iconv(c("H mer - H Vilaine",
-						"H vanne \n amont",
-						"2",
-						"3",
-						"Delta sas-mer",	
-						"1",
-						"4",
-						"5"
-				), "UTF8"),
-		color=c("white",
-				"white",
-				orange_EV,
-				"red",
-				"white",
-				"green",
-				orange_EV,
-				turquoise_EV),
-		fillcolor = bleu_EV,
-		style="filled",
-		shape=c("plaintext","plaintext","circle","circle","plaintext","circle","circle","circle"),
-		value=c(2,2,1,1,2,1,1,1),
-		fixedsize =FALSE
+    type=c("Niveau",
+        "Niveau",
+        "Type fonctionnement",
+        "Type fonctionnement",
+        "niveau",
+        "Type fonctionnement",
+        "Type fonctionnement",
+        "Type fonctionnement"
+    ),
+    label=iconv(c("H mer - H Vilaine",
+            "H vanne \n amont",
+            "2",
+            "3",
+            "Delta sas-mer",	
+            "1",
+            "4",
+            "5"
+        ), "UTF8"),
+    color=c("white",
+        "white",
+        orange_EV,
+        "red",
+        "white",
+        "green",
+        orange_EV,
+        turquoise_EV),
+    fillcolor = bleu_EV,
+    style="filled",
+    shape=c("plaintext","plaintext","circle","circle","plaintext","circle","circle","circle"),
+    value=c(2,2,1,1,2,1,1,1),
+    fixedsize =FALSE
 )
 
 edge_list<-create_edge_df(
-		from=c(1,1,2,2,5,5,1,2,5),
-		to=  c(2,3,4,5,6,7,8,8,8),
-		rel="a",
-		label=c(">0.3m","<0.3m","==0.08m","!=0.08m","<0.5m",">0.5m", "  ?", "  ?", "  ?"),
-		color=c("green",orange_EV,"red","green","green",orange_EV,turquoise_EV,turquoise_EV,turquoise_EV),
-		length=100)
+    from=c(1,1,2,2,5,5,1,2,5),
+    to=  c(2,3,4,5,6,7,8,8,8),
+    rel="a",
+    label=c(">0.3m","<0.3m","==0.08m","!=0.08m","<0.5m",">0.5m", "  ?", "  ?", "  ?"),
+    color=c("green",orange_EV,"red","green","green",orange_EV,turquoise_EV,turquoise_EV,turquoise_EV),
+    length=100)
 
 
 
 igraph1 <- create_graph()
 igraph2 <- igraph1%>%
-		add_nodes_from_table(table = node_list, 
-				type_col=type,
-				label_col=label) 
+    add_nodes_from_table(table = node_list, 
+        type_col=type,
+        label_col=label) 
 #igraph2 %>% get_node_df()
 # Add the edges to the graph
 i_graph_3 <-igraph2 %>%
-		add_edges_from_table(
-				table = edge_list,
-				from_col = from,
-				to_col = to,
-				from_to_map = id_external
-		)
+    add_edges_from_table(
+        table = edge_list,
+        from_col = from,
+        to_col = to,
+        from_to_map = id_external
+    )
 
 
 render_graph(i_graph_3, layout="nicely")
@@ -1256,15 +1260,15 @@ la RAM de l'ordinateur qui a du être remplacée.
 #' @rdname pastequery
 #' @export 
 pastequery <- function(table,name,tag,start,end){
-	if (tag==0){
-		query <- paste("SELECT HoroDate,valeur FROM",table,"WHERE HoroDate >=",start,
-				"AND HoroDate < ",end)
-	} else {
-		query <- paste("SELECT HoroDate, valeur FROM",table,"WHERE HoroDate >=",start,
-				"AND HoroDate < ",end,
-				"AND tag=",tag)
-	}
-	return(query)	
+  if (tag==0){
+    query <- paste("SELECT HoroDate,valeur FROM",table,"WHERE HoroDate >=",start,
+        "AND HoroDate < ",end)
+  } else {
+    query <- paste("SELECT HoroDate, valeur FROM",table,"WHERE HoroDate >=",start,
+        "AND HoroDate < ",end,
+        "AND tag=",tag)
+  }
+  return(query)	
 }
 
 
@@ -1295,19 +1299,19 @@ pastequery <- function(table,name,tag,start,end){
 #' @rdname getdata
 #' @export 
 getdata <- function(con,.df,start,end){
-	.df$start <- start
-	.df$end <- end
-	.df <- .df %>% mutate(.,"query"=pmap_chr(.,.f= pastequery))
-	.df <- .df %>% add_column(result=list(rep(list(),nrow(.df))))
-	for (i in 1:nrow(.df)){
-		cat("query for ",.df$table[i],"\n")
-		rs <- dbSendQuery(conn=con,statement=.df$query[i])
-		.df$result[i][[1]] <- tryCatch(dbFetch(rs, n = -1) ,
-				finally=dbClearResult(rs))
-		cat("nrow for ",.df$table[i]," :",nrow(.df$result[i][[1]]),"\n")
-	}
-	dbDisconnect(con)
-	return(.df)	
+  .df$start <- start
+  .df$end <- end
+  .df <- .df %>% mutate(.,"query"=pmap_chr(.,.f= pastequery))
+  .df <- .df %>% add_column(result=list(rep(list(),nrow(.df))))
+  for (i in 1:nrow(.df)){
+    cat("query for ",.df$table[i],"\n")
+    rs <- dbSendQuery(conn=con,statement=.df$query[i])
+    .df$result[i][[1]] <- tryCatch(dbFetch(rs, n = -1) ,
+        finally=dbClearResult(rs))
+    cat("nrow for ",.df$table[i]," :",nrow(.df$result[i][[1]]),"\n")
+  }
+  dbDisconnect(con)
+  return(.df)	
 }
 #' @title Calcul du fonctionnement de la passe d'Arzal
 #' @description Par défaut la fonction utilise les niveaux mer et Vilaine barrage puis les niveaux passe 
@@ -1330,154 +1334,154 @@ getdata <- function(con,.df,start,end){
 #' @rdname calc_fonct_pass
 
 calc_fonct_pass <- function(dat, per_dis_identifiant=1, vvv){
-	
-	# checks -------------------------------------------
-	
-	cols <- c("time","niveau_vilaine_passe","niveau_mer_passe","niveau_vilaine_barrage","niveau_mer_barrage","niveau_sas_passe",
-			"hauteur_vanne_vilaine","hauteur_vanne_mer")
-	test_column_present <- cols %in% colnames(dat)
-	if (!all(test_column_present)) stop("columns",paste(cols[!test_column_present], collapse=","),"manquantes") 
-	# teste que les colonnes sont ordonnées
-	stopifnot(sort(dat$time)==dat$time)
-	vvv$fonct_pass <- list()
-	cat(nrow(dat), 
-			"lignes dans le fichier d'entrée \n")
-	vvv$fonct_pass$nb_lignes <- nrow(dat)
-	
-	# niveau mer barrage ..................
-	
-	na_niveau_mer_barrage <- is.na(dat$niveau_mer_barrage)
-	if (sum(na_niveau_mer_barrage)>0) cat(sum(na_niveau_mer_barrage), "lignes avec valeurs manquantes pour niveau mer \n")
-	na_niveau_mer_passe <-  is.na(dat$niveau_mer_passe)
-	dat$niveau_mer_barrage[na_niveau_mer_barrage & !na_niveau_mer_passe] <- 
-			dat$niveau_mer_passe[na_niveau_mer_barrage & !na_niveau_mer_passe]
-	if (sum(na_niveau_mer_barrage & !na_niveau_mer_passe)>0) cat(
-				sum(na_niveau_mer_barrage & !na_niveau_mer_passe),
-				"lignes niveau mer barrage remplacées par niveau mer passe \n")	
-	vvv$fonct_pass$niveau_mer_barrage_manquant_rempl <- sum(na_niveau_mer_barrage & !na_niveau_mer_passe)
-	na_niveau_mer_barrage <- is.na(dat$niveau_mer_barrage)  # prise en compte des valeurs remplacées
-	vvv$fonct_pass$niveau_mer_manquant_final <- sum(na_niveau_mer_barrage)
-	
-	# niveau vilaine barrage ..................
-	
-	trop_bas_niveau_vilaine <- dat$niveau_vilaine_barrage< -0.5 & !is.na(dat$niveau_vilaine_barrage)
-	dat$niveau_vilaine_barrage[trop_bas_niveau_vilaine] <- NA
-	vvv$fonct_pass$trop_bas_niveau_vilaine <- sum(trop_bas_niveau_vilaine)
-	na_niveau_vilaine_barrage <- is.na(dat$niveau_vilaine_barrage)
-	if (sum(na_niveau_vilaine_barrage)>0) cat(sum(na_niveau_vilaine_barrage), "lignes avec valeurs manquantes pour niveau Vilaine \n")
-	na_niveau_vilaine_passe <-  is.na(dat$niveau_vilaine_passe)
-	dat$niveau_vilaine_barrage[na_niveau_vilaine_barrage & !na_niveau_vilaine_passe &  dat$niveau_vilaine_passe>= -0.5] <- 
-			dat$niveau_vilaine_passe[na_niveau_vilaine_barrage & !na_niveau_vilaine_passe & dat$niveau_vilaine_passe>= -0.5]
-	if (sum(na_niveau_vilaine_barrage & !na_niveau_vilaine_passe  &  dat$niveau_vilaine_passe>= -0.5)>0) cat(
-				sum(na_niveau_vilaine_barrage & !na_niveau_vilaine_passe  &  dat$niveau_vilaine_passe>= -0.5),
-				"lignes niveau Vilaine barrage remplacées par niveau Vilaine passe \n")	
-	vvv$fonct_pass$niveau_vilaine_barrage_manquant_rempl <- sum(na_niveau_vilaine_barrage & !na_niveau_vilaine_passe)
-	na_niveau_vilaine_barrage <- is.na(dat$niveau_vilaine_barrage) # prise en compte des valeurs remplacées
-	vvv$fonct_pass$niveau_vilaine_manquant_final <- sum(na_niveau_vilaine_barrage)
-
-	
-
-	# Fermeture de la vanne amont ...........................
-	
-	# pb niveau mer trop faible ..................
-	
-	pb_niveau_mer <- !na_niveau_mer_barrage & dat$niveau_mer_barrage< -3.5
-	if (sum(pb_niveau_mer)>0) cat(sum(pb_niveau_mer),"lignes avec niveau mer < -3.5  => corrigées \n")
-	dat[pb_niveau_mer,"niveau_mer_barrage"] <- -3.5
-	vvv$fonct_pass$pb_niveau_mer_inf_3.5 <- sum(pb_niveau_mer)
-	# pb niveau sas passe trop faible ou fort ..................
-	
-	pb_niveau_sas_passe_inf_m1 <- dat$niveau_sas_passe < -1   & !is.na(dat$niveau_sas_passe)
-	pb_niveau_sas_passe_sup_2.5 <- dat$niveau_sas_passe > 2.5 & !is.na(dat$niveau_sas_passe)
-	if (sum(pb_niveau_sas_passe_inf_m1)>0) cat(sum(pb_niveau_sas_passe_inf_m1),"lignes avec niveau SAS < -1 => corrigées \n")
-	if (sum(pb_niveau_sas_passe_sup_2.5)>0) cat(sum(pb_niveau_sas_passe_sup_2.5),"lignes avec niveau SAS > 2.5  => corrigées \n")
-	dat$niveau_sas_passe[pb_niveau_sas_passe_inf_m1] <- -1
-	dat$niveau_sas_passe[pb_niveau_sas_passe_sup_2.5] <- 2.5
-	vvv$fonct_pass$pb_niveau_sas <- sum(pb_niveau_sas_passe_inf_m1,pb_niveau_sas_passe_sup_2.5)
-	# pb hauteur vanne mer trop faible ou fort ..................	
-	
-	pb_hauteur_vanne_mer_inf_m1.72 <- dat$hauteur_vanne_mer< -1.72   & !is.na(dat$hauteur_vanne_mer)
-	pb_hauteur_vanne_mer_sup_2.08 <- dat$hauteur_vanne_mer>2.08 & !is.na(dat$hauteur_vanne_mer)
-	if (sum(pb_hauteur_vanne_mer_inf_m1.72)>0) cat(sum(pb_hauteur_vanne_mer_inf_m1.72),"lignes avec niveau vanne mer < -1.72  => corrigées \n")
-	if (sum(pb_hauteur_vanne_mer_sup_2.08)>0) cat(sum(pb_hauteur_vanne_mer_sup_2.08),"lignes avec niveau vanne mer  > 2.08  => corrigées \n")
-	
-	dat$hauteur_vanne_mer[pb_hauteur_vanne_mer_sup_2.08] <- 2.08
-	dat$hauteur_vanne_mer[pb_hauteur_vanne_mer_inf_m1.72] <- 1.72
-	vvv$fonct_pass$pb_hauteur_vanne_mer <- sum(pb_hauteur_vanne_mer_sup_2.08,pb_hauteur_vanne_mer_inf_m1.72)
-	# Initialisation des variables -----------------------------------
-	
-	dat$delta_vilaine_mer <- dat$niveau_vilaine_barrage - dat$niveau_mer_barrage
-	dat$delta_sas_mer <- dat$niveau_sas_passe - dat$niveau_mer_barrage
-	dat$per_etat_fonctionnement <- as.integer(NA)
-	dat$per_tar_code <- as.integer(NA)
-	
-	# CAS 1 - si on a pas d'information sur le Niveau Vilaine-----------------
-	
-	dat[is.na(dat$delta_vilaine_mer) | is.na(dat$hauteur_vanne_vilaine) | is.na(dat$delta_sas_mer) , 
-			"per_tar_code"] <- 5
-	dat[is.na(dat$delta_vilaine_mer) | is.na(dat$hauteur_vanne_vilaine) | is.na(dat$delta_sas_mer) , 
-			"per_etat_fonctionnement"] <- TRUE # temporary
-	
-	cat(sum(is.na(dat$delta_vilaine_mer) | is.na(dat$hauteur_vanne_vilaine) | is.na(dat$delta_sas_mer)), 
-			"lignes avec valeurs manquantes pour le calcul du fonctionnement de la passe \n")
-	vvv$fonct_pass$pb_na <- sum(is.na(dat$delta_vilaine_mer) | is.na(dat$hauteur_vanne_vilaine) | is.na(dat$delta_sas_mer))
-	
-	# CAS 2 quand le delta entre la Vilaine et la mer est de moins de 0.3, la vanne amont est fermée, la passe est fermée
-	# Arrêt du dispositif lié au fonctionnement normal du dispositif
-	
-	dat[dat$delta_vilaine_mer<0.3 & dat$hauteur_vanne_vilaine==-0.2 & is.na(dat$per_etat_fonctionnement), 
-			"per_tar_code"] <- 2
-	dat[dat$delta_vilaine_mer<0.3 & dat$hauteur_vanne_vilaine==-0.2 & is.na(dat$per_etat_fonctionnement), 
-			"per_etat_fonctionnement"] <- FALSE
-	
-	# CAS 3 la vanne Vilaine est fermée, la passe est fermée mais c'est pas pour une raison de maintenance
-	# La vanne aval ou la vanne amont peuvent être fermées
-	
-	dat[dat$hauteur_vanne_vilaine==-0.2 & is.na(dat$per_etat_fonctionnement), 
-			"per_tar_code"] <- 3
-	dat[dat$hauteur_vanne_vilaine==-0.2 & is.na(dat$per_etat_fonctionnement), 
-			"per_etat_fonctionnement"] <- FALSE
-	
-	dat[dat$hauteur_vanne_mer==1.72 & is.na(dat$per_etat_fonctionnement), 
-			"per_tar_code"] <- 3
-	dat[dat$hauteur_vanne_mer==1.72 & is.na(dat$per_etat_fonctionnement), 
-			"per_etat_fonctionnement"] <- FALSE
-	
-	
-	# CAS 4 la passe est ouverte mais la chute aval est trop forte
-	
-	dat[dat$delta_sas_mer>0.5 & is.na(dat$per_etat_fonctionnement), 
-			"per_tar_code"] <- 4
-	dat[dat$delta_sas_mer>0.5 & is.na(dat$per_etat_fonctionnement), 
-			"per_etat_fonctionnement"] <- FALSE
-	
-	# CAS 5 tous les autres cas la passe fonctionne
-	
-	dat[is.na(dat$per_etat_fonctionnement) , 
-			"per_tar_code"] <- 1
-	dat[is.na(dat$per_etat_fonctionnement) , 
-			"per_etat_fonctionnement"] <- TRUE
-	
-	# finally reset NA to missing values
-	
-	dat[is.na(dat$delta_vilaine_mer) | is.na(dat$hauteur_vanne_vilaine) | is.na(dat$delta_sas_mer) , 
-			"per_etat_fonctionnement"] <- NA # temporary
-	
-	vvv$fonct_pass$table_etat_fonct <- table(dat$per_tar_code)
-	
-	rle_per_tar_code <- rle(dat$per_tar_code) # run length encoding gives consecutive values
-	index <- head(cumsum(rle(dat$per_tar_code)$lengths)+1,-1)  # remove last with head
-	t_periodefonctdispositif_per <- 
-			data.frame("per_dis_identifiant" = rep(per_dis_identifiant,length(index)-1),
-					"per_date_debut"= 	dat$time[index[-length(index)]],
-					"per_date_fin" = dat$time[index[-1]],
-					"per_commentaires" = "fonct calcul",
-					"per_etat_fonctionnement" = dat$per_etat_fonctionnement[index[-length(index)]],
-					"per_tar_code" = dat$per_tar_code[index[-length(index)]])
-	cat("Creation de t_periodefonctdispositif_per","nb lignes= ",nrow(t_periodefonctdispositif_per),"\n")
-	vvv$fonct_pass$nb_lignes_t_periodefonct <- nrow(t_periodefonctdispositif_per)
-	vvv <<- vvv # retroune le résultat de la liste vvv dans l'environnement principal
-	return(list(dat=dat,t_periodefonctdispositif_per=t_periodefonctdispositif_per))
+  
+  # checks -------------------------------------------
+  
+  cols <- c("time","niveau_vilaine_passe","niveau_mer_passe","niveau_vilaine_barrage","niveau_mer_barrage","niveau_sas_passe",
+      "hauteur_vanne_vilaine","hauteur_vanne_mer")
+  test_column_present <- cols %in% colnames(dat)
+  if (!all(test_column_present)) stop("columns",paste(cols[!test_column_present], collapse=","),"manquantes") 
+  # teste que les colonnes sont ordonnées
+  stopifnot(sort(dat$time)==dat$time)
+  vvv$fonct_pass <- list()
+  cat(nrow(dat), 
+      "lignes dans le fichier d'entrée \n")
+  vvv$fonct_pass$nb_lignes <- nrow(dat)
+  
+  # niveau mer barrage ..................
+  
+  na_niveau_mer_barrage <- is.na(dat$niveau_mer_barrage)
+  if (sum(na_niveau_mer_barrage)>0) cat(sum(na_niveau_mer_barrage), "lignes avec valeurs manquantes pour niveau mer \n")
+  na_niveau_mer_passe <-  is.na(dat$niveau_mer_passe)
+  dat$niveau_mer_barrage[na_niveau_mer_barrage & !na_niveau_mer_passe] <- 
+      dat$niveau_mer_passe[na_niveau_mer_barrage & !na_niveau_mer_passe]
+  if (sum(na_niveau_mer_barrage & !na_niveau_mer_passe)>0) cat(
+        sum(na_niveau_mer_barrage & !na_niveau_mer_passe),
+        "lignes niveau mer barrage remplacées par niveau mer passe \n")	
+  vvv$fonct_pass$niveau_mer_barrage_manquant_rempl <- sum(na_niveau_mer_barrage & !na_niveau_mer_passe)
+  na_niveau_mer_barrage <- is.na(dat$niveau_mer_barrage)  # prise en compte des valeurs remplacées
+  vvv$fonct_pass$niveau_mer_manquant_final <- sum(na_niveau_mer_barrage)
+  
+  # niveau vilaine barrage ..................
+  
+  trop_bas_niveau_vilaine <- dat$niveau_vilaine_barrage< -0.5 & !is.na(dat$niveau_vilaine_barrage)
+  dat$niveau_vilaine_barrage[trop_bas_niveau_vilaine] <- NA
+  vvv$fonct_pass$trop_bas_niveau_vilaine <- sum(trop_bas_niveau_vilaine)
+  na_niveau_vilaine_barrage <- is.na(dat$niveau_vilaine_barrage)
+  if (sum(na_niveau_vilaine_barrage)>0) cat(sum(na_niveau_vilaine_barrage), "lignes avec valeurs manquantes pour niveau Vilaine \n")
+  na_niveau_vilaine_passe <-  is.na(dat$niveau_vilaine_passe)
+  dat$niveau_vilaine_barrage[na_niveau_vilaine_barrage & !na_niveau_vilaine_passe &  dat$niveau_vilaine_passe>= -0.5] <- 
+      dat$niveau_vilaine_passe[na_niveau_vilaine_barrage & !na_niveau_vilaine_passe & dat$niveau_vilaine_passe>= -0.5]
+  if (sum(na_niveau_vilaine_barrage & !na_niveau_vilaine_passe  &  dat$niveau_vilaine_passe>= -0.5)>0) cat(
+        sum(na_niveau_vilaine_barrage & !na_niveau_vilaine_passe  &  dat$niveau_vilaine_passe>= -0.5),
+        "lignes niveau Vilaine barrage remplacées par niveau Vilaine passe \n")	
+  vvv$fonct_pass$niveau_vilaine_barrage_manquant_rempl <- sum(na_niveau_vilaine_barrage & !na_niveau_vilaine_passe)
+  na_niveau_vilaine_barrage <- is.na(dat$niveau_vilaine_barrage) # prise en compte des valeurs remplacées
+  vvv$fonct_pass$niveau_vilaine_manquant_final <- sum(na_niveau_vilaine_barrage)
+  
+  
+  
+  # Fermeture de la vanne amont ...........................
+  
+  # pb niveau mer trop faible ..................
+  
+  pb_niveau_mer <- !na_niveau_mer_barrage & dat$niveau_mer_barrage< -3.5
+  if (sum(pb_niveau_mer)>0) cat(sum(pb_niveau_mer),"lignes avec niveau mer < -3.5  => corrigées \n")
+  dat[pb_niveau_mer,"niveau_mer_barrage"] <- -3.5
+  vvv$fonct_pass$pb_niveau_mer_inf_3.5 <- sum(pb_niveau_mer)
+  # pb niveau sas passe trop faible ou fort ..................
+  
+  pb_niveau_sas_passe_inf_m1 <- dat$niveau_sas_passe < -1   & !is.na(dat$niveau_sas_passe)
+  pb_niveau_sas_passe_sup_2.5 <- dat$niveau_sas_passe > 2.5 & !is.na(dat$niveau_sas_passe)
+  if (sum(pb_niveau_sas_passe_inf_m1)>0) cat(sum(pb_niveau_sas_passe_inf_m1),"lignes avec niveau SAS < -1 => corrigées \n")
+  if (sum(pb_niveau_sas_passe_sup_2.5)>0) cat(sum(pb_niveau_sas_passe_sup_2.5),"lignes avec niveau SAS > 2.5  => corrigées \n")
+  dat$niveau_sas_passe[pb_niveau_sas_passe_inf_m1] <- -1
+  dat$niveau_sas_passe[pb_niveau_sas_passe_sup_2.5] <- 2.5
+  vvv$fonct_pass$pb_niveau_sas <- sum(pb_niveau_sas_passe_inf_m1,pb_niveau_sas_passe_sup_2.5)
+  # pb hauteur vanne mer trop faible ou fort ..................	
+  
+  pb_hauteur_vanne_mer_inf_m1.72 <- dat$hauteur_vanne_mer< -1.72   & !is.na(dat$hauteur_vanne_mer)
+  pb_hauteur_vanne_mer_sup_2.08 <- dat$hauteur_vanne_mer>2.08 & !is.na(dat$hauteur_vanne_mer)
+  if (sum(pb_hauteur_vanne_mer_inf_m1.72)>0) cat(sum(pb_hauteur_vanne_mer_inf_m1.72),"lignes avec niveau vanne mer < -1.72  => corrigées \n")
+  if (sum(pb_hauteur_vanne_mer_sup_2.08)>0) cat(sum(pb_hauteur_vanne_mer_sup_2.08),"lignes avec niveau vanne mer  > 2.08  => corrigées \n")
+  
+  dat$hauteur_vanne_mer[pb_hauteur_vanne_mer_sup_2.08] <- 2.08
+  dat$hauteur_vanne_mer[pb_hauteur_vanne_mer_inf_m1.72] <- 1.72
+  vvv$fonct_pass$pb_hauteur_vanne_mer <- sum(pb_hauteur_vanne_mer_sup_2.08,pb_hauteur_vanne_mer_inf_m1.72)
+  # Initialisation des variables -----------------------------------
+  
+  dat$delta_vilaine_mer <- dat$niveau_vilaine_barrage - dat$niveau_mer_barrage
+  dat$delta_sas_mer <- dat$niveau_sas_passe - dat$niveau_mer_barrage
+  dat$per_etat_fonctionnement <- as.integer(NA)
+  dat$per_tar_code <- as.integer(NA)
+  
+  # CAS 1 - si on a pas d'information sur le Niveau Vilaine-----------------
+  
+  dat[is.na(dat$delta_vilaine_mer) | is.na(dat$hauteur_vanne_vilaine) | is.na(dat$delta_sas_mer) , 
+      "per_tar_code"] <- 5
+  dat[is.na(dat$delta_vilaine_mer) | is.na(dat$hauteur_vanne_vilaine) | is.na(dat$delta_sas_mer) , 
+      "per_etat_fonctionnement"] <- TRUE # temporary
+  
+  cat(sum(is.na(dat$delta_vilaine_mer) | is.na(dat$hauteur_vanne_vilaine) | is.na(dat$delta_sas_mer)), 
+      "lignes avec valeurs manquantes pour le calcul du fonctionnement de la passe \n")
+  vvv$fonct_pass$pb_na <- sum(is.na(dat$delta_vilaine_mer) | is.na(dat$hauteur_vanne_vilaine) | is.na(dat$delta_sas_mer))
+  
+  # CAS 2 quand le delta entre la Vilaine et la mer est de moins de 0.3, la vanne amont est fermée, la passe est fermée
+  # Arrêt du dispositif lié au fonctionnement normal du dispositif
+  
+  dat[dat$delta_vilaine_mer<0.3 & dat$hauteur_vanne_vilaine==-0.2 & is.na(dat$per_etat_fonctionnement), 
+      "per_tar_code"] <- 2
+  dat[dat$delta_vilaine_mer<0.3 & dat$hauteur_vanne_vilaine==-0.2 & is.na(dat$per_etat_fonctionnement), 
+      "per_etat_fonctionnement"] <- FALSE
+  
+  # CAS 3 la vanne Vilaine est fermée, la passe est fermée mais c'est pas pour une raison de maintenance
+  # La vanne aval ou la vanne amont peuvent être fermées
+  
+  dat[dat$hauteur_vanne_vilaine==-0.2 & is.na(dat$per_etat_fonctionnement), 
+      "per_tar_code"] <- 3
+  dat[dat$hauteur_vanne_vilaine==-0.2 & is.na(dat$per_etat_fonctionnement), 
+      "per_etat_fonctionnement"] <- FALSE
+  
+  dat[dat$hauteur_vanne_mer==1.72 & is.na(dat$per_etat_fonctionnement), 
+      "per_tar_code"] <- 3
+  dat[dat$hauteur_vanne_mer==1.72 & is.na(dat$per_etat_fonctionnement), 
+      "per_etat_fonctionnement"] <- FALSE
+  
+  
+  # CAS 4 la passe est ouverte mais la chute aval est trop forte
+  
+  dat[dat$delta_sas_mer>0.5 & is.na(dat$per_etat_fonctionnement), 
+      "per_tar_code"] <- 4
+  dat[dat$delta_sas_mer>0.5 & is.na(dat$per_etat_fonctionnement), 
+      "per_etat_fonctionnement"] <- FALSE
+  
+  # CAS 5 tous les autres cas la passe fonctionne
+  
+  dat[is.na(dat$per_etat_fonctionnement) , 
+      "per_tar_code"] <- 1
+  dat[is.na(dat$per_etat_fonctionnement) , 
+      "per_etat_fonctionnement"] <- TRUE
+  
+  # finally reset NA to missing values
+  
+  dat[is.na(dat$delta_vilaine_mer) | is.na(dat$hauteur_vanne_vilaine) | is.na(dat$delta_sas_mer) , 
+      "per_etat_fonctionnement"] <- NA # temporary
+  
+  vvv$fonct_pass$table_etat_fonct <- table(dat$per_tar_code)
+  
+  rle_per_tar_code <- rle(dat$per_tar_code) # run length encoding gives consecutive values
+  index <- head(cumsum(rle(dat$per_tar_code)$lengths)+1,-1)  # remove last with head
+  t_periodefonctdispositif_per <- 
+      data.frame("per_dis_identifiant" = rep(per_dis_identifiant,length(index)-1),
+          "per_date_debut"= 	dat$time[index[-length(index)]],
+          "per_date_fin" = dat$time[index[-1]],
+          "per_commentaires" = "fonct calcul",
+          "per_etat_fonctionnement" = dat$per_etat_fonctionnement[index[-length(index)]],
+          "per_tar_code" = dat$per_tar_code[index[-length(index)]])
+  cat("Creation de t_periodefonctdispositif_per","nb lignes= ",nrow(t_periodefonctdispositif_per),"\n")
+  vvv$fonct_pass$nb_lignes_t_periodefonct <- nrow(t_periodefonctdispositif_per)
+  vvv <<- vvv # retroune le résultat de la liste vvv dans l'environnement principal
+  return(list(dat=dat,t_periodefonctdispositif_per=t_periodefonctdispositif_per))
 } # end function calc_fonc_pass
 
 #' @title Calcul du débit de la passe
@@ -1495,52 +1499,52 @@ calc_fonct_pass <- function(dat, per_dis_identifiant=1, vvv){
 #' @rdname calcul_debit_passe
 #' @export
 calc_debit_passe <- function(list_fonct_pass, vvv){
-	###########################
-	# Calcul de debit sur la passe
-	###########################
-	dat <- ll$dat
-	dat$delta_sas_vanne=dat$niveau_sas_passe-dat$hauteur_vanne_mer
-	
-	################################################
-	# deversoir denoye si vanne mer > niveau mer
-	################################################
-	
-	reindex <- (dat$hauteur_vanne_mer>dat$niveau_mer_passe)&
-			(dat$per_tar_code==1|dat$per_tar_code==4)
-	reindex[is.na(reindex)]=FALSE
-	dat$debit_passe_recalcule <- NA
-	dat$debit_passe_recalcule[reindex]=0.4*1.5*dat$delta_sas_vanne[reindex]^1.5*sqrt(2*9.81)
-	## not run =commentaire ### 0.3 coeff de debit /# 1.5 largeur de la vanne aval
-	
-	################################################
-	# deversoir noye
-	################################################
-	## not run =commentaire ### deltasasmer>1/10 *deltasasvanne  (hauteur d'eau sur la vanne <3 m pour 30 cm <1 m pour 10 cm
-	## not run =commentaire ###coeffnoyage<0.9
-	reindex1 <- (dat$hauteur_vanne_mer<dat$niveau_mer_passe)&(dat$per_tar_code==1|dat$per_tar_code==4)
-	reindex1[is.na(reindex1)] <- FALSE
-	dat$coeff_noyage <- (dat$delta_sas_vanne-dat$delta_sas_mer)/dat$delta_sas_vanne
-	dat$coeff_debit <- (1-dat$coeff_noyage^1.5)^0.385
-	dat$debit_passe_recalcule <- NA
-	dat$debit_passe_recalcule[reindex1] <- 
-			dat$coeff_debit[reindex1]*0.4*1.5*dat$delta_sas_vanne[reindex1]^1.5*sqrt(2*9.81)
-	test_coeff_noyage<-dat$coeff_noyage[reindex1]
-	## not run =commentaire ### la formule fonctionne normalement pour un coefficient de noyage limite
-	cat(paste(
-					"La formule de calcul de debit fonctionne normalement pour un coefficient de noyage limite",
-					"il existe ",
-					length(test_coeff_noyage[test_coeff_noyage>0.9]),
-					"occurences de coeff > 0.9 sur un total de",
-					length(test_coeff_noyage),
-					"\n"))
-	vvv$debit_passe$coeff_noyage_sup_0.9 <- length(test_coeff_noyage[test_coeff_noyage>0.9])
-	vvv <<-vvv
-	################################################
-	# passe fermee
-	################################################
-	dat$debit_passe_recalcule[dat$per_tar_code==2|dat$per_tar_code==3]=0
-	ll$dat <- dat
-	return(ll)
+  ###########################
+  # Calcul de debit sur la passe
+  ###########################
+  dat <- ll$dat
+  dat$delta_sas_vanne=dat$niveau_sas_passe-dat$hauteur_vanne_mer
+  
+  ################################################
+  # deversoir denoye si vanne mer > niveau mer
+  ################################################
+  
+  reindex <- (dat$hauteur_vanne_mer>dat$niveau_mer_passe)&
+      (dat$per_tar_code==1|dat$per_tar_code==4)
+  reindex[is.na(reindex)]=FALSE
+  dat$debit_passe_recalcule <- NA
+  dat$debit_passe_recalcule[reindex]=0.4*1.5*dat$delta_sas_vanne[reindex]^1.5*sqrt(2*9.81)
+  ## not run =commentaire ### 0.3 coeff de debit /# 1.5 largeur de la vanne aval
+  
+  ################################################
+  # deversoir noye
+  ################################################
+  ## not run =commentaire ### deltasasmer>1/10 *deltasasvanne  (hauteur d'eau sur la vanne <3 m pour 30 cm <1 m pour 10 cm
+  ## not run =commentaire ###coeffnoyage<0.9
+  reindex1 <- (dat$hauteur_vanne_mer<dat$niveau_mer_passe)&(dat$per_tar_code==1|dat$per_tar_code==4)
+  reindex1[is.na(reindex1)] <- FALSE
+  dat$coeff_noyage <- (dat$delta_sas_vanne-dat$delta_sas_mer)/dat$delta_sas_vanne
+  dat$coeff_debit <- (1-dat$coeff_noyage^1.5)^0.385
+  dat$debit_passe_recalcule <- NA
+  dat$debit_passe_recalcule[reindex1] <- 
+      dat$coeff_debit[reindex1]*0.4*1.5*dat$delta_sas_vanne[reindex1]^1.5*sqrt(2*9.81)
+  test_coeff_noyage<-dat$coeff_noyage[reindex1]
+  ## not run =commentaire ### la formule fonctionne normalement pour un coefficient de noyage limite
+  cat(paste(
+          "La formule de calcul de debit fonctionne normalement pour un coefficient de noyage limite",
+          "il existe ",
+          length(test_coeff_noyage[test_coeff_noyage>0.9]),
+          "occurences de coeff > 0.9 sur un total de",
+          length(test_coeff_noyage),
+          "\n"))
+  vvv$debit_passe$coeff_noyage_sup_0.9 <- length(test_coeff_noyage[test_coeff_noyage>0.9])
+  vvv <<-vvv
+  ################################################
+  # passe fermee
+  ################################################
+  dat$debit_passe_recalcule[dat$per_tar_code==2|dat$per_tar_code==3]=0
+  ll$dat <- dat
+  return(ll)
 }
 
 #' @title Barplot des temps de fonctionnement du DF par type
@@ -1558,36 +1562,36 @@ calc_debit_passe <- function(list_fonct_pass, vvv){
 #' @rdname graph_DF
 #' @export 
 graph_DF=function(t_periodefonctdispositif_per){
-	t_periodefonctdispositif_per$tempsdebut <- 
-			strptime(t_periodefonctdispositif_per$per_date_debut, "%Y-%m-%d %H:%M:%S")
-	t_periodefonctdispositif_per$tempsfin <- 
-			strptime(t_periodefonctdispositif_per$per_date_fin, "%Y-%m-%d %H:%M:%S")
-	t_periodefonctdispositif_per$sumduree <-
-			as.numeric(difftime(t_periodefonctdispositif_per$tempsfin,	t_periodefonctdispositif_per$tempsdebut,units = "hours"))
-	t_periodefonctdispositif_per$mois <- 
-			strftime(t_periodefonctdispositif_per$tempsdebut,"%m")
-	annee <- 
-			strftime(t_periodefonctdispositif_per$tempsdebut[1],"%Y")
-	t_periodefonctdispositif_per$per_tar_code <- 
-			as.factor(t_periodefonctdispositif_per$per_tar_code)
-	t_periodefonctdispositif_per <- 
-			t_periodefonctdispositif_per[order(t_periodefonctdispositif_per$per_tar_code),]
-	
-	g<-ggplot(t_periodefonctdispositif_per)
-	g <- g+geom_bar(aes(x=mois,y=sumduree,fill=per_tar_code),stat="identity",position="stack")+
-			scale_fill_manual(values=c(bleu_EV,
-							turquoise_EV,
-							orange_EV,
-							jaune_EV,
-							"grey"
-					), 
-					name="type d'arrêt",
-					breaks=c("1", "2", "3","4","5"),
-					labels=c("Fonc normal","Arr ponctuel",
-							"Arr maint","Dysfonc","Non connu"))+theme_bw()+ylab("temps en heures")
-	
-	return(g)	
-	
+  t_periodefonctdispositif_per$tempsdebut <- 
+      strptime(t_periodefonctdispositif_per$per_date_debut, "%Y-%m-%d %H:%M:%S")
+  t_periodefonctdispositif_per$tempsfin <- 
+      strptime(t_periodefonctdispositif_per$per_date_fin, "%Y-%m-%d %H:%M:%S")
+  t_periodefonctdispositif_per$sumduree <-
+      as.numeric(difftime(t_periodefonctdispositif_per$tempsfin,	t_periodefonctdispositif_per$tempsdebut,units = "hours"))
+  t_periodefonctdispositif_per$mois <- 
+      strftime(t_periodefonctdispositif_per$tempsdebut,"%m")
+  annee <- 
+      strftime(t_periodefonctdispositif_per$tempsdebut[1],"%Y")
+  t_periodefonctdispositif_per$per_tar_code <- 
+      as.factor(t_periodefonctdispositif_per$per_tar_code)
+  t_periodefonctdispositif_per <- 
+      t_periodefonctdispositif_per[order(t_periodefonctdispositif_per$per_tar_code),]
+  
+  g<-ggplot(t_periodefonctdispositif_per)
+  g <- g+geom_bar(aes(x=mois,y=sumduree,fill=per_tar_code),stat="identity",position="stack")+
+      scale_fill_manual(values=c(bleu_EV,
+              turquoise_EV,
+              orange_EV,
+              jaune_EV,
+              "grey"
+          ), 
+          name="type d'arrêt",
+          breaks=c("1", "2", "3","4","5"),
+          labels=c("Fonc normal","Arr ponctuel",
+              "Arr maint","Dysfonc","Non connu"))+theme_bw()+ylab("temps en heures")
+  
+  return(g)	
+  
 }
 
 #' @title Plot avec lignes et indications du fonctionnement du DF
@@ -1606,45 +1610,45 @@ graph_DF=function(t_periodefonctdispositif_per){
 #' @rdname graph_DF_detail
 #' @export 
 graph_DF_detail=function(data_DF, from, to){
-	
-	if (missing(from)) {
-		from <- data_DF$time[1]
-		cat("from is missing, defaulting to fist horodate")
-	} 
-	if (typeof(from)=="character" ){
-		from <- parse_date_time(from, orders = c("dmy", "ymd"))
-		cat("from parsed to ",  strftime(from, "%d-%m-%Y "))
-	}
-	if (missing(to)){
-		to <- from + as.difftime(1, unit="weeks")	
-		cat("to is missing, defaulting to one week")
-	}
-	if (typeof(to)=="character" ){
-		to <- parse_date_time(to, orders = c("dmy", "ymd"))
-		cat("to parsed to ", strftime(to, "%d-%m-%Y"))
-	}
-	data_DFw <- data_DF %>% filter(time<to & time> from)
-	
-	data_DFw$per_tar_code <- as.factor(data_DFw$per_tar_code)	
-	
-	g <- ggplot(data_DFw) +
-			geom_line(aes(x=time,y=niveau_mer_barrage),col=marron, lty=1) +
-			geom_line(aes(x=time,y=niveau_vilaine_barrage),col=bleu_EV, lty=4) +
-			geom_line(aes(x=time,y=niveau_sas_passe),col="mediumslateblue") +
-			geom_line(aes(x=time,y=hauteur_vanne_mer),col="purple", lty=3) +
-			geom_line(aes(x=time,y=hauteur_vanne_vilaine),col="darkgoldenrod", lty=1) +
-			geom_rect(aes(xmin=time,xmax=time+as.difftime(10,units = "mins"),ymin=-3.5,ymax=-3, fill=per_tar_code),alpha=0.8) +
-			theme_bw() +
-			scale_fill_manual(values=c("#17364E","moccasin","#765223","#B68B52","grey"),					
-					name=iconv("type d'arrêt","UTF8"),
-					breaks=c("1", "2", "3", "4", "5"),
-					labels=c("Fonc normal","Arr ponctuel",
-							"Arr maint","Dysfonc","Non connu"))+
-			ylab("Niveau en m")
-	
-	
-	return(g)	
-	
+  
+  if (missing(from)) {
+    from <- data_DF$time[1]
+    cat("from is missing, defaulting to fist horodate")
+  } 
+  if (typeof(from)=="character" ){
+    from <- parse_date_time(from, orders = c("dmy", "ymd"))
+    cat("from parsed to ",  strftime(from, "%d-%m-%Y "))
+  }
+  if (missing(to)){
+    to <- from + as.difftime(1, unit="weeks")	
+    cat("to is missing, defaulting to one week")
+  }
+  if (typeof(to)=="character" ){
+    to <- parse_date_time(to, orders = c("dmy", "ymd"))
+    cat("to parsed to ", strftime(to, "%d-%m-%Y"))
+  }
+  data_DFw <- data_DF %>% filter(time<to & time> from)
+  
+  data_DFw$per_tar_code <- as.factor(data_DFw$per_tar_code)	
+  
+  g <- ggplot(data_DFw) +
+      geom_line(aes(x=time,y=niveau_mer_barrage),col=marron, lty=1) +
+      geom_line(aes(x=time,y=niveau_vilaine_barrage),col=bleu_EV, lty=4) +
+      geom_line(aes(x=time,y=niveau_sas_passe),col="mediumslateblue") +
+      geom_line(aes(x=time,y=hauteur_vanne_mer),col="purple", lty=3) +
+      geom_line(aes(x=time,y=hauteur_vanne_vilaine),col="darkgoldenrod", lty=1) +
+      geom_rect(aes(xmin=time,xmax=time+as.difftime(10,units = "mins"),ymin=-3.5,ymax=-3, fill=per_tar_code),alpha=0.8) +
+      theme_bw() +
+      scale_fill_manual(values=c("#17364E","moccasin","#765223","#B68B52","grey"),					
+          name=iconv("type d'arrêt","UTF8"),
+          breaks=c("1", "2", "3", "4", "5"),
+          labels=c("Fonc normal","Arr ponctuel",
+              "Arr maint","Dysfonc","Non connu"))+
+      ylab("Niveau en m")
+  
+  
+  return(g)	
+  
 }
 
 
@@ -1668,23 +1672,23 @@ pois <- getPass(msg="Main password")
 
 
 con <-dbConnect(RMySQL::MySQL(), dbname = "archive_IAV", username = decrypt_string(umysql,pois),
-		password = decrypt_string(pwdmysql,pois),host=decrypt_string(hostmysql,pois))
+    password = decrypt_string(pwdmysql,pois),host=decrypt_string(hostmysql,pois))
 df<- tribble(
-		~name, ~table, ~tag,
-		"niveau_mer_passe","b_passeapoisson_niveaumer",   0,
-		"niveau_sas_passe","b_passeapoisson_niveausas",   0,
-		"niveau_vilaine_passe","b_passeapoisson_niveauvilaine", 0,
-		"volume_cumule_passe","b_barrage_debit",   2523,
-		"niveau_mer_barrage","b_barrage_niveau", 2508,
-		"niveau_vilaine_barrage","b_barrage_niveau", 2507,
-		"hauteur_vanne_mer","b_passeapoisson_hauteurvannemer", 0,
-		"hauteur_vanne_vilaine","b_passeapoisson_hauteurvannevilaine", 0,
-		"debit_passe","b_barrage_debit", 2523,       # volume jour passe
-		"temperature_corde1_cran","b_pont_de_cran_vitesse",1909,
-		"temperature_corde2_cran","b_pont_de_cran_vitesse",1910,		
-		"temperature_externe_barrage","b_barrage_temperature",2560,	#temperature exterieure
-		"debit_pont_de_cran","b_pont_de_cran_debit",1900,
-		"debit_vilaine_estime","b_barrage_debit", 2515, 
+    ~name, ~table, ~tag,
+    "niveau_mer_passe","b_passeapoisson_niveaumer",   0,
+    "niveau_sas_passe","b_passeapoisson_niveausas",   0,
+    "niveau_vilaine_passe","b_passeapoisson_niveauvilaine", 0,
+    "volume_cumule_passe","b_barrage_debit",   2523,
+    "niveau_mer_barrage","b_barrage_niveau", 2508,
+    "niveau_vilaine_barrage","b_barrage_niveau", 2507,
+    "hauteur_vanne_mer","b_passeapoisson_hauteurvannemer", 0,
+    "hauteur_vanne_vilaine","b_passeapoisson_hauteurvannevilaine", 0,
+    "debit_passe","b_barrage_debit", 2523,       # volume jour passe
+    "temperature_corde1_cran","b_pont_de_cran_vitesse",1909,
+    "temperature_corde2_cran","b_pont_de_cran_vitesse",1910,		
+    "temperature_externe_barrage","b_barrage_temperature",2560,	#temperature exterieure
+    "debit_pont_de_cran","b_pont_de_cran_debit",1900,
+    "debit_vilaine_estime","b_barrage_debit", 2515, 
 )
 start <-str_c("'",CY,"-01-01 00:00:00'")
 end <-str_c("'",CY+1,"-01-01 00:00:00'")
@@ -1723,9 +1727,9 @@ library(tidyverse)
 #.. ..$ valeur  : num  -0.434 -0.374 -0.255 -0.188 -0.121 -0.094 -0.008 0.049 0.086 0.122 ...
 
 res1 <-
-		res %>% # drop the columns I no longer need
-		select(name,result)%>%
-		unnest(col=c(result))
+    res %>% # drop the columns I no longer need
+    select(name,result)%>%
+    unnest(col=c(result))
 
 ############################
 # PB HEURES ARZAL
@@ -1736,10 +1740,10 @@ res1 <-
 # This way the difference is zero in winter and one in summer like the dam
 
 res1 <- res1 %>%
-		mutate("time"=as.POSIXct(strptime(HoroDate,tz="GMT",format="%Y-%m-%d %H:%M:%S")))
+    mutate("time"=as.POSIXct(strptime(HoroDate,tz="GMT",format="%Y-%m-%d %H:%M:%S")))
 attributes(res1$time)$tzone <- "Europe/Paris"
 res1 <- res1 %>%
-		mutate("time"=time-as.difftime(1, units = "hours"))		
+    mutate("time"=time-as.difftime(1, units = "hours"))		
 
 
 
@@ -1747,21 +1751,21 @@ res1 <- res1 %>%
 #stopifnot( sum(lubridate::round_date(res1$time,"10 mins")!=res1$time)==0)
 
 
-data_DF_init <- res1 %>%select(name,time,valeur)%>%
-		pivot_wider(names_from=name,values_from=valeur) %>%
-		arrange(time)
+data_DF_init <- res1 %>% select(name,time,valeur)%>%
+    pivot_wider(names_from=name,values_from=valeur) %>%
+    arrange(time)
 
 # problèmes de codeur sur vanne aval ou le sas (pas possibel d'avoir 2.8 m de charge sur vanne aval)
 data_DF_init[data_DF_init$hauteur_vanne_mer< -1  &
-				!is.na(data_DF_init$hauteur_vanne_mer) &
-				data_DF_init$niveau_sas_passe> 1.8 &
-				!is.na(data_DF_init$niveau_sas_passe)
-		,"niveau_sas_passe"] <- 
-		data_DF_init[data_DF_init$hauteur_vanne_mer< -1  &
-						!is.na(data_DF_init$hauteur_vanne_mer) &
-						!is.na(data_DF_init$niveau_sas_passe) &
-						data_DF_init$niveau_sas_passe> 1.8 
-				,"niveau_mer_passe"]+0.3
+        !is.na(data_DF_init$hauteur_vanne_mer) &
+        data_DF_init$niveau_sas_passe> 1.8 &
+        !is.na(data_DF_init$niveau_sas_passe)
+    ,"niveau_sas_passe"] <- 
+    data_DF_init[data_DF_init$hauteur_vanne_mer< -1  &
+            !is.na(data_DF_init$hauteur_vanne_mer) &
+            !is.na(data_DF_init$niveau_sas_passe) &
+            data_DF_init$niveau_sas_passe> 1.8 
+        ,"niveau_mer_passe"]+0.3
 
 
 ll <- calc_fonct_pass(dat = data_DF_init, vvv=vvv)
@@ -1771,43 +1775,43 @@ vvv$coeff_noyage_sup_0.9 <- ll$coeff_noyage_sup_0.9
 
 png(filename=file.path(imgwd,CY,"fonctionnement_passe.png"),7,7,units="in",res=300)
 plot(data_DF$time,
-		data_DF$niveau_mer_passe,
-		type="n", 
-		col=turquoise_EV,
-		cex=0.2,
-		ylab="Niveau NGF (m)",
-		xlab="mois")
+    data_DF$niveau_mer_passe,
+    type="n", 
+    col=turquoise_EV,
+    cex=0.2,
+    ylab="Niveau NGF (m)",
+    xlab="mois")
 points(data_DF$time,
-		data_DF$hauteur_vanne_mer,pch=18,
-		col=jaune_EV,
-		cex=0.5) 
+    data_DF$hauteur_vanne_mer,pch=18,
+    col=jaune_EV,
+    cex=0.5) 
 points(data_DF$time,
-		data_DF$niveau_mer_passe,
-		col=turquoise_EV,
-		cex=0.2) 
+    data_DF$niveau_mer_passe,
+    col=turquoise_EV,
+    cex=0.2) 
 points(data_DF$time,
-		data_DF$niveau_sas_passe,
-		col=orange_EV,
-		cex=0.1)
+    data_DF$niveau_sas_passe,
+    col=orange_EV,
+    cex=0.1)
 points(data_DF$time,
-		data_DF$niveau_vilaine_barrage,
-		type="l",
-		col=orange_EVf) 
+    data_DF$niveau_vilaine_barrage,
+    type="l",
+    col=orange_EVf) 
 legend("bottomleft",		
-		legend=c("niveau mer","niveau sas","niveau Vilaine","niveau vanne mer"),
-		col=c(turquoise_EV,orange_EV,orange_EVf,jaune_EV),
-		pch=16)
+    legend=c("niveau mer","niveau sas","niveau Vilaine","niveau vanne mer"),
+    col=c(turquoise_EV,orange_EV,orange_EVf,jaune_EV),
+    pch=16)
 dev.off()
 
 
 save(ll,file=file.path(datawd,CY,"fonct_pass.Rdata"))
-path<-file.path(datawd,CY,"t_periodefonctdispositif_per.csv")
+path <- file.path(datawd,CY,"t_periodefonctdispositif_per.csv")
 write.table(ll$t_periodefonctdispositif_per,file=path,
-		row.names=FALSE,col.names=FALSE,sep=";",quote=FALSE)
+    row.names=FALSE,col.names=FALSE,sep=";",quote=FALSE)
 save(vvv,file=file.path(datawd,CY,"vvv.Rdata"))
 @
 
-<<calcul_debit_passe, echo=FALSE, eval=TRUE, include=FALSE>>=
+<<calcul_debit_passe, echo=FALSE, eval=FALSE, include=FALSE>>=
 #	liste ll avec dat, le dataframe des données corrigées, et t_periodefonctionnementdispositif_dis,
 #   le fichier des périodes de fonctionnement
 load(file=file.path(datawd,CY,"fonct_pass.Rdata"))	# ll
@@ -1847,25 +1851,25 @@ data_DF$resdeb <- NA
 data_DF$resdeb[index] <- resdeb 
 png(filename=file.path(imgwd,CY,"debit_passe_calcul.png"),7,7,units="in",res=300)
 plot(data_DF$time,
-		data_DF$debit_passe_recalcule,
-		xlab="mois",
-		ylab="m3 par seconde",
-		type="p",
-		pch="*",
-		#main=paste(
-		#		iconv("Débit instantané de la passe à bassins recalculé en","UTF-8"),annee),
-		cex=3/4)
+    data_DF$debit_passe_recalcule,
+    xlab="mois",
+    ylab="m3 par seconde",
+    type="p",
+    pch="*",
+    #main=paste(
+    #		iconv("Débit instantané de la passe à bassins recalculé en","UTF-8"),annee),
+    cex=3/4)
 dev.off()
 
 
 png(filename=file.path(imgwd,CY,"debit_passe_mesure.png"),7,7,units="in",res=300)
 plot(data_DF$time,
-		data_DF$debit_passe,
-		xlab="mois",
-		ylab="m3 par seconde",
-		type="p",
-		pch="*",
-		cex=3/4)
+    data_DF$debit_passe,
+    xlab="mois",
+    ylab="m3 par seconde",
+    type="p",
+    pch="*",
+    cex=3/4)
 dev.off()
 # graphique avec residus 
 
@@ -1895,33 +1899,33 @@ seqdate=seq(from=ledebut,to=lafin,by="day")
 table_jour <- data.frame("seqdate"=seqdate)
 table_jour <- left_join(table_jour%>% mutate(jour=strftime(seqdate,"%j")), 
     data_DF_jour,
-     by="jour")
+    by="jour")
 
 # "graphique de synthese des deux debits sur l'annee
 png(filename=file.path(imgwd,CY,"debit_passe_comp.png"),10,7,units="in",res=300)
 plot(table_jour$seqdate,table_jour$debit_jour_automate,
-		type="o",
-		lty=1,
-		col=c(turquoise_EVf),
-		pch=1,
-		ylab="débit journaliers (m3)",
-		xlab="date",
-		ylim=c(min(cbind(table_jour$debit_jour_recalcul,table_jour$debit_jour_automate), na.rm=TRUE),
-				max(cbind(table_jour$debit_jour_recalcul,table_jour$debit_jour_automate), na.rm=TRUE)),
-		main=paste("Débits de la passe en ", annee))
+    type="o",
+    lty=1,
+    col=c(turquoise_EVf),
+    pch=1,
+    ylab="débit journaliers (m3)",
+    xlab="date",
+    ylim=c(min(cbind(table_jour$debit_jour_recalcul,table_jour$debit_jour_automate), na.rm=TRUE),
+        max(cbind(table_jour$debit_jour_recalcul,table_jour$debit_jour_automate), na.rm=TRUE)),
+    main=paste("Débits de la passe en ", annee))
 points(table_jour$seqdate,table_jour$debit_jour_recalcul,
-		lty=1,
-		type="o",
-		pch=1,
-		col=c(bleu_EV))
+    lty=1,
+    type="o",
+    pch=1,
+    col=c(bleu_EV))
 legend(x=seqdate[100],
-		y=max(cbind(table_jour$debit_jour_recalcul,table_jour$debit_jour_automate)),
-		legend= c("débit automate","débit recalcule","débit mini. biol.",
-						"battardage"),
-		lty=1,
-		col=c(turquoise_EVf,bleu_EV,"red",orange_EV),
-		cex = 1,
-		lwd = 0.9)
+    y=max(cbind(table_jour$debit_jour_recalcul,table_jour$debit_jour_automate)),
+    legend= c("débit automate","débit recalcule","débit mini. biol.",
+        "battardage"),
+    lty=1,
+    col=c(turquoise_EVf,bleu_EV,"red",orange_EV),
+    cex = 1,
+    lwd = 0.9)
 abline(h=28000,col="red")
 abline(h=145000,col=orange_EV)
 abline(h=0,col="black")
@@ -1929,13 +1933,13 @@ dev.off()
 
 path<-file.path(datawd,paste("debits_journaliers_passe_",annee,".csv",sep=""))
 write.table(table_jour,file=path,
-		row.names=FALSE,col.names=TRUE,sep=";",quote=FALSE)
+    row.names=FALSE,col.names=TRUE,sep=";",quote=FALSE)
 
 paste(
-		"sauvegarde de la table des debits journaliers \n",
-		path,
-		"\n" ,
-		"Fin du programme de calcul du debit"
+    "sauvegarde de la table des debits journaliers \n",
+    path,
+    "\n" ,
+    "Fin du programme de calcul du debit"
 )
 
 save(vvv , file=file.path(datawd,CY,"vvv.Rdata"))
@@ -1946,11 +1950,11 @@ table_jour
 req<- new("RequeteDB")
 req <- connect(req)
 res <- dbGetQuery(req@connection,glue("SELECT * FROM iav.t_periodefonctdispositif_per 
-						WHERE per_dis_identifiant=1
-						AND extract(year from per_date_debut)={CY}") )
+            WHERE per_dis_identifiant=1
+            AND extract(year from per_date_debut)={CY}") )
 # si la requete 
 if (nrow(res)!=0){
-	cat('Attention il y a déjà des données dans la base')	
+  cat('Attention il y a déjà des données dans la base')	
 }
 # ATTENTION ECRITURE EN BASE !!!!
 con <- dbConnect(RPostgres::Postgres(), dbname="bd_contmig_nat_iav",host=host,port=5432,user=user, password=password)
@@ -1962,21 +1966,21 @@ DBI::dbWriteTable(req@connection, "t_periodefonctdispositif_per_temp", ll$t_peri
 # Il y a une erreur 
 DBI::dbExecute(req@connection, "DELETE FROM  t_periodefonctdispositif_per_temp where per_date_fin < per_date_debut")
 DBI::dbExecute(req@connection, "INSERT INTO iav.t_periodefonctdispositif_per (
-				per_dis_identifiant
-				,per_date_debut
-				,per_date_fin
-				,per_commentaires
-				,per_etat_fonctionnement
-				,per_tar_code
-				,per_org_code)
-				SELECT per_dis_identifiant
-				,per_date_debut
-				,per_date_fin
-				,per_commentaires
-				, coalesce(per_etat_fonctionnement,1)::boolean
-				, per_tar_code
-				,'IAV' as per_org_code
-				FROM t_periodefonctdispositif_per_temp") #2772
+        per_dis_identifiant
+        ,per_date_debut
+        ,per_date_fin
+        ,per_commentaires
+        ,per_etat_fonctionnement
+        ,per_tar_code
+        ,per_org_code)
+        SELECT per_dis_identifiant
+        ,per_date_debut
+        ,per_date_fin
+        ,per_commentaires
+        , coalesce(per_etat_fonctionnement,1)::boolean
+        , per_tar_code
+        ,'IAV' as per_org_code
+        FROM t_periodefonctdispositif_per_temp") #2772
 
 # PETITES CORRECTIONS SUR LES OVERLAPS.....
 
@@ -1999,14 +2003,14 @@ DBI::dbExecute(req@connection, "INSERT INTO iav.t_periodefonctdispositif_per (
 #AND per_date_fin <='2019-10-27 04:00:00'; --4
 @
 
-<<report_df, echo=FALSE, eval=TRUE, include=FALSE>>=
+<<report_df, echo=FALSE, eval=FALSE, include=FALSE>>=
 
 r_df=new("report_df")
 r_df<-choice_c(r_df,
-		1,
-		horodatedebut="2022-01-01",
-		horodatefin="2022-12-31",
-		silent=TRUE)
+    1,
+    horodatedebut="2022-01-01",
+    horodatefin="2022-12-31",
+    silent=TRUE)
 Sys.setenv(TZ='GMT')
 r_df<-connect(r_df)
 
@@ -2021,64 +2025,64 @@ png(filename=paste0(imgwdy,"report_df_annee.png"),width=10,height=6, units="in",
 t_periodefonctdispositif_per=r_df@data
 tpp<-split_per_day(t_periodefonctdispositif_per,horodatedebut="per_date_debut",horodatefin="per_date_fin")
 g<-ggplot(tpp)+
-		geom_rect(aes(xmin=xmin,xmax=xmax,ymin=Hdeb,ymax=Hfin,col=factor(per_tar_code),fill=factor(per_tar_code)),alpha=0.5)+
-		scale_fill_manual("type",values=c("1"=bleu_EV,"2"=turquoise_EV,"3"=jaune_EV,"4"=orange_EV,"5"="#999999"),
-				labels = gettext("Normal oper.","Operational stop","Stop","Dysfunct.","Unknown",domain="R-stacomiR"))+
-		scale_colour_manual("type",values=c("1"=bleu_EVf,"2"=turquoise_EVf,"3"=jaune_EVf,"4"=orange_EVf,"5"="black"),
-				labels = gettext("Normal oper.","Operational stop","Stop","Dysfunct.","Unknown",domain="R-stacomiR"))+		
-		ylab("Heure")+
-		theme(
-				plot.background = element_rect(fill ="white"),
-				panel.background = element_rect(fill="white"),
-				legend.background=element_rect(fill="white"),
-				panel.grid.major = element_blank(), 
-				panel.grid.minor = element_blank(),
-				text=element_text(colour="black"),								
-				line = element_line(colour = "grey50"),
-				legend.key=element_rect(fill="white",colour=bleu_EV),
-				axis.text=element_text(colour="black"))
+    geom_rect(aes(xmin=xmin,xmax=xmax,ymin=Hdeb,ymax=Hfin,col=factor(per_tar_code),fill=factor(per_tar_code)),alpha=0.5)+
+    scale_fill_manual("type",values=c("1"=bleu_EV,"2"=turquoise_EV,"3"=jaune_EV,"4"=orange_EV,"5"="#999999"),
+        labels = gettext("Normal oper.","Operational stop","Stop","Dysfunct.","Unknown",domain="R-stacomiR"))+
+    scale_colour_manual("type",values=c("1"=bleu_EVf,"2"=turquoise_EVf,"3"=jaune_EVf,"4"=orange_EVf,"5"="black"),
+        labels = gettext("Normal oper.","Operational stop","Stop","Dysfunct.","Unknown",domain="R-stacomiR"))+		
+    ylab("Heure")+
+    theme(
+        plot.background = element_rect(fill ="white"),
+        panel.background = element_rect(fill="white"),
+        legend.background=element_rect(fill="white"),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        text=element_text(colour="black"),								
+        line = element_line(colour = "grey50"),
+        legend.key=element_rect(fill="white",colour=bleu_EV),
+        axis.text=element_text(colour="black"))
 print(g)
 dev.off()
 Sys.setenv(TZ="Europe/London")
 r_df_hist<-choice_c(r_df,
-		1,
-		horodatedebut="2003-01-01",
-		horodatefin=str_c(CY,"-12-31"),
-		silent=TRUE)
+    1,
+    horodatedebut="2003-01-01",
+    horodatefin=str_c(CY,"-12-31"),
+    silent=TRUE)
 r_df_hist<-connect(r_df_hist)
 
 # Je fais rentrer tout le graphe sur une demie colonne ça rend bien.
 
 png(filename=paste0(imgwdy,"report_df_2003_2022.png"),width=6,height=12, units="in",res=300)
 plot(r_df_hist,plot.type=1,
-		color_type_oper = 	c(
-				"Fonc normal" = bleu_EV,
-				"Arr ponctuel" = turquoise_EV, 
-				"Arr maint" = jaune_EV,
-				"Dysfonc" = orange_EV, 						
-				"Non connu" = "#999999"
-		),
-		color_etat=c("TRUE"=bleu_EV, 
-				"FALSE"=orange_EV))
+    color_type_oper = 	c(
+        "Fonc normal" = bleu_EV,
+        "Arr ponctuel" = turquoise_EV, 
+        "Arr maint" = jaune_EV,
+        "Dysfonc" = orange_EV, 						
+        "Non connu" = "#999999"
+    ),
+    color_etat=c("TRUE"=bleu_EV, 
+        "FALSE"=orange_EV))
 dev.off()
 
 png(filename=paste0(imgwdy,"report_df_fct_2003_2022.png"),width=6,height=12, units="in",res=300)
 plot(r_df_hist,plot.type=2,
-		color_type_oper = 	c(
-				"Fonc normal" = bleu_EV,
-				"Arr ponctuel" = turquoise_EV, 
-				"Arr maint" = jaune_EV,
-				"Dysfonc" = orange_EV, 						
-				"Non connu" = "#999999"
-		),
-		color_etat=c("TRUE"=bleu_EV, 
-				"FALSE"=orange_EV))
+    color_type_oper = 	c(
+        "Fonc normal" = bleu_EV,
+        "Arr ponctuel" = turquoise_EV, 
+        "Arr maint" = jaune_EV,
+        "Dysfonc" = orange_EV, 						
+        "Non connu" = "#999999"
+    ),
+    color_etat=c("TRUE"=bleu_EV, 
+        "FALSE"=orange_EV))
 dev.off()
 r_df_2<-choice_c(r_df,
-		1,
-		horodatedebut="2011-01-01",
-		horodatefin="2022-12-31",
-		silent=TRUE)
+    1,
+    horodatedebut="2011-01-01",
+    horodatefin="2022-12-31",
+    silent=TRUE)
 r_df_2<-connect(r_df_2)
 
 
@@ -2111,31 +2115,31 @@ r_df_2<-connect(r_df_2)
 
 @
 
-<<report_dc, echo=FALSE, eval=TRUE, include=FALSE>>=
+<<report_dc, echo=FALSE, eval=FALSE, include=FALSE>>=
 r_dc=new("report_dc")
 r_dc<-choice_c(r_dc,
-		5,
-		horodatedebut="1998-01-01",
-		horodatefin=str_c(CY,"-12-31"),
-		silent=TRUE)
+    5,
+    horodatedebut="1998-01-01",
+    horodatefin=str_c(CY,"-12-31"),
+    silent=TRUE)
 r_dc1 <- connect(r_dc)
 plot(r_dc1,plot.type="1",
-		color_type_oper = 	c(
-				"Fonc normal" = bleu_EV,
-				"Arr ponctuel" = turquoise_EV, 
-				"Arr maint" = jaune_EV,
-				"Dysfonc" = orange_EV, 						
-				"Non connu" = "#999999"
-		),
-		color_etat=c("TRUE"=turquoise_EV, 
-				"FALSE"=jaune_EV)) 
+    color_type_oper = 	c(
+        "Fonc normal" = bleu_EV,
+        "Arr ponctuel" = turquoise_EV, 
+        "Arr maint" = jaune_EV,
+        "Dysfonc" = orange_EV, 						
+        "Non connu" = "#999999"
+    ),
+    color_etat=c("TRUE"=turquoise_EV, 
+        "FALSE"=jaune_EV)) 
 g_report_dc_1=get('g_report_dc_1',envir_stacomi)
 png(filename=paste0(imgwdy,"report_dc_1998_2022.png"),width=6,height=12, units="in",res=300)
 g_report_dc_1 +
-		theme(strip.background = element_rect(colour = "grey", fill = "grey20")		
-		) + 
-		labs(title="Fonctionnement du dispositif de comptage",
-				x ="mois", y = "Durée")
+    theme(strip.background = element_rect(colour = "grey", fill = "grey20")		
+    ) + 
+    labs(title="Fonctionnement du dispositif de comptage",
+        x ="mois", y = "Durée")
 dev.off()
 #r_dc<-choice_c(r_dc,
 #		5,
@@ -2157,37 +2161,163 @@ dev.off()
 #				"FALSE"=jaune_EV))
 #dev.off()
 r_dc<-choice_c(r_dc,
-		5,
-		horodatedebut=str_c(CY,"-01-01"),
-		horodatefin=str_c(CY,"-12-31"),
-		silent=TRUE)
+    5,
+    horodatedebut=str_c(CY,"-01-01"),
+    horodatefin=str_c(CY,"-12-31"),
+    silent=TRUE)
 r_dc3 <- connect(r_dc)
 png(filename=paste0(imgwdy,"report_dc_",CY,".png"),width=10,height=6, units="in",res=300)
 plot(r_dc3,plot.type="3",
-		color_type_oper = 	c(
-				"Fonc normal" = bleu_EV,
-				"Arr ponctuel" = turquoise_EV, 
-				"Arr maint" = jaune_EV,
-				"Dysfonc" = orange_EV, 						
-				"Non connu" = "#999999"
-		),
-		color_etat=c("TRUE"=turquoise_EV, 
-				"FALSE"=jaune_EV))
+    color_type_oper = 	c(
+        "Fonc normal" = bleu_EV,
+        "Arr ponctuel" = turquoise_EV, 
+        "Arr maint" = jaune_EV,
+        "Dysfonc" = orange_EV, 						
+        "Non connu" = "#999999"
+    ),
+    color_etat=c("TRUE"=turquoise_EV, 
+        "FALSE"=jaune_EV))
 dev.off()
 vvv$ref_dc <- list()
 vvv$ref_dc$date_debut <- strftime(
-		(r_dc3@data%>%
-			filter(per_etat_fonctionnement==1)%>%
-			pull(per_date_debut))
-				[1],"%d/%m/%Y")
+    (r_dc3@data%>%
+      filter(per_etat_fonctionnement==1)%>%
+      pull(per_date_debut))
+        [1],"%d/%m/%Y")
 vvv$ref_dc$date_fin <- strftime(
-		(r_dc3@data%>%
-			filter(per_etat_fonctionnement==1)%>%
-			arrange(desc(per_date_debut))%>%
-			pull(per_date_fin))
-				[1],"%d/%m/%Y")
+    (r_dc3@data%>%
+      filter(per_etat_fonctionnement==1)%>%
+      arrange(desc(per_date_debut))%>%
+      pull(per_date_fin))
+        [1],"%d/%m/%Y")
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
+
+<<load_from_hubeau, echo=FALSE, eval=FALSE, include=FALSE>>=
+
+
+# list_apis()
+#list_endpoints("temperature")
+#list_params(api = "temperature", endpoint ="station")
+#View(get_temperature_stations(code_departement = "56"))
+#get_temperature_stations(code_departement = "35")
+##  04216000     VILAINE à RIEUX 
+#
+#get_temperature_chronique(
+#    code_station = "04216000",
+#    date_debut_mesure = "2022-01-01",
+#    date_fin_mesure="2023-12-31",
+#    fields = paste("code_station,date_mesure_temp,heure_mesure_temp,resultat,symbole_unite")
+#)
+# 04214295     ARON à GRAND-FOUGERAY
+aron <- get_temperature_chronique(
+    code_station = "04214295",
+    date_debut_mesure = str_c(CY,"-01-01"),
+    date_fin_mesure=str_c(CY,"-12-31"),
+    fields = paste("code_station,date_mesure_temp,heure_mesure_temp,resultat,symbole_unite")
+)
+# données journalières,  %T>% sort le graphique mais passe à la ligne suivante
+hubeau_aronj <- aron %>% mutate(
+        date = lubridate::ymd(date_mesure_temp),
+        horodate_mesure_temp=lubridate::ymd_hms(str_c(date_mesure_temp," ",heure_mesure_temp)),
+        #jour=strftime(as.POSIXlt(date), "%j")
+        ) %T>%
+    with(.,plot(horodate_mesure_temp,resultat)) %>% 
+    group_by(date, date_mesure_temp, code_station) %>% 
+    summarise(resultat=mean(resultat, na.rm=TRUE),.groups="drop") %>%
+    rename(temp_aron = resultat) 
+
+# this one uses an exposition pipe    
+hubeau_aronj %$%    plot(date,temp_aron)    
+
+
+# save data
+save(hubeau_aronj, file =str_c(datawdy, "hubeau_aronj.Rdata"))
+@
+
+
+<<ecrit_env_passe, echo=FALSE, eval=FALSE, include=FALSE>>=
+
+# traitement des données --------------------------------------------
+
+load(file=file.path(datawd,CY,"fonct_pass.Rdata"))
+load(file =str_c(datawdy, "hubeau_aronj.Rdata"))
+dat <- ll$dat
+dat$date <- as.Date(dat$time)
+plot(dat$temperature_corde1_cran)
+points(dat$temperature_corde2_cran, col="red")
+# calcul des moyennes journalières
+datj <- dat %>% group_by(date) %>% summarise(
+    niveau_vil = mean(niveau_vilaine_barrage, na.rm=TRUE),
+    temp_cran1 = mean(temperature_corde1_cran, na.rm=TRUE),
+    temp_cran2 = mean(temperature_corde2_cran, na.rm=TRUE),
+    temp_air_arz = mean(temperature_externe_barrage, na.rm=TRUE),
+    debit_cran = mean(debit_pont_de_cran, na.rm=TRUE),
+    debit_arzal = mean(debit_vilaine_estime, na.rm=TRUE), .groups="drop"
+)
+datj <- left_join(datj, 
+    hubeau_aronj %>% select(date, temp_aron), by="date")
+# graph des temperatures
+datj %>% select(date, temp_cran1,temp_cran2, temp_air_arz, temp_aron) %>%
+    tidyr::pivot_longer(cols=!date, names_to="station",values_to="temperature") %T>%
+    {print(ggplot(data=., aes(x=date,y=temperature,col=station)) + geom_point())}
+# tous
+datjl <- datj %>%
+    tidyr::pivot_longer(cols=!date, names_to="station",values_to="env_valeur_quantitatif") 
+# vérifions les données déjà inscrites cette année en base dans la table tj_stationmesure_stm
+req<- new("RequeteDB")
+req <- connect(req)
+res <- dbGetQuery(req@connection,glue("SELECT * FROM iav.tj_stationmesure_stm
+            join iav.tj_conditionenvironnementale_env on env_stm_identifiant = stm_identifiant
+            WHERE extract(year from env_date_debut)={CY}"))
+
+if (nrow(res)!=0){
+  cat('Attention il y a déjà des données dans la base pour les stations', paste(unique(res$stm_libelle), collapse=", "))
+}
+
+#ecriture en base --------------------------------------------------------
+station <- dbGetQuery(req@connection,glue("SELECT * FROM iav.tj_stationmesure_stm"))
+tj_ce <- datjl %>% arrange(date) %>% filter(date>=as.Date(str_c(CY,"-01-01"))) %>%
+    left_join(station,by=c("station"="stm_libelle")) %>%
+    mutate(env_org_code="IAV",
+        env_date_fin=date+1,
+        env_methode_obtention = "MESURE"
+    ) %>%
+    filter(!is.na(env_valeur_quantitatif)) %>%
+    select( env_date_debut=date,
+        env_date_fin,
+        env_methode_obtention,
+        env_valeur_quantitatif,
+        env_stm_identifiant = stm_identifiant,
+        env_org_code
+    )
+
+
+con <- dbConnect(RPostgres::Postgres(), dbname="bd_contmig_nat_iav", host=host, port=5432, user=user, password=password)
+
+
+
+# ATTENTION ECRITURE EN BASE !!!!
+
+DBI::dbWriteTable(req@connection, "tj_conditionenvironnementale_env_temp", tj_ce, overwrite=TRUE)
+DBI::dbExecute(req@connection, "INSERT INTO iav.tj_conditionenvironnementale_env (
+        env_date_debut
+        ,env_date_fin
+        ,env_methode_obtention
+        ,env_valeur_quantitatif
+        ,env_stm_identifiant
+        ,env_org_code)
+        SELECT env_date_debut
+        ,env_date_fin
+        ,env_methode_obtention
+        ,env_valeur_quantitatif
+        ,env_stm_identifiant
+        ,env_org_code
+        FROM tj_conditionenvironnementale_env_temp") #2309
+
+
+@
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Conditions environnementales}
 
@@ -2218,22 +2348,22 @@ d3$HoroDate <- as.POSIXct(strptime(d3$HoroDate, format='%Y-%m-%d %H:%M:%S'))
 
 # ci dessous pour geom step ajouter deux foix la valeur décembre
 Q <-data.frame(Q=c(187.0 ,	177.0 ,	128.0 ,	68.50 ,	47.50 ,	33.40 ,	15.80 ,	11.10 ,	10.40 ,	18.40 ,	52.40 ,	119.0, 119.0),
-		mois<-c(seq(1,12,1),12))		
+    mois<-c(seq(1,12,1),12))		
 Q$j=as.POSIXct(strftime(str_c(CY,"-",Q$mois,"-",01),format='%Y-%m-%d'))
 Q$j[length(Q$j)] <- as.POSIXct(strftime(str_c(CY,"-","12","-",31),format='%Y-%m-%d'))
 
 png(file=str_c(imgwdy,"fig_debit.png"),width=7,height=7,units="in",res=300)
 ggplot(d3)+
-		geom_point(aes(x=HoroDate, y=debit_pont_de_cran),lwd=1.2,col=bleu_EV) +
-		geom_point(aes(x=HoroDate, y=debit_vilaine_estime),size=0.5,col="orange") +
-		geom_step(aes(x=j,y=Q), data=Q, col=marron,lwd=2, alpha=0.8)+
-		ylab(expression(debit~m^3*s^-1))+
-		xlab(str_c("date  (",CY,")"))+
-		scale_color_manual("Débit",
-				values=c(bleu_EV,orange_EV),
-				breaks=c("débit Pont de Cran","Débit Barrage"), 
-				guide="none")+
-		theme_bw()
+    geom_point(aes(x=HoroDate, y=debit_pont_de_cran),lwd=1.2,col=bleu_EV) +
+    geom_point(aes(x=HoroDate, y=debit_vilaine_estime),size=0.5,col="orange") +
+    geom_step(aes(x=j,y=Q), data=Q, col=marron,lwd=2, alpha=0.8)+
+    ylab(expression(debit~m^3*s^-1))+
+    xlab(str_c("date  (",CY,")"))+
+    scale_color_manual("Débit",
+        values=c(bleu_EV,orange_EV),
+        breaks=c("débit Pont de Cran","Débit Barrage"), 
+        guide="none")+
+    theme_bw()
 dev.off()
 @
 \clearpage
@@ -2388,13 +2518,13 @@ r_sample_char<-new("report_sample_char")
 # parameters 1786 (total size) C001 (size at video control)
 # dc 5 passe à bassins
 r_sample_char<-choice_c(r_sample_char,
-		dc=c(5),
-		taxa=c(2183),
-		stage=c("IND"),
-		par=c(1786,"C001"),
-		horodatedebut="2013-01-01",
-		horodatefin=str_c(CY,"-12-31"),
-		silent=TRUE)
+    dc=c(5),
+    taxa=c(2183),
+    stage=c("IND"),
+    par=c(1786,"C001"),
+    horodatedebut="2013-01-01",
+    horodatefin=str_c(CY,"-12-31"),
+    silent=TRUE)
 # lancement 
 r_sample_char<-connect(r_sample_char, silent=TRUE)
 r_sample_char<-calcule(r_sample_char, silent=TRUE)
@@ -2407,15 +2537,15 @@ r_sample_char<-calcule(r_sample_char, silent=TRUE)
 png(filename=paste0(imgwd,"taille.png"),width=600,height=400)
 g <- ggplot(r_sample_char@data)
 g <- g+
-		geom_jitter(aes(x=ope_date_debut,y=car_valeur_quantitatif, col=annee),
-				width = 0.5, 
-				height = 0.5, 
-				alpha=0.5) +
-		scale_colour_discrete_qualitative(
-				palette = "Pastel1", nmax = 7, order = 2:7)+
-		xlab("Date")+
-		ylab("Taille des mulets (mm)")+
-		theme_dark()
+    geom_jitter(aes(x=ope_date_debut,y=car_valeur_quantitatif, col=annee),
+        width = 0.5, 
+        height = 0.5, 
+        alpha=0.5) +
+    scale_colour_discrete_qualitative(
+        palette = "Pastel1", nmax = 7, order = 2:7)+
+    xlab("Date")+
+    ylab("Taille des mulets (mm)")+
+    theme_dark()
 print(g)
 dev.off()
 options(warn=0)
@@ -2438,20 +2568,20 @@ dat$date <- dat$ope_date_debut # je cree une variable date qui sera plus tard tr
 # en facteur dans les modèles
 # ci dessous une fonction pour extraire les dates
 fndate<-function(data, origine="01012013"){
-	#browser()
-	if (!"date"%in%colnames(data)) stop ("date should be in colnames(data)")
-	if (!class(data$date)[1]=="POSIXct") stop("date should be POSIXct")
-	if (!class(origine)=="character") stop("date should be a character")  
-	origine=dmy(origine)
-	data$month <- lubridate::month(data$date)
-	data$year<-lubridate::year(data$date)
-	# lubridate::yday(lubridate::dmy(01082008))
-	data$yday=lubridate::yday(data$date)			
-	data$time=as.numeric(as.Date(data$date)-origine)
-	data$hour=hour(data$date)
-	data$date <- as.factor(as.Date(data$date))
-	data$year <-as.factor(data$year)
-	return(data)
+  #browser()
+  if (!"date"%in%colnames(data)) stop ("date should be in colnames(data)")
+  if (!class(data$date)[1]=="POSIXct") stop("date should be POSIXct")
+  if (!class(origine)=="character") stop("date should be a character")  
+  origine=dmy(origine)
+  data$month <- lubridate::month(data$date)
+  data$year<-lubridate::year(data$date)
+  # lubridate::yday(lubridate::dmy(01082008))
+  data$yday=lubridate::yday(data$date)			
+  data$time=as.numeric(as.Date(data$date)-origine)
+  data$hour=hour(data$date)
+  data$date <- as.factor(as.Date(data$date))
+  data$year <-as.factor(data$year)
+  return(data)
 }
 dat <- fndate(dat)
 dat <- rename(dat, taille_mm=car_valeur_quantitatif)
@@ -2460,11 +2590,11 @@ dat <- rename(dat, taille_mm=car_valeur_quantitatif)
 # Quel est l'écart type moyen des tailles de mulets journalières
 ############################################
 (allsd <- dat %>%
-			group_by(date) %>%                                           # groupe par date
-			summarize(sd=sd(taille_mm, na.rm=TRUE)) %>%                  # ecart type
-			ungroup() %>%                                                # degroupe
-			pull(sd) %>%                                                 # calcule ecart type
-			mean(na.rm=TRUE))                                            # moyenne de l'écart type
+      group_by(date) %>%                                           # groupe par date
+      summarize(sd=sd(taille_mm, na.rm=TRUE)) %>%                  # ecart type
+      ungroup() %>%                                                # degroupe
+      pull(sd) %>%                                                 # calcule ecart type
+      mean(na.rm=TRUE))                                            # moyenne de l'écart type
 
 ###################################
 # graphique en densité montrant la distribution de taille par mois
@@ -2473,17 +2603,17 @@ dat <- rename(dat, taille_mm=car_valeur_quantitatif)
 ###################################
 dat$mois <- as.factor(dat$month)
 g0 <- ggplot(dat)+
-		geom_density(aes(x=taille_mm, fill=mois),alpha=0.5)+
-		facet_grid(.~year)+
-		scale_fill_discrete_sequential(
-				palette = "Plasma",order=c(10:7,1:3, 4:6))+ 
-		xlab("Taille (mm)")+
-		ggpubr::theme_pubr(legend="bottom")+
-		theme(axis.title.x = element_blank(),
-				axis.text.x = element_blank(),
-				axis.ticks.x = element_blank(),
-				axis.line.x = element_blank())+
-		rotate()#+
+    geom_density(aes(x=taille_mm, fill=mois),alpha=0.5)+
+    facet_grid(.~year)+
+    scale_fill_discrete_sequential(
+        palette = "Plasma",order=c(10:7,1:3, 4:6))+ 
+    xlab("Taille (mm)")+
+    ggpubr::theme_pubr(legend="bottom")+
+    theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.line.x = element_blank())+
+    rotate()#+
 #guides(fill = guide_legend(nrow = 1))
 print(g0)
 
@@ -2495,10 +2625,10 @@ print(g0)
 
 colours <- qualitative_hcl(CY-2013, "Pastel_1")
 g1 <- ggviolin(dat, x = "year", y = "taille_mm", fill = "year",
-				palette = colours,
-				add = "boxplot", add.params = list(fill = "white"))+
-		theme_transparent()+
-		theme(legend.position = "none")
+        palette = colours,
+        add = "boxplot", add.params = list(fill = "white"))+
+    theme_transparent()+
+    theme(legend.position = "none")
 
 
 
@@ -2582,31 +2712,31 @@ dat$upr <-dat$pred+2*predict(g4m, type="response",se.fit=TRUE)$se.fit
 ################################
 # g1 plot brut des tailles de mulets
 g2 <- ggplot(dat)+    
-		scale_colour_discrete_qualitative(
-				palette = "Pastel1", nmax = CY-2013)+
-		scale_fill_discrete_qualitative(
-				palette = "Dark2", nmax = CY-2013)+
-		xlab("Date")+
-		ylab("Taille des mulets (mm)")+
-		theme_dark()
+    scale_colour_discrete_qualitative(
+        palette = "Pastel1", nmax = CY-2013)+
+    scale_fill_discrete_qualitative(
+        palette = "Dark2", nmax = CY-2013)+
+    xlab("Date")+
+    ylab("Taille des mulets (mm)")+
+    theme_dark()
 
 
 g3 <- g2 +  
-		
-		geom_ribbon(aes(x=ope_date_debut,ymin=lwrPoint,ymax=uprPoint,colour=annee),
-				fill="grey40",alpha=0.2)+
-		
-		geom_jitter(aes(x=ope_date_debut,y=taille_mm, col=annee),
-				size=1,
-				width = 0.5, 
-				height = 0.5, 
-				alpha=0.5) +
-		
-		geom_ribbon(aes(x=ope_date_debut,ymin=lwr,ymax=upr, fill=annee),
-				color="white",alpha=0.9)+   
-		
-		geom_point(aes(x=ope_date_debut,y=pred, fill=annee), 
-				shape=23,size=0.8, fill="white")
+    
+    geom_ribbon(aes(x=ope_date_debut,ymin=lwrPoint,ymax=uprPoint,colour=annee),
+        fill="grey40",alpha=0.2)+
+    
+    geom_jitter(aes(x=ope_date_debut,y=taille_mm, col=annee),
+        size=1,
+        width = 0.5, 
+        height = 0.5, 
+        alpha=0.5) +
+    
+    geom_ribbon(aes(x=ope_date_debut,ymin=lwr,ymax=upr, fill=annee),
+        color="white",alpha=0.9)+   
+    
+    geom_point(aes(x=ope_date_debut,y=pred, fill=annee), 
+        shape=23,size=0.8, fill="white")
 
 ###############################################"
 # combinaison de plusieurs graphiques
@@ -2614,7 +2744,7 @@ g3 <- g2 +
 ################################################
 
 p1 <- ggarrange(g0, g1, labels=c("A", "B"),
-		ncol = 2, nrow = 1)
+    ncol = 2, nrow = 1)
 p2 <- ggarrange(g3, labels="C")
 p3 <- ggarrange(p1, p2, nrow=2, ncol=1)
 
@@ -2627,8 +2757,8 @@ dev.off()
 #################################################################
 # creation du tableau de prédiciton
 pred <-
-		data.frame("date"=
-						as.POSIXct(seq(from=as.POSIXct(dmy("01012013")), to = as.POSIXct(dmy("30072022")), by="1 day")))
+    data.frame("date"=
+            as.POSIXct(seq(from=as.POSIXct(dmy("01012013")), to = as.POSIXct(dmy("30072022")), by="1 day")))
 pred <- fndate(pred)
 pred <- pred[pred$yday>59&pred$yday<319,]
 pred <- pred[pred$year!="2014",]
@@ -2636,8 +2766,8 @@ pred <- pred[pred$year!="2014",]
 # prediction
 predo <- predict.gam(object=g4m,type="response", se.fit = TRUE, newdata=pred)
 pred <-  cbind(pred, 
-		"fit"=predo$fit,
-		"se.fit"=predo$se.fit)
+    "fit"=predo$fit,
+    "se.fit"=predo$se.fit)
 pred$date <- as.Date(pred$date)
 plot(pred$date, pred$fit)
 
@@ -2647,7 +2777,7 @@ ma<-matrix(NA,nrow=nrow(pred),ncol=length(the_seq))
 # prediction normale tous les jours avec la moyenne et l'écart type
 # commun à tout le jeu de données
 for (i in 1:nrow(pred)){
-	ma[i,]<- dnorm(the_seq, mean=pred$fit[i],sd=allsd)
+  ma[i,]<- dnorm(the_seq, mean=pred$fit[i],sd=allsd)
 }
 load_package("plot3D")
 plot3D::image2D(ma)
@@ -2672,55 +2802,55 @@ save(vvv , file=file.path(datawd,CY,"vvv.Rdata"))
 # launching stacomi without selecting the scheme or interface
 bilA <- new("report_annual")
 bilA <- choice_c(bilA,
-		dc=c(5),
-		taxa=c("Liza ramada"),
-		stage=c("IND"),
-		start_year="1996",
-		end_year=CY,
-		silent=FALSE)
+    dc=c(5),
+    taxa=c("Liza ramada"),
+    stage=c("IND"),
+    start_year="1996",
+    end_year=CY,
+    silent=FALSE)
 
 bilA <- connect(bilA)	
 bilA@data <- bilA@data[!bilA@data$annee%in%c(2007,2008),]
 options(encoding = "UTF-8")
 xtbilA<-stacomiR::xtable(bilA,
-		caption="Migration des mulets dans la passe à bassins du barrage d'Arzal 
-				(passe à fentes verticales).",
-		label="table_bilanannuel_mulets",
-		dc_name=c("P. bassins")		
+    caption="Migration des mulets dans la passe à bassins du barrage d'Arzal 
+        (passe à fentes verticales).",
+    label="table_bilanannuel_mulets",
+    dc_name=c("P. bassins")		
 )
 
 # below not run but one can create a file as following
 save(bilA, file= str_c("bilAmup",CY,".Rdata"))
 #load(file= str_c("bilAmup",CY,".Rdata"))
 path=file.path(tabwdy,
-		paste(paste(bilA@dc@dc_selected,collapse="_"),"_",
-				paste(bilA@taxa@taxa_selected,collapse="_"),"_",
-				paste(bilA@stage@stage_selected,collapse="_"),"_",
-				bilA@start_year@year_selected,"to",
-				bilA@end_year@year_selected,".tex",sep=""),fsep ="")
+    paste(paste(bilA@dc@dc_selected,collapse="_"),"_",
+        paste(bilA@taxa@taxa_selected,collapse="_"),"_",
+        paste(bilA@stage@stage_selected,collapse="_"),"_",
+        bilA@start_year@year_selected,"to",
+        bilA@end_year@year_selected,".tex",sep=""),fsep ="")
 # the following uses the "addtorow" argument which creates nice column headings,
 # format.args creates a thousand separator
 # again this will need to be saved in a file using the file argument
 
 print(xtbilA,
-		file=path,
-		add.to.row= list(pos=list(0),
-				command=				
-						"\\multicolumn{2}{c}{\\textit{Chelon ramada}}  \\\\ 
-						\\multicolumn{2}{c}{Indéterminé} \\\\"),
-		include.rownames = TRUE,
-		include.colnames = FALSE,
-		format.args = list(big.mark = " ", decimal.mark = ","),
-		booktabs=TRUE
+    file=path,
+    add.to.row= list(pos=list(0),
+        command=				
+            "\\multicolumn{2}{c}{\\textit{Chelon ramada}}  \\\\ 
+            \\multicolumn{2}{c}{Indéterminé} \\\\"),
+    include.rownames = TRUE,
+    include.colnames = FALSE,
+    format.args = list(big.mark = " ", decimal.mark = ","),
+    booktabs=TRUE
 )
 options(encoding = "native.enc")
 #===================================================
 
 png(filename=str_c(imgwdy,"bilan_annuel_mup.png"))
 ggplot(bilA@data)+ geom_col(aes(x=annee,y=effectif), fill=bleu_EV)+
-		ylab("Effectif (mulet)") + 
-		xlab("Année") +
-		theme_bw()
+    ylab("Effectif (mulet)") + 
+    xlab("Année") +
+    theme_bw()
 dev.off()
 
 #===================================================
@@ -2745,24 +2875,24 @@ vvv[["MUP"]][["maxrank"]]<-nrow(somme_mup)
 req<- new("RequeteDB")
 req <- connect(req)
 res <- dbGetQuery(req@connection,glue("select sum(lot_effectif) as effectif_mont,
-						annee, 
-						ope_dic_identifiant,
-						lot_tax_code, 
-						lot_std_code  
-						FROM (
-						SELECT *, extract(year  from ope_date_debut) as annee
-						FROM iav.t_operation_ope  
-						JOIN iav.t_lot_lot on lot_ope_identifiant=ope_identifiant 
-						WHERE ope_dic_identifiant in('5') 
-						AND extract(year from ope_date_debut)>=1996 
-						AND extract(year from ope_date_fin)<=",CY,"  
-						AND extract(month FROM ope_date_debut) < 9
-						AND lot_tax_code in ('2183') 
-						AND lot_std_code in ('IND') 
-						AND lot_lot_identifiant is null
-						) as tmp
-						GROUP BY annee, ope_dic_identifiant, lot_tax_code, lot_std_code"  
-		))
+            annee, 
+            ope_dic_identifiant,
+            lot_tax_code, 
+            lot_std_code  
+            FROM (
+            SELECT *, extract(year  from ope_date_debut) as annee
+            FROM iav.t_operation_ope  
+            JOIN iav.t_lot_lot on lot_ope_identifiant=ope_identifiant 
+            WHERE ope_dic_identifiant in('5') 
+            AND extract(year from ope_date_debut)>=1996 
+            AND extract(year from ope_date_fin)<=",CY,"  
+            AND extract(month FROM ope_date_debut) < 9
+            AND lot_tax_code in ('2183') 
+            AND lot_std_code in ('IND') 
+            AND lot_lot_identifiant is null
+            ) as tmp
+            GROUP BY annee, ope_dic_identifiant, lot_tax_code, lot_std_code"  
+    ))
 load(file= str_c("bilAmup",CY,".Rdata"))
 res <- res[,c(1,2)]
 restt<-bilA@data
@@ -2772,32 +2902,32 @@ colnames(res2) <- c("Année","N annuel","N 01-08")
 bilA@data <- res
 options(encoding = "UTF-8")
 xtmup <- xtable(res2,
-		digits = 0,
-		caption="Migration des mulets dans la passe à bassins du barrage d'Arzal 
-				(passe à fentes verticale), pour l'année complète et pour la période de montaison 
-				(jusqu'au 31 août.)",
-		label="table_bilanannuel_mulets_0108")		
+    digits = 0,
+    caption="Migration des mulets dans la passe à bassins du barrage d'Arzal 
+        (passe à fentes verticale), pour l'année complète et pour la période de montaison 
+        (jusqu'au 31 août.)",
+    label="table_bilanannuel_mulets_0108")		
 
 path=file.path(tabwdy,
-		paste(paste(bilA@dc@dc_selected,collapse="_"),"_",
-				paste(bilA@taxa@taxa_selected,collapse="_"),"_",
-				paste(bilA@stage@stage_selected,collapse="_"),"_",
-				bilA@start_year@year_selected,"to",
-				bilA@end_year@year_selected,"0108.tex",sep=""),fsep ="")
+    paste(paste(bilA@dc@dc_selected,collapse="_"),"_",
+        paste(bilA@taxa@taxa_selected,collapse="_"),"_",
+        paste(bilA@stage@stage_selected,collapse="_"),"_",
+        bilA@start_year@year_selected,"to",
+        bilA@end_year@year_selected,"0108.tex",sep=""),fsep ="")
 # the following uses the "addtorow" argument which creates nice column headings,
 # format.args creates a thousand separator
 # again this will need to be saved in a file using the file argument
 print(xtmup,
-		file=path,
-		add.to.row= list(pos=list(0),
-				command=				
-						"&\\multicolumn{2}{c}{\\textit{Chelon ramada}}  \\\\
-						&\\multicolumn{2}{c}{Indéterminé} \\\\
-						"),
-		include.rownames = FALSE,
-		include.colnames = TRUE,
-		format.args = list(big.mark = " ", decimal.mark = ","),
-		booktabs=TRUE
+    file=path,
+    add.to.row= list(pos=list(0),
+        command=				
+            "&\\multicolumn{2}{c}{\\textit{Chelon ramada}}  \\\\
+            &\\multicolumn{2}{c}{Indéterminé} \\\\
+            "),
+    include.rownames = FALSE,
+    include.colnames = TRUE,
+    format.args = list(big.mark = " ", decimal.mark = ","),
+    booktabs=TRUE
 )
 options(encoding = "native.enc")
 vvv[["MUP"]][["path0108"]] <- gsub("C:/workspace/","../../../",path)
@@ -2814,11 +2944,11 @@ load_package("wesanderson")
 color_ope<-sample(c(mycolorramp1(10),mycolorramp2(10)),20)
 bMM_Arzal=new("report_mig_mult")
 bMM_Arzal=choice_c(bMM_Arzal,
-		dc=c(5),
-		taxa=c("Liza ramada"),
-		stage=c("IND"),
-		datedebut=str_c(CY,"-01-01"),
-		datefin=str_c(CY,"-12-31"))
+    dc=c(5),
+    taxa=c("Liza ramada"),
+    stage=c("IND"),
+    datedebut=str_c(CY,"-01-01"),
+    datefin=str_c(CY,"-12-31"))
 bMM_Arzal <- charge(bMM_Arzal)
 bMM_Arzal <- connect(bMM_Arzal)
 bMM_Arzal <- calcule(bMM_Arzal)
@@ -2826,12 +2956,12 @@ color_ope<-sample(c(mycolorramp1(10),mycolorramp2(10)),20)
 # par("din") # pour voir la taille de la fenetre graphique
 png(file=str_c(imgwdy,"bmm_mulet.png"),7,7,units="in",res=300)
 plot(bMM_Arzal,plot.type="standard",
-		color=color,
-		color_ope=color_ope,
-		main=str_c("Effectif de mulets porcs (Chelon ramada) en ",CY),
-		cex.main=1.1,		
-		type="h",
-		silent=TRUE)
+    color=color,
+    color_ope=color_ope,
+    main=str_c("Effectif de mulets porcs (Chelon ramada) en ",CY),
+    cex.main=1.1,		
+    type="h",
+    silent=TRUE)
 dev.off()
 
 
@@ -2840,54 +2970,54 @@ dev.off()
 ######################
 mig <- bMM_Arzal@data
 mig <- mig %>% mutate(time=strftime(ope_date_debut, format="%H:%M:%S"),
-		date=as.Date(ope_date_debut))
+    date=as.Date(ope_date_debut))
 # ATTENTION RECOMPILER fun_date_extraction dans stacomiR il y avait une erreur
 
 fun_date_extraction=function(data, # tableau de donnees e importer
-		nom_coldt, # nom de la colonne
-		annee=TRUE,
-		mois=TRUE,
-		quinzaine=FALSE,
-		semaine=TRUE,
-		semaine_std=FALSE,
-		jour_an=FALSE,
-		jour_mois=TRUE,
-		heure=FALSE                           
+    nom_coldt, # nom de la colonne
+    annee=TRUE,
+    mois=TRUE,
+    quinzaine=FALSE,
+    semaine=TRUE,
+    semaine_std=FALSE,
+    jour_an=FALSE,
+    jour_mois=TRUE,
+    heure=FALSE                           
 ){
-	if (annee) data$annee <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%Y"))                        
-	if (mois) data$mois <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%m"))
-	# %b Abbreviated month name in the current locale. (Also matches full name on input.)
-	if (quinzaine) {
-		data$quinzaine=ceiling(as.numeric(strftime(as.POSIXlt(data[,nom_coldt]),
-								format="%W"))/2)
-		data$quinzaine <- as.character(data$quinzaine)
-		data$quinzaine[as.numeric(data$quinzaine)<10] <- paste("0", data$quinzaine[as.numeric(data$quinzaine)<10],sep="")
-		data$quinzaine <- as.factor(data$quinzaine)
-	}
-	if (semaine) data$semaine <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%W"))
-	#%W : Week of the year as decimal number (00e53) using Monday as the first day of week (and typically with the first Monday of the year as day 1 of week 1). The UK convention
-	if (jour_an) data$jour_365 <- strftime(as.POSIXlt(data[,nom_coldt]), format="%j")                          
-	if (jour_mois) data$jour_mois <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%d"))  
-	# %d :  Day of the month as decimal number (01e31).
-	if (heure) data$heure <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%H"))  
-	#%H     Hours as decimal number (00e23).    
-	if (semaine_std) data$semaine_std=lubridate::isoweek(as.POSIXlt(data[,nom_coldt]))
-	return(data)
+  if (annee) data$annee <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%Y"))                        
+  if (mois) data$mois <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%m"))
+  # %b Abbreviated month name in the current locale. (Also matches full name on input.)
+  if (quinzaine) {
+    data$quinzaine=ceiling(as.numeric(strftime(as.POSIXlt(data[,nom_coldt]),
+                format="%W"))/2)
+    data$quinzaine <- as.character(data$quinzaine)
+    data$quinzaine[as.numeric(data$quinzaine)<10] <- paste("0", data$quinzaine[as.numeric(data$quinzaine)<10],sep="")
+    data$quinzaine <- as.factor(data$quinzaine)
+  }
+  if (semaine) data$semaine <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%W"))
+  #%W : Week of the year as decimal number (00e53) using Monday as the first day of week (and typically with the first Monday of the year as day 1 of week 1). The UK convention
+  if (jour_an) data$jour_365 <- strftime(as.POSIXlt(data[,nom_coldt]), format="%j")                          
+  if (jour_mois) data$jour_mois <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%d"))  
+  # %d :  Day of the month as decimal number (01e31).
+  if (heure) data$heure <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%H"))  
+  #%H     Hours as decimal number (00e23).    
+  if (semaine_std) data$semaine_std=lubridate::isoweek(as.POSIXlt(data[,nom_coldt]))
+  return(data)
 }    
 
 
 mig <-	fun_date_extraction(
-		data=mig,
-		nom_coldt="ope_date_debut", annee = FALSE, mois = TRUE,
-		quinzaine = FALSE, semaine = FALSE, semaine_std = FALSE,
-		jour_an = FALSE, jour_mois = TRUE, heure = TRUE)
+    data=mig,
+    nom_coldt="ope_date_debut", annee = FALSE, mois = TRUE,
+    quinzaine = FALSE, semaine = FALSE, semaine_std = FALSE,
+    jour_an = FALSE, jour_mois = TRUE, heure = TRUE)
 hhh <- mig %>% group_by(heure) %>% summarize(N=sum(value))
 png(file=str_c(imgwdy,"horaires_mulet.png"),7,7,units="in",res=300)
 g <- ggplot(hhh, aes(x = heure)) + 
-		geom_histogram(aes(y=N), width = 0.6, colour = NA,stat="identity") +
-		coord_polar(start=3*pi/4) +
-		theme_minimal() +	
-		ylab("Nombre") 
+    geom_histogram(aes(y=N), width = 0.6, colour = NA,stat="identity") +
+    coord_polar(start=3*pi/4) +
+    theme_minimal() +	
+    ylab("Nombre") 
 print(g)
 dev.off()
 hhh <- mig %>% group_by(heure, mois) %>% summarize(N=sum(value))
@@ -2900,14 +3030,14 @@ hhh<- mige%>%group_by(heure) %>% summarize(N=sum(value))
 
 png(file=str_c(imgwdy,"bmm_horaires_maree.png"),7,7,units="in",res=300)
 ggplot(mige)+
-		geom_point( aes(x=timec,y=niveau_mer_barrage,col=value))+	
-		scale_colour_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous"), 
-				breaks=c(0,10,100,1000,10000),trans = "log") +
-		scale_fill_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous"), 
-				breaks=c(0,10,100,1000,10000),trans = "log") +
-		scale_x_datetime(date_labels = "%H")+
-		xlab("Heure")+
-		theme_bw()
+    geom_point( aes(x=timec,y=niveau_mer_barrage,col=value))+	
+    scale_colour_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous"), 
+        breaks=c(0,10,100,1000,10000),trans = "log") +
+    scale_fill_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous"), 
+        breaks=c(0,10,100,1000,10000),trans = "log") +
+    scale_x_datetime(date_labels = "%H")+
+    xlab("Heure")+
+    theme_bw()
 dev.off()
 
 @
@@ -2924,12 +3054,12 @@ dev.off()
 
 bmi <- new("report_mig_interannual")
 bmi <- choice_c(bmi,
-		dc=c(5),
-		taxa=c("Liza ramada"),
-		stage=c("IND"),
-		start_year="1996",
-		end_year=CY,
-		silent=TRUE)
+    dc=c(5),
+    taxa=c("Liza ramada"),
+    stage=c("IND"),
+    start_year="1996",
+    end_year=CY,
+    silent=TRUE)
 
 
 bmi <- charge(bmi,silent=TRUE)
@@ -2948,14 +3078,14 @@ color_ope<-c(rev(mycolorramp1(10)),mycolorramp2(nb_annee-11),"#85A3BA")
 #============================================
 png(filename=str_c(imgwdy,"rmi_journalier_mup.png"),10,7,units="in",res=300)
 g <- g+scale_x_datetime(name="date",
-				date_breaks="months",
-				date_minor_breaks="weeks", 
-				date_labels="%d-%m"#,
-		#limits=as.POSIXct(strptime(c("2000-03-15","2000-07-01"),format=,"%Y-%m-%d"))
-		)+
-		ylab("Effectifs capturés ou montés dans la passe")+
-		theme_bw()+ 
-		theme(legend.key = element_blank())
+        date_breaks="months",
+        date_minor_breaks="weeks", 
+        date_labels="%d-%m"#,
+    #limits=as.POSIXct(strptime(c("2000-03-15","2000-07-01"),format=,"%Y-%m-%d"))
+    )+
+    ylab("Effectifs capturés ou montés dans la passe")+
+    theme_bw()+ 
+    theme(legend.key = element_blank())
 print(g)
 dev.off()
 
@@ -2978,7 +3108,7 @@ colrp1 <- colorRampPalette(colors=c("#6D9A58","#C6B130"))
 load_package("viridis")
 g <- get("g",envir=envir_stacomi)	
 g +
-		ggplot2::scale_fill_manual(values=c(colrp(12),colrp1(12)))
+    ggplot2::scale_fill_manual(values=c(colrp(12),colrp1(12)))
 
 
 #============================================
@@ -2993,20 +3123,20 @@ mmm <- mmm[,-1]
 options(encoding = "UTF-8")
 colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2022)")
 xtmmm <- xtable(mmm,caption="Migrations mensuelles des mulets dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-				la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
-		label="table_lpm_mois",
-		digits=c(0,0,0,0,0,0),
-		display = c("s","s","f","f", "f", "f"))
+        la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+    label="table_lpm_mois",
+    digits=c(0,0,0,0,0,0),
+    display = c("s","s","f","f", "f", "f"))
 path_y <- file.path(tabwdy,
-		paste(5,"_",
-				paste(bmi@taxa@taxa_selected, collapse="_"),"_",
-				paste(bmi@stage@stage_selected,collapse="_"),"_"
-				,"mensuel.tex",sep=""),fsep ="")
+    paste(5,"_",
+        paste(bmi@taxa@taxa_selected, collapse="_"),"_",
+        paste(bmi@stage@stage_selected,collapse="_"),"_"
+        ,"mensuel.tex",sep=""),fsep ="")
 print(xtmmm,
-		file=path_y,
-		format.args = list(big.mark = " ", decimal.mark = ","),
-		table.placement=c("htbp")
-		#include.rownames = FALSE => OK set as global options
+    file=path_y,
+    format.args = list(big.mark = " ", decimal.mark = ","),
+    table.placement=c("htbp")
+#include.rownames = FALSE => OK set as global options
 )
 options(encoding = "native.enc")
 
@@ -3148,34 +3278,34 @@ différentes zones de la vitre.}
 color_ope <- sample(c(mycolorramp1(10),mycolorramp2(10)),20)
 bMM_Arzal <- new("report_mig_mult")
 bMM_Arzal <- choice_c(bMM_Arzal,
-		dc=c(5),
-		taxa=c("Petromyzon marinus"),
-		stage=c("11"),
-		datedebut=str_c(CY,"-01-01"),
-		datefin=str_c(CY,"-12-31"))
+    dc=c(5),
+    taxa=c("Petromyzon marinus"),
+    stage=c("11"),
+    datedebut=str_c(CY,"-01-01"),
+    datefin=str_c(CY,"-12-31"))
 bMM_Arzal <- charge(bMM_Arzal)
 bMM_Arzal <- connect(bMM_Arzal)
 bMM_Arzal <- calcule(bMM_Arzal)
 png(file=str_c(imgwdy,"bmm_lpm.png"),7,7,units="in",res=300)
 plot(bMM_Arzal,plot.type="standard",
-		color=color,
-		color_ope=color_ope,
-		main=str_c("Effectif de lamproies marines en ", CY),
-		cex.main=1.1,		
-		type="h",
-		silent=TRUE)
+    color=color,
+    color_ope=color_ope,
+    main=str_c("Effectif de lamproies marines en ", CY),
+    cex.main=1.1,		
+    type="h",
+    silent=TRUE)
 dev.off()
 @
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 <<report_interannual_lpm, echo=FALSE, eval=FALSE, include=FALSE >>=
 rmi <- new("report_mig_interannual")
 rmi <- choice_c(rmi,
-		dc=c(5),
-		taxa=c("Petromyzon marinus"),
-		stage=c("11"),
-		start_year="1996",
-		end_year=CY,
-		silent=TRUE)
+    dc=c(5),
+    taxa=c("Petromyzon marinus"),
+    stage=c("11"),
+    start_year="1996",
+    end_year=CY,
+    silent=TRUE)
 rmi <- charge(rmi)
 rmi <- connect(rmi,check=TRUE,silent=FALSE)	
 rmi <- calcule(rmi)
@@ -3191,13 +3321,13 @@ color_ope <- c(rev(mycolorramp1(10)),mycolorramp2(nb_annee-11),"#85A3BA")
 #============================================
 png(filename=str_c(imgwdy,"rmi_density_lpm.png"))
 g+ggplot2::scale_fill_manual(values=color_ope)+
-		ggplot2::ggtitle("")+
-		theme(
-				panel.border = element_blank(),
-				panel.background = element_blank(),
-				panel.grid.minor = element_line(colour = "white"),
-				panel.grid.major = element_line(colour = "white"),
-				panel.grid.major.x = element_line(colour = "white"))
+    ggplot2::ggtitle("")+
+    theme(
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.minor = element_line(colour = "white"),
+        panel.grid.major = element_line(colour = "white"),
+        panel.grid.major.x = element_line(colour = "white"))
 dev.off()
 #============================================
 plot(rmi,plot.type="barchart",timesplit="mois",silent=TRUE)
@@ -3222,19 +3352,19 @@ mmm <- summary(rmi,silent=TRUE)$'5'
 mmm <- mmm[,-1]
 colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2022)")
 xtmmm <- xtable(mmm,caption="Migrations mensuelles des lamproies marines dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-				la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
-		label="table_lpm_mois",
-		digits=c(0,0,0,0,0,0),
-		display = c("s","s","f","f", "f", "f"))
+        la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+    label="table_lpm_mois",
+    digits=c(0,0,0,0,0,0),
+    display = c("s","s","f","f", "f", "f"))
 path_y <- file.path(tabwdy,
-		paste(5,"_",
-				paste(rmi@taxa@taxa_selected,collapse="_"),"_",
-				paste(rmi@stage@stage_selected,collapse="_"),"_"
-				,"mensuel.tex",sep=""),fsep ="")
+    paste(5,"_",
+        paste(rmi@taxa@taxa_selected,collapse="_"),"_",
+        paste(rmi@stage@stage_selected,collapse="_"),"_"
+        ,"mensuel.tex",sep=""),fsep ="")
 print(xtmmm,
-		file=path_y,
-		format.args = list(big.mark = " ", decimal.mark = ","),
-		table.placement=c("htbp")#,
+    file=path_y,
+    format.args = list(big.mark = " ", decimal.mark = ","),
+    table.placement=c("htbp")#,
 #include.rownames = FALSE => OK set as global options
 )
 #vvv[["LPM"]]<- list()# normalement vient du rapport de l'années précédente
@@ -3249,51 +3379,51 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 ###############################
 ra<-new("report_annual")
 ra<-choice_c(ra,
-		dc=c(5),
-		taxa=c("Petromyzon marinus"),
-		stage=c("11"),
-		start_year=1996,
-		end_year=CY,
-		silent=TRUE)
+    dc=c(5),
+    taxa=c("Petromyzon marinus"),
+    stage=c("11"),
+    start_year=1996,
+    end_year=CY,
+    silent=TRUE)
 ra <- connect(ra,silent=FALSE)
 png(filename=str_c(imgwdy,"barplot_report_annual_lpm.png"))
 barplot(ra)
 dev.off()
 xtra<-stacomiR::xtable(ra,
-		caption="Migration des lamproies marines dans la passe à bassins du barrage
-				d'Arzal (passe à fentes verticales).",
-		label="table_bilanannuel_lpm",
-		dc_name=c("P. bassins")		
+    caption="Migration des lamproies marines dans la passe à bassins du barrage
+        d'Arzal (passe à fentes verticales).",
+    label="table_bilanannuel_lpm",
+    dc_name=c("P. bassins")		
 )
 # below not run but one can create a file as following
 
 path=file.path(tabwdy,
-		paste(paste(ra@dc@dc_selected,collapse="_"),"_",
-				paste(ra@taxa@taxa_selected,collapse="_"),"_",
-				paste(ra@stage@stage_selected,collapse="_"),"_",
-				ra@start_year@year_selected,"to",
-				ra@end_year@year_selected,".tex",sep=""),fsep ="")
+    paste(paste(ra@dc@dc_selected,collapse="_"),"_",
+        paste(ra@taxa@taxa_selected,collapse="_"),"_",
+        paste(ra@stage@stage_selected,collapse="_"),"_",
+        ra@start_year@year_selected,"to",
+        ra@end_year@year_selected,".tex",sep=""),fsep ="")
 # the following uses the "addtorow" argument which creates nice column headings,
 # format.args creates a thousand separator
 # again this will need to be saved in a file using the file argument
 print(xtra,
-		file=path,
-		add.to.row= list(pos=list(0),
-				command=				
-						"\\multicolumn{2}{c}{\\textit{Petromyzon marinus}}  \\\\
-						\\multicolumn{2}{c}{Géniteur} \\\\"),
-		include.rownames = TRUE,
-		include.colnames = FALSE,
-		format.args = list(big.mark = " ", decimal.mark = ","),
-		booktabs=TRUE
+    file=path,
+    add.to.row= list(pos=list(0),
+        command=				
+            "\\multicolumn{2}{c}{\\textit{Petromyzon marinus}}  \\\\
+            \\multicolumn{2}{c}{Géniteur} \\\\"),
+    include.rownames = TRUE,
+    include.colnames = FALSE,
+    format.args = list(big.mark = " ", decimal.mark = ","),
+    booktabs=TRUE
 )
 
 # some manual editing needed....
 #===================================================
 png(filename=str_c(imgwdy,"bilan_annuel_lpm.png"))
 barplot(ra,args.legend=list(x="topleft",bty = "n"),
-		col=c(marron),
-		ylab="Effectif (lamproie marine)")
+    col=c(marron),
+    ylab="Effectif (lamproie marine)")
 dev.off()
 #===================================================
 # total 
@@ -3319,13 +3449,13 @@ stacomi()
 
 r_sample_char<-new("report_sample_char")
 r_sample_char<-choice_c(r_sample_char,
-		dc=c("5"),
-		taxa=c("Petromyzon marinus"),
-		stage=c("11"),
-		par=c("C001"),
-		horodatedebut="1998-01-01",
-		horodatefin=str_c(CY,"-12-31"),
-		silent=FALSE)
+    dc=c("5"),
+    taxa=c("Petromyzon marinus"),
+    stage=c("11"),
+    par=c("C001"),
+    horodatedebut="1998-01-01",
+    horodatefin=str_c(CY,"-12-31"),
+    silent=FALSE)
 r_sample_char<-connect(r_sample_char)
 r_sample_char<-calcule(r_sample_char,silent=TRUE)
 # A "violin" plot
@@ -3334,10 +3464,10 @@ plot(r_sample_char,plot.type="1",silent=TRUE)
 g<-get("g",envir=envir_stacomi)
 png(filename=str_c(imgwdy,"size_lpm.png"))
 g+ggplot2::xlab("taille video (mm)")+
-		ggplot2::ylab("annee")+
-		theme(axis.title.x=element_blank(),
-				axis.text.x=element_blank(),
-				axis.ticks.x=element_blank())
+    ggplot2::ylab("annee")+
+    theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
 dev.off()
 @
 
@@ -3530,11 +3660,11 @@ calcul.}
 color_ope<-sample(c(mycolorramp1(10),mycolorramp2(10)),20)
 bMM_Arzal=new("report_mig_mult")
 bMM_Arzal=choice_c(bMM_Arzal,
-		dc=c(5),
-		taxa=c("Alosa"),
-		stage=c("11"),
-		datedebut=str_c(CY,"-01-01"),
-		datefin=str_c(CY,"-12-31"))
+    dc=c(5),
+    taxa=c("Alosa"),
+    stage=c("11"),
+    datedebut=str_c(CY,"-01-01"),
+    datefin=str_c(CY,"-12-31"))
 bMM_Arzal<-charge(bMM_Arzal)
 bMM_Arzal<-connect(bMM_Arzal)
 bMM_Arzal=calcule(bMM_Arzal)
@@ -3542,12 +3672,12 @@ bMM_Arzal=calcule(bMM_Arzal)
 # par("din") # pour voir la taille de la fenetre graphique
 png(file=str_c(imgwdy,"bmm_alose.png"),7,7,units="in",res=300)
 plot(bMM_Arzal,plot.type="standard",
-		color=color,
-		color_ope=color_ope,
-		main=str_c("Effectif d'aloses en ",CY),
-		cex.main=1.1,		
-		type="h",
-		silent=TRUE)
+    color=color,
+    color_ope=color_ope,
+    main=str_c("Effectif d'aloses en ",CY),
+    cex.main=1.1,		
+    type="h",
+    silent=TRUE)
 dev.off()
 @
 
@@ -3570,13 +3700,13 @@ poids=0.00492*taille_tot^3.202 # 1693.8
 
 b_carlot<-new("report_sample_char")
 b_carlot<-choice_c(b_carlot,
-		dc=c(5),
-		taxa=c("Alosa"),
-		stage=c("11"),
-		par=c("C001"),
-		horodatedebut=as.Date("2010-01-01"),
-		horodatefin=as.Date(str_c(CY+1,"-01-01")),
-		silent=FALSE)
+    dc=c(5),
+    taxa=c("Alosa"),
+    stage=c("11"),
+    par=c("C001"),
+    horodatedebut=as.Date("2010-01-01"),
+    horodatefin=as.Date(str_c(CY+1,"-01-01")),
+    silent=FALSE)
 # two warning produced, ignored if silent=TRUE
 
 
@@ -3588,24 +3718,24 @@ b_carlot<-calcule(b_carlot,silent=TRUE)
 png(filename=str_c(imgwdy,"size_alose.png"))
 # A set of useful summary functions is provided from the Hmisc package:
 stat_sum_df <- function(fun, geom="crossbar", ...) {
-	stat_summary(fun.data = fun, colour = bleu_EV, geom = geom, width = 0.4, alpha=0.8, ...)
+  stat_summary(fun.data = fun, colour = bleu_EV, geom = geom, width = 0.4, alpha=0.8, ...)
 }
 
 g <- ggplot(b_carlot@data,aes(x=annee,y=car_valeur_quantitatif))
 #fn_coul <- colorRampPalette(colors=c(bleu_EV,"white",marron))
 #col <- fn_coul(length(levels(bilan_carlot@data$mois)))
 g <- g +	geom_violin(color=marron,
-				fill=marron,
-				alpha=0.8)+   # build the base violins	
-		geom_point(aes(color=mois),
-				size=1,
-				position=position_jitter(w = 0.05, h = 0.5))+
-		theme_bw()+
-		stat_sum_df("mean_sdl", fun.args = list(mult = 2), 
-				mapping = aes(x=annee,y=car_valeur_quantitatif,group = annee))+
-		theme_bw()+	
-		scale_color_manual(values=wesanderson::wes_palette("Zissou1", 6, type = "continuous"))+
-		ylab("taille")
+        fill=marron,
+        alpha=0.8)+   # build the base violins	
+    geom_point(aes(color=mois),
+        size=1,
+        position=position_jitter(w = 0.05, h = 0.5))+
+    theme_bw()+
+    stat_sum_df("mean_sdl", fun.args = list(mult = 2), 
+        mapping = aes(x=annee,y=car_valeur_quantitatif,group = annee))+
+    theme_bw()+	
+    scale_color_manual(values=wesanderson::wes_palette("Zissou1", 6, type = "continuous"))+
+    ylab("taille")
 print(g)
 dev.off()
 
@@ -3615,17 +3745,17 @@ dev.off()
 
 
 fundatpech <- function(year,poids_moyen=1680,nomfichier="capture_"){
-	datpech<-read.table(str_c(datawd,nomfichier,year,".csv"),header=TRUE,sep=";")
-	colnames(datpech)<-c("Pecheur","Poids","gisement","temps","date")
-	datpech<-datpech[!is.na(datpech$gisement),]
-	#str(datpech)
-	datpech<-stacomirtools::killfactor(datpech)
-	datpech<-as.data.frame(select(datpech,date,Pecheur,Poids)%>%group_by(date)%>%summarize(capture=sum(Poids)))
-	datpech$date=parse_date_time(datpech$date,"%d/%m/%Y")
-	datpech<-datpech[order(datpech$date),]	
-	datpech$nb=datpech$capture/poids_moyen
-	datpech$jour=as.POSIXct(ymd(str_c("2000","-",month(datpech$date),"-",day(datpech$date))))
-	datpech<-stacomirtools::killfactor(datpech)
+  datpech<-read.table(str_c(datawd,nomfichier,year,".csv"),header=TRUE,sep=";")
+  colnames(datpech)<-c("Pecheur","Poids","gisement","temps","date")
+  datpech<-datpech[!is.na(datpech$gisement),]
+  #str(datpech)
+  datpech<-stacomirtools::killfactor(datpech)
+  datpech<-as.data.frame(select(datpech,date,Pecheur,Poids)%>%group_by(date)%>%summarize(capture=sum(Poids)))
+  datpech$date=parse_date_time(datpech$date,"%d/%m/%Y")
+  datpech<-datpech[order(datpech$date),]	
+  datpech$nb=datpech$capture/poids_moyen
+  datpech$jour=as.POSIXct(ymd(str_c("2000","-",month(datpech$date),"-",day(datpech$date))))
+  datpech<-stacomirtools::killfactor(datpech)
 }
 #datpech2017<-fundatpech("2017",1693)
 # correction d'après le ficher des ventes, voir traitement_capture.R
@@ -3645,12 +3775,12 @@ datpech2016<-fundatpech("2016",1680)
 
 bmi<-new("report_mig_interannual")
 bmi<-choice_c(bmi,
-		dc=c(5),
-		taxa=c("Alosa"),
-		stage=c("11"),
-		start_year="1996",
-		end_year=CY,
-		silent=TRUE)
+    dc=c(5),
+    taxa=c("Alosa"),
+    stage=c("11"),
+    start_year="1996",
+    end_year=CY,
+    silent=TRUE)
 
 
 bmi<-charge(bmi,silent=TRUE)
@@ -3671,13 +3801,13 @@ color_ope<-c(rev(mycolorramp1(10)),mycolorramp2(nb_annee-11),"#85A3BA")
 #============================================
 png(filename=str_c(imgwdy,"rmi_journalier_ala.png"),10,7,units="in",res=300)
 g <- g+scale_x_datetime(name="date",
-				date_breaks="months",
-				date_minor_breaks="weeks", 
-				date_labels="%d-%m",
-				limits=as.POSIXct(strptime(c("2000-03-15","2000-07-01"),format=,"%Y-%m-%d")))+
-		ylab(iconv("Effectifs capturés ou montés dans la passe","UTF8"))+
-		theme_bw()+ 
-		theme(legend.key = element_blank())
+        date_breaks="months",
+        date_minor_breaks="weeks", 
+        date_labels="%d-%m",
+        limits=as.POSIXct(strptime(c("2000-03-15","2000-07-01"),format=,"%Y-%m-%d")))+
+    ylab(iconv("Effectifs capturés ou montés dans la passe","UTF8"))+
+    theme_bw()+ 
+    theme(legend.key = element_blank())
 print(g)
 dev.off()
 
@@ -3700,7 +3830,7 @@ colrp1<-colorRampPalette(colors=c("#6D9A58","#C6B130"))
 load_package("viridis")
 g<-get("g",envir=envir_stacomi)	
 g+
-		ggplot2::scale_fill_manual(values=c(colrp(12),colrp1(12)))
+    ggplot2::scale_fill_manual(values=c(colrp(12),colrp1(12)))
 
 
 #============================================
@@ -3714,19 +3844,19 @@ mmm <- summary(bmi,silent=TRUE)$'5'
 mmm <- mmm[,-1]
 colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2022)")
 xtmmm<-xtable(mmm,caption="Migrations mensuelles des lamproies marines dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-				la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
-		label="table_lpm_mois",
-		digits=c(0,0,0,0,0,0),
-		display = c("s","s","f","f", "f", "f"))
+        la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+    label="table_lpm_mois",
+    digits=c(0,0,0,0,0,0),
+    display = c("s","s","f","f", "f", "f"))
 path_y=file.path(tabwdy,
-		paste(5,"_",
-				paste(bmi@taxa@taxa_selected,collapse="_"),"_",
-				paste(bmi@stage@stage_selected,collapse="_"),"_"
-				,"mensuel.tex",sep=""),fsep ="")
+    paste(5,"_",
+        paste(bmi@taxa@taxa_selected,collapse="_"),"_",
+        paste(bmi@stage@stage_selected,collapse="_"),"_"
+        ,"mensuel.tex",sep=""),fsep ="")
 print(xtmmm,
-		file=path_y,
-		format.args = list(big.mark = " ", decimal.mark = ","),
-		table.placement=c("htbp")#,
+    file=path_y,
+    format.args = list(big.mark = " ", decimal.mark = ","),
+    table.placement=c("htbp")#,
 #include.rownames = FALSE => OK set as global options
 )
 @
@@ -3738,49 +3868,49 @@ print(xtmmm,
 ###############################
 ra	<-new("report_annual")
 ra<-choice_c(ra,
-		dc=c(5),
-		taxa=c("Alosa"),
-		stage=c("11"),
-		start_year=1996,
-		end_year=2022,
-		silent=TRUE)
+    dc=c(5),
+    taxa=c("Alosa"),
+    stage=c("11"),
+    start_year=1996,
+    end_year=2022,
+    silent=TRUE)
 
 
 ra <- connect(ra,silent=FALSE)
 save(ra,file=str_c(datawdy,"ra_mup_",CY,".Rdata"))
 png(filename=str_c(imgwdy,"bilan_annuel_ala.png"))
 barplot(ra,args.legend=list(x="topleft",bty = "n"),
-		col=c("#6BB1C1"),
-		ylab="Effectif (aloses)")
+    col=c("#6BB1C1"),
+    ylab="Effectif (aloses)")
 dev.off()
 
 xtra<-stacomiR::xtable(ra,
-		caption="Migration des aloses (Alosa sp.) dans la passe à bassins du barrage
-				d'Arzal (passe à fentes verticales).",
-		label="table_bilanannuel_ala",
-		dc_name=c("P. bassins")		
+    caption="Migration des aloses (Alosa sp.) dans la passe à bassins du barrage
+        d'Arzal (passe à fentes verticales).",
+    label="table_bilanannuel_ala",
+    dc_name=c("P. bassins")		
 )
 # below not run but one can create a file as following
 
 path <- file.path(tabwdy,
-		paste(paste(ra@dc@dc_selected,collapse="_"),"_",
-				paste(ra@taxa@taxa_selected,collapse="_"),"_",
-				paste(ra@stage@stage_selected,collapse="_"),"_",
-				ra@start_year@year_selected,"to",
-				ra@end_year@year_selected,".tex",sep=""),fsep ="")
+    paste(paste(ra@dc@dc_selected,collapse="_"),"_",
+        paste(ra@taxa@taxa_selected,collapse="_"),"_",
+        paste(ra@stage@stage_selected,collapse="_"),"_",
+        ra@start_year@year_selected,"to",
+        ra@end_year@year_selected,".tex",sep=""),fsep ="")
 # the following uses the "addtorow" argument which creates nice column headings,
 # format.args creates a thousand separator
 # again this will need to be saved in a file using the file argument
 print(xtra,
-		file=path,
-		add.to.row= list(pos=list(0),
-				command=				
-						"\\multicolumn{2}{c}{\\textit{Alosa sp.}}  \\\\ 
-						\\multicolumn{2}{c}{Géniteur} \\\\"),		
-		include.rownames = TRUE,
-		include.colnames = FALSE,
-		format.args = list(big.mark = " ", decimal.mark = ","),
-		booktabs=TRUE
+    file=path,
+    add.to.row= list(pos=list(0),
+        command=				
+            "\\multicolumn{2}{c}{\\textit{Alosa sp.}}  \\\\ 
+            \\multicolumn{2}{c}{Géniteur} \\\\"),		
+    include.rownames = TRUE,
+    include.colnames = FALSE,
+    format.args = list(big.mark = " ", decimal.mark = ","),
+    booktabs=TRUE
 )
 
 vvv[["ALA"]][["path"]] <- gsub("C:/workspace/","../../../",path)
@@ -3884,47 +4014,47 @@ bmi2020 <- summary(bmi,year_choice=2020,silent=FALSE)
 bmi2021 <- summary(bmi,year_choice=2021,silent=FALSE)
 bmi2022 <- summary(bmi,year_choice=2022,silent=FALSE)
 datmens <- data.frame("2016"=c("capture (nb)"=round(sum(datpech2016$nb)),
-				"capture (kg)"=round(sum(datpech2016$capture/1000)),
-				"migration(03)"=0,
-				"migration(04)"=bmi2016[["5"]][1,6],
-				"migration(05)"=bmi2016[["5"]][2,6],
-				"migration(06-07)"=bmi2016[["5"]][3,6]),
-		"2017"=c("capture (nb)"=round(sum(datpech2017$nb)),
-				"capture (kg)"=round(sum(datpech2017$capture/1000)),
-				"migration(03)"=bmi2017[["5"]][1,6],
-				"migration(04)"=bmi2017[["5"]][2,6],
-				"migration(05)"=bmi2017[["5"]][3,6],             
-				"migration(06-07)"=round(sum(bmi2018[["5"]][c(4,5),6]))),
-		"2018"=c("capture (nb)"=0,
-				"capture (kg)"=0,
-				"migration(03)"=0,
-				"migration(04)"=bmi2018[["5"]][1,6],
-				"migration(05)"=bmi2018[["5"]][2,6],
-				"migration(06-07)"=round(sum(bmi2018[["5"]][c(3,4),6]))),            
-		"2019"=c("capture (nb)"=0,
-				"capture (kg)"=0,
-				"migration(03)"=bmi2019[["5"]][1,6],
-				"migration(04)"=bmi2019[["5"]][2,6],
-				"migration(05)"=bmi2019[["5"]][3,6],
-				"migration(06-07)"=NA),
-		"2020"=c("capture (nb)"=0,
-				"capture (kg)"=0,
-				"migration(03)"=bmi2020[["5"]][1,6],
-				"migration(04)"=bmi2020[["5"]][2,6],
-				"migration(05)"=bmi2020[["5"]][3,6],
-				"migration(06-07)"=NA),
-		"2021"=c("capture (nb)"=0,
-				"capture (kg)"=0,
-				"migration(03)"=bmi2021[["5"]][1,6],
-				"migration(04)"=bmi2021[["5"]][2,6],
-				"migration(05)"=bmi2021[["5"]][3,6],
-				"migration(06-07)"=NA), 
-   "2022"=c("capture (nb)"=0,
-    "capture (kg)"=0,
-    "migration(03)"=bmi2022[["5"]][1,6],
-    "migration(04)"=bmi2022[["5"]][2,6],
-    "migration(05)"=bmi2022[["5"]][3,6],
-    "migration(06-07)"=NA) 
+        "capture (kg)"=round(sum(datpech2016$capture/1000)),
+        "migration(03)"=0,
+        "migration(04)"=bmi2016[["5"]][1,6],
+        "migration(05)"=bmi2016[["5"]][2,6],
+        "migration(06-07)"=bmi2016[["5"]][3,6]),
+    "2017"=c("capture (nb)"=round(sum(datpech2017$nb)),
+        "capture (kg)"=round(sum(datpech2017$capture/1000)),
+        "migration(03)"=bmi2017[["5"]][1,6],
+        "migration(04)"=bmi2017[["5"]][2,6],
+        "migration(05)"=bmi2017[["5"]][3,6],             
+        "migration(06-07)"=round(sum(bmi2018[["5"]][c(4,5),6]))),
+    "2018"=c("capture (nb)"=0,
+        "capture (kg)"=0,
+        "migration(03)"=0,
+        "migration(04)"=bmi2018[["5"]][1,6],
+        "migration(05)"=bmi2018[["5"]][2,6],
+        "migration(06-07)"=round(sum(bmi2018[["5"]][c(3,4),6]))),            
+    "2019"=c("capture (nb)"=0,
+        "capture (kg)"=0,
+        "migration(03)"=bmi2019[["5"]][1,6],
+        "migration(04)"=bmi2019[["5"]][2,6],
+        "migration(05)"=bmi2019[["5"]][3,6],
+        "migration(06-07)"=NA),
+    "2020"=c("capture (nb)"=0,
+        "capture (kg)"=0,
+        "migration(03)"=bmi2020[["5"]][1,6],
+        "migration(04)"=bmi2020[["5"]][2,6],
+        "migration(05)"=bmi2020[["5"]][3,6],
+        "migration(06-07)"=NA),
+    "2021"=c("capture (nb)"=0,
+        "capture (kg)"=0,
+        "migration(03)"=bmi2021[["5"]][1,6],
+        "migration(04)"=bmi2021[["5"]][2,6],
+        "migration(05)"=bmi2021[["5"]][3,6],
+        "migration(06-07)"=NA), 
+    "2022"=c("capture (nb)"=0,
+        "capture (kg)"=0,
+        "migration(03)"=bmi2022[["5"]][1,6],
+        "migration(04)"=bmi2022[["5"]][2,6],
+        "migration(05)"=bmi2022[["5"]][3,6],
+        "migration(06-07)"=NA) 
 )
 save(datmens, file=str_c(datawdy,"datmens.Rdata"))
 
@@ -3937,25 +4067,25 @@ save(datmens, file=str_c(datawdy,"datmens.Rdata"))
 datmens2 <- as.data.frame(t(datmens))
 rownames(datmens2) <- gsub("X","",rownames(datmens2))
 xtala <- xtable(datmens2,
-		caption=str_c("Migrations mensuelles et captures annuelles des aloses dans la passe à bassins 
-						du barrage d'Arzal entre 2016 et ", CY,"."),
-		label="table_ala_mois",
-		digits=c(0,0,0,0,0,0,0),
-		align =c("l","l","r","r","r","r","r"),
-		display = c("s","f","f","f", "f", "f","f"))
+    caption=str_c("Migrations mensuelles et captures annuelles des aloses dans la passe à bassins 
+            du barrage d'Arzal entre 2016 et ", CY,"."),
+    label="table_ala_mois",
+    digits=c(0,0,0,0,0,0,0),
+    align =c("l","l","r","r","r","r","r"),
+    display = c("s","f","f","f", "f", "f","f"))
 path_y <- file.path(tabwdy,str_c("2055_IND_11_2016_",CY,".tex"))
 print(xtala,
-		file=path_y,
-		add.to.row= list(pos=list(0),
-				command=				
-						"Année & \\multicolumn{2}{c}{Captures} & \\multicolumn{4}{c}{Migration} \\\\
-						& nb & kg & mars & avril & mai & juin-juillet  \\\\
-						"),
-		include.rownames = TRUE,
-		include.colnames = FALSE,		
-		format.args = list(big.mark = " ", decimal.mark = ","),
-		table.placement=c("pbt"),
-		booktabs=TRUE)
+    file=path_y,
+    add.to.row= list(pos=list(0),
+        command=				
+            "Année & \\multicolumn{2}{c}{Captures} & \\multicolumn{4}{c}{Migration} \\\\
+            & nb & kg & mars & avril & mai & juin-juillet  \\\\
+            "),
+    include.rownames = TRUE,
+    include.colnames = FALSE,		
+    format.args = list(big.mark = " ", decimal.mark = ","),
+    table.placement=c("pbt"),
+    booktabs=TRUE)
 
 vvv[["ALA"]][["path_y"]]<-gsub("C:/workspace/","../../../",path_y)
 save(vvv, file=str_c(datawdy,"vvv.Rdata"))
@@ -3973,8 +4103,8 @@ save(vvv, file=str_c(datawdy,"vvv.Rdata"))
 
 
 dat <- data.frame("annee"=2002:2022,
-		"effectif_capture"=c(177,127,60,293,360,93,134,82,549,376,2499,2994,2633,1330,271,1009,0,0,0,0),
-		"poids_capture"=c(rep(NA,10),4112,4993,4105,2617,456,1707,0,0,0,0))
+    "effectif_capture"=c(177,127,60,293,360,93,134,82,549,376,2499,2994,2633,1330,271,1009,0,0,0,0),
+    "poids_capture"=c(rep(NA,10),4112,4993,4105,2617,456,1707,0,0,0,0))
 dat$poids_capture/dat$effectif_capture
 #dat$effectif_capture=round(1000*dat$capture/poids)
 # Il ne semble pas que le poids moyen ait augmenté à Arzal en 2015
@@ -4009,14 +4139,14 @@ ala0$effectif[ala0$source=="effectif_capture"] <- 0
 
 png(file=str_c(imgwdy,"tx_exploit0.png"),15,10,units="cm",res=300)
 g<-ggplot(ala0[ala0$annee<=2001,])+geom_bar(aes(x=annee,y=effectif,fill=source),stat="identity")+ylim(0,5000)+
-		scale_fill_manual("source",values=c("migration"="#453B1A","effectif_capture"="#93853F"))+
-		scale_x_continuous(limits=c(1995,2015))+
-		theme(#text= element_text(size = 12, colour = 'white'),
-				legend.box =NULL,
-				#legend.key = element_rect(colour = NA, fill = 'white'),
-				#legend.text = element_text(size = 12, colour = 'black'), 
-				#legend.background = element_rect(colour = NA, fill = 'white'),
-				legend.position = c(.2, .8))
+    scale_fill_manual("source",values=c("migration"="#453B1A","effectif_capture"="#93853F"))+
+    scale_x_continuous(limits=c(1995,2015))+
+    theme(#text= element_text(size = 12, colour = 'white'),
+        legend.box =NULL,
+        #legend.key = element_rect(colour = NA, fill = 'white'),
+        #legend.text = element_text(size = 12, colour = 'black'), 
+        #legend.background = element_rect(colour = NA, fill = 'white'),
+        legend.position = c(.2, .8))
 print(g)
 dev.off()
 
@@ -4050,30 +4180,30 @@ dev.off()
 
 png(file=str_c(imgwdy,"tx_exploit3.png"),15,10,units="cm",res=300)
 g<-ggplot(ala2)+geom_bar(aes(x=annee,y=effectif,fill=source),stat="identity")+ylim(0,5000)+
-		scale_fill_manual("source",values=c("migration"=bleu_EV,"effectif_capture"=orange_EV))+
-		geom_text(aes(x=annee,y=textpos,label=tx_exploitation),data=ala[ala$annee<=CY,],size=3)+
-		scale_x_continuous(limits=c(1995,CY+1)) +
-		theme_bw() +		
-		theme(#text= element_text(size = 12, colour = 'white'),
-				legend.box =NULL,
-				#legend.key = element_rect(colour = NA, fill = 'white'),
-				#legend.text = element_text(size = 12, colour = 'black'), 
-				#legend.background = element_rect(colour = NA, fill = 'white'),
-				legend.position = c(.2, .8))
+    scale_fill_manual("source",values=c("migration"=bleu_EV,"effectif_capture"=orange_EV))+
+    geom_text(aes(x=annee,y=textpos,label=tx_exploitation),data=ala[ala$annee<=CY,],size=3)+
+    scale_x_continuous(limits=c(1995,CY+1)) +
+    theme_bw() +		
+    theme(#text= element_text(size = 12, colour = 'white'),
+        legend.box =NULL,
+        #legend.key = element_rect(colour = NA, fill = 'white'),
+        #legend.text = element_text(size = 12, colour = 'black'), 
+        #legend.background = element_rect(colour = NA, fill = 'white'),
+        legend.position = c(.2, .8))
 print(g)
 
 dev.off()
 png(file=str_c(imgwdy,"tx_exploit.png"),15,10,units="cm",res=300)
 g<-ggplot(ala2)+geom_bar(aes(x=annee,y=effectif,fill=source),stat="identity")+ylim(0,5000)+
-		scale_fill_manual("source",values=c("migration"=bleu_EV,"effectif_capture"=orange_EV))+
-		geom_text(aes(x=annee,y=textpos,label=tx_exploitation),data=ala,size=3) +
-		theme_bw() +
-		theme(#text= element_text(size = 12, colour = 'white'),
-				legend.box =NULL,
-				#legend.key = element_rect(colour = NA, fill = 'white'),
-				#legend.text = element_text(size = 12, colour = 'black'), 
-				#legend.background = element_rect(colour = NA, fill = 'white'),
-				legend.position = c(.2, .8))
+    scale_fill_manual("source",values=c("migration"=bleu_EV,"effectif_capture"=orange_EV))+
+    geom_text(aes(x=annee,y=textpos,label=tx_exploitation),data=ala,size=3) +
+    theme_bw() +
+    theme(#text= element_text(size = 12, colour = 'white'),
+        legend.box =NULL,
+        #legend.key = element_rect(colour = NA, fill = 'white'),
+        #legend.text = element_text(size = 12, colour = 'black'), 
+        #legend.background = element_rect(colour = NA, fill = 'white'),
+        legend.position = c(.2, .8))
 print(g)
 
 dev.off()
@@ -4165,27 +4295,27 @@ text(x=17000,y=15000,labels="Blim",col=orange_EV)
 ###########################################
 background<-function(Aminimum=0,Amaximum=4,Bminimum=0,Bmaximum=100000){
 # the left of the graph is filled with polygons
-	Bminimum<<-Bminimum
-	Bmaximum<<-Bmaximum
-	Amaximum<<-Amaximum
-	Atarget<--log(txtarget)
-	Blim=15000
-	Btrigger=Blim
-	Blow=2000
-	B<-c(Bminimum,Blow,Blim)
-	SumA<-c(Aminimum,Aminimum,Atarget) # linear decrease in proportion to B/Btrigger
-	X<-c(B,rev(B))
-	Ylowersquare<-c(SumA,rep(Aminimum,length(B)))
-	df<-data.frame("B"=X,"SumA"=Ylowersquare,"color"="orange3")
-	Yuppersquare<-c(SumA,rep(Amaximum,length(B)))
-	df<-rbind(df,	data.frame("B"=X,"SumA"=Yuppersquare,"color"="red3"))
-	df<-rbind(df,data.frame("B"=c(Blim,Blim,Bmaximum,Bmaximum),
-					"SumA"=c(Aminimum,Atarget,Atarget,Aminimum),
-					"color"="palegreen3")) # drawn clockwise from low left corner
-	df<-rbind(df,data.frame("B"=c(Blim,Blim,Bmaximum,Bmaximum,Blim),
-					"SumA"=c(Atarget,Amaximum,Amaximum,Atarget, Atarget),
-					"color"="orange3")) # drawn clockwise from low left corner
-	return(df)
+  Bminimum<<-Bminimum
+  Bmaximum<<-Bmaximum
+  Amaximum<<-Amaximum
+  Atarget<--log(txtarget)
+  Blim=15000
+  Btrigger=Blim
+  Blow=2000
+  B<-c(Bminimum,Blow,Blim)
+  SumA<-c(Aminimum,Aminimum,Atarget) # linear decrease in proportion to B/Btrigger
+  X<-c(B,rev(B))
+  Ylowersquare<-c(SumA,rep(Aminimum,length(B)))
+  df<-data.frame("B"=X,"SumA"=Ylowersquare,"color"="orange3")
+  Yuppersquare<-c(SumA,rep(Amaximum,length(B)))
+  df<-rbind(df,	data.frame("B"=X,"SumA"=Yuppersquare,"color"="red3"))
+  df<-rbind(df,data.frame("B"=c(Blim,Blim,Bmaximum,Bmaximum),
+          "SumA"=c(Aminimum,Atarget,Atarget,Aminimum),
+          "color"="palegreen3")) # drawn clockwise from low left corner
+  df<-rbind(df,data.frame("B"=c(Blim,Blim,Bmaximum,Bmaximum,Blim),
+          "SumA"=c(Atarget,Amaximum,Amaximum,Atarget, Atarget),
+          "color"="orange3")) # drawn clockwise from low left corner
+  return(df)
 }
 ######################"
 # Data for buble plot (must be in the same format)
@@ -4206,38 +4336,38 @@ x_limitsu <- c(5000, NA)
 x_limitsl <- c(NA, 1000)
 
 g <-	ggplot(df[,]) +
-		theme_bw()+		
-		theme(legend.key = element_rect(colour = "white")) +
-		geom_polygon(aes(x=B,y=SumA,fill=color),alpha=0.7) +		
-		scale_fill_identity(labels=NULL) +
-		scale_x_continuous(name=expression(paste(bold("Nombre geniteurs"))),
-				limits=c(Bminimum, Bmaximum),
-				breaks=c(1,2000,15000,20000),
-				labels=c(1,2000,15000,20000)) +
-		scale_y_continuous(name=expression(paste(bold("Mortalite cumulee")~ ~symbol("\123"),"A")),
-				limits=c(Aminimum, Amaximum)) +			
-		#scale_colour_discrete(name="year")+	
-		#scale_color_discrete(guide = 'none')+
-		geom_path(data=precodataf,aes(x=effectif_total,y=tx_exploitation,col=annee),size=1.5)+
-		geom_point(data=precodataf,aes(x=effectif_total,y=tx_exploitation,size=effectif_total), 
-				colour="black", 
-				pch=21,
-				fill="yellow")	+
-		
-		geom_label_repel(data=precodataf[precodataf$effectif_total>2000,],
-				aes(x=effectif_total,y=tx_exploitation, 
-						label = annee),
-				arrow = grid::arrow(length = unit(0.01, "npc"), type = "closed", ends = "last"),
-				force = 1,
-				xlim  = x_limitsu) +
-		geom_label_repel(data=precodataf[precodataf$effectif_total<=2000,],
-				aes(x=effectif_total,y=tx_exploitation, 
-						label = annee),
-				arrow = grid::arrow(length = unit(0.01, "npc"), type = "closed", ends = "last"),
-				force = 1,
-				xlim  = x_limitsl      
-		) +
-		scale_colour_continuous(trans = 'reverse')
+    theme_bw()+		
+    theme(legend.key = element_rect(colour = "white")) +
+    geom_polygon(aes(x=B,y=SumA,fill=color),alpha=0.7) +		
+    scale_fill_identity(labels=NULL) +
+    scale_x_continuous(name=expression(paste(bold("Nombre geniteurs"))),
+        limits=c(Bminimum, Bmaximum),
+        breaks=c(1,2000,15000,20000),
+        labels=c(1,2000,15000,20000)) +
+    scale_y_continuous(name=expression(paste(bold("Mortalite cumulee")~ ~symbol("\123"),"A")),
+        limits=c(Aminimum, Amaximum)) +			
+    #scale_colour_discrete(name="year")+	
+    #scale_color_discrete(guide = 'none')+
+    geom_path(data=precodataf,aes(x=effectif_total,y=tx_exploitation,col=annee),size=1.5)+
+    geom_point(data=precodataf,aes(x=effectif_total,y=tx_exploitation,size=effectif_total), 
+        colour="black", 
+        pch=21,
+        fill="yellow")	+
+    
+    geom_label_repel(data=precodataf[precodataf$effectif_total>2000,],
+        aes(x=effectif_total,y=tx_exploitation, 
+            label = annee),
+        arrow = grid::arrow(length = unit(0.01, "npc"), type = "closed", ends = "last"),
+        force = 1,
+        xlim  = x_limitsu) +
+    geom_label_repel(data=precodataf[precodataf$effectif_total<=2000,],
+        aes(x=effectif_total,y=tx_exploitation, 
+            label = annee),
+        arrow = grid::arrow(length = unit(0.01, "npc"), type = "closed", ends = "last"),
+        force = 1,
+        xlim  = x_limitsl      
+    ) +
+    scale_colour_continuous(trans = 'reverse')
 
 png(file=str_c(imgwdy,"preco_diagram.png"),10,7,units="in",res=300)
 print(g)
@@ -4405,23 +4535,23 @@ d'Arzal.}
 color_ope<-sample(c(mycolorramp1(10),mycolorramp2(10)),20)
 bMM_Arzal <- new("report_mig_mult")
 bMM_Arzal <- choice_c(bMM_Arzal,
-		dc=c(5),
-		taxa=c("Salmo salar"),
-		stage=c("IND"),
-		datedebut=str_c(CY,"-01-01"),
-		datefin=str_c(CY,"-12-31"))
+    dc=c(5),
+    taxa=c("Salmo salar"),
+    stage=c("IND"),
+    datedebut=str_c(CY,"-01-01"),
+    datefin=str_c(CY,"-12-31"))
 bMM_Arzal<-charge(bMM_Arzal)
 bMM_Arzal<-connect(bMM_Arzal)
 bMM_Arzal=calcule(bMM_Arzal)
 
 png(file=str_c(imgwdy,"bmm_sat.png"),7,7,units="in",res=300)
 plot(bMM_Arzal,plot.type="standard",
-		color=color,
-		color_ope=color_ope,
-		main=str_c("Effectif de saumons en ", CY),
-		cex.main=1.1,		
-		type="h",
-		silent=TRUE)
+    color=color,
+    color_ope=color_ope,
+    main=str_c("Effectif de saumons en ", CY),
+    cex.main=1.1,		
+    type="h",
+    silent=TRUE)
 dev.off()
 @
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -4429,12 +4559,12 @@ dev.off()
 <<report_interannual_sat, echo=FALSE, eval=FALSE, include=FALSE >>=
 rmi <- new("report_mig_interannual")
 rmi <- choice_c(rmi,
-		dc=c(5),
-		taxa=c("Salmo salar"),
-		stage=c("IND"),
-		start_year="1996",
-		end_year=CY,
-		silent=TRUE)
+    dc=c(5),
+    taxa=c("Salmo salar"),
+    stage=c("IND"),
+    start_year="1996",
+    end_year=CY,
+    silent=TRUE)
 rmi <- charge(rmi)
 rmi <- connect(rmi,check=TRUE,silent=FALSE)	
 rmi <- calcule(rmi)
@@ -4450,13 +4580,13 @@ colors<-rev(mycolorramp(nb_annee))
 #============================================
 png(filename=str_c(imgwdy,"rmi_density_sat.png"))
 g+ggplot2::scale_fill_manual(values=colors)+
-		ggplot2::ggtitle("")+
-		theme(
-				panel.border = element_blank(),
-				panel.background = element_blank(),
-				panel.grid.minor = element_line(colour = "white"),
-				panel.grid.major = element_line(colour = "white"),
-				panel.grid.major.x = element_line(colour = "white"))
+    ggplot2::ggtitle("")+
+    theme(
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.minor = element_line(colour = "white"),
+        panel.grid.major = element_line(colour = "white"),
+        panel.grid.major.x = element_line(colour = "white"))
 dev.off()
 #============================================
 plot(rmi,plot.type="barchart",timesplit="mois",silent=TRUE)
@@ -4481,19 +4611,19 @@ mmm <- summary(rmi,silent=TRUE)$'5'
 mmm <- mmm[,-1]
 colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2022)")
 xtmmm<-xtable(mmm,caption="Migrations mensuelles des saumons dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-				la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
-		label="table_sat_mois",
-		digits=c(0,0,0,0,0,0),
-		display = c("s","s","f","f", "f", "f"))
+        la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+    label="table_sat_mois",
+    digits=c(0,0,0,0,0,0),
+    display = c("s","s","f","f", "f", "f"))
 path_y=file.path(tabwdy,
-		paste(5,"_",
-				paste(rmi@taxa@taxa_selected,collapse="_"),"_",
-				paste(rmi@stage@stage_selected,collapse="_"),"_"
-				,"mensuel.tex",sep=""),fsep ="")
+    paste(5,"_",
+        paste(rmi@taxa@taxa_selected,collapse="_"),"_",
+        paste(rmi@stage@stage_selected,collapse="_"),"_"
+        ,"mensuel.tex",sep=""),fsep ="")
 print(xtmmm,
-		file=path_y,
-		format.args = list(big.mark = " ", decimal.mark = ","),
-		table.placement=c("htbp")#,
+    file=path_y,
+    format.args = list(big.mark = " ", decimal.mark = ","),
+    table.placement=c("htbp")#,
 #include.rownames = FALSE => OK set as global options
 )
 #vvv[["LPM"]]<- list()# normalement vient du rapport de l'années précédente
@@ -4508,51 +4638,51 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 ###############################
 ra <- new("report_annual")
 ra <- choice_c(ra,
-		dc=c(5),
-		taxa=c("Salmo salar"),
-		stage=c("IND"),
-		start_year=1996,
-		end_year=CY,
-		silent=TRUE)
+    dc=c(5),
+    taxa=c("Salmo salar"),
+    stage=c("IND"),
+    start_year=1996,
+    end_year=CY,
+    silent=TRUE)
 ra <- connect(ra,silent=FALSE)
 png(filename=str_c(imgwdy,"barplot_report_annual_sat.png"))
 barplot(ra)
 dev.off()
 xtra<-stacomiR::xtable(ra,
-		caption="Migration des saumons atlantiques dans la passe à bassins du barrage
-				d'Arzal (passe à fentes verticales).",
-		label="table_bilanannuel_sat",
-		dc_name=c("P. bassins")		
+    caption="Migration des saumons atlantiques dans la passe à bassins du barrage
+        d'Arzal (passe à fentes verticales).",
+    label="table_bilanannuel_sat",
+    dc_name=c("P. bassins")		
 )
 # below not run but one can create a file as following
 
 path <- file.path(tabwdy,
-		paste(paste(ra@dc@dc_selected,collapse="_"),"_",
-				paste(ra@taxa@taxa_selected,collapse="_"),"_",
-				paste(ra@stage@stage_selected,collapse="_"),"_",
-				ra@start_year@year_selected,"to",
-				ra@end_year@year_selected,".tex",sep=""),fsep ="")
+    paste(paste(ra@dc@dc_selected,collapse="_"),"_",
+        paste(ra@taxa@taxa_selected,collapse="_"),"_",
+        paste(ra@stage@stage_selected,collapse="_"),"_",
+        ra@start_year@year_selected,"to",
+        ra@end_year@year_selected,".tex",sep=""),fsep ="")
 # the following uses the "addtorow" argument which creates nice column headings,
 # format.args creates a thousand separator
 # again this will need to be saved in a file using the file argument
 print(xtra,
-		file=path,
-		add.to.row= list(pos=list(0),
-				command=				
-						"\\multicolumn{2}{c}{\\textit{saumon}}  \\\\
-						\\multicolumn{2}{c}{Indéterminé} \\\\"),		
-		include.rownames = TRUE,
-		include.colnames = FALSE,
-		format.args = list(big.mark = " ", decimal.mark = ","),
-		booktabs=TRUE
+    file=path,
+    add.to.row= list(pos=list(0),
+        command=				
+            "\\multicolumn{2}{c}{\\textit{saumon}}  \\\\
+            \\multicolumn{2}{c}{Indéterminé} \\\\"),		
+    include.rownames = TRUE,
+    include.colnames = FALSE,
+    format.args = list(big.mark = " ", decimal.mark = ","),
+    booktabs=TRUE
 )
 
 # some manual editing needed....
 #===================================================
 png(filename=str_c(imgwdy,"bilan_annuel_sat.png"))
 barplot(ra,args.legend=list(x="topleft",bty = "n"),
-		col=c(marron),
-		ylab="Effectif (saumons atlantiques)")
+    col=c(marron),
+    ylab="Effectif (saumons atlantiques)")
 dev.off()
 #===================================================
 # total 
@@ -4578,13 +4708,13 @@ stacomi()
 # TODO AJOUTER LES SALMO
 r_sample_char <- new("report_sample_char")
 r_sample_char <- choice_c(r_sample_char,
-		dc=c("5"),
-		taxa=c("Salmo salar"),
-		stage=c("IND"),
-		par=c("C001"),
-		horodatedebut="1998-01-01",
-		horodatefin=str_c(CY,"-12-31"),
-		silent=FALSE)
+    dc=c("5"),
+    taxa=c("Salmo salar"),
+    stage=c("IND"),
+    par=c("C001"),
+    horodatedebut="1998-01-01",
+    horodatefin=str_c(CY,"-12-31"),
+    silent=FALSE)
 r_sample_char <- connect(r_sample_char)
 r_sample_char <- calcule(r_sample_char,silent=TRUE)
 
@@ -4592,14 +4722,14 @@ r_sample_char <- calcule(r_sample_char,silent=TRUE)
 
 png(filename=str_c(imgwdy,"size_sat.png"))
 ggplot(r_sample_char@data) +
-		geom_boxplot(aes(x=annee,y=car_valeur_quantitatif), outlier.alpha = 0) +
-		ggplot2::ylab("taille video (mm)")+
-		ggplot2::xlab("annee")+
-		geom_jitter(aes(x=annee,y=car_valeur_quantitatif),col=bleu_EV,
-				width = 0.2, 
-				height = 0.2, 
-				alpha=0.5)+
-		theme_bw() 
+    geom_boxplot(aes(x=annee,y=car_valeur_quantitatif), outlier.alpha = 0) +
+    ggplot2::ylab("taille video (mm)")+
+    ggplot2::xlab("annee")+
+    geom_jitter(aes(x=annee,y=car_valeur_quantitatif),col=bleu_EV,
+        width = 0.2, 
+        height = 0.2, 
+        alpha=0.5)+
+    theme_bw() 
 dev.off()
 @
 
@@ -4608,12 +4738,12 @@ dev.off()
 # les trt sont traduites en Salmo au niveau genre dans la base : essais pour comprendre
 rmi <- new("report_mig_interannual")
 rmi <- choice_c(rmi,
-		dc=c(5),
-		taxa=c("Salmo"),
-		stage=c("IND"),
-		start_year="1996",
-		end_year=CY,
-		silent=TRUE)
+    dc=c(5),
+    taxa=c("Salmo"),
+    stage=c("IND"),
+    start_year="1996",
+    end_year=CY,
+    silent=TRUE)
 rmi <- charge(rmi)
 rmi <- connect(rmi,check=TRUE,silent=FALSE)	
 rmi <- calcule(rmi)
@@ -4629,13 +4759,13 @@ colors<-rev(mycolorramp(nb_annee))
 #============================================
 png(filename=str_c(imgwdy,"rmi_density_trt.png"))
 g+ggplot2::scale_fill_manual(values=colors)+
-		ggplot2::ggtitle("")+
-		theme(
-				panel.border = element_blank(),
-				panel.background = element_blank(),
-				panel.grid.minor = element_line(colour = "white"),
-				panel.grid.major = element_line(colour = "white"),
-				panel.grid.major.x = element_line(colour = "white"))
+    ggplot2::ggtitle("")+
+    theme(
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.minor = element_line(colour = "white"),
+        panel.grid.major = element_line(colour = "white"),
+        panel.grid.major.x = element_line(colour = "white"))
 dev.off()
 #============================================
 plot(rmi,plot.type="barchart",timesplit="mois",silent=TRUE)
@@ -4660,19 +4790,19 @@ mmm <- summary(rmi,silent=TRUE)$'5'
 mmm <- mmm[,-1]
 colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2022)")
 xtmmm<-xtable(mmm,caption="Migrations mensuelles de truites dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-				la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
-		label="table_sat_genre_mois",
-		digits=c(0,0,0,0,0,0),
-		display = c("s","s","f","f", "f", "f"))
+        la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+    label="table_sat_genre_mois",
+    digits=c(0,0,0,0,0,0),
+    display = c("s","s","f","f", "f", "f"))
 path_y=file.path(tabwdy,
-		paste(5,"_",
-				paste(rmi@taxa@taxa_selected,collapse="_"),"_",
-				paste(rmi@stage@stage_selected,collapse="_"),"_"
-				,"mensuel.tex",sep=""),fsep ="")
+    paste(5,"_",
+        paste(rmi@taxa@taxa_selected,collapse="_"),"_",
+        paste(rmi@stage@stage_selected,collapse="_"),"_"
+        ,"mensuel.tex",sep=""),fsep ="")
 print(xtmmm,
-		file=path_y,
-		format.args = list(big.mark = " ", decimal.mark = ","),
-		table.placement=c("htbp")#,
+    file=path_y,
+    format.args = list(big.mark = " ", decimal.mark = ","),
+    table.placement=c("htbp")#,
 #include.rownames = FALSE => OK set as global options
 )
 #vvv[["LPM"]]<- list()# normalement vient du rapport de l'années précédente
@@ -4689,13 +4819,13 @@ library("stacomiR")
 stacomi()
 r_sample_char <- new("report_sample_char")
 r_sample_char <- choice_c(r_sample_char,
-		dc=c("5"),
-		taxa=c("Salmo"),
-		stage=c("IND"),
-		par=c("C001"),
-		horodatedebut="1998-01-01",
-		horodatefin=str_c(CY,"-12-31"),
-		silent=FALSE)
+    dc=c("5"),
+    taxa=c("Salmo"),
+    stage=c("IND"),
+    par=c("C001"),
+    horodatedebut="1998-01-01",
+    horodatefin=str_c(CY,"-12-31"),
+    silent=FALSE)
 r_sample_char <- connect(r_sample_char)
 r_sample_char <- calcule(r_sample_char,silent=TRUE)
 
@@ -4703,14 +4833,14 @@ r_sample_char <- calcule(r_sample_char,silent=TRUE)
 
 png(filename=str_c(imgwdy,"size_sat.png"))
 ggplot(r_sample_char@data) +
-		geom_boxplot(aes(x=annee,y=car_valeur_quantitatif), outlier.alpha = 0) +
-		ggplot2::ylab("taille video (mm)")+
-		ggplot2::xlab("annee")+
-		geom_jitter(aes(x=annee,y=car_valeur_quantitatif),col=bleu_EV,
-				width = 0.2, 
-				height = 0.2, 
-				alpha=0.5)+
-		theme_bw() 
+    geom_boxplot(aes(x=annee,y=car_valeur_quantitatif), outlier.alpha = 0) +
+    ggplot2::ylab("taille video (mm)")+
+    ggplot2::xlab("annee")+
+    geom_jitter(aes(x=annee,y=car_valeur_quantitatif),col=bleu_EV,
+        width = 0.2, 
+        height = 0.2, 
+        alpha=0.5)+
+    theme_bw() 
 dev.off()
 @
 
@@ -4813,54 +4943,54 @@ vidéocontrôle d'Arzal.}
 color_ope<-sample(c(mycolorramp1(10),mycolorramp2(10)),20)
 bMM_Arzal <- new("report_mig_mult")
 bMM_Arzal <- choice_c(bMM_Arzal,
-		dc=c(5),
-		taxa=c("Salmo trutta trutta"),
-		stage=c("IND"),
-		datedebut=str_c(CY,"-01-01"),
-		datefin=str_c(CY,"-12-31"))
+    dc=c(5),
+    taxa=c("Salmo trutta trutta"),
+    stage=c("IND"),
+    datedebut=str_c(CY,"-01-01"),
+    datefin=str_c(CY,"-12-31"))
 bMM_Arzal <- charge(bMM_Arzal)
 bMM_Arzal <- connect(bMM_Arzal)
 bMM_Arzal <- calcule(bMM_Arzal)
 color=c(
-		"#052945",#working
-		"#ECDAC0",#stopped
-		"#3071A2",#normal
-		"#462800",#maintenance
-		"#B68B52",#dysfunction
-		"#FFC26E",
-		"#A66F24",
-		"#012746",#mesure
-		"#29A570",#calcule
-		"#B67B2D", #expert
-		"#4F7EA2" # ponctuel
+    "#052945",#working
+    "#ECDAC0",#stopped
+    "#3071A2",#normal
+    "#462800",#maintenance
+    "#B68B52",#dysfunction
+    "#FFC26E",
+    "#A66F24",
+    "#012746",#mesure
+    "#29A570",#calcule
+    "#B67B2D", #expert
+    "#4F7EA2" # ponctuel
 )
 if (nrow(bMM_Arzal@data)==0) {
-	bM = new("report_mig")
-	if (!silent)
-		funout(gettextf("Running report_mig for year %s", Y, domain = "R-StacomiR"))
-	bM = choice_c(
-			bM,
-			dc = 5,
-			taxa=c("Salmo trutta trutta"),
-			stage=c("IND"),
-			datedebut=str_c(CY,"-01-01"),
-			datefin=str_c(CY,"-12-31"))	
-	bM <- charge(bM, silent = FALSE)
-	bM <- connect(bM, silent = FALSE)
-	bM <- calcule(bM, silent = FALSE)
-	
-	
-	
-	stop("PAs de truites de mer cette année, supprimer le graphe")
+  bM = new("report_mig")
+  if (!silent)
+    funout(gettextf("Running report_mig for year %s", Y, domain = "R-StacomiR"))
+  bM = choice_c(
+      bM,
+      dc = 5,
+      taxa=c("Salmo trutta trutta"),
+      stage=c("IND"),
+      datedebut=str_c(CY,"-01-01"),
+      datefin=str_c(CY,"-12-31"))	
+  bM <- charge(bM, silent = FALSE)
+  bM <- connect(bM, silent = FALSE)
+  bM <- calcule(bM, silent = FALSE)
+  
+  
+  
+  stop("PAs de truites de mer cette année, supprimer le graphe")
 }
 png(file=str_c(imgwdy,"bmm_trm.png"),7,7,units="in",res=300)
 plot(bMM_Arzal,plot.type="standard",
-		color=color,
-		color_ope=color_ope,
-		main=str_c("Effectif de truites de mer en ", CY),
-		cex.main=1.1,		
-		type="h",
-		silent=TRUE)
+    color=color,
+    color_ope=color_ope,
+    main=str_c("Effectif de truites de mer en ", CY),
+    cex.main=1.1,		
+    type="h",
+    silent=TRUE)
 dev.off()
 @
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -4868,12 +4998,12 @@ dev.off()
 <<report_interannual_trm, echo=FALSE, eval=FALSE, include=FALSE >>=
 rmi<-new("report_mig_interannual")
 rmi<-choice_c(rmi,
-		dc=c(5),
-		taxa=c("Salmo trutta trutta"),
-		stage=c("IND"),
-		start_year="1996",
-		end_year=CY,
-		silent=TRUE)
+    dc=c(5),
+    taxa=c("Salmo trutta trutta"),
+    stage=c("IND"),
+    start_year="1996",
+    end_year=CY,
+    silent=TRUE)
 rmi<-charge(rmi)
 rmi<-connect(rmi,check=TRUE,silent=FALSE)	
 rmi<-calcule(rmi)
@@ -4889,13 +5019,13 @@ colors<-rev(mycolorramp(nb_annee))
 #============================================
 png(filename=str_c(imgwdy,"rmi_density_trm.png"))
 g+ggplot2::scale_fill_manual(values=colors)+
-		ggplot2::ggtitle("")+
-		theme(
-				panel.border = element_blank(),
-				panel.background = element_blank(),
-				panel.grid.minor = element_line(colour = "white"),
-				panel.grid.major = element_line(colour = "white"),
-				panel.grid.major.x = element_line(colour = "white"))
+    ggplot2::ggtitle("")+
+    theme(
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.minor = element_line(colour = "white"),
+        panel.grid.major = element_line(colour = "white"),
+        panel.grid.major.x = element_line(colour = "white"))
 dev.off()
 #============================================
 plot(rmi,plot.type="barchart",timesplit="mois",silent=TRUE)
@@ -4920,19 +5050,19 @@ mmm <- summary(rmi,silent=TRUE)$'5'
 mmm <- mmm[,-1]
 colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2022)")
 xtmmm<-xtable(mmm,caption="Migrations mensuelles des truites de mer dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-				la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
-		label="table_trm_mois",
-		digits=c(0,0,0,0,0,0),
-		display = c("s","s","f","f", "f", "f"))
+        la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+    label="table_trm_mois",
+    digits=c(0,0,0,0,0,0),
+    display = c("s","s","f","f", "f", "f"))
 path_y=file.path(tabwdy,
-		paste(5,"_",
-				paste(rmi@taxa@taxa_selected,collapse="_"),"_",
-				paste(rmi@stage@stage_selected,collapse="_"),"_"
-				,"mensuel.tex",sep=""),fsep ="")
+    paste(5,"_",
+        paste(rmi@taxa@taxa_selected,collapse="_"),"_",
+        paste(rmi@stage@stage_selected,collapse="_"),"_"
+        ,"mensuel.tex",sep=""),fsep ="")
 print(xtmmm,
-		file=path_y,
-		format.args = list(big.mark = " ", decimal.mark = ","),
-		table.placement=c("htbp")#,
+    file=path_y,
+    format.args = list(big.mark = " ", decimal.mark = ","),
+    table.placement=c("htbp")#,
 #include.rownames = FALSE => OK set as global options
 )
 #vvv[["LPM"]]<- list()# normalement vient du rapport de l'années précédente
@@ -4946,51 +5076,51 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 ###############################
 ra<-new("report_annual")
 ra<-choice_c(ra,
-		dc=c(5),
-		taxa=c("Salmo trutta trutta"),
-		stage=c("IND"),
-		start_year=1996,
-		end_year=CY,
-		silent=TRUE)
+    dc=c(5),
+    taxa=c("Salmo trutta trutta"),
+    stage=c("IND"),
+    start_year=1996,
+    end_year=CY,
+    silent=TRUE)
 ra <- connect(ra,silent=FALSE)
 png(filename=str_c(imgwdy,"barplot_report_annual_trm.png"))
 barplot(ra)
 dev.off()
 xtra<-stacomiR::xtable(ra,
-		caption="Migration des truites de mer dans la passe à bassins du barrage
-				d'Arzal (passe à fentes verticales).",
-		label="table_bilanannuel_trm",
-		dc_name=c("P. bassins")		
+    caption="Migration des truites de mer dans la passe à bassins du barrage
+        d'Arzal (passe à fentes verticales).",
+    label="table_bilanannuel_trm",
+    dc_name=c("P. bassins")		
 )
 # below not run but one can create a file as following
 
 path=file.path(tabwdy,
-		paste(paste(ra@dc@dc_selected,collapse="_"),"_",
-				paste(ra@taxa@taxa_selected,collapse="_"),"_",
-				paste(ra@stage@stage_selected,collapse="_"),"_",
-				ra@start_year@year_selected,"to",
-				ra@end_year@year_selected,".tex",sep=""),fsep ="")
+    paste(paste(ra@dc@dc_selected,collapse="_"),"_",
+        paste(ra@taxa@taxa_selected,collapse="_"),"_",
+        paste(ra@stage@stage_selected,collapse="_"),"_",
+        ra@start_year@year_selected,"to",
+        ra@end_year@year_selected,".tex",sep=""),fsep ="")
 # the following uses the "addtorow" argument which creates nice column headings,
 # format.args creates a thousand separator
 # again this will need to be saved in a file using the file argument
 print(xtra,
-		file=path,
-		add.to.row= list(pos=list(0),
-				command=				
-						"\\multicolumn{2}{c}{\\textit{Salmo trutta trutta}}  \\\\\n 
-						\\multicolumn{2}{c}{Indéterminé} \\\\"),
-		include.rownames = TRUE,
-		include.colnames = FALSE,
-		format.args = list(big.mark = " ", decimal.mark = ","),
-		booktabs=TRUE
+    file=path,
+    add.to.row= list(pos=list(0),
+        command=				
+            "\\multicolumn{2}{c}{\\textit{Salmo trutta trutta}}  \\\\\n 
+            \\multicolumn{2}{c}{Indéterminé} \\\\"),
+    include.rownames = TRUE,
+    include.colnames = FALSE,
+    format.args = list(big.mark = " ", decimal.mark = ","),
+    booktabs=TRUE
 )
 
 # some manual editing needed....
 #===================================================
 png(filename=str_c(imgwdy,"bilan_annuel_trm.png"))
 barplot(ra,args.legend=list(x="topleft",bty = "n"),
-		col=c(marron),
-		ylab="Effectif (truite de mer)")
+    col=c(marron),
+    ylab="Effectif (truite de mer)")
 dev.off()
 #===================================================
 # total 
@@ -5016,27 +5146,27 @@ stacomi()
 
 r_sample_char <- new("report_sample_char")
 r_sample_char <- choice_c(r_sample_char,
-		dc=c("5"),
-		taxa=c("Salmo trutta trutta"),
-		stage=c("IND"),
-		par=c("C001"),
-		horodatedebut="1998-01-01",
-		horodatefin=str_c(CY,"-12-31"),
-		silent=FALSE)
+    dc=c("5"),
+    taxa=c("Salmo trutta trutta"),
+    stage=c("IND"),
+    par=c("C001"),
+    horodatedebut="1998-01-01",
+    horodatefin=str_c(CY,"-12-31"),
+    silent=FALSE)
 r_sample_char <- connect(r_sample_char)
 r_sample_char <- calcule(r_sample_char,silent=TRUE)
 
 
 png(file=str_c(imgwdy,"size_trm.png"),10,7,units="in",res=300)
 ggplot(r_sample_char@data) +
-		geom_boxplot(aes(x=annee,y=car_valeur_quantitatif, fill=tax_nom_latin), outlier.alpha = 0) +
-		ggplot2::ylab("taille video (mm)")+
-		ggplot2::xlab("annee")+
-		geom_jitter(aes(x=annee,y=car_valeur_quantitatif, col=tax_nom_latin),
-				width = 0.2, 
-				height = 0.2, 
-				alpha=0.5)+
-		theme_bw() 
+    geom_boxplot(aes(x=annee,y=car_valeur_quantitatif, fill=tax_nom_latin), outlier.alpha = 0) +
+    ggplot2::ylab("taille video (mm)")+
+    ggplot2::xlab("annee")+
+    geom_jitter(aes(x=annee,y=car_valeur_quantitatif, col=tax_nom_latin),
+        width = 0.2, 
+        height = 0.2, 
+        alpha=0.5)+
+    theme_bw() 
 dev.off()
 @
 
@@ -5101,21 +5231,21 @@ bilesp <- new("report_species")
 # split is one of "none", "year", "week", "month
 # first load all taxa
 bilesp <- choice_c(bilesp,
-		dc=c(5),
-		split="none", 
-		start_year="2000",
-		end_year=CY,
-		silent=FALSE)	
+    dc=c(5),
+    split="none", 
+    start_year="2000",
+    end_year=CY,
+    silent=FALSE)	
 # remove Liza ramada from bilesp
 taxa <- bilesp@taxa@taxa_selected
 taxa <- taxa[!taxa %in% c(2183,2055,2014,2224,2038, 2220)]
 bilesp <- choice_c(bilesp,
-		dc=c(5),
-		taxa=taxa,
-		split="none", 
-		start_year="2000",
-		end_year=CY,
-		silent=FALSE)
+    dc=c(5),
+    taxa=taxa,
+    split="none", 
+    start_year="2000",
+    end_year=CY,
+    silent=FALSE)
 #bilesp<-charge(bilesp) this is used by the graphical interface
 bilesp <- connect(bilesp)
 bilesp <- calcule(bilesp)
@@ -5133,19 +5263,19 @@ dat.gg <- circleLayoutVertices(packing, npoints=50)
 
 # Make the plot
 g <- ggplot() + 		
-		# Make the bubbles
-		geom_polygon(data = dat.gg, aes(x, y, group = id, fill=id), colour = "black", alpha = 0.6) +
-		
-		# Add text in the center of each bubble + control its size
-		ggrepel::geom_label_repel(data = data, aes(x, y, label = paste(taxa_stage, "\n N=", Effectif)),max.overlaps = 1000) +
-		scale_size_continuous(range = c(1,4)) +
-		ggthemes::scale_fill_gradient2_tableau(palette="Temperature Diverging")+
-		#scale_fill_viridis() +
-		
-		# General theme:
-		theme_void() + 
-		theme(legend.position="none") +
-		coord_equal()
+    # Make the bubbles
+    geom_polygon(data = dat.gg, aes(x, y, group = id, fill=id), colour = "black", alpha = 0.6) +
+    
+    # Add text in the center of each bubble + control its size
+    ggrepel::geom_label_repel(data = data, aes(x, y, label = paste(taxa_stage, "\n N=", Effectif)),max.overlaps = 1000) +
+    scale_size_continuous(range = c(1,4)) +
+    ggthemes::scale_fill_gradient2_tableau(palette="Temperature Diverging")+
+    #scale_fill_viridis() +
+    
+    # General theme:
+    theme_void() + 
+    theme(legend.position="none") +
+    coord_equal()
 
 png(file=str_c(imgwdy,"autres_especes_2000_",CY,".png"),8,8,units="in",res=300)
 print(g)
@@ -5155,35 +5285,35 @@ dev.off()
 ###############
 
 bilesp<-choice_c(bilesp,
-		dc=c(5),
-		taxa=taxa,
-		start_year=CY,
-		end_year=CY,
-		silent=FALSE)
+    dc=c(5),
+    taxa=taxa,
+    start_year=CY,
+    end_year=CY,
+    silent=FALSE)
 bilesp<-charge(bilesp)
 bilesp<-connect(bilesp)
 bilesp<-calcule(bilesp)
 
 png(file=str_c(imgwdy,"autres_especes.png"),8,8,units="in",res=300)
 ggplot(bilesp@calcdata, aes(x="",y=(Effectif / sum(Effectif))*100,fill=taxa_stage))+
-		geom_bar(,width=1, color="white", stat = "identity",)+
-		ggthemes::scale_fill_tableau()+
-		theme_void()+
-		geom_text(aes(y = round(Effectif / sum(Effectif) * 100, 1), label = Effectif), 
-				position = position_stack(vjust = 0.5), color = "white", size=6)+
-		coord_polar("y", start=0)
+    geom_bar(,width=1, color="white", stat = "identity",)+
+    ggthemes::scale_fill_tableau()+
+    theme_void()+
+    geom_text(aes(y = round(Effectif / sum(Effectif) * 100, 1), label = Effectif), 
+        position = position_stack(vjust = 0.5), color = "white", size=6)+
+    coord_polar("y", start=0)
 dev.off()
 @
 
 <<silurus, echo=FALSE, eval=FALSE,include=FALSE >>=
 rmi<-new("report_mig_interannual")
 rmi<-choice_c(rmi,
-		dc=c(5),
-		taxa=c("Silurus glanis"),
-		stage=c("IND"),
-		start_year="1996",
-		end_year=CY,
-		silent=TRUE)
+    dc=c(5),
+    taxa=c("Silurus glanis"),
+    stage=c("IND"),
+    start_year="1996",
+    end_year=CY,
+    silent=TRUE)
 rmi<-charge(rmi)
 rmi<-connect(rmi,check=TRUE,silent=FALSE)	
 rmi<-calcule(rmi)
@@ -5199,13 +5329,13 @@ colors<-rev(mycolorramp(nb_annee))
 #============================================
 png(filename=str_c(imgwdy,"rmi_density_sil.png"))
 g+ggplot2::scale_fill_manual(values=colors)+
-		ggplot2::ggtitle("")+
-		theme(
-				panel.border = element_blank(),
-				panel.background = element_blank(),
-				panel.grid.minor = element_line(colour = "white"),
-				panel.grid.major = element_line(colour = "white"),
-				panel.grid.major.x = element_line(colour = "white"))
+    ggplot2::ggtitle("")+
+    theme(
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.minor = element_line(colour = "white"),
+        panel.grid.major = element_line(colour = "white"),
+        panel.grid.major.x = element_line(colour = "white"))
 dev.off()
 #============================================
 plot(rmi,plot.type="barchart",timesplit="mois",silent=TRUE)
@@ -5230,19 +5360,19 @@ mmm <- summary(rmi,silent=TRUE)$'5'
 mmm <- mmm[,-1]
 colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2022)")
 xtmmm<-xtable(mmm,caption="Migrations mensuelles des silures dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-				la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
-		label="table_trm_mois",
-		digits=c(0,0,0,0,0,0),
-		display = c("s","s","f","f", "f", "f"))
+        la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+    label="table_trm_mois",
+    digits=c(0,0,0,0,0,0),
+    display = c("s","s","f","f", "f", "f"))
 path_y=file.path(tabwdy,
-		paste(5,"_",
-				paste(rmi@taxa@taxa_selected,collapse="_"),"_",
-				paste(rmi@stage@stage_selected,collapse="_"),"_"
-				,"mensuel.tex",sep=""),fsep ="")
+    paste(5,"_",
+        paste(rmi@taxa@taxa_selected,collapse="_"),"_",
+        paste(rmi@stage@stage_selected,collapse="_"),"_"
+        ,"mensuel.tex",sep=""),fsep ="")
 print(xtmmm,
-		file=path_y,
-		format.args = list(big.mark = " ", decimal.mark = ","),
-		table.placement=c("htbp")#,
+    file=path_y,
+    format.args = list(big.mark = " ", decimal.mark = ","),
+    table.placement=c("htbp")#,
 #include.rownames = FALSE => OK set as global options
 )
 #vvv[["LPM"]]<- list()# normalement vient du rapport de l'années précédente
@@ -5258,49 +5388,49 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 ###############################
 ra<-new("report_annual")
 ra<-choice_c(ra,
-		dc=c(5),
-		taxa=c("Silurus glanis"),
-		stage=c("IND"),
-		start_year=1996,
-		end_year=CY,
-		silent=TRUE)
+    dc=c(5),
+    taxa=c("Silurus glanis"),
+    stage=c("IND"),
+    start_year=1996,
+    end_year=CY,
+    silent=TRUE)
 ra <- connect(ra,silent=FALSE)
 
 xtra<-stacomiR::xtable(ra,
-		caption="Silures observés dans la passe à bassins du barrage
-				d'Arzal (passe à fentes verticales).",
-		label="table_bilanannuel_sil",
-		dc_name=c("P. bassins")		
+    caption="Silures observés dans la passe à bassins du barrage
+        d'Arzal (passe à fentes verticales).",
+    label="table_bilanannuel_sil",
+    dc_name=c("P. bassins")		
 )
 # below not run but one can create a file as following
 
 path=file.path(tabwdy,
-		paste(paste(ra@dc@dc_selected,collapse="_"),"_",
-				paste(ra@taxa@taxa_selected,collapse="_"),"_",
-				paste(ra@stage@data$stage_selected,collapse="_"),"_",
-				ra@start_year@year_selected,"to",
-				ra@end_year@year_selected,".tex",sep=""),fsep ="")
+    paste(paste(ra@dc@dc_selected,collapse="_"),"_",
+        paste(ra@taxa@taxa_selected,collapse="_"),"_",
+        paste(ra@stage@data$stage_selected,collapse="_"),"_",
+        ra@start_year@year_selected,"to",
+        ra@end_year@year_selected,".tex",sep=""),fsep ="")
 # the following uses the "addtorow" argument which creates nice column headings,
 # format.args creates a thousand separator
 # again this will need to be saved in a file using the file argument
 print(xtra,
-		file=path,
-		add.to.row= list(pos=list(0),
-				command=				
-						"\\multicolumn{2}{c}{\\textit{Silurus glanis}}  \\\\
-						\\multicolumn{2}{c}{Indéterminé} \\\\"),		
-		include.rownames = TRUE,
-		include.colnames = FALSE,
-		format.args = list(big.mark = " ", decimal.mark = ","),
-		booktabs=TRUE
+    file=path,
+    add.to.row= list(pos=list(0),
+        command=				
+            "\\multicolumn{2}{c}{\\textit{Silurus glanis}}  \\\\
+            \\multicolumn{2}{c}{Indéterminé} \\\\"),		
+    include.rownames = TRUE,
+    include.colnames = FALSE,
+    format.args = list(big.mark = " ", decimal.mark = ","),
+    booktabs=TRUE
 )
 
 # some manual editing needed....
 #===================================================
 png(filename=str_c(imgwdy,"bilan_annuel_sil.png"))
 barplot(ra,args.legend=list(x="topleft",bty = "n"),
-		col="orchid4",
-		ylab="Effectif (Silure)")
+    col="orchid4",
+    ylab="Effectif (Silure)")
 dev.off()
 #===================================================
 # total 
@@ -5319,18 +5449,18 @@ library("stacomiR")
 
 # launching stacomi without selecting the scheme or interface
 stacomi(gr_interface=FALSE,
-		login_window=FALSE,
-		database_expected=TRUE)
+    login_window=FALSE,
+    database_expected=TRUE)
 
 r_sample_char <- new("report_sample_char")
 r_sample_char <- choice_c(r_sample_char,
-		dc=c("5"),
-		taxa=c("Silurus glanis"),
-		stage=c("IND"),
-		par=c("C001"),
-		horodatedebut="1998-01-01",
-		horodatefin=str_c(CY,"-12-31"),
-		silent=FALSE)
+    dc=c("5"),
+    taxa=c("Silurus glanis"),
+    stage=c("IND"),
+    par=c("C001"),
+    horodatedebut="1998-01-01",
+    horodatefin=str_c(CY,"-12-31"),
+    silent=FALSE)
 r_sample_char <- connect(r_sample_char)
 r_sample_char <- calcule(r_sample_char,silent=TRUE)
 
@@ -5338,14 +5468,14 @@ r_sample_char <- calcule(r_sample_char,silent=TRUE)
 
 png(filename=str_c(imgwdy,"size_sil.png"))
 ggplot(r_sample_char@data) +
-		geom_boxplot(aes(x=annee,y=car_valeur_quantitatif, fill=tax_nom_latin), outlier.alpha = 0) +
-		ggplot2::ylab("taille video (mm)")+
-		ggplot2::xlab("annee")+
-		geom_jitter(aes(x=annee,y=car_valeur_quantitatif, col=tax_nom_latin),
-				width = 0.2, 
-				height = 0.2, 
-				alpha=0.5)+
-		theme_bw() 
+    geom_boxplot(aes(x=annee,y=car_valeur_quantitatif, fill=tax_nom_latin), outlier.alpha = 0) +
+    ggplot2::ylab("taille video (mm)")+
+    ggplot2::xlab("annee")+
+    geom_jitter(aes(x=annee,y=car_valeur_quantitatif, col=tax_nom_latin),
+        width = 0.2, 
+        height = 0.2, 
+        alpha=0.5)+
+    theme_bw() 
 dev.off()
 @
 
