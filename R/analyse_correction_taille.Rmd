@@ -432,6 +432,7 @@ GLM0<-glm(taille_mesuree ~ profondeur:taille_theorique+0,family=gaussian(link=id
 1/coefficients(GLM0)
 
 
+
 #taille_pixel   ~ taille_theorique : profondeur
 
 # taille_pixel  ~  0.135 * taille_mm + zone + profondeur (0 si loin)

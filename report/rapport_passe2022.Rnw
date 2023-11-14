@@ -2267,7 +2267,7 @@ datjl <- datj %>%
 # vérifions les données déjà inscrites cette année en base dans la table tj_stationmesure_stm
 req<- new("RequeteDB")
 req <- connect(req)
-res <- dbGetQuery(req@connection,glue("SELECT * FROM iav.tj_stationmesure_stm
+res <- dbGetQuery(req@connection,glue("SELECT distinct stm_libelle FROM iav.tj_stationmesure_stm
             join iav.tj_conditionenvironnementale_env on env_stm_identifiant = stm_identifiant
             WHERE extract(year from env_date_debut)={CY}"))
 
@@ -2284,6 +2284,7 @@ tj_ce <- datjl %>% arrange(date) %>% filter(date>=as.Date(str_c(CY,"-01-01"))) %
         env_methode_obtention = "MESURE"
     ) %>%
     filter(!is.na(env_valeur_quantitatif)) %>%
+    #filter(station!="temp_air_arz") %>%
     select( env_date_debut=date,
         env_date_fin,
         env_methode_obtention,
@@ -2313,7 +2314,7 @@ DBI::dbExecute(req@connection, "INSERT INTO iav.tj_conditionenvironnementale_env
         ,env_valeur_quantitatif
         ,env_stm_identifiant
         ,env_org_code
-        FROM tj_conditionenvironnementale_env_temp") #2309
+        FROM tj_conditionenvironnementale_env_temp") #2012 (2021) 2309 (2022)
 
 
 @
@@ -2367,6 +2368,116 @@ ggplot(d3)+
 dev.off()
 @
 \clearpage
+
+<<correction_taille_tous, echo=FALSE, eval=FALSE, include=FALSE >>=
+# pb de tailles des poissons aux vitres
+options(warn=-1)
+
+
+r_sample_char<-new("report_sample_char")
+# the following will load data for size, 
+# parameters 1786 (total size) C001 (size at video control)
+# dc 5 passe à bassins
+r_sample_char<-choice_c(r_sample_char,
+    dc=c(5),
+    taxa=c(2183,2014,2234,2055,2038,2220,2224), # 2238 Silure
+    stage=c(11,'AGJ',"IND"),
+    par=c("C001"),
+    horodatedebut="2007-01-01",
+    horodatefin=str_c(CY,"-12-31"),
+    silent=TRUE)
+# lancement 
+r_sample_char <- connect(r_sample_char, silent=TRUE)
+r_sample_char <- calcule(r_sample_char, silent=TRUE)
+
+#x11()
+
+#hcl_palettes(plot = TRUE)
+
+tail <- r_sample_char@data
+xtabs(tail$lot_effectif  ~tail$tax_nom_latin)
+#tail$tax_stade <- str_c(tail$tax_nom_latin, tail$std_libelle)
+# graphique des données quantitatives
+png(filename=paste0(imgwdy,"taille_tous.png"),width=600,height=400)
+
+g <- ggplot(tail)
+g <- g+
+    geom_jitter(aes(x=ope_date_debut,y=car_valeur_quantitatif, col=lot_tax_code),
+        width = 0.5, 
+        height = 0.5, 
+        alpha=0.5) +
+    scale_colour_discrete_qualitative(
+        palette = "Pastel1", nmax = 20, order = 1:20)+
+    xlab("Date")+
+    ylab("Taille tous poissons (mm)")+
+    theme_dark()
+print(g)
+dev.off()
+options(warn=0)
+
+unique(tail$car_par_code)
+unique(tail$car_methode_obtention)
+
+tail <- tail %>% 
+    select (date= ope_date_debut, stade=lot_std_code,tax = tax_nom_latin,std_libelle, 
+        taille= car_valeur_quantitatif, annee, mois, quinzaine, semaine,jour_365) %>%
+    mutate(annee=as.factor(annee)
+        )
+tail <- tail[!(tail$tax=="Dicentrarchus labrax"&(tail$taille>1000 |tail$taille<200)),]
+tail <- tail[!(tail$tax=="Anguilla anguilla"&(tail$taille>1000)),]
+tail$anneenum <- as.numeric(as.character(tail$annee))
+tail$moisnum <- as.numeric(as.character(tail$mois))
+tail$tax<-as.factor(tail$tax)
+g0 <- glm(taille ~ annee, data= tail)
+pdev <- function(mod)(mod$null.deviance-deviance(mod))/mod$null.deviance
+x11()
+pdev(g0) # 0.032
+plot(g0)
+g1 <- glm(taille ~  annee*tax + mois*tax, data= tail )
+g1 <- glm(taille ~  annee + tax + annee:tax, data= tail)
+pdev(g1) #0.63
+plot(g1)
+
+
+library(mgcv)
+g2 <- gam(taille ~ annee+ tax  + s(moisnum, k=7, by=tax, bs="cc"), data= tail)
+plot.gam(g2, all.terms =T)
+pdev(g2) # 0.691
+g3 <- glm(taille ~ annee+ tax + annee:tax + as.factor(mois)*tax, data=tail)
+pdev(g3) # 0.706
+g4 <- glm(taille ~ annee+ tax + as.factor(mois)*tax, data=tail)
+pdev(g4) # 0.692
+plot(g4)
+g5 <- gam(taille ~ annee+ tax  + s(anneenum, k=7, by=tax, bs="tp")+ s(moisnum, k=7, by=tax, bs="cc"), data= tail)
+summary(g5) #70.1
+plot.gam(g5, all.terms =T,ylim =c(-100,100),residuals=TRUE)
+# trois anguilles
+tail["19786",]
+tail["13647",]
+tail["13226",]
+# les trois suivants : OK
+tail["7935",]
+tail["37859",]
+tail["13737",]
+
+co <- coefficients(g5)
+co_annee <- co[grepl("annee", names(co)) & !grepl("anneenum", names(co))] 
+names(co_annee) <- gsub("annee","",names(co_annee))
+barplot(co_annee)
+
+req<- new("RequeteDB")
+req <- connect(req)
+res <- dbGetQuery(req@connection,glue("SELECT count(*) as nline, extract(year FROM ope_date_debut) as year 
+              FROM iav.t_operation_ope
+              JOIN iav.t_lot_lot ON lot_ope_identifiant= ope_identifiant
+              WHERE lot_commentaires SIMILAR TO '%mm[0-9]*mm%'
+              GROUP BY extract(year from ope_date_debut)
+               ORDER BY extract(year from ope_date_debut)"))
+
+@
+
+
+
 \subsection{Mulet}
 \makebox[-10pt]{ % decale vers le base par rapport 
   \begin{tikzpicture}[overlay]
@@ -2521,20 +2632,23 @@ r_sample_char<-choice_c(r_sample_char,
     dc=c(5),
     taxa=c(2183),
     stage=c("IND"),
-    par=c(1786,"C001"),
+    par=c("C001"),
     horodatedebut="2013-01-01",
     horodatefin=str_c(CY,"-12-31"),
     silent=TRUE)
 # lancement 
-r_sample_char<-connect(r_sample_char, silent=TRUE)
-r_sample_char<-calcule(r_sample_char, silent=TRUE)
+r_sample_char <- connect(r_sample_char, silent=TRUE)
+r_sample_char <- calcule(r_sample_char, silent=TRUE)
 
 #x11()
 
 #hcl_palettes(plot = TRUE)
 
+
+
 # graphique des données quantitatives
-png(filename=paste0(imgwd,"taille.png"),width=600,height=400)
+png(filename=paste0(imgwdy,"taille.png"),width=600,height=400)
+
 g <- ggplot(r_sample_char@data)
 g <- g+
     geom_jitter(aes(x=ope_date_debut,y=car_valeur_quantitatif, col=annee),
@@ -2542,14 +2656,14 @@ g <- g+
         height = 0.5, 
         alpha=0.5) +
     scale_colour_discrete_qualitative(
-        palette = "Pastel1", nmax = 7, order = 2:7)+
+        palette = "Pastel1", nmax = 20, order = 1:20)+
     xlab("Date")+
     ylab("Taille des mulets (mm)")+
     theme_dark()
 print(g)
 dev.off()
 options(warn=0)
-save(r_sample_char, file=str_c(datawd,CY,"r_sample_char.Rdata"))
+save(r_sample_char, file=str_c(datawdy,"r_sample_char_mulet.Rdata"))
 @
 
 <<modele_taille_mup, echo=FALSE, eval=FALSE, include=FALSE >>=
@@ -2560,7 +2674,7 @@ load_package("ggpubr")
 ###################################
 # modélisation de la taille moyenne des mulets 
 ###################################
-load(file=str_c(datawd,CY,"r_sample_char.Rdata"))
+load(file=str_c(datawdy,"r_sample_char_mulet.Rdata"))
 dat <- r_sample_char@data
 #dat[dat$car_valeur_quantitatif> 700,]
 #str(dat)
@@ -2753,9 +2867,9 @@ print(p3)
 dev.off()
 
 #################################################################
-# prédicton des  donnéees avec loi normale +- 2 *sd autour de la moyenne
+# prédicton des  données avec loi normale +- 2 *sd autour de la moyenne
 #################################################################
-# creation du tableau de prédiciton
+# creation du tableau de prédiction
 pred <-
     data.frame("date"=
             as.POSIXct(seq(from=as.POSIXct(dmy("01012013")), to = as.POSIXct(dmy("30072022")), by="1 day")))
@@ -2803,7 +2917,7 @@ save(vvv , file=file.path(datawd,CY,"vvv.Rdata"))
 bilA <- new("report_annual")
 bilA <- choice_c(bilA,
     dc=c(5),
-    taxa=c("Liza ramada"),
+    taxa=c("Chelon ramada"),
     stage=c("IND"),
     start_year="1996",
     end_year=CY,
@@ -2945,7 +3059,7 @@ color_ope<-sample(c(mycolorramp1(10),mycolorramp2(10)),20)
 bMM_Arzal=new("report_mig_mult")
 bMM_Arzal=choice_c(bMM_Arzal,
     dc=c(5),
-    taxa=c("Liza ramada"),
+    taxa=c("Chelon ramada"),
     stage=c("IND"),
     datedebut=str_c(CY,"-01-01"),
     datefin=str_c(CY,"-12-31"))
@@ -3055,7 +3169,7 @@ dev.off()
 bmi <- new("report_mig_interannual")
 bmi <- choice_c(bmi,
     dc=c(5),
-    taxa=c("Liza ramada"),
+    taxa=c("Chelon ramada"),
     stage=c("IND"),
     start_year="1996",
     end_year=CY,
@@ -3069,8 +3183,8 @@ bmi <- calcule(bmi)
 #load(file=str_c(datawd,'bmi2022.Rdata'))
 #str(bmi)
 
-plot(bmi)
-g=get("g1",envir_stacomi)
+plot(bmi, year_choice = CY, silent=TRUE)
+g <- get("g_standard",envir_stacomi)
 nb_annee<-length(unique(bmi@data$bjo_annee))
 mycolorramp1<-colorRampPalette(c("#011A2D","#4F7EA2"))
 mycolorramp2<-colorRampPalette(c("#462800","#B68B52"))
@@ -3089,8 +3203,8 @@ g <- g+scale_x_datetime(name="date",
 print(g)
 dev.off()
 
-plot(bmi,plot.type="barchart", timesplit="mois")
-g<-get("g1", envir=envir_stacomi)
+plot(bmi,plot.type="barchart", timesplit="mois", year_choice = CY)
+g <- get("g_barchart", envir=envir_stacomi)
 cols <- c("max" = "#012746","min" = "#6C3E00",">=moy" = "#327AB5", "<moy" = "#D29035","hist_mean"="black","hist_range"="grey","?"="#D26435")
 fills <- c("max" = "#043C6B","min" = "#6C3E00",">=moy" = "#558AB5", "<moy" = "#D2A25F","hist_mean"="black","hist_range"="grey","?"="#D26435")
 g <- g + scale_colour_manual(name=CY,values=cols,limits=c("min","max","<moy",">=moy","hist_mean","hist_range","?"))
@@ -3102,18 +3216,18 @@ print(g)
 dev.off()
 #============================================
 
-plot(bmi,plot.type="density",timesplit="semaine")
+plot(bmi,plot.type="density",timesplit="semaine", year_choice=CY)
 colrp <- colorRampPalette(colors=rev(c("#6D9A58","#0E2C00")))
 colrp1 <- colorRampPalette(colors=c("#6D9A58","#C6B130"))
 load_package("viridis")
-g <- get("g",envir=envir_stacomi)	
+g <- get("g_density",envir=envir_stacomi)	
 g +
     ggplot2::scale_fill_manual(values=c(colrp(12),colrp1(12)))
 
 
 #============================================
 png(filename=str_c(imgwdy,"plot_seasonal_mup.png"),width=14,height=10,unit="cm",res=300)
-plot(bmi, plot.type="seasonal", timesplit="semaine") 
+plot(bmi, plot.type="seasonal", timesplit="semaine", year_choice =CY, silent= FALSE) 
 dev.off()
 
 # ====== Bilan mensuel ===============
@@ -3312,8 +3426,8 @@ rmi <- calcule(rmi)
 
 # utilisation de la méthode plot pour générer un graphique des densités
 # puis modification des couleurs du titre et de y
-plot(rmi,plot.type="density",silent=TRUE)
-g <- get("g",envir=envir_stacomi)
+plot(rmi,plot.type="density",silent=TRUE, year_choice =CY)
+g <- get("g_density",envir=envir_stacomi)
 nb_annee <- length(unique(rmi@data$bjo_annee))
 mycolorramp1 <- colorRampPalette(c("#011A2D","#4F7EA2"))
 mycolorramp2 <- colorRampPalette(c("#462800","#B68B52"))
@@ -3330,8 +3444,8 @@ g+ggplot2::scale_fill_manual(values=color_ope)+
         panel.grid.major.x = element_line(colour = "white"))
 dev.off()
 #============================================
-plot(rmi,plot.type="barchart",timesplit="mois",silent=TRUE)
-g<-get("g1",envir=envir_stacomi)
+plot(rmi,plot.type="barchart",timesplit="mois", year_choice = CY, silent=TRUE)
+g<-get("g_barchart",envir=envir_stacomi)
 cols <- c("max" = "#012746","min" = "#6C3E00",">=moy" = "#327AB5", "<moy" = "#D29035","hist_mean"="black","hist_range"="grey","?"="#D26435")
 fills <- c("max" = "#043C6B","min" = "#6C3E00",">=moy" = "#558AB5", "<moy" = "#D2A25F","hist_mean"="black","hist_range"="grey","?"="#D26435")
 g <- g+scale_colour_manual(name=CY,values=cols,limits=c("min","max","<moy",">=moy","hist_mean","hist_range","?"))
@@ -3343,7 +3457,7 @@ print(g)
 dev.off()
 #============================================
 png(filename=str_c(imgwdy,"plot_seasonal_lpm.png"),width=14,height=10,unit="cm",res=300)
-plot(rmi, plot.type="seasonal", timesplit="semaine") 
+plot(rmi, plot.type="seasonal", timesplit="semaine", year_choice = CY, silent = TRUE) 
 dev.off()
 
 # ====== Bilan mensuel ===============
@@ -3445,7 +3559,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 library("stacomiR")
 
 # launching stacomi without selecting the scheme or interface
-stacomi()
+stacomi(sch='iav')
 
 r_sample_char<-new("report_sample_char")
 r_sample_char<-choice_c(r_sample_char,
@@ -3461,7 +3575,7 @@ r_sample_char<-calcule(r_sample_char,silent=TRUE)
 # A "violin" plot
 plot(r_sample_char,plot.type="1",silent=TRUE)
 
-g<-get("g",envir=envir_stacomi)
+g<-get("g1",envir=envir_stacomi)
 png(filename=str_c(imgwdy,"size_lpm.png"))
 g+ggplot2::xlab("taille video (mm)")+
     ggplot2::ylab("annee")+
@@ -3711,9 +3825,9 @@ b_carlot<-choice_c(b_carlot,
 
 
 # two warning produced, ignored if silent=TRUE
-b_carlot<-charge(b_carlot)
-b_carlot<-connect(b_carlot)
-b_carlot<-calcule(b_carlot,silent=TRUE)
+b_carlot <- charge(b_carlot)
+b_carlot <- connect(b_carlot)
+b_carlot <- calcule(b_carlot,silent=TRUE)
 
 png(filename=str_c(imgwdy,"size_alose.png"))
 # A set of useful summary functions is provided from the Hmisc package:
@@ -3734,7 +3848,7 @@ g <- g +	geom_violin(color=marron,
     stat_sum_df("mean_sdl", fun.args = list(mult = 2), 
         mapping = aes(x=annee,y=car_valeur_quantitatif,group = annee))+
     theme_bw()+	
-    scale_color_manual(values=wesanderson::wes_palette("Zissou1", 6, type = "continuous"))+
+    scale_color_manual(values=wesanderson::wes_palette("Zissou1", 8, type = "continuous"))+
     ylab("taille")
 print(g)
 dev.off()
@@ -3788,12 +3902,12 @@ bmi<-connect(bmi,silent=FALSE)
 bmi<-calcule(bmi)
 save(bmi,file=str_c(datawd,'bmiala2022.Rdata'))
 #load(file=str_c(datawd,'bmi2022.Rdata'))
-str(bmi)
+#str(bmi)
 ####################
 # graphique de stacomi (2018 pas de captures)
 ##########################
-plot(bmi)
-g=get("g1",envir_stacomi)
+plot(bmi, year_choice = CY, silent=TRUE)
+g=get("g_standard",envir_stacomi)
 nb_annee<-length(unique(bmi@data$bjo_annee))
 mycolorramp1<-colorRampPalette(c("#011A2D","#4F7EA2"))
 mycolorramp2<-colorRampPalette(c("#462800","#B68B52"))
@@ -3811,8 +3925,8 @@ g <- g+scale_x_datetime(name="date",
 print(g)
 dev.off()
 
-plot(bmi,plot.type="barchart",timesplit="mois")
-g<-get("g1",envir=envir_stacomi)
+plot(bmi,plot.type="barchart",timesplit="mois",year_choice = CY, silent=TRUE)
+g<-get("g_barchart",envir=envir_stacomi)
 cols <- c("max" = "#012746","min" = "#6C3E00",">=moy" = "#327AB5", "<moy" = "#D29035","hist_mean"="black","hist_range"="grey","?"="#D26435")
 fills <- c("max" = "#043C6B","min" = "#6C3E00",">=moy" = "#558AB5", "<moy" = "#D2A25F","hist_mean"="black","hist_range"="grey","?"="#D26435")
 g <- g+scale_colour_manual(name=CY,values=cols,limits=c("min","max","<moy",">=moy","hist_mean","hist_range","?"))
@@ -3824,18 +3938,18 @@ print(g)
 dev.off()
 #============================================
 
-plot(bmi,plot.type="density",timesplit="semaine")
+plot(bmi,plot.type="density",timesplit="semaine", year_choice = CY, silent=TRUE)
 colrp<-colorRampPalette(colors=rev(c("#6D9A58","#0E2C00")))
 colrp1<-colorRampPalette(colors=c("#6D9A58","#C6B130"))
 load_package("viridis")
-g<-get("g",envir=envir_stacomi)	
+g<-get("g_density",envir=envir_stacomi)	
 g+
     ggplot2::scale_fill_manual(values=c(colrp(12),colrp1(12)))
 
 
 #============================================
 png(filename=str_c(imgwdy,"plot_seasonal_ala.png"),width=14,height=10,unit="cm",res=300)
-plot(bmi,plot.type="seasonal",timesplit="semaine") 
+plot(bmi,plot.type="seasonal",timesplit="semaine", year_choice = CY, silent=TRUE) 
 dev.off()
 
 # ====== Bilan mensuel ===============
@@ -4087,7 +4201,7 @@ print(xtala,
     table.placement=c("pbt"),
     booktabs=TRUE)
 
-vvv[["ALA"]][["path_y"]]<-gsub("C:/workspace/","../../../",path_y)
+vvv[["ALA"]][["path_y"]] <- gsub("C:/workspace/","../../../",path_y)
 save(vvv, file=str_c(datawdy,"vvv.Rdata"))
 
 # => 55 cm
@@ -4103,8 +4217,8 @@ save(vvv, file=str_c(datawdy,"vvv.Rdata"))
 
 
 dat <- data.frame("annee"=2002:2022,
-    "effectif_capture"=c(177,127,60,293,360,93,134,82,549,376,2499,2994,2633,1330,271,1009,0,0,0,0),
-    "poids_capture"=c(rep(NA,10),4112,4993,4105,2617,456,1707,0,0,0,0))
+    "effectif_capture"=c(177,127,60,293,360,93,134,82,549,376,2499,2994,2633,1330,271,1009,0,0,0,0,0),
+    "poids_capture"=c(rep(NA,10),4112,4993,4105,2617,456,1707,0,0,0,0,0))
 dat$poids_capture/dat$effectif_capture
 #dat$effectif_capture=round(1000*dat$capture/poids)
 # Il ne semble pas que le poids moyen ait augmenté à Arzal en 2015
@@ -4571,8 +4685,8 @@ rmi <- calcule(rmi)
 
 # utilisation de la méthode plot pour générer un graphique des densités
 # puis modification des couleurs du titre et de y
-plot(rmi,plot.type="density",silent=TRUE)
-g <- get("g",envir=envir_stacomi)
+plot(rmi,plot.type="density",year_choice = CY, silent=TRUE)
+g <- get("g_density",envir=envir_stacomi)
 nb_annee<-length(unique(rmi@data$bjo_annee))
 mycolorramp <- colorRampPalette(c('#020731','#3862C6','#6E7587','#806641','#AE956D'))
 
@@ -4590,7 +4704,7 @@ g+ggplot2::scale_fill_manual(values=colors)+
 dev.off()
 #============================================
 plot(rmi,plot.type="barchart",timesplit="mois",silent=TRUE)
-g <- get("g1",envir=envir_stacomi)
+g <- get("g_barchart",envir=envir_stacomi)
 cols <- c("max" = "#012746","min" = "#6C3E00",">=moy" = "#327AB5", "<moy" = "#D29035","hist_mean"="black","hist_range"="grey","?"="#D26435")
 fills <- c("max" = "#043C6B","min" = "#6C3E00",">=moy" = "#558AB5", "<moy" = "#D2A25F","hist_mean"="black","hist_range"="grey","?"="#D26435")
 g <- g+scale_colour_manual(name=CY,values=cols,limits=c("min","max","<moy",">=moy","hist_mean","hist_range","?"))
@@ -4704,7 +4818,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 library("stacomiR")
 
 # launching stacomi without selecting the scheme or interface
-stacomi()
+stacomi(sch='iav')
 # TODO AJOUTER LES SALMO
 r_sample_char <- new("report_sample_char")
 r_sample_char <- choice_c(r_sample_char,
@@ -4816,7 +4930,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 library("stacomiR")
 
 # launching stacomi without selecting the scheme or interface
-stacomi()
+stacomi(sch='iav')
 r_sample_char <- new("report_sample_char")
 r_sample_char <- choice_c(r_sample_char,
     dc=c("5"),
@@ -5007,11 +5121,11 @@ rmi<-choice_c(rmi,
 rmi<-charge(rmi)
 rmi<-connect(rmi,check=TRUE,silent=FALSE)	
 rmi<-calcule(rmi)
-
+rmi@data$bjo_valeur[rmi@data$bjo_valeur<0]<- -rmi@data$bjo_valeur[rmi@data$bjo_valeur<0]
 # utilisation de la méthode plot pour générer un graphique des densités
 # puis modification des couleurs du titre et de y
-plot(rmi,plot.type="density",silent=TRUE)
-g<-get("g",envir=envir_stacomi)
+plot(rmi, plot.type="density", silent=TRUE, year_choice = CY)
+g<-get("g_density",envir=envir_stacomi)
 nb_annee<-length(unique(rmi@data$bjo_annee))
 mycolorramp <- colorRampPalette(c('#020731','#3862C6','#6E7587','#806641','#AE956D'))
 
@@ -5028,8 +5142,8 @@ g+ggplot2::scale_fill_manual(values=colors)+
         panel.grid.major.x = element_line(colour = "white"))
 dev.off()
 #============================================
-plot(rmi,plot.type="barchart",timesplit="mois",silent=TRUE)
-g <- get("g1",envir=envir_stacomi)
+plot(rmi,plot.type="barchart",timesplit="mois", year_choice = CY, silent=TRUE)
+g <- get("g_barchart",envir=envir_stacomi)
 cols <- c("max" = "#012746","min" = "#6C3E00",">=moy" = "#327AB5", "<moy" = "#D29035","hist_mean"="black","hist_range"="grey","?"="#D26435")
 fills <- c("max" = "#043C6B","min" = "#6C3E00",">=moy" = "#558AB5", "<moy" = "#D2A25F","hist_mean"="black","hist_range"="grey","?"="#D26435")
 g <- g+scale_colour_manual(name=CY,values=cols,limits=c("min","max","<moy",">=moy","hist_mean","hist_range","?"))
@@ -5142,7 +5256,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 library("stacomiR")
 
 # launching stacomi without selecting the scheme or interface
-stacomi()
+stacomi(sch='iav')
 
 r_sample_char <- new("report_sample_char")
 r_sample_char <- choice_c(r_sample_char,
@@ -5305,7 +5419,7 @@ ggplot(bilesp@calcdata, aes(x="",y=(Effectif / sum(Effectif))*100,fill=taxa_stag
 dev.off()
 @
 
-<<silurus, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_interannual_silurus, echo=FALSE, eval=FALSE,include=FALSE >>=
 rmi<-new("report_mig_interannual")
 rmi<-choice_c(rmi,
     dc=c(5),
@@ -5320,8 +5434,8 @@ rmi<-calcule(rmi)
 
 # utilisation de la méthode plot pour générer un graphique des densités
 # puis modification des couleurs du titre et de y
-plot(rmi,plot.type="density",silent=TRUE)
-g<-get("g",envir=envir_stacomi)
+plot(rmi,plot.type="density",year_choice = CY, silent=TRUE)
+g<-get("g_density",envir=envir_stacomi)
 nb_annee<-length(unique(rmi@data$bjo_annee))
 mycolorramp <- colorRampPalette(c('#020731','#3862C6','#6E7587','#806641','#AE956D'))
 
@@ -5338,8 +5452,8 @@ g+ggplot2::scale_fill_manual(values=colors)+
         panel.grid.major.x = element_line(colour = "white"))
 dev.off()
 #============================================
-plot(rmi,plot.type="barchart",timesplit="mois",silent=TRUE)
-g <- get("g1",envir=envir_stacomi)
+plot(rmi,plot.type="barchart",timesplit="mois",year_choice = CY, silent=TRUE)
+g <- get("g_barchart",envir=envir_stacomi)
 cols <- c("max" = "#012746","min" = "#6C3E00",">=moy" = "#327AB5", "<moy" = "#D29035","hist_mean"="black","hist_range"="grey","?"="#D26435")
 fills <- c("max" = "#043C6B","min" = "#6C3E00",">=moy" = "#558AB5", "<moy" = "#D2A25F","hist_mean"="black","hist_range"="grey","?"="#D26435")
 g <- g+scale_colour_manual(name=CY,values=cols,limits=c("min","max","<moy",">=moy","hist_mean","hist_range","?"))
@@ -5382,7 +5496,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 @
 
-<<report_annual_sil, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_annual_silurus, echo=FALSE, eval=FALSE,include=FALSE >>=
 ###############################
 # Bilan annuel des migrations
 ###############################
@@ -5478,6 +5592,180 @@ ggplot(r_sample_char@data) +
     theme_bw() 
 dev.off()
 @
+<<report_interannual_dicentrarchus, echo=FALSE, eval=FALSE,include=FALSE >>=
+rmi<-new("report_mig_interannual")
+rmi<-choice_c(rmi,
+    dc=c(5),
+    taxa=c("Dicentrarchus labrax"),
+    stage=c("IND"),
+    start_year="1996",
+    end_year=CY,
+    silent=TRUE)
+rmi<-charge(rmi)
+rmi<-connect(rmi,check=TRUE,silent=FALSE)	
+rmi<-calcule(rmi)
+
+# utilisation de la méthode plot pour générer un graphique des densités
+# puis modification des couleurs du titre et de y
+plot(rmi,plot.type="density",year_choice = CY, silent=TRUE)
+g<-get("g_density",envir=envir_stacomi)
+nb_annee<-length(unique(rmi@data$bjo_annee))
+mycolorramp <- colorRampPalette(c('#020731','#3862C6','#6E7587','#806641','#AE956D'))
+
+colors<-rev(mycolorramp(nb_annee))
+#============================================
+png(filename=str_c(imgwdy,"rmi_density_dicentrarchus.png"))
+g+ggplot2::scale_fill_manual(values=colors)+
+    ggplot2::ggtitle("")+
+    theme(
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.minor = element_line(colour = "white"),
+        panel.grid.major = element_line(colour = "white"),
+        panel.grid.major.x = element_line(colour = "white"))
+dev.off()
+#============================================
+plot(rmi,plot.type="barchart",timesplit="mois",year_choice = CY, silent=TRUE)
+g <- get("g_barchart",envir=envir_stacomi)
+cols <- c("max" = "#012746","min" = "#6C3E00",">=moy" = "#327AB5", "<moy" = "#D29035","hist_mean"="black","hist_range"="grey","?"="#D26435")
+fills <- c("max" = "#043C6B","min" = "#6C3E00",">=moy" = "#558AB5", "<moy" = "#D2A25F","hist_mean"="black","hist_range"="grey","?"="#D26435")
+g <- g+scale_colour_manual(name=CY,values=cols,limits=c("min","max","<moy",">=moy","hist_mean","hist_range","?"))
+g <- g+scale_fill_manual(name=CY,values=fills,limits=c("min","max","<moy",">=moy","hist_mean","hist_range","?"))
+g <- g+ggtitle("")
+#============================================
+png(filename=str_c(imgwdy,"barchart_bmi_dcentrarchus.png"))
+print(g)
+dev.off()
+#============================================
+#png(filename=str_c(imgwdy,"plot_seasonal_trm.png"),width=14,height=10,unit="cm",res=300)
+#plot(rmi,plot.type="seasonal",timesplit="semaine") 
+#dev.off()
+
+# ====== Bilan mensuel ===============
+
+mmm <- summary(rmi,silent=TRUE)$'5' 
+mmm <- mmm[,-1]
+colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2022)")
+xtmmm<-xtable(mmm,caption="Migrations mensuelles des silures dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
+        la période 1996-2022. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+    label="table_trm_mois",
+    digits=c(0,0,0,0,0,0),
+    display = c("s","s","f","f", "f", "f"))
+path_y=file.path(tabwdy,
+    paste(5,"_",
+        paste(rmi@taxa@taxa_selected,collapse="_"),"_",
+        paste(rmi@stage@stage_selected,collapse="_"),"_"
+        ,"mensuel.tex",sep=""),fsep ="")
+print(xtmmm,
+    file=path_y,
+    format.args = list(big.mark = " ", decimal.mark = ","),
+    table.placement=c("htbp")#,
+#include.rownames = FALSE => OK set as global options
+)
+#vvv[["LPM"]]<- list()# normalement vient du rapport de l'années précédente
+vvv[["BAR"]][["path_y"]]<-gsub("C:/workspace/","../../../",path_y)
+save(vvv,file=str_c(datawdy,"vvv.Rdata"))
+
+
+@
+
+<<report_annual_dicentrarchus, echo=FALSE, eval=FALSE,include=FALSE >>=
+###############################
+# Bilan annuel des migrations
+###############################
+ra<-new("report_annual")
+ra<-choice_c(ra,
+    dc=c(5),
+    taxa=c("Dicentrarchus labrax"),
+    stage=c("IND"),
+    start_year=1996,
+    end_year=CY,
+    silent=TRUE)
+ra <- connect(ra,silent=FALSE)
+
+xtra<-stacomiR::xtable(ra,
+    caption="Silures observés dans la passe à bassins du barrage
+        d'Arzal (passe à fentes verticales).",
+    label="table_bilanannuel_sil",
+    dc_name=c("P. bassins")		
+)
+# below not run but one can create a file as following
+
+path=file.path(tabwdy,
+    paste(paste(ra@dc@dc_selected,collapse="_"),"_",
+        paste(ra@taxa@taxa_selected,collapse="_"),"_",
+        paste(ra@stage@data$stage_selected,collapse="_"),"_",
+        ra@start_year@year_selected,"to",
+        ra@end_year@year_selected,".tex",sep=""),fsep ="")
+# the following uses the "addtorow" argument which creates nice column headings,
+# format.args creates a thousand separator
+# again this will need to be saved in a file using the file argument
+print(xtra,
+    file=path,
+    add.to.row= list(pos=list(0),
+        command=				
+            "\\multicolumn{2}{c}{\\textit{Silurus glanis}}  \\\\
+            \\multicolumn{2}{c}{Indéterminé} \\\\"),		
+    include.rownames = TRUE,
+    include.colnames = FALSE,
+    format.args = list(big.mark = " ", decimal.mark = ","),
+    booktabs=TRUE
+)
+
+# some manual editing needed....
+#===================================================
+png(filename=str_c(imgwdy,"bilan_annuel_dicentrarchus.png"))
+barplot(ra,args.legend=list(x="topleft",bty = "n"),
+    col="orchid4",
+    ylab="Effectif (bar)")
+dev.off()
+#===================================================
+# total 
+
+
+vvv[["BAR"]][["path"]] <- gsub("C:/workspace/","../../../",path)
+
+somme<-round(tapply(ra@data$effectif,ra@data$annee,sum))
+indiceCY <- match(as.character(CY),names(somme))
+
+save(vvv,file=str_c(datawdy,"vvv.Rdata"))
+@
+
+<<report_sample_char_dicentrarchus, echo=FALSE, eval=FALSE,include=FALSE >>=
+library("stacomiR")
+
+# launching stacomi without selecting the scheme or interface
+stacomi(gr_interface=FALSE,
+    login_window=FALSE,
+    database_expected=TRUE)
+
+r_sample_char <- new("report_sample_char")
+r_sample_char <- choice_c(r_sample_char,
+    dc=c("5"),
+    taxa=c("Dicentrarchus labrax"),
+    stage=c("IND"),
+    par=c("C001"),
+    horodatedebut="1998-01-01",
+    horodatefin=str_c(CY,"-12-31"),
+    silent=FALSE)
+r_sample_char <- connect(r_sample_char)
+r_sample_char <- calcule(r_sample_char,silent=TRUE)
+
+
+
+png(filename=str_c(imgwdy,"size_dicentrarchus.png"))
+ggplot(r_sample_char@data) +
+    geom_boxplot(aes(x=annee,y=car_valeur_quantitatif, fill=tax_nom_latin), outlier.alpha = 0) +
+    ggplot2::ylab("taille video (mm)")+
+    ggplot2::xlab("annee")+
+    geom_jitter(aes(x=annee,y=car_valeur_quantitatif, col=tax_nom_latin),
+        width = 0.2, 
+        height = 0.2, 
+        alpha=0.5)+
+    theme_bw() 
+dev.off()
+@
+
 
 \clearpage
 \onecolumn

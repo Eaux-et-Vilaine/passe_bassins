@@ -133,3 +133,5 @@ image/2022
 image/any
 
 image/*.png~
+/table/
+/image/
