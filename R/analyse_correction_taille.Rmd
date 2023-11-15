@@ -120,7 +120,7 @@ plot(GLM3)
 ```
 		
 ```{r treatmentssm, eval=TRUE,echo=FALSE} 
-file <- "T:\\12-PoleMAB\\Socle\\Migrateurs\\poissons\\suivi_pab\\2022\\Concat22_jusqua80958.txt"
+file <- "T:\\12-PoleMAB\\Socle\\Migrateurs\\poissons\\suivi_pab\\2023\\Concat23_jusqua38999.txt"
 #file <- "C:/workspace/pdata/traitement_stacomi/rapport_passe/data/2019/AZ20_0001-44765_corrige.SSM"
 # des erreurs dans le SSM avec des champs non fermés, il faut relire le fichier dans notepad++
 ssm <- read.table(file, quote = "\"", sep= " ")
@@ -144,17 +144,17 @@ hist(ssm$taillepixel)
 # Tailles en pixel sans zone
 table(ssm$taillepixel[ssm$remarque==""])
 #ssm$remarque <- stringi::stri_trans_general(ssm$remarque, "Latin-ASCII")
-
-# po1 avec taille
+# ssm[ssm$remarque=="" & ssm$taillepixel >0,"remarque"] <- 'mm5mm'
+# po1 avec taille (il ne doit pas y en avoir, il s'agit de 10 mulets)
 ssm[ssm$taillepixel>0&ssm$taxonvideo=='po1',]
 
-# Données de taille sans indication de la zone
-ssm[ssm$taillepixel>0 & is.na(ssm$co_zone), ]
+
 
 
 # Vérification à la main des commentaires du fichier SSM
 unique(ssm$remarque)
 table(ssm$remarque)
+
 #ssm$remarque[ssm$remarque=='mm2mm+']<- 'mm2mm'
 #ssm$remarque[ssm$remarque=='mm2mmm']<- 'mm2mm'
 #ssm$remarque[ssm$remarque==' micro coupure caisson']<- 'micro coupure caisson'
@@ -165,7 +165,7 @@ table(ssm$remarque)
 #ssm$remarque[grep("les carpeaux non mesur",ssm$remarque)]<-"les carpeaux non mesures font en moyenne 20cm"
 #ssm$remarque[ssm$remarque==' arret nettoyage vitres']<- 'arret nettoyage vitres'
 #ssm$remarque[ssm$remarque=='micro coupre caisson']
-load(file =str_c("C:/workspace/pdata/traitement_stacomi/rapport_passe/data/co_2022.Rdata"))
+load(file =str_c("C:/workspace/passe_bassins/data/co_2022.Rdata"))
 
 ssm$co_profondeur[ssm$distance=='P']<-"profondeurproche"
 ssm$co_profondeur[ssm$distance=='I']<-"profondeurmoyen"
@@ -218,8 +218,9 @@ ssmf <- ssm[,c("fichierVideo",
 				"distance",
 				"taille",
 				"remarque")]
-file <- "C:/workspace/pdata/traitement_stacomi/rapport_passe/data/2022/fichiers_traite_2022.SSM"
-dir.create("C:/workspace/pdata/traitement_stacomi/rapport_passe/data/2022/")
+dir.create("C:/workspace/passe_bassins/data/2023/")
+file <- str_c("C:/workspace/passe_bassins/data/2023/fichiers_traite_2023.SSM")
+
 #  des erreurs dans le SSM avec des champs non fermés, il faut relire lefichier dans notepad++
 write.table(x=ssmf,row.names = FALSE,file=file, quote = 10, sep= " ")
 

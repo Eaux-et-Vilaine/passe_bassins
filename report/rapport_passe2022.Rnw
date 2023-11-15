@@ -3482,7 +3482,7 @@ print(xtmmm,
 #include.rownames = FALSE => OK set as global options
 )
 #vvv[["LPM"]]<- list()# normalement vient du rapport de l'années précédente
-vvv[["LPM"]][["path_y"]]<-gsub("C:/workspace/","../../../",path_y)
+vvv[["LPM"]][["path_y"]]<-path_y
 
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
@@ -3543,7 +3543,7 @@ dev.off()
 # total 
 total <- ra@data
 
-vvv[["LPM"]][["path"]] <- gsub("C:/workspace/","../../../",path)
+vvv[["LPM"]][["path"]] <- path
 
 somme<-round(tapply(ra@data$effectif,ra@data$annee,sum))
 indiceCY <- match(as.character(CY),names(somme))
@@ -4027,7 +4027,7 @@ print(xtra,
     booktabs=TRUE
 )
 
-vvv[["ALA"]][["path"]] <- gsub("C:/workspace/","../../../",path)
+vvv[["ALA"]][["path"]] <- path
 
 somme<-round(tapply(ra@data$effectif,ra@data$annee,sum))
 indiceCY <- match(as.character(CY),names(somme))
@@ -4201,7 +4201,7 @@ print(xtala,
     table.placement=c("pbt"),
     booktabs=TRUE)
 
-vvv[["ALA"]][["path_y"]] <- gsub("C:/workspace/","../../../",path_y)
+vvv[["ALA"]][["path_y"]] <- path_y
 save(vvv, file=str_c(datawdy,"vvv.Rdata"))
 
 # => 55 cm
@@ -4741,7 +4741,7 @@ print(xtmmm,
 #include.rownames = FALSE => OK set as global options
 )
 #vvv[["LPM"]]<- list()# normalement vient du rapport de l'années précédente
-vvv[["SAT"]][["path_y"]]<-gsub("C:/workspace/","../../../",path_y)
+vvv[["SAT"]][["path_y"]] <- path_y
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
@@ -4802,7 +4802,7 @@ dev.off()
 # total 
 
 
-vvv[["SAT"]][["path"]] <- gsub("C:/workspace/","../../../",path)
+vvv[["SAT"]][["path"]] <- path
 
 somme <- round(tapply(ra@data$effectif,ra@data$annee,sum))
 indiceCY <- match(as.character(CY),names(somme))
@@ -4920,7 +4920,7 @@ print(xtmmm,
 #include.rownames = FALSE => OK set as global options
 )
 #vvv[["LPM"]]<- list()# normalement vient du rapport de l'années précédente
-vvv[["SAT"]][["path_y"]]<-gsub("C:/workspace/","../../../",path_y)
+vvv[["SAT"]][["path_y"]] <- path_y
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
@@ -5180,7 +5180,7 @@ print(xtmmm,
 #include.rownames = FALSE => OK set as global options
 )
 #vvv[["LPM"]]<- list()# normalement vient du rapport de l'années précédente
-vvv[["TRM"]][["path_y"]]<-gsub("C:/workspace/","../../../",path_y)
+vvv[["TRM"]][["path_y"]] <- path_y
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
@@ -5240,7 +5240,7 @@ dev.off()
 # total 
 
 
-vvv[["TRM"]][["path"]] <- gsub("C:/workspace/","../../../",path)
+vvv[["TRM"]][["path"]] <- path
 
 somme<-round(tapply(ra@data$effectif,ra@data$annee,sum))
 indiceCY <- match(as.character(CY),names(somme))
@@ -5490,7 +5490,7 @@ print(xtmmm,
 #include.rownames = FALSE => OK set as global options
 )
 #vvv[["LPM"]]<- list()# normalement vient du rapport de l'années précédente
-vvv[["TRM"]][["path_y"]]<-gsub("C:/workspace/","../../../",path_y)
+vvv[["TRM"]][["path_y"]] <- path_y
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 
@@ -5550,7 +5550,7 @@ dev.off()
 # total 
 
 
-vvv[["SIL"]][["path"]] <- gsub("C:/workspace/","../../../",path)
+vvv[["SIL"]][["path"]] <- path
 
 somme<-round(tapply(ra@data$effectif,ra@data$annee,sum))
 indiceCY <- match(as.character(CY),names(somme))
@@ -5663,7 +5663,7 @@ print(xtmmm,
 #include.rownames = FALSE => OK set as global options
 )
 #vvv[["LPM"]]<- list()# normalement vient du rapport de l'années précédente
-vvv[["BAR"]][["path_y"]]<-gsub("C:/workspace/","../../../",path_y)
+vvv[["BAR"]][["path_y"]] <- path_y
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 
@@ -5723,7 +5723,7 @@ dev.off()
 # total 
 
 
-vvv[["BAR"]][["path"]] <- gsub("C:/workspace/","../../../",path)
+vvv[["BAR"]][["path"]] <- path
 
 somme<-round(tapply(ra@data$effectif,ra@data$annee,sum))
 indiceCY <- match(as.character(CY),names(somme))
@@ -5745,7 +5745,7 @@ r_sample_char <- choice_c(r_sample_char,
     taxa=c("Dicentrarchus labrax"),
     stage=c("IND"),
     par=c("C001"),
-    horodatedebut="1998-01-01",
+    horodatedebut=str_c(CY,"-01-01"),
     horodatefin=str_c(CY,"-12-31"),
     silent=FALSE)
 r_sample_char <- connect(r_sample_char)
@@ -5755,10 +5755,10 @@ r_sample_char <- calcule(r_sample_char,silent=TRUE)
 
 png(filename=str_c(imgwdy,"size_dicentrarchus.png"))
 ggplot(r_sample_char@data) +
-    geom_boxplot(aes(x=annee,y=car_valeur_quantitatif, fill=tax_nom_latin), outlier.alpha = 0) +
+    geom_boxplot(aes(x=mois,y=car_valeur_quantitatif), outlier.alpha = 0) +
     ggplot2::ylab("taille video (mm)")+
-    ggplot2::xlab("annee")+
-    geom_jitter(aes(x=annee,y=car_valeur_quantitatif, col=tax_nom_latin),
+    ggplot2::xlab("mois")+
+    geom_jitter(aes(x=mois,y=car_valeur_quantitatif, col=tax_nom_latin),
         width = 0.2, 
         height = 0.2, 
         alpha=0.5)+
