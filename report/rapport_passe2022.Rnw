@@ -2563,7 +2563,16 @@ ajusté sur les valeurs de taille (au centre modèle et intervalle de confiance
 Les effectifs de mulets de 2022
 N=\Sexpr{format(vvv[["MUP"]][["NCY"]], digits=1, nsmall =0, big.mark=" ",scientific=FALSE)}
 sont à leur minimum historique sur l'ensemble des saisons de suivi.
-La diminution d'un facteur 2 est alarmante.
+La diminution d'un facteur 2 est alarmante. Les effectifs mensuels sont tous
+soit inférieurs à la moyenne (en orange sur la figure \ref{barchart_bmi_mup})
+soit à leur minimum historique (en marron sur la figure \ref{barchart_bmi_mup})
+
+\begin{figure}[htpb]
+\centering
+\includegraphics[width=0.45\textwidth]{2022/barchart_bmi_mup} 
+\caption{Bilan annuel des migrations de mulets au barrage d'Arzal.}
+\label{barchart_bmi_mup}
+\end{figure}
 
 
 A partir de septembre, on note une augmentation des effectifs de mulets dans la
@@ -3161,7 +3170,7 @@ dev.off()
 
 
 
-<<report_mig_internnual_mulet, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_mig_interannual_mulet, echo=FALSE, eval=FALSE,include=FALSE >>=
 ###########################################
 # Bilan interannuel de stacomi
 #########################################
@@ -3203,7 +3212,7 @@ g <- g+scale_x_datetime(name="date",
 print(g)
 dev.off()
 
-plot(bmi,plot.type="barchart", timesplit="mois", year_choice = CY)
+plot(bmi,plot.type="barchart", timesplit="mois", year_choice = CY, silent=TRUE)
 g <- get("g_barchart", envir=envir_stacomi)
 cols <- c("max" = "#012746","min" = "#6C3E00",">=moy" = "#327AB5", "<moy" = "#D29035","hist_mean"="black","hist_range"="grey","?"="#D26435")
 fills <- c("max" = "#043C6B","min" = "#6C3E00",">=moy" = "#558AB5", "<moy" = "#D2A25F","hist_mean"="black","hist_range"="grey","?"="#D26435")
