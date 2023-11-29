@@ -103,6 +103,7 @@ levels(data$zone) #c'est bon le 5 est en premier
 # 1 en bas à gauche, 2 centre, 3 droite
 #4 milieu gauche , 5 centre, 6 centre droit....
 
+
 summary(data)
 
 # ------------ GLM ---------------------
@@ -110,10 +111,11 @@ summary(data)
 GLM3 <- glm(taille_mesuree~zone+profondeur+taille_theorique+ 0,family=gaussian(link=identity),data=data)
 summary(GLM3)
 anova(GLM3,test="Chisq") # tout significatif
-
+# https://stats.stackexchange.com/questions/596165/multivariable-logistic-in-r-without-the-reference-level-in-a-categorical-pred
+# using a +0 just adds one level to zone, i.e. zone5 the reference is now used
 co <- coefficients(GLM3)
-save(co, file =str_c("C:/workspace/pdata/traitement_stacomi/rapport_passe/data/co_2022.Rdata"))
-load(file =str_c("C:/workspace/pdata/traitement_stacomi/rapport_passe/data/co_2022.Rdata"))
+save(co, file =str_c("C:/workspace/passe_bassins/data/co_2022.Rdata"))
+load(file =str_c("C:/workspace/passe_bassins/data/co_2022.Rdata"))
 
 1- deviance(GLM3)/GLM3$null.deviance
 plot(GLM3)

@@ -403,7 +403,7 @@ keepaspectratio]{/frontpage.png}%
 {\titlefont Date d'édition :\\}}
 \qquad \color{orange_EV}
 \Large
-{\titlefont Août 2022}
+{\titlefont Novembre 2023}
 \vspace{2cm}
 
 \end{minipage}
@@ -1141,14 +1141,17 @@ l’évaluation des stocks de migrateurs doivent donc être considérés comme u
 \subsection{Fonctionnement de la passe à bassins}
 \paragraph{Résumé du fonctionnement.}
 
-Le fonctionnement de la passe en 2022 a été plutôt bon. Il y a eu des arrêts en
-janvier et février lors des crues. La passe est en effet fermée
-en débit de crue pour empêcher la descente d'objets flottants et car la baisse
-de la ligne d'eau amont limite fortement les débits évacués. En pratique, la
-passe est très peu attractive en conditions de crue. En février il y a eu une
-intervention sur les capteurs de la vanne aval. En 2022, les débits sont restés soutenus et la passe n'est pas passée en
-mode étiage, il n'y a pas eu non plus de mise en place de battardage du débit
-d'appoint.
+Le fonctionnement de la passe en 2022 a été plutôt bon. La passe n'est pas
+fonctionnelle en débit de crue car la baisse de la ligne d'eau amont limite
+fortement les débits évacués et la passe est très peu attractive, mais ce
+dysfonctionnement n'apparait pas sur les chroniques des figures
+\ref{figure_fonctionnement_passe} \ref{report_df_fct_2003_2022} et \ref{report_df_2003_2022}.
+Le 28/03, il y a eu une intervention technique sur les centrales hydrauliques pour changer l'huile et
+le fonctionnement des vannes est re-réglé. 
+Le 27/04 la passe est arrêtée pour installer des cordes à l'aval pour tenter de
+gêner les braconniers. Le 26/08 il y a un problème d'automate.
+La passe est passée en mode étiage (diminution du débit,
+et battardage du débit d'appoint) de juillet à novembre.
 Plusieurs interventions techniques ont eu lieu avec un problème de
 fonctionnement de la vanne intermédiaire le 26 avril, qui ont finalement été
 réglés en octobre novembre avec le remplacement des joints.
@@ -1222,16 +1225,16 @@ de fonctionnement.}
 
 Le dispositif de comptage 
 a été mis en service le
-\Sexpr{vvv$ref_dc$date_debut} et arrêté le
-\Sexpr{vvv$ref_dc$date_fin} (Figure \ref{report_dc_2022}).
+\Sexpr{vvv$ref_dc$date_debut} après que les premiers mulets aient été observés
+dans la passe. %\Sexpr{vvv$ref_dc$date_fin}
+Le suivi est fonctionnel sauf deux arrêts en septembre et octobre
+equi demandent un changement de disque (Figure \ref{report_dc_2022}).
 Les arrêts techniques pendant la période de suivi sont relativement rares
 (Figure \ref{report_dc_1998_2022}). 
-La caméra a été déplacée lors
-du lavage des vitres ce qui entraine un décalage de l'image avec perte de la
-partie basse en Juillet (voir Figure \ref{report_dc_2022}). Les néons de la
-passe ont été remplacés par des néons à leds mais l'intervention a duré moins
-d'une journée (en août). La période d'arrêt du DC en octobre est liée à un défaut de
-la RAM de l'ordinateur qui a du être remplacée.
+La caméra a été recalée en début de saison et fait l'objet d'une recalibration
+Les néons de la passe ont été remplacés en 2022 par des néons à leds. La vitre
+est très rayée ce qui entraine un problème de salissure, et de qualité de
+l'image.
 
 \begin{figure}[htpb]
 \centering
@@ -2533,9 +2536,8 @@ taille des mulets présente à la fois des variations saisonnières et
 interannuelles (Figure \ref{figure_taille_mulets}). Les mulets les plus grands
 se présentent en tout début de saison, puis la taille des mulets diminue pour
 atteindre son minimum lors de l'été \citep{lemonnier_dynamique_2019}.
-Cette année comme en 2019 les mulets de petite taille, qui constituent une
-majeure partie des effectifs, ne sont pas présents, sans que le fonctionnement
-de la passe puisse expliquer cette absence.
+Cette année des mulets de petite taille ont été observés en Mai, et on retrouve
+la tendance saisonnière des migrations.
 
 \begin{figure}[htpb]
 \centering
@@ -2560,11 +2562,9 @@ ajusté sur les valeurs de taille (au centre modèle et intervalle de confiance
 
 Les effectifs de mulets de 2022
 N=\Sexpr{format(vvv[["MUP"]][["NCY"]], digits=1, nsmall =0, big.mark=" ",scientific=FALSE)}
-sont comparables à ceux de la période 2014-2022 avec des variations entre des effectifs de 200~000 à 600~000 mulets. 
-Les variations des effectifs de petits mulets sont en 
-grande partie liée à l'abondance des mulets de classe de taille de 200 à 300 mm
-\citep{lemonnier_dynamique_2019} (Tableau \ref{table_bilanannuel_mulets_0108}, Figure
-\ref{bilan_annuel_mup}).
+sont à leur minimum historique sur l'ensemble des saisons de suivi.
+La diminution d'un facteur 2 est alarmante.
+
 
 A partir de septembre, on note une augmentation des effectifs de mulets dans la
 passe (Figure \ref{rmi_journalier_mup}) et les bancs de mulets commencent à
@@ -2971,7 +2971,7 @@ dev.off()
 # total 
 total <- bilA@data
 #vvv[["MUP"]]<- list()# normalement vient du rapport de l'années précédente
-vvv[["MUP"]][["path"]] <- gsub("C:/workspace/","../../../",path)
+vvv[["MUP"]][["path"]] <- path
 
 somme_mup<-round(tapply(bilA@data$effectif,bilA@data$annee,sum))
 indiceCY <- match(as.character(CY),names(somme_mup))
@@ -3044,7 +3044,7 @@ print(xtmup,
     booktabs=TRUE
 )
 options(encoding = "native.enc")
-vvv[["MUP"]][["path0108"]] <- gsub("C:/workspace/","../../../",path)
+vvv[["MUP"]][["path0108"]] <- path
 total <- bilA@data
 somme_mup <- round(tapply(bilA@data$effectif,bilA@data$annee,sum))
 indiceCY <- match(as.character(CY),names(somme_mup))
@@ -5807,14 +5807,16 @@ fonctionnement réintégré dans stacomiR comporte
 \caption{Illustration du fonctionnement de la passe lors d'un fonctionnement
 normal en mai. A chaque cycle de marée, le niveau de la mer varie entre +2 m et
 -2m environ (en noir). Le niveau Vilaine (.- bleu) varie peu et reste
-autour de 1m80. La vanne amont (en marron clair) s'ouvre  dès que le niveau mer
-descend 30 cm en dessous du niveau Vilaine, c'est l'entrée en régulation de la
-passe. La vanne aval (.... violets) ajuste le niveau du SAS (courbe bleue)
-pour maintenir une chute constante à l'aval de la passe à l'aide d'une
-régulation par l'automate. 
- L'arrêt pour maintenance le 17 lors de la marée montante se traduit par une
- fermeture de la vanne amont (trait horizontal supplémentaire). L'état de la
- passe est calculée pour chaque période de 10 minutes (en bas).
+autour de 2m. A partir de 16 h 00, la vanne aval (.... violet) entre en
+régulation et se ferme progressivement pour maintenir une hauteur de chute
+constante entre le niveau du sas (courbe bleue) et le niveau mer (courbe noire). 
+Lorsqu'une différence de moins de 30 cm apparaît entre le niveau Vilaine et la
+mer, la vanne amont se ferme (trait marron).
+ On constate qu'il y a des fuites sur la vanne aval à pleine mer, car le niveau
+ du sas monte au-dessus de 1m80.  Un arrêt pour maintenance est calculé au
+ moment de la réouverture de la vanne car la passe ne s'ouvre pas immédiatement
+ à l'atteinte du seuil de 30 cm. L'état de la passe est calculée pour chaque
+ période de 10 minutes (en bas).
 }
 \label{detail_fonct_passe_2}
 \end{figure}
@@ -5822,7 +5824,7 @@ régulation par l'automate.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.8\textwidth]{2022/detail_fonct_passe_1.png}
+\includegraphics[width=0.8\textwidth]{2021/detail_fonct_passe_1.png}
 \caption{Illustration du fonctionnement de la passe après la remise en route
 de la passe en avril. En ordonnée les niveaux mer (noir), vilaine
 (.-), sas (en bleu), niveau vanne mer (pointillés violet), niveau vanne Vilaine (ligne marron
@@ -5857,20 +5859,19 @@ aberrantes et prise en compte du noyage aval de la passe.}
 il est possible de suivre les périodes de haute mer où la passe est fermée, les
 périodes où les bandes sont les plus larges correspondent à des périodes de
 vives eaux et également en hiver aux périodes où la gestion de la
-Vilaine est plus réduite. Les arrêts nocturnes de la passe sont visibles en mai
-- juin - juillet. En septembre et octobre le passage en "mode étiage" réduit la
+Vilaine est plus réduite. Entre juillet et octobre le passage en "mode étiage" réduit la
 durée de fonctionnement de la passe aux quelques heures qui précèdent la marée
-haute. En hiver, en période de crue, la passe est à l'arrêt.}
+haute. En décembre, en période de crue, la passe est à l'arrêt.}
 \label{report_df_annee}
 \end{figure}
 
-\begin{figure}[hp]
-\centering
-\includegraphics[width=0.95\textwidth]{2022/report_df_fct_2003_2010.png} 
-\caption{Bilan mensuel du fonctionnement de la passe à bassins d'Arzal de 2003
-à 2010.}
-\label{report_df_fct_2003_2010}
-\end{figure}
+%\begin{figure}[hp]
+%\centering
+%\includegraphics[width=0.95\textwidth]{2022/report_df_fct_2003_2010.png} 
+%\caption{Bilan mensuel du fonctionnement de la passe à bassins d'Arzal de 2003
+%à 2010.}
+%\label{report_df_fct_2003_2010}
+%\end{figure}
 
 
 
