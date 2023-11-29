@@ -2220,8 +2220,8 @@ aron <- get_temperature_chronique(
 hubeau_aronj <- aron %>% mutate(
         date = lubridate::ymd(date_mesure_temp),
         horodate_mesure_temp=lubridate::ymd_hms(str_c(date_mesure_temp," ",heure_mesure_temp)),
-        #jour=strftime(as.POSIXlt(date), "%j")
-        ) %T>%
+    #jour=strftime(as.POSIXlt(date), "%j")
+    ) %T>%
     with(.,plot(horodate_mesure_temp,resultat)) %>% 
     group_by(date, date_mesure_temp, code_station) %>% 
     summarise(resultat=mean(resultat, na.rm=TRUE),.groups="drop") %>%
@@ -2390,6 +2390,19 @@ r_sample_char<-choice_c(r_sample_char,
 r_sample_char <- connect(r_sample_char, silent=TRUE)
 r_sample_char <- calcule(r_sample_char, silent=TRUE)
 
+# récupération des distances au sein des commentaires de lots
+
+
+req<- new("RequeteDB")
+req <- connect(req)
+res <- dbGetQuery(req@connection,glue("SELECT lot_identifiant, lot_commentaires 
+            FROM iav.t_operation_ope JOIN iav.t_lot_lot on lot_ope_identifiant=ope_identifiant 
+            WHERE (ope_date_debut, ope_date_fin) overlaps ('2007-01-01'::timestamp without time zone, '2023-12-31 23:59:59'::timestamp without time zone)  
+            AND ope_dic_identifiant in('5') 
+            AND lot_tax_code in ('2038','2055','2234','2183','2014','2220','2224') 
+            AND lot_std_code in ('11','AGJ','IND') 
+            ;"))
+
 #x11()
 
 #hcl_palettes(plot = TRUE)
@@ -2422,7 +2435,7 @@ tail <- tail %>%
     select (date= ope_date_debut, stade=lot_std_code,tax = tax_nom_latin,std_libelle, 
         taille= car_valeur_quantitatif, annee, mois, quinzaine, semaine,jour_365) %>%
     mutate(annee=as.factor(annee)
-        )
+    )
 tail <- tail[!(tail$tax=="Dicentrarchus labrax"&(tail$taille>1000 |tail$taille<200)),]
 tail <- tail[!(tail$tax=="Anguilla anguilla"&(tail$taille>1000)),]
 tail$anneenum <- as.numeric(as.character(tail$annee))
@@ -2468,11 +2481,11 @@ barplot(co_annee)
 req<- new("RequeteDB")
 req <- connect(req)
 res <- dbGetQuery(req@connection,glue("SELECT count(*) as nline, extract(year FROM ope_date_debut) as year 
-              FROM iav.t_operation_ope
-              JOIN iav.t_lot_lot ON lot_ope_identifiant= ope_identifiant
-              WHERE lot_commentaires SIMILAR TO '%mm[0-9]*mm%'
-              GROUP BY extract(year from ope_date_debut)
-               ORDER BY extract(year from ope_date_debut)"))
+            FROM iav.t_operation_ope
+            JOIN iav.t_lot_lot ON lot_ope_identifiant= ope_identifiant
+            WHERE lot_commentaires SIMILAR TO '%mm[0-9]*mm%'
+            GROUP BY extract(year from ope_date_debut)
+            ORDER BY extract(year from ope_date_debut)"))
 
 @
 
@@ -3220,10 +3233,25 @@ plot(bmi,plot.type="density",timesplit="semaine", year_choice=CY)
 colrp <- colorRampPalette(colors=rev(c("#6D9A58","#0E2C00")))
 colrp1 <- colorRampPalette(colors=c("#6D9A58","#C6B130"))
 load_package("viridis")
+g <- get("g_density",envir=envir_stacomi)
+nb_annee <- length(unique(rmi@data$bjo_annee))
+mycolorramp1 <- colorRampPalette(c("#011A2D","#4F7EA2"))
+mycolorramp2 <- colorRampPalette(c("#462800","#B68B52"))
+color_ope <- c(rev(mycolorramp1(10)),mycolorramp2(nb_annee-11),"#85A3BA")
+#============================================
+png(filename=str_c(imgwdy,"rmi_density_mup.png"))
 g <- get("g_density",envir=envir_stacomi)	
-g +
-    ggplot2::scale_fill_manual(values=c(colrp(12),colrp1(12)))
-
+g <- g +
+    ggplot2::scale_fill_manual(values=c(colrp(12),colrp1(12))) +
+    ggplot2::ggtitle("") +
+    theme(
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.minor = element_line(colour = "white"),
+        panel.grid.major = element_line(colour = "white"),
+        panel.grid.major.x = element_line(colour = "white"))
+print(g)
+dev.off()
 
 #============================================
 png(filename=str_c(imgwdy,"plot_seasonal_mup.png"),width=14,height=10,unit="cm",res=300)
@@ -3487,6 +3515,8 @@ vvv[["LPM"]][["path_y"]]<-gsub("C:/workspace/","../../../",path_y)
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
+
+
 <<report_annual_lpm, echo=FALSE, eval=FALSE,include=FALSE >>=
 ###############################
 # Bilan annuel des migrations
@@ -3552,7 +3582,80 @@ vvv[["LPM"]][["NCY"]] <- somme[indiceCY]
 
 vvv[["LPM"]][["rank"]]<-nrow(somme)+1-rank(somme)[indiceCY]
 vvv[["LPM"]][["maxrank"]]<-nrow(somme)
+vvv[["LPM"]][["total"]] <- total
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
+@
+
+<<analyse_lpm, echo=FALSE, eval=FALSE, include=FALSE >>=
+load(file=str_c(datawdy,"vvv.Rdata"))
+total <- vvv[["LPM"]][["total"]]
+fra <- readxl::read_excel(path=str_c(datawd,"comptage_frayere.xlsx")) %>% rename("site"="...1")
+fras <- fra %>% rowwise() %>% 
+    mutate(total = sum(c_across(where(is.numeric)),na.rm=TRUE)) %>% select(site, total)
+frat <- fra %>%  summarise(across(where(is.numeric),  sum, na.rm=TRUE)) %>%
+    tidyr::pivot_longer(cols=everything(), names_to = "annee", values_to = "observee", names_transform =as.numeric)
+fram <- fra %>% tidyr::pivot_longer(cols=2:ncol(.),
+        names_to = "annee",
+        values_to = "observee",
+        names_transform =as.numeric) %>%
+    mutate(observee=2*observee)  %>%
+    filter(annee !=2007)%>%
+    mutate(annee =as.factor(annee),
+        ) 
+
+# creation du graphique observe / corrige
+# prediction à l'aide d'un modèle binomial
+# graphique des sorties
+png(filename=str_c(imgwdy, "frayere.png"))
+fraf <- fram %>% tidyr::complete() %>%
+    mutate(corrigee=predict(gnb<<- MASS::glm.nb(observee~site+annee, data=fram), newdata=., type="response")) %>%
+    group_by(annee) %>% summarize(observee=sum(observee, na.rm=TRUE), corrigee= sum(corrigee, na.rm=TRUE)) %>%
+    mutate(annee=as.numeric(as.character(annee))) %>%
+    ungroup() %>%
+    right_join(frat%>%select(annee), by="annee")%>%
+    tidyr::pivot_longer(cols=2:ncol(.),
+        names_to = "type",
+        values_to = "nombre") %T>%
+    {print(ggplot(.)+ 
+              geom_col(aes(x=annee,y=nombre,fill=type), position="dodge")+
+              ylab("Nombre de frayères en Vilaine (source ONEMA, FDPPMA35)") +
+              scale_fill_manual(values=c("observee"="#33857e", "corrigee"="#f2ae68")) +
+              geom_vline(xintercept = 2007, linetype = 2, color = "black") +
+              ggtext::geom_richtext(x = 2007, y = 100, label = "? Turbidité", angle = 90) +
+              theme_bw()
+      )
+    }
+#summary(gnb)
+#plot(gnb)
+dev.off()
+
+png(filename=str_c(imgwdy, "proportion_frayere.png"),4,4,units="in",res=300)
+prop <- total %>% select(effectif, annee) %>% 
+    left_join(fraf%>% tidyr::pivot_wider(id_cols="annee",names_from="type",values_from="nombre")) %>%
+    mutate(prop=round(effectif/corrigee,2)) %>%
+    mutate(prop =ifelse(prop>10,NA ,prop),
+        prop=ifelse(prop<0.001, NA,prop)) %T>%
+    {print(gsub1 <<- ggplot(.)+
+              geom_point(aes(x=annee, y= prop)) +
+    geom_smooth(aes(x=annee, y= prop), col="#505940", fill="#d8f1ae")+
+    xlim(1996,2010)+
+    theme_minimal())}
+dev.off()
+
+png(filename=str_c(imgwdy, "comp_frayere_arzal.png"), 7,7,units="in",res=300)
+prop%>% dplyr::select(annee, effectif, corrigee) %>%
+    rename("comptage Arzal"=effectif) %>%
+    tidyr::pivot_longer(cols=2:ncol(.),
+        names_to = "type",
+        values_to = "nombre") %T>%
+   {print(ggplot(.)+
+             geom_col(aes(x=annee,y=nombre,fill=type), position="dodge")+
+             ylab("Effectif lamproie marines (source Eaux & Vilaine, ONEMA, FDPPMA35)") +
+             ggrepel::geom_label_repel(aes(x=annee,y=effectif, label=prop), data=prop,box.padding = 0.5)+
+             scale_fill_manual(values=c("corrigee"="#33857e", "comptage Arzal"=orange_EV)) +
+             theme_bw())} 
+dev.off()
+
 @
 
 <<report_sample_char_lpm, echo=FALSE, eval=FALSE,include=FALSE >>=
@@ -5566,6 +5669,42 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
 <<report_sample_char_silurus, echo=FALSE, eval=FALSE,include=FALSE >>=
+library("stacomiR")
+
+# launching stacomi without selecting the scheme or interface
+stacomi(gr_interface=FALSE,
+    login_window=FALSE,
+    database_expected=TRUE)
+
+r_sample_char <- new("report_sample_char")
+r_sample_char <- choice_c(r_sample_char,
+    dc=c("5"),
+    taxa=c("Silurus glanis"),
+    stage=c("IND"),
+    par=c("C001"),
+    horodatedebut="1998-01-01",
+    horodatefin=str_c(CY,"-12-31"),
+    silent=FALSE)
+r_sample_char <- connect(r_sample_char)
+r_sample_char <- calcule(r_sample_char,silent=TRUE)
+
+
+
+png(filename=str_c(imgwdy,"size_sil.png"))
+ggplot(r_sample_char@data) +
+    geom_boxplot(aes(x=annee,y=car_valeur_quantitatif, fill=tax_nom_latin), outlier.alpha = 0) +
+    ggplot2::ylab("taille video (mm)")+
+    ggplot2::xlab("annee")+
+    geom_jitter(aes(x=annee,y=car_valeur_quantitatif, col=tax_nom_latin),
+        width = 0.2, 
+        height = 0.2, 
+        alpha=0.5)+
+    theme_bw() 
+dev.off()
+@
+
+
+<<analyse_didson_silurus, echo=FALSE, eval=FALSE,include=FALSE >>=
 library("stacomiR")
 
 # launching stacomi without selecting the scheme or interface
