@@ -2223,8 +2223,8 @@ aron <- get_temperature_chronique(
 hubeau_aronj <- aron %>% mutate(
         date = lubridate::ymd(date_mesure_temp),
         horodate_mesure_temp=lubridate::ymd_hms(str_c(date_mesure_temp," ",heure_mesure_temp)),
-        #jour=strftime(as.POSIXlt(date), "%j")
-        ) %T>%
+    #jour=strftime(as.POSIXlt(date), "%j")
+    ) %T>%
     with(.,plot(horodate_mesure_temp,resultat)) %>% 
     group_by(date, date_mesure_temp, code_station) %>% 
     summarise(resultat=mean(resultat, na.rm=TRUE),.groups="drop") %>%
@@ -2425,7 +2425,7 @@ tail <- tail %>%
     select (date= ope_date_debut, stade=lot_std_code,tax = tax_nom_latin,std_libelle, 
         taille= car_valeur_quantitatif, annee, mois, quinzaine, semaine,jour_365) %>%
     mutate(annee=as.factor(annee)
-        )
+    )
 tail <- tail[!(tail$tax=="Dicentrarchus labrax"&(tail$taille>1000 |tail$taille<200)),]
 tail <- tail[!(tail$tax=="Anguilla anguilla"&(tail$taille>1000)),]
 tail$anneenum <- as.numeric(as.character(tail$annee))
@@ -2471,11 +2471,11 @@ barplot(co_annee)
 req<- new("RequeteDB")
 req <- connect(req)
 res <- dbGetQuery(req@connection,glue("SELECT count(*) as nline, extract(year FROM ope_date_debut) as year 
-              FROM iav.t_operation_ope
-              JOIN iav.t_lot_lot ON lot_ope_identifiant= ope_identifiant
-              WHERE lot_commentaires SIMILAR TO '%mm[0-9]*mm%'
-              GROUP BY extract(year from ope_date_debut)
-               ORDER BY extract(year from ope_date_debut)"))
+            FROM iav.t_operation_ope
+            JOIN iav.t_lot_lot ON lot_ope_identifiant= ope_identifiant
+            WHERE lot_commentaires SIMILAR TO '%mm[0-9]*mm%'
+            GROUP BY extract(year from ope_date_debut)
+            ORDER BY extract(year from ope_date_debut)"))
 
 @
 
@@ -2683,11 +2683,11 @@ load_package("ggpubr")
 ###################################
 # modélisation de la taille moyenne des mulets 
 ###################################
-load(file=str_c(datawdy,"r_sample_char_mulet.Rdata"))
-dat <- r_sample_char@data
-#dat[dat$car_valeur_quantitatif> 700,]
-#str(dat)
-dat$date <- dat$ope_date_debut # je cree une variable date qui sera plus tard transformée
+load(file=str_c(dat_char_2183awdy,"r_sample_char_mulet.Rdat_char_2183a"))
+dat_char_2183 <- r_sample_char@data
+#dat_char_2183[dat_char_2183$car_valeur_quantitatif> 700,]
+#str(dat_char_2183)
+dat_char_2183$date <- dat_char_2183$ope_date_debut # je cree une variable date qui sera plus tard transformée
 # en facteur dans les modèles
 # ci dessous une fonction pour extraire les dates
 fndate<-function(data, origine="01012013"){
@@ -2706,13 +2706,13 @@ fndate<-function(data, origine="01012013"){
   data$year <-as.factor(data$year)
   return(data)
 }
-dat <- fndate(dat)
-dat <- rename(dat, taille_mm=car_valeur_quantitatif)
+dat_char_2183 <- fndate(dat_char_2183)
+dat_char_2183 <- rename(dat_char_2183, taille_mm=car_valeur_quantitatif)
 
 ###########################################"
 # Quel est l'écart type moyen des tailles de mulets journalières
 ############################################
-(allsd <- dat %>%
+(allsd <- dat_char_2183 %>%
       group_by(date) %>%                                           # groupe par date
       summarize(sd=sd(taille_mm, na.rm=TRUE)) %>%                  # ecart type
       ungroup() %>%                                                # degroupe
@@ -2724,8 +2724,8 @@ dat <- rename(dat, taille_mm=car_valeur_quantitatif)
 # les couleurs sont choisies pour mettre en contraste les valeurs
 # des mois estivaux et printemps+ automne
 ###################################
-dat$mois <- as.factor(dat$month)
-g0 <- ggplot(dat)+
+dat_char_2183$mois <- as.factor(dat_char_2183$month)
+g0 <- ggplot(dat_char_2183)+
     geom_density(aes(x=taille_mm, fill=mois),alpha=0.5)+
     facet_grid(.~year)+
     scale_fill_discrete_sequential(
@@ -2747,26 +2747,26 @@ print(g0)
 # add boxplot with white fill color
 
 colours <- qualitative_hcl(CY-2013, "Pastel_1")
-g1 <- ggviolin(dat, x = "year", y = "taille_mm", fill = "year",
+g1 <- ggviolin(dat_char_2183, x = "year", y = "taille_mm", fill = "year",
         palette = colours,
         add = "boxplot", add.params = list(fill = "white"))+
-    theme_transparent()+
+    theme_bw()+
     theme(legend.position = "none")
 
 
 
 
 
-# dat[1:100,c("time","yday","year")]
+# dat_char_2183[1:100,c("time","yday","year")]
 
 
 #
-#g0 <- gam(taille_mm ~ s(yday),  data=dat)
+#g0 <- gam(taille_mm ~ s(yday),  data=dat_char_2183)
 #
 #
-#g0m <- bam(taille_mm ~ s(yday,bs="cc")+ s(date,bs="re"),  data=dat)
+#g0m <- bam(taille_mm ~ s(yday,bs="cc")+ s(date,bs="re"),  data=dat_char_2183)
 #
-#g1m <- bam(taille_mm ~ s(yday,bs="cc",by=year)+ s(date,bs="re"),  data=dat)
+#g1m <- bam(taille_mm ~ s(yday,bs="cc",by=year)+ s(date,bs="re"),  data=dat_char_2183)
 #
 ##x11()
 ##plot(g0) ; plot(g0, resid=TRUE,shade=TRUE)
@@ -2779,19 +2779,19 @@ g1 <- ggviolin(dat, x = "year", y = "taille_mm", fill = "year",
 ## visreg(g1m,xvar="yday", by="year", ylab= "taille mm")
 #compareML(gamm2,gamm3)#gamm2 est meilleur
 #
-#g3m <- bam(taille_mm ~ s(yday,bs="cc",by=year)+s(date,bs="re"),  data=dat)
+#g3m <- bam(taille_mm ~ s(yday,bs="cc",by=year)+s(date,bs="re"),  data=dat_char_2183)
 #summary(g3m)
 #visreg(g3m, xvar="date",  ylab= "taille mm")
 #visreg(g3m, xvar="yday", by="year", ylab= "taille mm")
-g4m <- gam(taille_mm ~ s(yday,bs="cc", by=year,k=8)+s(time,k=3),  data=dat)
+g4m <- gam(taille_mm ~ s(yday,bs="cc", by=year,k=8)+s(time,k=6),  data=dat_char_2183)
 
 
 plot(acf(resid(g4m)))
 plot(pacf(resid(g4m))) # pas bon, il faudrait utiliser un gamm, je vais pas donner de stats
-g2mm <- gam(taille_mm ~ s(time,k=3),  data=dat)
-g4mm <- gam(taille_mm ~ s(yday,bs="cc", by=year,k=8)+s(time,k=3),  data=dat)
-g3mm <- gam(taille_mm ~ s(yday,bs="cc", by=year,k=8),  data=dat)
-g5mm <- gam(taille_mm ~ s(yday,bs="cc", k=8)+s(time,k=3),  data=dat)
+g2mm <- gam(taille_mm ~ s(time,k=3),  data=dat_char_2183)
+g4mm <- gam(taille_mm ~ s(yday,bs="cc", by=year,k=8)+s(time,k=3),  data=dat_char_2183)
+g3mm <- gam(taille_mm ~ s(yday,bs="cc", by=year,k=8),  data=dat_char_2183)
+g5mm <- gam(taille_mm ~ s(yday,bs="cc", k=8)+s(time,k=3),  data=dat_char_2183)
 
 # model 3 is best g4mm
 anova(g3mm,g3mm,g4mm,g5mm, test="Chisq")
@@ -2819,13 +2819,13 @@ anova(g3mm,g3mm,g4mm,g5mm, test="Chisq")
 # Prédictions du modèle sur le jeu de données d'origine
 ############################################
 
-dat$pred <-predict(g4m, type="response",se.fit=TRUE)$fit
+dat_char_2183$pred <-predict(g4m, type="response",se.fit=TRUE)$fit
 # 95 % des données de prédiction sont entre fit *se.fit et fit-2*se.fit
-dat$lwr <-dat$pred-2*predict(g4m, type="response",se.fit=TRUE)$se.fit
-dat$upr <-dat$pred+2*predict(g4m, type="response",se.fit=TRUE)$se.fit
-dat$lwrPoint <-dat$pred - 2*allsd
-dat$uprPoint <-dat$pred + 2*allsd
-dat$upr <-dat$pred+2*predict(g4m, type="response",se.fit=TRUE)$se.fit
+dat_char_2183$lwr <-dat_char_2183$pred-2*predict(g4m, type="response",se.fit=TRUE)$se.fit
+dat_char_2183$upr <-dat_char_2183$pred+2*predict(g4m, type="response",se.fit=TRUE)$se.fit
+dat_char_2183$lwrPoint <-dat_char_2183$pred - 2*allsd
+dat_char_2183$uprPoint <-dat_char_2183$pred + 2*allsd
+dat_char_2183$upr <-dat_char_2183$pred+2*predict(g4m, type="response",se.fit=TRUE)$se.fit
 
 
 
@@ -2834,7 +2834,7 @@ dat$upr <-dat$pred+2*predict(g4m, type="response",se.fit=TRUE)$se.fit
 # graphiques du modèle, des données avec prédiction
 ################################
 # g1 plot brut des tailles de mulets
-g2 <- ggplot(dat)+    
+g2 <- ggplot(dat_char_2183)+    
     scale_colour_discrete_qualitative(
         palette = "Pastel1", nmax = CY-2013)+
     scale_fill_discrete_qualitative(
@@ -2858,22 +2858,10 @@ g3 <- g2 +
     geom_ribbon(aes(x=ope_date_debut,ymin=lwr,ymax=upr, fill=annee),
         color="white",alpha=0.9)+   
     
-    geom_point(aes(x=ope_date_debut,y=pred, fill=annee), 
+    geom_point(aes(x=ope_date_,debut,y=pred, fill=annee), 
         shape=23,size=0.8, fill="white")
 
-###############################################"
-# combinaison de plusieurs graphiques
-# http://www.sthda.com/english/articles/24-ggpubr-publication-ready-plots/81-ggplot2-easy-way-to-mix-multiple-graphs-on-the-same-page/
-################################################
-
-p1 <- ggarrange(g0, g1, labels=c("A", "B"),
-    ncol = 2, nrow = 1)
-p2 <- ggarrange(g3, labels="C")
-p3 <- ggarrange(p1, p2, nrow=2, ncol=1)
-
-pdf(file.path(imgwd,CY,"graphe_taille_mulets.pdf"),width=8, height=8)
-print(p3)
-dev.off()
+save(g0,g1,g2,g3, file=str_c(datawdy, "plot_taille_mulet.Rdata"))
 
 #################################################################
 # prédicton des  données avec loi normale +- 2 *sd autour de la moyenne
@@ -2893,28 +2881,47 @@ pred <-  cbind(pred,
     "se.fit"=predo$se.fit)
 pred$date <- as.Date(pred$date)
 plot(pred$date, pred$fit)
+pred$fit[pred$fit >600] <-0
+range(pred$date)
 
 
-the_seq <- seq(0,600,by=5)
+
+
+the_seq <- seq(200,800,by=5)
 ma<-matrix(NA,nrow=nrow(pred),ncol=length(the_seq))
 # prediction normale tous les jours avec la moyenne et l'écart type
 # commun à tout le jeu de données
 for (i in 1:nrow(pred)){
   ma[i,]<- dnorm(the_seq, mean=pred$fit[i],sd=allsd)
 }
+# On vire les predictions qui partent en sucette (2013)
+
 load_package("plot3D")
-plot3D::image2D(ma)
-ma <-ma/rowSums(ma)
+plot3D::image2D(ma, x=pred$date, y =the_seq, contour=TRUE,
+    ylab="Taille (mm)")
+
+save(ma,file=paste0(datawdy,"ma.Rdata"))
 mad <- as.data.frame(ma)
-save(ma,file=paste0(datawd,"ma.Rdata"))
-the_seq <- seq(0,600,by=5)
-colnames(mad) <-str_c("t",the_seq)
+
+
+plot3D::persp3D(x=, y=the_seq, z= ma)
 pred2 <- cbind(pred,mad)
-save(pred2,file=paste0(datawd,"pred2.Rdata"))
-save(vvv , file=file.path(datawd,CY,"vvv.Rdata"))
+save(dat_char_2183,file=paste0(datawdy,"dat_char_2183.Rdata"))
+save(pred2,file=paste0(datawdy,"pred2.Rdata"))
+save(vvv , file=file.path(datawdy,"vvv.Rdata"))
 @
 
 
+Typically, the workflow of a data-poor stock
+assessment with LFQ data would include: (i) estimation of
+biological stock characteristics (growth and natural mortality),
+(ii) fisheries performance aspects (exploitation rate and
+selectivity), and (iii) stock size and status. The order of the
+methods is important as they build upon each other in a
+sequential way. If some or all of the vital parameters for
+stock assessment are already known, the user may skip the
+data-poor approaches for their assessment and can directly
+TropFishR \citep{mildenberger_tropfishr_2017}
 
 
 
@@ -3188,8 +3195,8 @@ bmi <- choice_c(bmi,
 bmi <- charge(bmi,silent=TRUE)
 bmi <- connect(bmi,silent=FALSE)
 bmi <- calcule(bmi)
-#save(bmi,file=str_c(datawd,'bmimup2022.Rdata'))
-#load(file=str_c(datawd,'bmi2022.Rdata'))
+save(bmi,file=str_c(datawdy,'bmimup2022.Rdata'))
+
 #str(bmi)
 
 plot(bmi, year_choice = CY, silent=TRUE)
@@ -3267,6 +3274,204 @@ vvv[["MUP"]][["pathmensuel"]] <- path_y
 save(vvv, file=str_c(datawdy,"vvv.Rdata"))
 @
 
+
+<<traitements_mulets, echo=FALSE, eval=FALSE,include=FALSE >>=
+
+load(file=str_c(datawdy,'bmimup2022.Rdata')) # bmi
+load(file=paste0(datawdy,"pred2.Rdata"))
+load(file=paste0(datawdy,"ma.Rdata"))
+load(file=str_c(datawd,"lm_taille_poids.Rdata")) 
+load(file=paste0(datawdy,"dat_char_2183.Rdata"))
+load( file=str_c(datawdy, "plot_taille_mulet.Rdata")) # g0, g1, g2
+# on extrait que les lignes avec effectif total
+effectif <- bmi@data%>%
+    filter(bjo_labelquantite=="Effectif_total")
+#with(effectif, plot(bjo_jour,bjo_valeur))
+effectif$date <- as.Date(effectif$bjo_jour) 
+# les effectifs sont bien les bons
+sel <- effectif$bjo_annee>=2013
+with(subset(effectif, sel),tapply(bjo_valeur,bjo_annee,sum,na.rm=TRUE))
+with(subset(effectif, sel),tapply(bjo_valeur,month(date),sum))
+# on joint les données journaières d'effectif au tableau de prédiction
+pred3 <- left_join(effectif[,c("date","bjo_valeur")], pred2,by="date") %>% filter(!is.na(year))
+pred3 <- rename(pred3,effectif=bjo_valeur)
+
+
+
+###################################
+#calcul de la taille moyenne par an
+###################################
+tendance_taille <- pred3 %>% mutate(taillexeffectif=fit*abs(effectif)) %>% group_by(year)%>%summarize(taille_ponderee=sum(taillexeffectif)/sum(effectif),
+    effectif=sum(effectif))
+n_measured <- dat_char_2183 %>% group_by(annee) %>% tally() %>% rename(year=annee)
+tendance_taille <- inner_join(tendance_taille,n_measured) %>%
+    mutate(label_effectif=paste0("N=",effectif,"\n,e=",n))
+mean_taille_ponderee <- mean(tendance_taille$taille_ponderee)
+
+g5 <- g1+
+ geom_point(aes(x=year,y=taille_ponderee), col=orange_EVf, data=tendance_taille) +
+ ggrepel::geom_text_repel(aes(x=year,y=taille_ponderee,label=label_effectif), col=orange_EVf,  
+     nudge_y=5,
+     data=tendance_taille
+    ) +
+ geom_hline(yintercept=mean_taille_ponderee, lty=3)
+
+###############################################"
+# combinaison de plusieurs graphiques
+# http://www.sthda.com/english/articles/24-ggpubr-publication-ready-plots/81-ggplot2-easy-way-to-mix-multiple-graphs-on-the-same-page/
+################################################
+
+p1 <- ggarrange(g0, g5, labels=c("A", "B"),
+    ncol = 2, nrow = 1)
+p2 <- ggarrange(g3, labels="C")
+p3 <- ggarrange(p1, p2, nrow=2, ncol=1)
+
+pdf(file.path(imgwd,CY,"graphe_taille_mulets.pdf"),width=8, height=8)
+print(p3)
+dev.off()
+
+
+#taille_ponderee$year <- as.numeric(as.character(taille_ponderee$year))
+#plot(taille_ponderee$year,taille_ponderee$taille_ponderee,type="l",ylim=c(200,600))
+
+
+
+
+ma <-ma/rowSums(ma)
+L <- seq(200,800,by=5)
+# prediciton du poids
+df_pred_poids <- data.frame(L=L,lL=log(L/10))
+df_pred_poids$poids <- exp(predict(lm_taille_poids,newdata=df_pred_poids))
+map<- matrix(rep(df_pred_poids$poids,nrow(pred3)),
+    nrow=nrow(pred3),
+    ncol=ncol(ma),byrow=TRUE)
+
+
+# effectifs par date (lignes) et classe de taille (colonnes)
+pred3[,10:ncol(pred3)] <-pred3[,10:ncol(pred3)]*matrix(rep(abs(pred3$effectif),121),
+    nrow=nrow(pred3),
+    ncol=ncol(ma), 
+    byrow=FALSE)
+ma2 <-as.matrix(pred3[,10:ncol(pred3)])
+plot3D::image2D(ma2, x=pred3$date, y =the_seq, ,
+    ylab="Taille (mm)")
+mat4 <- t(L)%*%as.matrix(t(pred3[,10:ncol(pred3)]))
+plot(t(mat4/sum(L)))
+
+
+
+
+
+
+mapp <- map*ma2
+plot3D::image2D(mapp)
+
+
+data(synLFQ7);lfq <- synLFQ7
+## set seed value for reproducible results
+set.seed(1)
+
+## adjust bin size
+lfq_bin2 <- lfqModify(lfq, bin_size = 2)
+
+## plot raw and restructured LFQ data
+ma <- 7
+lfq_bin2_res <- lfqRestructure(lfq_bin2, MA = 7, addl.sqrt = FALSE)
+opar()
+
+
+
+opar <- par(mfrow = c(2,1), mar = c(2,5,2,3), oma = c(2,0,0,0))
+plot(lfq_bin2_res, Fname = "catch", date.axis = "modern")
+plot(lfq_bin2_res, Fname = "rcounts", date.axis = "modern")
+par(opar)
+
+
+# data and plot of catch frequencies
+data(synLFQ4)
+plot(synLFQ4, Fname="catch")
+
+# restructuring and calculation of ASP
+synLFQ4 <- lfqRestructure(synLFQ4, MA=11)
+synLFQ4$ASP
+
+# plot of restructured scores and fit of soVBGF growth curves
+plot(synLFQ4)
+lfqFitCurves(synLFQ4,
+    par=list(Linf=80, K=0.5, t_anchor=0.25, C=0.75, ts=0),
+    draw=TRUE
+)$fASP
+
+linf_guess <- max(lfq_bin2$midLengths) / 0.95
+low_par <- list(Linf = 0.8 * linf_guess,
+    K = 0.01,
+    t_anchor = 0,
+    C = 0,
+    ts = 0)
+
+## upper search space bounds
+up_par <- list(Linf = 1.2 * linf_guess,
+    K = 1,
+    t_anchor = 1,
+    C = 1,
+    ts = 1)
+
+res_SA <- ELEFAN_SA(lfq_bin2, SA_time = 60*0.5, SA_temp = 6e5,
+    MA = ma, seasonalised = TRUE, addl.sqrt = FALSE,
+    init_par = list(Linf = linf_guess,
+        K = 0.5,
+        t_anchor = 0.5,
+        C=0.5,
+        ts = 0.5),
+    low_par = low_par,
+    up_par = up_par)
+
+## show results
+res_SA$par
+res_SA$Rn_max
+
+
+## run ELEFAN with genetic algorithm
+res_GA <- ELEFAN_GA(lfq_bin2, MA = ma, seasonalised = TRUE,
+    maxiter = 50, addl.sqrt = FALSE,
+    low_par = low_par,
+    up_par = up_par,
+    monitor = FALSE)
+## show results
+res_GA$par
+res_GA$Rn_max
+
+# assign estimates to the data list
+lfq_bin2 <- lfqModify(lfq_bin2, par = res_GA$par)
+Ms <- M_empirical(Linf = lfq_bin2$par$Linf, 
+    K_l = lfq_bin2$par$K, 
+    method = "Then_growth")
+lfq_bin2$par$M <- as.numeric(Ms)
+## define plus group as largest length class smaller than Linf
+plus_group <- lfq_bin2$midLengths[max(which(lfq_bin2$midLengths < lfq_bin2$par$Linf))]
+
+## summarise catch matrix into vector and add plus group
+lfq_catch_vec <- lfqModify(lfq_bin2, vectorise_catch = TRUE, plus_group = plus_group)
+## run catch curve
+res_cc <- catchCurve(lfq_catch_vec, reg_int = c(18,55), calc_ogive = TRUE)
+
+catchCurve(lfq_catch_vec)
+catchCurve(lfq_catch_vec, 
+    reg_int = c(18,55), 
+    calc_ogive = TRUE,
+    )
+
+
+data(goatfish)
+output <- catchCurve(goatfish)
+summary(output$linear_mod)
+
+# based on age composition data
+data(whiting)
+catchCurve(whiting, catch_columns = 1)
+
+
+@
 \clearpage
 \twocolumn
 \subsection{Lamproie marine}
@@ -3385,7 +3590,9 @@ comptage pour prendre en compte les déformations de la lentille de la caméra.
 Or l'aumentation est observée depuis 2015, elle ne peut donc pas être attribuée
 au changement de méthode de mesure. L'augmentation de la taille des lamproies
 est donc un phénomène notable, comme pour les variations d'effectifs, les raisons de cette augmentation de taille ne
-sont pas connues (Figure \ref{size_lpm}).
+sont pas connues, mais une tendance exactement similaire a été rapportée
+sur la Loire (Marion Legrand, comm. pers.)(Figure
+\ref{size_lpm}, \ref{size_lpm_density}).
 
 \begin{figure}[htpb]
 \centering
@@ -3394,6 +3601,13 @@ sont pas connues (Figure \ref{size_lpm}).
 de 2019 et 2022 ont été calculées en prenant en compte la déformation des distances dans les
 différentes zones de la vitre.}
 \label{size_lpm}
+\end{figure}
+
+\begin{figure}[htpb]
+\centering
+\includegraphics[width=0.45\textwidth]{2022/size_lpm_density.png} 
+\caption{Comparaison des structure en taille des lamproies marines.}
+\label{size_lpm_density}
 \end{figure}
 
 <<report_mig_mult_lpm, echo=FALSE, eval=FALSE,include=FALSE >>=
@@ -3581,17 +3795,44 @@ r_sample_char<-choice_c(r_sample_char,
     silent=FALSE)
 r_sample_char<-connect(r_sample_char)
 r_sample_char<-calcule(r_sample_char,silent=TRUE)
+r_sample_char@data$annee <- as.factor(as.character(r_sample_char@data$annee))
+r_sample_char@data <- r_sample_char@data[
+    as.numeric(as.character(r_sample_char@data$annee))>2005 &
+        as.numeric(as.character(r_sample_char@data$annee))!=2008,] 
+
 # A "violin" plot
 plot(r_sample_char,plot.type="1",silent=TRUE)
 
 g<-get("g1",envir=envir_stacomi)
-png(filename=str_c(imgwdy,"size_lpm.png"))
+png(filename=str_c(imgwdy,"size_lpm.png"),6,6,units="in",res=300)
 g+ggplot2::xlab("taille video (mm)")+
     ggplot2::ylab("annee")+
     theme(axis.title.x=element_blank(),
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank())
 dev.off()
+
+taille <- left_join(r_sample_char@data,
+    r_sample_char@data %>% 
+        group_by(annee) %>% 
+        tally(),
+    by= "annee")
+taille$fannee <- factor(as.character(taille$annee), 
+    levels=unique(taille$annee),
+    labels=unique(paste0(taille$annee," (",taille$n,")")))
+png(filename=str_c(imgwdy,"size_lpm_density.png"),6,6,units="in",res=300)
+taille %>%
+    filter(as.numeric(as.character(annee))>2005) %>%
+    filter(as.numeric(as.character(annee))!=2008) %>%
+    ggplot(aes(x=car_valeur_quantitatif)) +
+    geom_density(aes(fill=fannee), alpha=0.5) + 
+    xlim(0,1500) +
+    theme_bw()
+dev.off()
+
+
+
+
 @
 
 \clearpage
