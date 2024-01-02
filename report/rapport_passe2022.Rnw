@@ -479,7 +479,7 @@ Gérard Eriau\par
 \vspace{2cm}
 \begin{minipage}{0.8\textwidth}
 \begin{center}
-\hspace{3cm}{\color{white}{\huge \itshape{Août 2022}}}
+\hspace{3cm}{\color{white}{\huge \itshape{Décembre 2023}}}
 \end{center}
 \end{minipage}
 \restoregeometry
@@ -573,6 +573,7 @@ load_package('glue')
 load_package('getPass')
 load_package('stringr')
 load_package('hubeau')
+load_package('ggpubr')
 
 
 # l'annee en cours (c'est la valeur à changer en début de script
@@ -1141,20 +1142,21 @@ l’évaluation des stocks de migrateurs doivent donc être considérés comme u
 \subsection{Fonctionnement de la passe à bassins}
 \paragraph{Résumé du fonctionnement.}
 
-Le fonctionnement de la passe en 2022 a été plutôt bon. La passe n'est pas
-fonctionnelle en débit de crue car la baisse de la ligne d'eau amont limite
-fortement les débits évacués et la passe est très peu attractive, mais ce
-dysfonctionnement n'apparait pas sur les chroniques des figures
-\ref{figure_fonctionnement_passe} \ref{report_df_fct_2003_2022} et \ref{report_df_2003_2022}.
-Le 28/03, il y a eu une intervention technique sur les centrales hydrauliques pour changer l'huile et
-le fonctionnement des vannes est re-réglé. 
-Le 27/04 la passe est arrêtée pour installer des cordes à l'aval pour tenter de
-gêner les braconniers. Le 26/08 il y a un problème d'automate.
-La passe est passée en mode étiage (diminution du débit,
-et battardage du débit d'appoint) de juillet à novembre.
-Plusieurs interventions techniques ont eu lieu avec un problème de
-fonctionnement de la vanne intermédiaire le 26 avril, qui ont finalement été
-réglés en octobre novembre avec le remplacement des joints.
+Le fonctionnement de la passe en 2022 a été plutôt bon. En été la passe est
+passée en mode étiage de juillet à novembre. Le mode étiage consiste à arrêter
+la passe (fermer la vanne amont) en marée decendante, et privilégier son
+fonctionnement lors de la marée montante. Le canal de débit d'appoint, chenal
+qui amènent un débit supplémentaire de 1m3/S à l'aval de la passe est également
+battardé. Ce fonctionnement augmente les périodes arrêt pour maintenance qui
+interviennent lorsque la passe devrait en théorie être fonctionnelle 
+(les niveaux permettent son ouverture) alors qu'en pratique elle est fermée (Figures \ref{figure_fonctionnement_passe} \ref{report_df_fct_2003_2022} et \ref{report_df_2003_2022}).
+Les interventions techniques sur les vannes sont assez limitées,
+\begin{itemize}
+\item Le 28/03, il y a eu une intervention technique sur les centrales
+hydrauliques pour changer l'huile et le fonctionnement des vannes a fait l'objet d'un règlage. 
+\item Le 27/04 la passe a été arrêtée pour installer des cordes à l'aval pour
+tenter de gêner les braconniers. Le 26/08 il y a un problème d'automate.
+\end{itemize}
 
 \begin{figure}[htpb]
 \centering
@@ -1182,7 +1184,7 @@ périodes auxquelles la passe a été arrêtée (en orange
 par exemple le passage en mode étiage de 2016 à 2019 se traduit par une  
 augmentation de la durée des dysfonctionnements
 (en orange \textcolor{orange_EV}{\rule[-0.2mm]{3mm}{2mm}}) ou par des arrêts
-nocturnes (en jaune \textcolor{jaune_EV}{\rule[-0.2mm]{3mm}{2mm}}). Les mêmes
+ponctuels (en jaune \textcolor{jaune_EV}{\rule[-0.2mm]{3mm}{2mm}}). Les mêmes
 graphiques sont présentés pour la période 2003-2011 (Figure
 \ref{report_df_2003_2022}) en mettant juste en avant les périodes où la passe est fonctionnelle
 (en bleu \textcolor{bleu_EV}{\rule[-0.2mm]{3mm}{2mm}}) et les périodes où elle
@@ -1227,10 +1229,11 @@ Le dispositif de comptage
 a été mis en service le
 \Sexpr{vvv$ref_dc$date_debut} après que les premiers mulets aient été observés
 dans la passe. %\Sexpr{vvv$ref_dc$date_fin}
-Le suivi est fonctionnel sauf deux arrêts en septembre et octobre
-equi demandent un changement de disque (Figure \ref{report_dc_2022}).
-Les arrêts techniques pendant la période de suivi sont relativement rares
-(Figure \ref{report_dc_1998_2022}). 
+Le suivi est fonctionnel sauf lors de deux arrêts en septembre et octobre,
+problèmes techniques au niveau du matériel informatique qui ont demandé un
+changement de disque (Figure \ref{report_dc_2022}).
+Sur l'ensemble de la période de suivi depuis 2003, les arrêts techniques pendant
+la période de suivi sont relativement rares (Figure \ref{report_dc_1998_2022}). 
 La caméra a été recalée en début de saison et fait l'objet d'une recalibration
 Les néons de la passe ont été remplacés en 2022 par des néons à leds. La vitre
 est très rayée ce qui entraine un problème de salissure, et de qualité de
@@ -2326,8 +2329,8 @@ DBI::dbExecute(req@connection, "INSERT INTO iav.tj_conditionenvironnementale_env
 \subsection{Conditions environnementales}
 
 L'année \Sexpr{CY} a été marquée par des débits de crue en début et en
-fin d'année et des débits globalement plus importants que les débits de
-référence de la banque hydro (Figure \ref{fig_debit}).
+fin d'année et des débits printaniers plus faibles que les débits de
+référence (modules mensuels) de la banque hydro (Figure \ref{fig_debit}).
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{2022/fig_debit.png} 
@@ -2537,7 +2540,9 @@ interannuelles (Figure \ref{figure_taille_mulets}). Les mulets les plus grands
 se présentent en tout début de saison, puis la taille des mulets diminue pour
 atteindre son minimum lors de l'été \citep{lemonnier_dynamique_2019}.
 Cette année des mulets de petite taille ont été observés en Mai, et on retrouve
-la tendance saisonnière des migrations.
+la tendance saisonnière des migrations. Il n'y a pas de tendance claire des
+tailles moyennes des mulets reconstituées en calculat la taille moyenne pondérée
+à partir du modèle de variation saisonnière de la taille et des effectifs.
 
 \begin{figure}[htpb]
 \centering
@@ -2545,13 +2550,13 @@ la tendance saisonnière des migrations.
 \caption{Tendance saisonnière d'évolution des
 tailles de mulets depuis 2013. A. Graphiques de densités (distributions) des
 tailles par mois, en jaune mois estivaux, en violet mois printaniers, en rose
-automne. B. Graphique en violon et box-plot des tailles annuelles. C. Modèle gam
-ajusté sur les valeurs de taille (au centre modèle et intervalle de confiance
+automne. B. Graphique en violon et box-plot des tailles annuelles, les points
+représentent la moyenne pondéree des tailles modélisées (courbe en C) par les effectifs. En
+texte, effectif de mulet (N) et effectif mesuré (e).
+C. Modèle gam ajusté sur les valeurs de taille (au centre modèle et intervalle de confiance
  à 95 \%) les points correspondent à prédiction + résidus.}
 \label{figure_taille_mulets}
 \end{figure}
-
-
 
 \begin{figure}[htpb]
 \centering
@@ -2559,6 +2564,7 @@ ajusté sur les valeurs de taille (au centre modèle et intervalle de confiance
 \caption{Bilan annuel des migrations de mulets au barrage d'Arzal.}
 \label{bilan_annuel_mup}
 \end{figure}
+
 
 Les effectifs de mulets de 2022
 N=\Sexpr{format(vvv[["MUP"]][["NCY"]], digits=1, nsmall =0, big.mark=" ",scientific=FALSE)}
@@ -2570,7 +2576,9 @@ soit à leur minimum historique (en marron sur la figure \ref{barchart_bmi_mup})
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{2022/barchart_bmi_mup} 
-\caption{Bilan annuel des migrations de mulets au barrage d'Arzal.}
+\caption{Bilan inter-annuel des migrations de mulets au barrage d'Arzal. En
+gris les minimum, maximum et moyenne des valeurs historiques de migration
+mensuelles.}
 \label{barchart_bmi_mup}
 \end{figure}
 
@@ -2858,7 +2866,7 @@ g3 <- g2 +
     geom_ribbon(aes(x=ope_date_debut,ymin=lwr,ymax=upr, fill=annee),
         color="white",alpha=0.9)+   
     
-    geom_point(aes(x=ope_date_,debut,y=pred, fill=annee), 
+    geom_point(aes(x=ope_date_debut,y=pred, fill=annee), 
         shape=23,size=0.8, fill="white")
 
 save(g0,g1,g2,g3, file=str_c(datawdy, "plot_taille_mulet.Rdata"))
@@ -2911,23 +2919,7 @@ save(pred2,file=paste0(datawdy,"pred2.Rdata"))
 save(vvv , file=file.path(datawdy,"vvv.Rdata"))
 @
 
-
-Typically, the workflow of a data-poor stock
-assessment with LFQ data would include: (i) estimation of
-biological stock characteristics (growth and natural mortality),
-(ii) fisheries performance aspects (exploitation rate and
-selectivity), and (iii) stock size and status. The order of the
-methods is important as they build upon each other in a
-sequential way. If some or all of the vital parameters for
-stock assessment are already known, the user may skip the
-data-poor approaches for their assessment and can directly
-TropFishR \citep{mildenberger_tropfishr_2017}
-
-
-
 <<bilan_annuels_mup, echo=FALSE, eval=FALSE,include=FALSE >>=
-
-
 
 # launching stacomi without selecting the scheme or interface
 bilA <- new("report_annual")
@@ -3219,7 +3211,7 @@ g <- g+scale_x_datetime(name="date",
 print(g)
 dev.off()
 
-plot(bmi,plot.type="barchart", timesplit="mois", year_choice = CY, silent=TRUE)
+plot(bmi,plot.type="barchart", timesplit="mois", year_choice = CY, silent=TRUE, alpha=1)
 g <- get("g_barchart", envir=envir_stacomi)
 cols <- c("max" = "#012746","min" = "#6C3E00",">=moy" = "#327AB5", "<moy" = "#D29035","hist_mean"="black","hist_range"="grey","?"="#D26435")
 fills <- c("max" = "#043C6B","min" = "#6C3E00",">=moy" = "#558AB5", "<moy" = "#D2A25F","hist_mean"="black","hist_range"="grey","?"="#D26435")
@@ -3305,13 +3297,13 @@ tendance_taille <- pred3 %>% mutate(taillexeffectif=fit*abs(effectif)) %>% group
     effectif=sum(effectif))
 n_measured <- dat_char_2183 %>% group_by(annee) %>% tally() %>% rename(year=annee)
 tendance_taille <- inner_join(tendance_taille,n_measured) %>%
-    mutate(label_effectif=paste0("N=",effectif,"\n,e=",n))
+    mutate(label_effectif=paste0("N=",effectif,"\n e=",n))
 mean_taille_ponderee <- mean(tendance_taille$taille_ponderee)
 
 g5 <- g1+
  geom_point(aes(x=year,y=taille_ponderee), col=orange_EVf, data=tendance_taille) +
  ggrepel::geom_text_repel(aes(x=year,y=taille_ponderee,label=label_effectif), col=orange_EVf,  
-     nudge_y=5,
+     nudge_y=0.9,
      data=tendance_taille
     ) +
  geom_hline(yintercept=mean_taille_ponderee, lty=3)
@@ -3336,139 +3328,36 @@ dev.off()
 
 
 
-
-ma <-ma/rowSums(ma)
-L <- seq(200,800,by=5)
-# prediciton du poids
-df_pred_poids <- data.frame(L=L,lL=log(L/10))
-df_pred_poids$poids <- exp(predict(lm_taille_poids,newdata=df_pred_poids))
-map<- matrix(rep(df_pred_poids$poids,nrow(pred3)),
-    nrow=nrow(pred3),
-    ncol=ncol(ma),byrow=TRUE)
-
-
-# effectifs par date (lignes) et classe de taille (colonnes)
-pred3[,10:ncol(pred3)] <-pred3[,10:ncol(pred3)]*matrix(rep(abs(pred3$effectif),121),
-    nrow=nrow(pred3),
-    ncol=ncol(ma), 
-    byrow=FALSE)
-ma2 <-as.matrix(pred3[,10:ncol(pred3)])
-plot3D::image2D(ma2, x=pred3$date, y =the_seq, ,
-    ylab="Taille (mm)")
-mat4 <- t(L)%*%as.matrix(t(pred3[,10:ncol(pred3)]))
-plot(t(mat4/sum(L)))
-
-
+#
+#ma <-ma/rowSums(ma)
+#L <- seq(200,800,by=5)
+## prediciton du poids
+#df_pred_poids <- data.frame(L=L,lL=log(L/10))
+#df_pred_poids$poids <- exp(predict(lm_taille_poids,newdata=df_pred_poids))
+#map<- matrix(rep(df_pred_poids$poids,nrow(pred3)),
+#    nrow=nrow(pred3),
+#    ncol=ncol(ma),byrow=TRUE)
+#
+#
+## effectifs par date (lignes) et classe de taille (colonnes)
+#pred3[,10:ncol(pred3)] <-pred3[,10:ncol(pred3)]*matrix(rep(abs(pred3$effectif),121),
+#    nrow=nrow(pred3),
+#    ncol=ncol(ma), 
+#    byrow=FALSE)
+#ma2 <-as.matrix(pred3[,10:ncol(pred3)])
+#plot3D::image2D(ma2, x=pred3$date, y =the_seq, ,
+#    ylab="Taille (mm)")
+#mat4 <- t(L)%*%as.matrix(t(pred3[,10:ncol(pred3)]))
+#plot(t(mat4/sum(L)))
 
 
 
 
-mapp <- map*ma2
-plot3D::image2D(mapp)
 
-
-data(synLFQ7);lfq <- synLFQ7
-## set seed value for reproducible results
-set.seed(1)
-
-## adjust bin size
-lfq_bin2 <- lfqModify(lfq, bin_size = 2)
-
-## plot raw and restructured LFQ data
-ma <- 7
-lfq_bin2_res <- lfqRestructure(lfq_bin2, MA = 7, addl.sqrt = FALSE)
-opar()
-
-
-
-opar <- par(mfrow = c(2,1), mar = c(2,5,2,3), oma = c(2,0,0,0))
-plot(lfq_bin2_res, Fname = "catch", date.axis = "modern")
-plot(lfq_bin2_res, Fname = "rcounts", date.axis = "modern")
-par(opar)
-
-
-# data and plot of catch frequencies
-data(synLFQ4)
-plot(synLFQ4, Fname="catch")
-
-# restructuring and calculation of ASP
-synLFQ4 <- lfqRestructure(synLFQ4, MA=11)
-synLFQ4$ASP
-
-# plot of restructured scores and fit of soVBGF growth curves
-plot(synLFQ4)
-lfqFitCurves(synLFQ4,
-    par=list(Linf=80, K=0.5, t_anchor=0.25, C=0.75, ts=0),
-    draw=TRUE
-)$fASP
-
-linf_guess <- max(lfq_bin2$midLengths) / 0.95
-low_par <- list(Linf = 0.8 * linf_guess,
-    K = 0.01,
-    t_anchor = 0,
-    C = 0,
-    ts = 0)
-
-## upper search space bounds
-up_par <- list(Linf = 1.2 * linf_guess,
-    K = 1,
-    t_anchor = 1,
-    C = 1,
-    ts = 1)
-
-res_SA <- ELEFAN_SA(lfq_bin2, SA_time = 60*0.5, SA_temp = 6e5,
-    MA = ma, seasonalised = TRUE, addl.sqrt = FALSE,
-    init_par = list(Linf = linf_guess,
-        K = 0.5,
-        t_anchor = 0.5,
-        C=0.5,
-        ts = 0.5),
-    low_par = low_par,
-    up_par = up_par)
-
-## show results
-res_SA$par
-res_SA$Rn_max
-
-
-## run ELEFAN with genetic algorithm
-res_GA <- ELEFAN_GA(lfq_bin2, MA = ma, seasonalised = TRUE,
-    maxiter = 50, addl.sqrt = FALSE,
-    low_par = low_par,
-    up_par = up_par,
-    monitor = FALSE)
-## show results
-res_GA$par
-res_GA$Rn_max
-
-# assign estimates to the data list
-lfq_bin2 <- lfqModify(lfq_bin2, par = res_GA$par)
-Ms <- M_empirical(Linf = lfq_bin2$par$Linf, 
-    K_l = lfq_bin2$par$K, 
-    method = "Then_growth")
-lfq_bin2$par$M <- as.numeric(Ms)
-## define plus group as largest length class smaller than Linf
-plus_group <- lfq_bin2$midLengths[max(which(lfq_bin2$midLengths < lfq_bin2$par$Linf))]
-
-## summarise catch matrix into vector and add plus group
-lfq_catch_vec <- lfqModify(lfq_bin2, vectorise_catch = TRUE, plus_group = plus_group)
-## run catch curve
-res_cc <- catchCurve(lfq_catch_vec, reg_int = c(18,55), calc_ogive = TRUE)
-
-catchCurve(lfq_catch_vec)
-catchCurve(lfq_catch_vec, 
-    reg_int = c(18,55), 
-    calc_ogive = TRUE,
-    )
-
-
-data(goatfish)
-output <- catchCurve(goatfish)
-summary(output$linear_mod)
-
-# based on age composition data
-data(whiting)
-catchCurve(whiting, catch_columns = 1)
+#
+#mapp <- map*ma2
+#plot3D::image2D(mapp)
+#
 
 
 @
@@ -3556,8 +3445,8 @@ de mars à mai. Les premières migrations sont clairement plus précoces, et les
 migrations de mars correspondent au maximum connu jusqu'alors 
 (Figures \ref{barchart_bmi_lpm}, \ref{plot_seasonal_lpm}).
 Ces résultats sont en accord avec l'examen des tendances de migration des
-lamproies marines en France par \citet{legrandContrastingTrendsSpecies2020} qui
-montre globalement une arrivée plus précoce dans les 30 dernières années. 
+lamproies marines en France par \citet{legrand_DiadromousFishModified_2021} qui
+montrent globalement une arrivée plus précoce dans les 30 dernières années. 
 Les dates de première arrivée correspondant à l'arrivée de 5 \% des
 effectifs annuels, arrivée médiane (quand 50 \% des lamproies ont migré) et
 arrivées tardives (95 \%) ne varient pas de manière indépendante pour la
@@ -3603,12 +3492,7 @@ différentes zones de la vitre.}
 \label{size_lpm}
 \end{figure}
 
-\begin{figure}[htpb]
-\centering
-\includegraphics[width=0.45\textwidth]{2022/size_lpm_density.png} 
-\caption{Comparaison des structure en taille des lamproies marines.}
-\label{size_lpm_density}
-\end{figure}
+
 
 <<report_mig_mult_lpm, echo=FALSE, eval=FALSE,include=FALSE >>=
 # Lamproies --------------------------------------- 
@@ -3927,13 +3811,12 @@ sont peut être légèrement plus petites (Figure \ref{size_alose}).
 La diminution de la taille moyenne en 2020 semblait cohérente avec un retour des
 premières aloses ayant fait l'objet de mesures de protection 5 ans auparavant en
 2015, et la relative rareté des grandes aloses correspondant à la période de
-surexploitation en 2012-2014. Cette année les tailles ont clairement ré-augmenté.
-Le scénario pourrait être le suivant, pas assez de reproducteurs entre 2013 et
-2014, quelques reproductions en 2015 arrivent en 2020 à l'âge 5 (petites
-aloses.). Cette même cohorte se retrouve en 2022. Celà signifierait un succès
-reproducteur très faible des alose ayant migré en 2016, c'est plutôt inquiétant
-car les effectifs auraient du commencer à ré-augmenter.
-
+surexploitation en 2012-2014. En 2021 les tailles ont ré-augmenté, puis elles
+retournent à leur valeur de 2020 en 2022. Ces variations de taille moyennes
+pourraient s'expliquer par des années pour lesquelles le succès reproducteur
+serait plus faible, ou par la contribution plus ou moins importante d'aloses
+provenant d'autres bassins. 
+ 
 
 
 \begin{figure}[htpb]
@@ -4151,7 +4034,7 @@ bmi<-charge(bmi,silent=TRUE)
 bmi<-connect(bmi,silent=FALSE)
 bmi<-calcule(bmi)
 save(bmi,file=str_c(datawd,'bmiala2022.Rdata'))
-#load(file=str_c(datawd,'bmi2022.Rdata'))
+#load(file=str_c(datawd,'bmiala2022.Rdata'))
 #str(bmi)
 ####################
 # graphique de stacomi (2018 pas de captures)
@@ -4194,7 +4077,7 @@ colrp1<-colorRampPalette(colors=c("#6D9A58","#C6B130"))
 load_package("viridis")
 g<-get("g_density",envir=envir_stacomi)	
 g+
-    ggplot2::scale_fill_manual(values=c(colrp(12),colrp1(12)))
+    ggplot2::scale_fill_manual(values=c(colrp(15),colrp1(15)))
 
 
 #============================================
@@ -4932,7 +4815,8 @@ rmi <- choice_c(rmi,
 rmi <- charge(rmi)
 rmi <- connect(rmi,check=TRUE,silent=FALSE)	
 rmi <- calcule(rmi)
-
+save(rmi,file=str_c(datawd,'rmisalmo2022.Rdata'))
+#load(file=str_c(datawd,'rmisalmo2022.Rdata'))
 # utilisation de la méthode plot pour générer un graphique des densités
 # puis modification des couleurs du titre et de y
 plot(rmi,plot.type="density",year_choice = CY, silent=TRUE)
@@ -5371,6 +5255,8 @@ rmi<-choice_c(rmi,
 rmi<-charge(rmi)
 rmi<-connect(rmi,check=TRUE,silent=FALSE)	
 rmi<-calcule(rmi)
+save(rmi,file=str_c(datawd,'rmitrm2022.Rdata'))
+#load(file=str_c(datawd,'rmitrm2022.Rdata'))
 rmi@data$bjo_valeur[rmi@data$bjo_valeur<0]<- -rmi@data$bjo_valeur[rmi@data$bjo_valeur<0]
 # utilisation de la méthode plot pour générer un graphique des densités
 # puis modification des couleurs du titre et de y
