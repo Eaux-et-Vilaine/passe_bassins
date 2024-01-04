@@ -5960,7 +5960,7 @@ mer, la vanne amont se ferme (trait marron).
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.8\textwidth]{2021/detail_fonct_passe_1.png}
+\includegraphics[width=0.8\textwidth]{2022/detail_fonct_passe_1.png}
 \caption{Illustration du fonctionnement de la passe après la remise en route
 de la passe en avril. En ordonnée les niveaux mer (noir), vilaine
 (.-), sas (en bleu), niveau vanne mer (pointillés violet), niveau vanne Vilaine (ligne marron
