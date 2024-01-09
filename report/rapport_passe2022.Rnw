@@ -2694,7 +2694,7 @@ load_package("ggpubr")
 ###################################
 # modélisation de la taille moyenne des mulets 
 ###################################
-load(file=str_c(dat_char_2183awdy,"r_sample_char_mulet.Rdat_char_2183a"))
+load(file=str_c(datawdy,"r_sample_char_mulet.Rdata"))
 dat_char_2183 <- r_sample_char@data
 #dat_char_2183[dat_char_2183$car_valeur_quantitatif> 700,]
 #str(dat_char_2183)
@@ -3305,7 +3305,7 @@ mean_taille_ponderee <- mean(tendance_taille$taille_ponderee)
 
 g5 <- g1+
  geom_point(aes(x=year,y=taille_ponderee), col=orange_EVf, data=tendance_taille) +
- ggrepel::geom_text_repel(aes(x=year,y=taille_ponderee,label=label_effectif), col=orange_EVf,  
+ ggrepel::geom_text_repel(aes(x=year,y=taille_ponderee,label=label_effectif), col="black", size=3, 
      nudge_y=0.9,
      data=tendance_taille
     ) +
