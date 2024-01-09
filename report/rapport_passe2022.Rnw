@@ -353,6 +353,8 @@ pdfkeywords={passe} {lamproies} {alose} {stacomi}
 \titlespacing*{\section}{0}{4.5ex plus 1ex minus .2ex}{3.3ex plus .2ex}
 \titlespacing*{\subsection}{0}{3.5ex plus 1ex minus 1ex}{1ex plus .2ex}
 \titlespacing*{\subsubsection}{0}{2.5ex plus 1ex minus 1ex}{0.5ex plus .1ex}
+
+\newcommand{\rev}[2][orange]{\textcolor{#1}{#2}}
 %%===============================================%%
 %%==========    END OF THE PREAMBLE    ==========%%
 %%===============================================%%
@@ -1150,13 +1152,13 @@ qui amènent un débit supplémentaire de 1m3/S à l'aval de la passe est égale
 battardé. Ce fonctionnement augmente les périodes arrêt pour maintenance qui
 interviennent lorsque la passe devrait en théorie être fonctionnelle 
 (les niveaux permettent son ouverture) alors qu'en pratique elle est fermée (Figures \ref{figure_fonctionnement_passe} \ref{report_df_fct_2003_2022} et \ref{report_df_2003_2022}).
-Les interventions techniques sur les vannes sont assez limitées,
+\rev[red]{Les interventions techniques sur les vannes sont assez limitées,
 \begin{itemize}
 \item Le 28/03, il y a eu une intervention technique sur les centrales
 hydrauliques pour changer l'huile et le fonctionnement des vannes a fait l'objet d'un règlage. 
 \item Le 27/04 la passe a été arrêtée pour installer des cordes à l'aval pour
 tenter de gêner les braconniers. Le 26/08 il y a un problème d'automate.
-\end{itemize}
+\end{itemize}}
 
 \begin{figure}[htpb]
 \centering
@@ -1169,7 +1171,7 @@ sont manquantes en début de saison.}
 \label{figure_fonctionnement_passe}
 \end{figure}
 
-\paragraph{Calculs du fonctionnement et des débits la passe à bassins.}
+\paragraph{Calculs du fonctionnement et des débits de la passe à bassins.}
 Les niveaux observés pour la ligne d'eau et les cotes de vannes de la passe
 à bassins sont illustrés en figure \ref{figure_fonctionnement_passe}. A
 partir de ces niveaux, dont le détail est présenté en annexe (Figures
@@ -1234,7 +1236,7 @@ problèmes techniques au niveau du matériel informatique qui ont demandé un
 changement de disque (Figure \ref{report_dc_2022}).
 Sur l'ensemble de la période de suivi depuis 2003, les arrêts techniques pendant
 la période de suivi sont relativement rares (Figure \ref{report_dc_1998_2022}). 
-La caméra a été recalée en début de saison et fait l'objet d'une recalibration
+La caméra a été recalée en début de saison et fait l'objet d'une recalibration.
 Les néons de la passe ont été remplacés en 2022 par des néons à leds. La vitre
 est très rayée ce qui entraine un problème de salissure, et de qualité de
 l'image.
@@ -2328,9 +2330,10 @@ DBI::dbExecute(req@connection, "INSERT INTO iav.tj_conditionenvironnementale_env
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Conditions environnementales}
 
-L'année \Sexpr{CY} a été marquée par des débits de crue en début et en
-fin d'année et des débits printaniers plus faibles que les débits de
-référence (modules mensuels) de la banque hydro (Figure \ref{fig_debit}).
+\rev{L'année \Sexpr{CY} a été marquée par des débits de crue en début et en
+fin d'année et sur le reste de l'année des débits plus
+faibles que ceux de référence (modules mensuels) de la banque hydro (Figure
+\ref{fig_debit}).}
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{2022/fig_debit.png} 
@@ -2541,8 +2544,8 @@ se présentent en tout début de saison, puis la taille des mulets diminue pour
 atteindre son minimum lors de l'été \citep{lemonnier_dynamique_2019}.
 Cette année des mulets de petite taille ont été observés en Mai, et on retrouve
 la tendance saisonnière des migrations. Il n'y a pas de tendance claire des
-tailles moyennes des mulets reconstituées en calculat la taille moyenne pondérée
-à partir du modèle de variation saisonnière de la taille et des effectifs.
+tailles moyennes des mulets reconstituées en calculant la taille moyenne
+pondérée à partir du modèle de variation saisonnière de la taille et des effectifs.
 
 \begin{figure}[htpb]
 \centering
@@ -3419,11 +3422,12 @@ au barrage d'Arzal.}
 \label{barplot_report_annual_lpm}
 \end{figure}
 
-
-La comparaison des tendances mensuelles avec les migrations
-interannuelles montre qu'elles sont inférieures à la moyenne observée sur la
-période 1996-2020 sauf en mars (Figure \ref{barchart_bmi_lpm}, Tableau
-\ref{table_lpm_mois}).
+\rev{
+La première partie de l'année 2022 se caractérise par des tendances mensuelles
+supérieures à la moyenne observée sur la période 1996-\Sexpr{CY}. Au contraire,
+pour la deuxième partie de l'année on observe des tendances mensuelles
+inférieures à la moyenne des migrations interannuelles (Figure \ref{barchart_bmi_lpm}, Tableau
+\ref{table_lpm_mois}).}
 
 \begin{figure}[htpb]
 \centering
@@ -3439,11 +3443,13 @@ série interannuelle de données 1996-\Sexpr{CY-1}.}
 \input{\Sexpr{vvv[["LPM"]][["path"]]}} % table bilan lamproies pour l'année
 
 
-La migration des lamproies marines intervient entre mars et juin (Figure
+\rev{La migration des lamproies marines intervient entre mars et juin (Figure
 \ref{rmi_density_lpm}). En \Sexpr{CY}, la migration s'est faite essentiellement
-de mars à mai. Les premières migrations sont clairement plus précoces, et les
-migrations de mars correspondent au maximum connu jusqu'alors 
-(Figures \ref{barchart_bmi_lpm}, \ref{plot_seasonal_lpm}).
+de février à mai, ce qui contraste avec l'année précédente où les migration
+ont commencé en mars.
+Les premières migrations sont clairement plus précoces, et les migrations de
+février correspondent au maximum connu jusqu'alors (Figures
+\ref{barchart_bmi_lpm}, \ref{plot_seasonal_lpm}).}
 Ces résultats sont en accord avec l'examen des tendances de migration des
 lamproies marines en France par \citet{legrand_DiadromousFishModified_2021} qui
 montrent globalement une arrivée plus précoce dans les 30 dernières années. 
@@ -3471,28 +3477,21 @@ point la médiane. L'importance des effectifs est représentée par la couleur.}
 \label{plot_seasonal_lpm}
 \end{figure}
 
-La comparaison des structures en taille vidéo de cette année laisse apparaître
-un accroissement de la taille, alors que la taille des aloses a fortement
-diminué. C'est à partir de 2019 qu'une nouvelle méthode de mesure a été
-appliquée : la taille a été mesurée relativement à 9 sections de la vitre de
-comptage pour prendre en compte les déformations de la lentille de la caméra. 
-Or l'aumentation est observée depuis 2015, elle ne peut donc pas être attribuée
-au changement de méthode de mesure. L'augmentation de la taille des lamproies
-est donc un phénomène notable, comme pour les variations d'effectifs, les raisons de cette augmentation de taille ne
-sont pas connues, mais une tendance exactement similaire a été rapportée
-sur la Loire (Marion Legrand, comm. pers.)(Figure
-\ref{size_lpm}, \ref{size_lpm_density}).
+\rev{La comparaison des structures en taille vidéo laisse paraître un
+accroissement depuis 2015. Les raisons de cette augmentation de taille ne sont pas connues,
+mais une tendance exactement similaire avait été rappor‐
+tée sur la Loire (Marion Legrand, comm. pers.). Cependant, pour l'année 2022 les
+tailles des lamproies sont en baisse par rapport aux années 2019, 2020 et 2021
+(Figure \ref{size_lpm}).}
 
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{2022/size_lpm.png} 
 \caption{Comparaison des structure en taille des lamproies marines. Les tailles
-de 2019 et 2022 ont été calculées en prenant en compte la déformation des distances dans les
-différentes zones de la vitre.}
+de 2019 à 2022 ont été calculées en prenant en compte la déformation des
+distances dans les différentes zones de la vitre.}
 \label{size_lpm}
 \end{figure}
-
-
 
 <<report_mig_mult_lpm, echo=FALSE, eval=FALSE,include=FALSE >>=
 # Lamproies --------------------------------------- 
@@ -3762,7 +3761,7 @@ la liste rouge UICN.
 
 \Sexpr{vvv$ALA$NCY} aloses ont été comptées en
 \Sexpr{CY} (Figure
-\ref{tx_exploit} \ref{rmi_journalier_ala} et Tableau
+\ref{tx_exploit}, \ref{rmi_journalier_ala} et Tableau
 \ref{table_bilanannuel_ala}).
 Cette migration place l'année \Sexpr{CY} au rang \Sexpr{vvv$ALA$rank}
 par rapport à l'ensemble des années de migration. En
@@ -3790,9 +3789,10 @@ interannuelle de données 1996-\Sexpr{CY-1}.}
 \end{figure}
 
 
-Quel que soit le mois, les migrations sont inférieures à la
-moyenne interannuelle (Figures
-\ref{barchart_bmi_ala} \ref{rmi_journalier_ala}, Tableau \ref{table_ala_mois}).
+\rev{Globalement, les migrations sont inférieures à la
+moyenne interannuelle sauf pour le mois de mai (Figures
+\ref{rmi_journalier_ala}, \ref{barchart_bmi_ala}, Tableau
+\ref{table_ala_mois}).}
 
 \begin{figure}[htpb]
 \centering
@@ -4984,6 +4984,7 @@ dev.off()
 
 <<report_interannual_trt, echo=FALSE, eval=FALSE, include=FALSE >>=
 # les trt sont traduites en Salmo au niveau genre dans la base : essais pour comprendre
+vvv[["salmo"]] <- list()
 rmi <- new("report_mig_interannual")
 rmi <- choice_c(rmi,
     dc=c(5),
@@ -5054,7 +5055,7 @@ print(xtmmm,
 #include.rownames = FALSE => OK set as global options
 )
 #vvv[["LPM"]]<- list()# normalement vient du rapport de l'années précédente
-vvv[["SAT"]][["path_y"]] <- path_y
+vvv[["salmo"]][["path_y"]] <- path_y
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
@@ -5137,8 +5138,8 @@ puis les effectifs ont chuté très rapidement, pour être anecdotiques ces dern
 \smallskip
 
 %\Sexpr{vvv$TRM$N[vvv$TRM$N$annee==CY,"effectif"]} 
-Aucune truites de mer n'a été %ont été
-comptée en \Sexpr{CY} (Figure \ref{barplot_report_annual_trm}) %,  Tableau
+\rev{Une truite de mer a été %ont été
+comptée en \Sexpr{CY} (Figure \ref{barplot_report_annual_trm}) }%,  Tableau
 %\ref{table_trm_mois}).
 \begin{figure}[htpb]
 \centering
@@ -5421,7 +5422,7 @@ dev.off()
 @
 
 \clearpage
-\subsection{Autre espèces}
+\subsection{Autres espèces}
 
 
 Par sa situation avec le pied en eau salée et la tête en eau douce, la passe ne
@@ -5437,8 +5438,11 @@ graphique à la Figure \ref{autres_especes_2000_2022}.
 \includegraphics[width=0.45\textwidth]{2022/autres_especes.png} 
 \caption{Effectif des autres espèces recensées en \Sexpr{CY} dans la passe,
 \textit{Abramis brama} brème, \textit{Sander lucioperca} sandre,
-\textit{Cyprinus} cyprinidés sans détermination (genre), \textit{Micropterus
-salmoides} black bass à grande bouche, \textit{Silurus glanis} silure.}
+\textit{Cyprinus} carpe (genre), \textit{Cyprinidae} cyprinidés sans détermination,
+\textit{Dichentrachus labrax} bar commun,
+\textit{Salmo trutta fario} truite fario,
+\textit{Tinca tinca} tanche,
+\textit{Silurus glanis} silure.}
 \label{autres_especes}
 \end{figure}
 
@@ -5462,7 +5466,8 @@ salmoides} black bass à grande bouche, \textit{Silurus glanis} silure.}
 \end{figure}
 
 Les tailles et les effectifs des silures mesurées au niveau de la passe d'Arzal
-sont en très nette augmentation Figures (\ref{size_sil}\ref{bilan_annuel_sil}) .
+sont en très nette augmentation (Figures \ref{size_sil}
+et \ref{bilan_annuel_sil}) .
 
 \begin{figure}[htpb]
 \centering
@@ -5960,7 +5965,7 @@ mer, la vanne amont se ferme (trait marron).
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.8\textwidth]{2021/detail_fonct_passe_1.png}
+\includegraphics[width=0.8\textwidth]{2022/detail_fonct_passe_1.png}
 \caption{Illustration du fonctionnement de la passe après la remise en route
 de la passe en avril. En ordonnée les niveaux mer (noir), vilaine
 (.-), sas (en bleu), niveau vanne mer (pointillés violet), niveau vanne Vilaine (ligne marron
@@ -6074,7 +6079,7 @@ leds.\\
 2020 & Changement de pièces sur les vérins de la porte aval.\\
 2021 & Renforcement des structure du capteur de fin de course aval, Remplacement
 des joints de la vanne intermédiaire.\\
-2022 & TODOTODO\\
+2022 & Aucune modification particulière effectuée\\
 \bottomrule
 \end{tabular}
 \caption{Entretien historique de la passe à poissons.}
@@ -6148,8 +6153,8 @@ de la passe à bassins, 2008}\\
 
 La passe fonctionne au quotidien grâce au travail d'entretien de suivi et
 d'intervention des barragistes : Alban Le Guen, Cyril Faucon, Johann Dahlem,
-laurent Philippot, Thierry Besnard. Nous tenons à les remercier pour leur aide et leur
-disponibilité.
+Laurent Philippot, Thierry Besnard. Nous tenons à les remercier pour leur aide
+et leur disponibilité.
 \bigskip
 
 \vfill
