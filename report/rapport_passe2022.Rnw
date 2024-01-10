@@ -3477,12 +3477,21 @@ point la médiane. L'importance des effectifs est représentée par la couleur.}
 \label{plot_seasonal_lpm}
 \end{figure}
 
-\rev{La comparaison des structures en taille vidéo laisse paraître un
-accroissement depuis 2015. Les raisons de cette augmentation de taille ne sont pas connues,
-mais une tendance exactement similaire avait été rappor‐
-tée sur la Loire (Marion Legrand, comm. pers.). Cependant, pour l'année 2022 les
+\rev{La comparaison des structures en taille vidéo laisse
+paraître un accroissement depuis 2015. C’est à partir de 2019 qu’une nouvelle méthode de
+mesure a été appliquée : la taille a été mesurée relati‐
+vement à 9 sections de la vitre de comptage pour
+prendre en compte les déformations de la lentille
+de la caméra. Or l’aumentation est observée depuis
+2015, elle ne peut donc pas être attribuée au change‐
+ment de méthode de mesure. L’augmentation de la
+taille des lamproies est donc un phénomène notable,
+comme pour les variations d’effectifs, les raisons de
+cette augmentation de taille ne sont pas connues, et un phénomène exactement
+similaire avait été rappor‐ tée sur la Loire (Marion Legrand, comm. pers.). Cependant, pour l'année 2022 les
 tailles des lamproies sont en baisse par rapport aux années 2019, 2020 et 2021
 (Figure \ref{size_lpm}).}
+
 
 \begin{figure}[htpb]
 \centering
