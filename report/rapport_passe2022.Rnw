@@ -405,7 +405,7 @@ keepaspectratio]{/frontpage.png}%
 {\titlefont Date d'édition :\\}}
 \qquad \color{orange_EV}
 \Large
-{\titlefont Novembre 2023}
+{\titlefont Janvier 2024}
 \vspace{2cm}
 
 \end{minipage}
@@ -481,7 +481,7 @@ Gérard Eriau\par
 \vspace{2cm}
 \begin{minipage}{0.8\textwidth}
 \begin{center}
-\hspace{3cm}{\color{white}{\huge \itshape{Décembre 2023}}}
+\hspace{3cm}{\color{white}{\huge \itshape{Janvier 2024}}}
 \end{center}
 \end{minipage}
 \restoregeometry
@@ -820,7 +820,7 @@ L'estuaire en amont, jusqu'à la limite historique de l'estuaire tital (barrages
 a été transformé en rivière. Le plan d'eau ainsi créé a vu se développer de
 nouveaux usages dont les principaux sont la navigation et
 l'eau potable.
-Le barrage d'Arzal joue aussi un rôle majeur dans la protection contre les crues de l'aval du bassin versant, 
+Le barrage d'Arzal joue un rôle majeur dans la protection contre les crues de l'aval du bassin versant, 
 en empêchant les conjonctions de
 forts débits amont et d'importantes surcotes de marées.
 Ce barrage constitue ainsi une rupture nette entre des eaux saumâtres et douces. Il évacue le débit
@@ -1006,12 +1006,12 @@ render_graph(i_graph_3, layout="nicely")
 \includegraphics[width=0.5\textwidth]{schema_fonctionnement_EV.png}
 \caption{Diagramme schématique de l'algorithme de calcul du fonctionnement de la
 passe. Les valeurs sont en mètres. La passe fonctionne pour une différence de
-niveaux entre la Vilaine et la mer supérieure à 30 cm, elle est fermée quand le
-codeur de la vanne amont est à la cote 0.08m, elle est ouverte pour toutes les
+niveaux entre la Vilaine et la mer supérieure à 0.3 m, elle est fermée quand le
+codeur de la vanne amont est à la cote 0.08 m, elle est ouverte pour toutes les
 autres valeurs.
-Un dysfonctionnement hydraulique est noté pour des valeurs de chute aval supérieures à 50 cm (lors des basses mer). En
-cercles les types de fonctionnement du dispositif, 1 = Fonctionnement normal,
-2 = arrêt normal dû au fonctionnement du dispositif, ici marée haute, 3 =
+Un dysfonctionnement hydraulique est noté pour des valeurs de chute aval
+supérieures à 0.5 m (lors des basses mer). En cercles les types de
+fonctionnement du dispositif, 1 = Fonctionnement normal, 2 = arrêt normal dû au fonctionnement du dispositif, ici marée haute, 3 =
 arrêt pour maintenance, 4 = dysfonctionnement hydraulique, 5 pas de données. Le
 graphique est créé à partir du package DiagrammeR
 \citep{Iannone_diagrammer_2019}.}
@@ -1137,8 +1137,8 @@ où les volets sont franchissables.
 Entre 2013 et 2020 nous avons observé grâce à un sonar multifaisceaux (DIDSON)
 des passages de lamproies marines sous les vannes lorsque les vitesses de courant ne sont pas élevées. Les effectifs recalculés peuvent être conséquents.
 Lorsque la marée monte jusqu’au niveau des volets, il arrive un moment où ils sont franchissables par des espèces
-ayant une bonne capacité de nage. \textcolor{orange_EV}{Les chiffres donnés pour
-l’évaluation des stocks de migrateurs doivent donc être considérés comme un minimum}.
+ayant une bonne capacité de nage. Les chiffres donnés pour
+l’évaluation des stocks de migrateurs doivent donc être considérés comme un minimum.
 
 \section{Résultats}
 \subsection{Fonctionnement de la passe à bassins}
@@ -1146,25 +1146,25 @@ l’évaluation des stocks de migrateurs doivent donc être considérés comme u
 
 Le fonctionnement de la passe en 2022 a été plutôt bon. En été la passe est
 passée en mode étiage de juillet à novembre. Le mode étiage consiste à arrêter
-la passe (fermer la vanne amont) en marée decendante, et privilégier son
+la passe (fermer la vanne amont) en marée descendante, et privilégier son
 fonctionnement lors de la marée montante. Le canal de débit d'appoint, chenal
-qui amènent un débit supplémentaire de 1m3/S à l'aval de la passe est également
-battardé. Ce fonctionnement augmente les périodes arrêt pour maintenance qui
+qui amène un débit supplémentaire de 1m3/S à l'aval de la passe est également
+batardé. Ce fonctionnement augmente les périodes arrêt pour maintenance qui
 interviennent lorsque la passe devrait en théorie être fonctionnelle 
 (les niveaux permettent son ouverture) alors qu'en pratique elle est fermée (Figures \ref{figure_fonctionnement_passe} \ref{report_df_fct_2003_2022} et \ref{report_df_2003_2022}).
-\rev[red]{Les interventions techniques sur les vannes sont assez limitées,
+Les interventions techniques sur les vannes sont assez limitées,
 \begin{itemize}
-\item Le 28/03, il y a eu une intervention technique sur les centrales
+\item le 28/03, il y a eu une intervention technique sur les centrales
 hydrauliques pour changer l'huile et le fonctionnement des vannes a fait l'objet d'un règlage. 
-\item Le 27/04 la passe a été arrêtée pour installer des cordes à l'aval pour
+\item le 27/04 la passe a été arrêtée pour installer des cordes à l'aval pour
 tenter de gêner les braconniers. Le 26/08 il y a un problème d'automate.
-\end{itemize}}
+\end{itemize}
 
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{2022/fonctionnement_passe.png}
 \caption{Fonctionnement de la passe en \Sexpr{CY}, niveaux Vilaine, mer, sas
-(dernier bassin en aval de la passe), et niveaux de la vanne aval. Chaque point correspond aux niveaux
+(dernier bassin en aval de la passe), et niveau de la vanne aval. Chaque point correspond aux niveaux
 enregistrés lors d'une période de 10 minutes. Les données ont été corrigées des
 valeurs abérrantes. Les données concernant le codeur du vérin de la vanne aval
 sont manquantes en début de saison.}
@@ -1173,16 +1173,16 @@ sont manquantes en début de saison.}
 
 \paragraph{Calculs du fonctionnement et des débits de la passe à bassins.}
 Les niveaux observés pour la ligne d'eau et les cotes de vannes de la passe
-à bassins sont illustrés en figure \ref{figure_fonctionnement_passe}. A
+à bassins sont illustrés en Figure \ref{figure_fonctionnement_passe}. A
 partir de ces niveaux, dont le détail est présenté en annexe (Figures
 \ref{detail_fonct_passe_2} et \ref{detail_fonct_passe_1}), le fonctionnement
 de la passe est calculé par période de 10 minutes (Figure \ref{report_df_annee}
 en annexe).
 
-En figure \ref{report_df_fct_2003_2022}, l'analyse des durées mensuelles
+En Figure \ref{report_df_fct_2003_2022}, l'analyse des durées mensuelles
 cumulées de chaque type de fonctionnement permet de se donner une idée des
 périodes auxquelles la passe a été arrêtée (en orange
-\textcolor{orange_EV}{\rule[-0.2mm]{3mm}{2mm}}) - arrêt lors des crues), mais également des périodes où elle a fonctionné de manière plus limitée, 
+\textcolor{orange_EV}{\rule[-0.2mm]{3mm}{2mm}}), mais également des périodes où elle a fonctionné de manière plus limitée, 
 par exemple le passage en mode étiage de 2016 à 2019 se traduit par une  
 augmentation de la durée des dysfonctionnements
 (en orange \textcolor{orange_EV}{\rule[-0.2mm]{3mm}{2mm}}) ou par des arrêts
@@ -2330,10 +2330,10 @@ DBI::dbExecute(req@connection, "INSERT INTO iav.tj_conditionenvironnementale_env
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Conditions environnementales}
 
-\rev{L'année \Sexpr{CY} a été marquée par des débits de crue en début et en
+L'année \Sexpr{CY} a été marquée par des débits de crue en début et en
 fin d'année et sur le reste de l'année des débits plus
 faibles que ceux de référence (modules mensuels) de la banque hydro (Figure
-\ref{fig_debit}).}
+\ref{fig_debit}).
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{2022/fig_debit.png} 
@@ -2542,9 +2542,9 @@ taille des mulets présente à la fois des variations saisonnières et
 interannuelles (Figure \ref{figure_taille_mulets}). Les mulets les plus grands
 se présentent en tout début de saison, puis la taille des mulets diminue pour
 atteindre son minimum lors de l'été \citep{lemonnier_dynamique_2019}.
-Cette année des mulets de petite taille ont été observés en Mai, et on retrouve
+Cette année des mulets de petite taille ont été observés en mai, et on retrouve
 la tendance saisonnière des migrations. Il n'y a pas de tendance claire des
-tailles moyennes des mulets reconstituées en calculant la taille moyenne
+tailles moyennes reconstituées en calculant la taille moyenne
 pondérée à partir du modèle de variation saisonnière de la taille et des effectifs.
 
 \begin{figure}[htpb]
@@ -2570,17 +2570,16 @@ C. Modèle gam ajusté sur les valeurs de taille (au centre modèle et intervall
 
 
 Les effectifs de mulets de 2022
-N=\Sexpr{format(vvv[["MUP"]][["NCY"]], digits=1, nsmall =0, big.mark=" ",scientific=FALSE)}
-sont à leur minimum historique sur l'ensemble des saisons de suivi.
+(N=\Sexpr{format(vvv[["MUP"]][["NCY"]], digits=1, nsmall =0, big.mark="",scientific=FALSE)}) sont à leur minimum historique sur l'ensemble des saisons de suivi.
 La diminution d'un facteur 2 est alarmante. Les effectifs mensuels sont tous
-soit inférieurs à la moyenne (en orange sur la figure \ref{barchart_bmi_mup})
-soit à leur minimum historique (en marron sur la figure \ref{barchart_bmi_mup})
+soit inférieurs à la moyenne (en orange sur la Figure \ref{barchart_bmi_mup})
+soit à leur minimum historique (en marron sur la Figure \ref{barchart_bmi_mup}).
 
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{2022/barchart_bmi_mup} 
 \caption{Bilan inter-annuel des migrations de mulets au barrage d'Arzal. En
-gris les minimum, maximum et moyenne des valeurs historiques de migration
+gris les minimum, maximum et moyenne des valeurs historiques des migrations
 mensuelles.}
 \label{barchart_bmi_mup}
 \end{figure}
@@ -3030,7 +3029,7 @@ xtmup <- xtable(res2,
     digits = 0,
     caption="Migration des mulets dans la passe à bassins du barrage d'Arzal 
         (passe à fentes verticale), pour l'année complète et pour la période de montaison 
-        (jusqu'au 31 août.)",
+        (jusqu'au 31 août).",
     label="table_bilanannuel_mulets_0108")		
 
 path=file.path(tabwdy,
@@ -3396,8 +3395,8 @@ Au niveau national, la tendance des abondances est à la baisse, surtout sur les
 sites qui étaient les plus fréquentés (Gironde, Loire), alors qu'en Bretagne, la chute est moins marquée. 
 La contribution de la Vilaine à l'échelle de la France, très faible aux débuts des années 2000, 
 est aujourd'hui non négligeable. Sur la Vilaine, les migrations de 2016 à 2019 
-ont été très mauvaises, mais les saisons 2020 et 2022 marque un retour à la
-normale.
+ont été très mauvaises. Après un retour à la normale en 2020, les migrations
+sont à nouveau en forte baisse depuis 2021.
 L'espèce est classée en danger en France sur la liste rouge UICN.}
 \end{minipage}}
 \smallskip
@@ -3422,12 +3421,12 @@ au barrage d'Arzal.}
 \label{barplot_report_annual_lpm}
 \end{figure}
 
-\rev{
+
 La première partie de l'année 2022 se caractérise par des tendances mensuelles
 supérieures à la moyenne observée sur la période 1996-\Sexpr{CY}. Au contraire,
-pour la deuxième partie de l'année on observe des tendances mensuelles
+pour la deuxième partie de l'année, on observe des tendances mensuelles
 inférieures à la moyenne des migrations interannuelles (Figure \ref{barchart_bmi_lpm}, Tableau
-\ref{table_lpm_mois}).}
+\ref{table_lpm_mois}).
 
 \begin{figure}[htpb]
 \centering
@@ -3443,18 +3442,18 @@ série interannuelle de données 1996-\Sexpr{CY-1}.}
 \input{\Sexpr{vvv[["LPM"]][["path"]]}} % table bilan lamproies pour l'année
 
 
-\rev{La migration des lamproies marines intervient entre mars et juin (Figure
+La migration des lamproies marines intervient entre mars et juin (Figure
 \ref{rmi_density_lpm}). En \Sexpr{CY}, la migration s'est faite essentiellement
-de février à mai, ce qui contraste avec l'année précédente où les migration
+de février à mai, ce qui contraste avec l'année précédente où les migrations
 ont commencé en mars.
 Les premières migrations sont clairement plus précoces, et les migrations de
 février correspondent au maximum connu jusqu'alors (Figures
-\ref{barchart_bmi_lpm}, \ref{plot_seasonal_lpm}).}
+\ref{barchart_bmi_lpm}, \ref{plot_seasonal_lpm}).
 Ces résultats sont en accord avec l'examen des tendances de migration des
 lamproies marines en France par \citet{legrand_DiadromousFishModified_2021} qui
 montrent globalement une arrivée plus précoce dans les 30 dernières années. 
-Les dates de première arrivée correspondant à l'arrivée de 5 \% des
-effectifs annuels, arrivée médiane (quand 50 \% des lamproies ont migré) et
+Les dates de première arrivée (correspondant à l'arrivée de 5 \% des
+effectifs annuels), arrivée médiane (quand 50 \% des lamproies ont migré) et
 arrivées tardives (95 \%) ne varient pas de manière indépendante pour la
 lamproie. 
 
@@ -3477,9 +3476,9 @@ point la médiane. L'importance des effectifs est représentée par la couleur.}
 \label{plot_seasonal_lpm}
 \end{figure}
 
-\rev{La comparaison des structures en taille vidéo laisse
-paraître un accroissement depuis 2015. C’est à partir de 2019 qu’une nouvelle méthode de
-mesure a été appliquée : la taille a été mesurée relati‐
+La comparaison des structures en taille vidéo laisse
+paraître un accroissement entre 2015 et 2021. C’est à partir de 2019 qu’une
+nouvelle méthode de mesure a été appliquée : la taille a été mesurée relati‐
 vement à 9 sections de la vitre de comptage pour
 prendre en compte les déformations de la lentille
 de la caméra. Or l’aumentation est observée depuis
@@ -3488,9 +3487,9 @@ ment de méthode de mesure. L’augmentation de la
 taille des lamproies est donc un phénomène notable,
 comme pour les variations d’effectifs, les raisons de
 cette augmentation de taille ne sont pas connues, et un phénomène exactement
-similaire avait été rappor‐ tée sur la Loire (Marion Legrand, comm. pers.). Cependant, pour l'année 2022 les
+similaire avait été rapportée sur la Loire (Marion Legrand, comm. pers.). Cependant, pour l'année 2022 les
 tailles des lamproies sont en baisse par rapport aux années 2019, 2020 et 2021
-(Figure \ref{size_lpm}).}
+(Figure \ref{size_lpm}).
 
 
 \begin{figure}[htpb]
@@ -3798,10 +3797,10 @@ interannuelle de données 1996-\Sexpr{CY-1}.}
 \end{figure}
 
 
-\rev{Globalement, les migrations sont inférieures à la
+Globalement, les migrations sont inférieures à la
 moyenne interannuelle sauf pour le mois de mai (Figures
 \ref{rmi_journalier_ala}, \ref{barchart_bmi_ala}, Tableau
-\ref{table_ala_mois}).}
+\ref{table_ala_mois}).
 
 \begin{figure}[htpb]
 \centering
@@ -3813,14 +3812,14 @@ interannuelle de données 1996-\Sexpr{CY-1}.}
 
 La comparaison des structures en taille vidéo de cette année laisse apparaître
 une forte diminution de la taille moyenne après une tendance sur plusieurs
-années à l'augmentation des effectifs.
-A compter de 2019, la taille a été mesurée relativement à 9 sections de la vitre de comptage pour prendre en compte les
-déformations de la lentille de la caméra. Ainsi les tailles avant 2019 et 2022
-sont peut être légèrement plus petites (Figure \ref{size_alose}).
+années à l'augmentation.
+A compter de 2019, la taille a été mesurée relativement à 9 zones de la vitre de
+comptage pour prendre en compte les déformations de la lentille de la caméra.
+Ainsi, les tailles avant 2019 et 2022 sont peut être légèrement plus petites (Figure \ref{size_alose}).
 La diminution de la taille moyenne en 2020 semblait cohérente avec un retour des
 premières aloses ayant fait l'objet de mesures de protection 5 ans auparavant en
 2015, et la relative rareté des grandes aloses correspondant à la période de
-surexploitation en 2012-2014. En 2021 les tailles ont ré-augmenté, puis elles
+surexploitation en 2012-2014. En 2021, les tailles ont ré-augmenté, puis elles
 retournent à leur valeur de 2020 en 2022. Ces variations de taille moyennes
 pourraient s'expliquer par des années pour lesquelles le succès reproducteur
 serait plus faible, ou par la contribution plus ou moins importante d'aloses
@@ -3838,8 +3837,8 @@ du mois de passage.}
 \end{figure}
 
 
-Contrairement à l'année 2019 le début de la migration n'est pas particulièrement
-précoce (Figure \ref{plot_seasonal_ala}).
+Contrairement à l'année 2019, le début de la migration n'est pas
+particulièrement précoce (Figure \ref{plot_seasonal_ala}).
 
 
 
@@ -3860,10 +3859,10 @@ débat technique dans le cadre du Comité de gestion des poissons migrateurs de
 Bretagne.
 A partir des éléments collectés sur le bassin, et des données obtenues sur les
 bassins voisins, un objectif de gestion en biomasse a été défini. Le
-stock potentiel d'aloses sur la Vilaine est estimé entre 50~000 aloses, pour
+stock potentiel sur la Vilaine est estimé entre 50~000 aloses, pour
 le niveau actuel d'aménagement du bassin - c'est à dire un fort étagement
 par le barrage d'Arzal puis par les ouvrages de l'Oust et de la Vilaine- , et
-100~000 aloses pour une rivière en conditions pristines, c'est à dire une
+100~000 aloses pour une rivière en conditions pristine, c'est à dire une
 rivière pour laquelle l'accès aux zones de frayères serait restauré. Une limite
 en biomasse, celle en-dessous de laquelle on estime qu'il pourrait y avoir un
 risque accru de diminution du stock, est proposée à 15~000 aloses. En dessous de
@@ -3872,9 +3871,9 @@ niveau optimal. Une règle de gestion a été proposée pour la gestion des
 pêcheries. L'importance de l'aménagement des axes fluviaux pour l'accès aux
 zones de reproduction a également été mise en avant (Figure \ref{tx_exploit}).
 
-\textcolor{orange}{La question de la prédation du silure, dont les effectifs
+La question de la prédation du silure, dont les effectifs
 sont en claire augmentation avec des tailles allant en s'accroissant, devra se poser l'année
-prochaine si les effectifs n'augmentent pas.}
+prochaine si les effectifs n'augmentent pas.
 
 
 \vfill
@@ -3899,7 +3898,7 @@ de 2015 à 2017, puis interdiction totale saisonnière de pêche à partir de 20
 \caption{Diagramme de précaution pour la gestion des aloses en Vilaine, 
 les données indiquent la position du stock par rapport à la règle de gestion proposée 
 par le groupe de travail du cogepomi sur les aloses. 
-En abscisse, niveau de biomasse par rapport à la cible de gestion, 
+En abscisse, nombre de géniteurs par rapport à la cible de gestion, 
 en ordonnée, mortalité cumulée (taux instantané) de la pêcherie estuarienne. 
 Les données de la pêcherie fluviale, indisponibles, ne sont pas intégrées au
 calcul.}
@@ -4323,8 +4322,9 @@ save(datmens, file=str_c(datawdy,"datmens.Rdata"))
 datmens2 <- as.data.frame(t(datmens))
 rownames(datmens2) <- gsub("X","",rownames(datmens2))
 xtala <- xtable(datmens2,
-    caption=str_c("Migrations mensuelles et captures annuelles des aloses dans la passe à bassins 
-            du barrage d'Arzal entre 2016 et ", CY,"."),
+    caption=str_c("Migrations mensuelles par la passe à bassins du barrage d'Arzal entre 2016 et", CY,
+			", et captures professionnelles en estuaire."
+			),
     label="table_ala_mois",
     digits=c(0,0,0,0,0,0,0),
     align =c("l","l","r","r","r","r","r"),
@@ -4701,7 +4701,7 @@ dev.off()
 
 \clearpage
 \twocolumn
-\subsection{Saumon}
+\subsection{Saumon atlantique}
 %\vspace{5pt} % utiliser innertopmargin
 \makebox[-2.5pt]{
   \begin{tikzpicture}[overlay]
@@ -5147,8 +5147,8 @@ puis les effectifs ont chuté très rapidement, pour être anecdotiques ces dern
 \smallskip
 
 %\Sexpr{vvv$TRM$N[vvv$TRM$N$annee==CY,"effectif"]} 
-\rev{Une truite de mer a été %ont été
-comptée en \Sexpr{CY} (Figure \ref{barplot_report_annual_trm}) }%,  Tableau
+Une truite de mer a été %ont été
+comptée en \Sexpr{CY} (Figure \ref{barplot_report_annual_trm}). %,  Tableau
 %\ref{table_trm_mois}).
 \begin{figure}[htpb]
 \centering
@@ -5435,7 +5435,7 @@ dev.off()
 
 
 Par sa situation avec le pied en eau salée et la tête en eau douce, la passe ne
-rencontre que des effectifs très faibles d'autres espèces. En \Sexpr{CY} les
+rencontre que des effectifs très faibles d'autres espèces. En \Sexpr{CY}, les
 espèces recensées sont peu
 nombreuses, silure, sandre, black bass, cyprinidés et brème (Figure
 \ref{autres_especes}). 
@@ -5926,8 +5926,8 @@ dev.off()
 
 La base de données du barrage collecte les informations relatives aux niveaux et
 au fonctionnement des vannes au pas de temps de 10 minutes. Le fichier des données extrait de la base de données du barrage
-contient \Sexpr{num(vvv$fonct_pass$nb_lignes)} lignes. A partir de ce dernier un
-script de traitement extrait les temps et les modes de fonctionnement de la
+contient \Sexpr{num(vvv$fonct_pass$nb_lignes)} lignes. A partir de ce dernier,
+un script de traitement extrait les temps et les modes de fonctionnement de la
 passe (Figure \ref{figure_schema_fonctionnement}). 
 Les sondes utilisées en
 référence ont parfois des valeurs manquantes,
@@ -5976,7 +5976,7 @@ mer, la vanne amont se ferme (trait marron).
 \centering
 \includegraphics[width=0.8\textwidth]{2022/detail_fonct_passe_1.png}
 \caption{Illustration du fonctionnement de la passe après la remise en route
-de la passe en avril. En ordonnée les niveaux mer (noir), vilaine
+de la passe en avril. En ordonnée, les niveaux mer (noir), vilaine
 (.-), sas (en bleu), niveau vanne mer (pointillés violet), niveau vanne Vilaine (ligne marron
 continue). L'état de la passe est calculée pour chaque période de 10 minutes (en bas).
 Les 10 et 11 après midi, la position basse de la vanne amont (vanne fermée)
@@ -6005,12 +6005,12 @@ aberrantes et prise en compte du noyage aval de la passe.}
 \begin{figure}[hp]
 \centering
 \includegraphics[width=0.9\textwidth]{2022/report_df_annee.png} 
-\caption{Bilan du fonctionnement de la passe lors de l'année 2022. En orange
+\caption{Bilan du fonctionnement de la passe lors de l'année 2022. En orange,
 il est possible de suivre les périodes de haute mer où la passe est fermée, les
 périodes où les bandes sont les plus larges correspondent à des périodes de
 vives eaux et également en hiver aux périodes où la gestion de la
-Vilaine est plus réduite. Entre juillet et octobre le passage en "mode étiage" réduit la
-durée de fonctionnement de la passe aux quelques heures qui précèdent la marée
+Vilaine est plus réduite. Entre juillet et octobre, le passage en "mode étiage"
+réduit la durée de fonctionnement de la passe aux quelques heures qui précèdent la marée
 haute. En décembre, en période de crue, la passe est à l'arrêt.}
 \label{report_df_annee}
 \end{figure}
@@ -6160,7 +6160,7 @@ de la passe à bassins, 2008}\\
 \bigskip
 \paragraph{Remerciements}
 
-La passe fonctionne au quotidien grâce au travail d'entretien de suivi et
+La passe fonctionne au quotidien grâce au travail d'entretien, de suivi et
 d'intervention des barragistes : Alban Le Guen, Cyril Faucon, Johann Dahlem,
 Laurent Philippot, Thierry Besnard. Nous tenons à les remercier pour leur aide
 et leur disponibilité.
@@ -6231,11 +6231,10 @@ Migrateurs Rhône-Méditerranée (MRM)~:
     Sp.}), 
     \Sexpr{num(vvv$LPM$NCY)} lamproies marines (\textit{Petromyzon
     marinus}), 
-    \Sexpr{num(vvv$TRM$NCY)} truites de mer (\textit{Salmo trutta trutta}),
+    \Sexpr{num(vvv$TRM$NCY)} truite de mer (\textit{Salmo trutta trutta}),
     \Sexpr{num(vvv$SAT$NCY)} saumons (\textit{Salmo salar}) et
     \Sexpr{num(vvv$MUP$NCY)} mulets porcs (\textit{Chelon ramada}) ont été
-    comptabilisés à la passe d'Arzal. Le COVID n'a pas affecté le suivi de la
-    passe. \par
+    comptabilisés à la passe d'Arzal.  \par
         
    \vspace{8mm}
     
@@ -6250,10 +6249,10 @@ Migrateurs Rhône-Méditerranée (MRM)~:
     In \Sexpr{num(CY)}, 
     \Sexpr{num(vvv$ALA$NCY)} shads (\textit{Alosa Sp.}),
     \Sexpr{num(vvv$LPM$NCY)} sea lampreys (\textit{Petromyzon marinus}), 
-    \Sexpr{num(vvv$TRM$NCY)} sea trouts (\textit{Salmo trutta trutta}),
+    \Sexpr{num(vvv$TRM$NCY)} sea trout (\textit{Salmo trutta trutta}),
     \Sexpr{num(vvv$SAT$NCY)} salmons (\textit{Salmo salar}) 
-    and \Sexpr{num(vvv$MUP$NCY)} (\textit{Chelon ramada}) mulet have been counted
-    at the Arzal fishway. COVID did not induce any breakdown in monitoring. \par
+    and \Sexpr{num(vvv$MUP$NCY)} mullets (\textit{Chelon ramada}) have been
+    counted at the Arzal fishway. \par
 
    
 
@@ -6262,7 +6261,7 @@ Migrateurs Rhône-Méditerranée (MRM)~:
      \textit{mulet, lamproie marine, alose, stacomi}\par 
     \vspace{8mm}    
      \textbf{\textit{Keywords:}}\par
-     \textit{mulet, lamprey, shad, stacomi}  
+     \textit{mulet, sea lamprey, shad, stacomi}  
 \end{tcolorbox}
 
 
