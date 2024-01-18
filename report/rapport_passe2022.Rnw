@@ -427,6 +427,7 @@ keepaspectratio]{/frontpage.png}%
 \large
 \color{bleu_EV}
 \leftskip=1cm
+Léa Patau\par
 Cédric Briand\par   
 Brice Sauvaget\par
 Gérard Eriau\par
@@ -467,7 +468,7 @@ Gérard Eriau\par
 \vspace{4mm}\noindent
 {\color{turquoise_EV}\rule{0.9\textwidth}{1.8pt}}\par
 \vspace{5mm}
-{\color{jaune_EV}{\titlefont \Large \itshape{Brice Sauvaget,
+{\color{jaune_EV}{\titlefont \Large \itshape{Léa Patau, Brice Sauvaget,
       Gérard Eriau,
       Cédric Briand\par   }}}
 \end{center}
