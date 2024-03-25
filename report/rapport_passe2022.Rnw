@@ -380,7 +380,7 @@ pdfkeywords={passe} {lamproies} {alose} {stacomi}
 \vfill
 \includegraphics[%width=\paperwidth,
 height=\paperheight,%
-keepaspectratio]{/frontpage.png}%
+keepaspectratio]{/2022/frontpage.png}%
 %\vfill
 }}}%
 
@@ -2761,7 +2761,7 @@ colours <- qualitative_hcl(CY-2013, "Pastel_1")
 g1 <- ggviolin(dat_char_2183, x = "year", y = "taille_mm", fill = "year",
         palette = colours,
         add = "boxplot", add.params = list(fill = "white"))+
-    theme_bw()+
+	theme_transparent()+
     theme(legend.position = "none")
 
 
@@ -2873,6 +2873,15 @@ g3 <- g2 +
         shape=23,size=0.8, fill="white")
 
 save(g0,g1,g2,g3, file=str_c(datawdy, "plot_taille_mulet.Rdata"))
+
+p1 <- ggarrange(g0, g1, labels=c("A", "B"),
+		ncol = 2, nrow = 1)
+p2 <- ggarrange(g3, labels="C")
+p3 <- ggarrange(p1, p2, nrow=2, ncol=1)
+
+pdf(file.path(imgwd,CY,"graphe_taille_mulets.pdf"),width=8, height=8)
+print(p3)
+dev.off()
 
 #################################################################
 # prédicton des  données avec loi normale +- 2 *sd autour de la moyenne
@@ -5437,9 +5446,9 @@ dev.off()
 
 Par sa situation avec le pied en eau salée et la tête en eau douce, la passe ne
 rencontre que des effectifs très faibles d'autres espèces. En \Sexpr{CY}, les
-espèces recensées sont peu
-nombreuses, silure, sandre, black bass, cyprinidés et brème (Figure
-\ref{autres_especes}). 
+espèces recensées sont assez
+nombreuses, silure, sandre, bar commun, truite fario, tanche, cyprinidés et
+brème (Figure \ref{autres_especes}). 
 La fréquentation des autres espèces depuis 2000 est illustrée de manière
 graphique à la Figure \ref{autres_especes_2000_2022}. 
 

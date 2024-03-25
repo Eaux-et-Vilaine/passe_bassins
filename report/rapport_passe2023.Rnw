@@ -130,7 +130,7 @@ citecolor=orange_EV,
 filecolor=bleu_EV, 
 urlcolor=bleu_EV, 
 pdftitle= {Suivi scientifique des migrations de poissons de la passe à bassins
-du barrage d'Arzal, Rapport 2022)}, 
+du barrage d'Arzal, Rapport 2023)}, 
 pdfauthor={Brice Sauvaget},
 pdfsubject={mulet}, 
 pdfkeywords={passe} {lamproies} {alose} {stacomi}
@@ -235,7 +235,7 @@ pdfkeywords={passe} {lamproies} {alose} {stacomi}
 \fancyhf{} \fancyfoot[C]{\sffamily\normalsize\thepage} % Font setting for
 % the page number in the header
 \fancyhead[LE,RO]{\sffamily \rightmark}
-\fancyhead[LO,RE]{\slshape \normalsize Rapport passe à bassins 2022}
+\fancyhead[LO,RE]{\slshape \normalsize Rapport passe à bassins 2023}
 
 
 
@@ -380,7 +380,7 @@ pdfkeywords={passe} {lamproies} {alose} {stacomi}
 \vfill
 \includegraphics[%width=\paperwidth,
 height=\paperheight,%
-keepaspectratio]{/frontpage.png}%
+keepaspectratio]{/2023/frontpage.png}%
 %\vfill
 }}}%
 
@@ -405,7 +405,7 @@ keepaspectratio]{/frontpage.png}%
 {\titlefont Date d'édition :\\}}
 \qquad \color{orange_EV}
 \Large
-{\titlefont Janvier 2024}
+{\titlefont Mars 2024}
 \vspace{2cm}
 
 \end{minipage}
@@ -1137,24 +1137,22 @@ où les volets sont franchissables.
 Entre 2013 et 2020 nous avons observé grâce à un sonar multifaisceaux (DIDSON)
 des passages de lamproies marines sous les vannes lorsque les vitesses de courant ne sont pas élevées. Les effectifs recalculés peuvent être conséquents.
 Lorsque la marée monte jusqu’au niveau des volets, il arrive un moment où ils sont franchissables par des espèces
-ayant une bonne capacité de nage. \textcolor{orange_EV}{Les chiffres donnés pour
-l’évaluation des stocks de migrateurs doivent donc être considérés comme un minimum}.
+ayant une bonne capacité de nage. Les chiffres donnés pour
+l’évaluation des stocks de migrateurs doivent donc être considérés comme un minimum.
 
 \section{Résultats}
 \subsection{Fonctionnement de la passe à bassins}
 \paragraph{Résumé du fonctionnement.}
 
-Le fonctionnement de la passe en 2022 a été plutôt bon. Il y a eu des arrêts en
-janvier et février lors des crues. La passe est en effet fermée
-en débit de crue pour empêcher la descente d'objets flottants et car la baisse
-de la ligne d'eau amont limite fortement les débits évacués. En pratique, la
-passe est très peu attractive en conditions de crue. En février il y a eu une
-intervention sur les capteurs de la vanne aval. En 2022, les débits sont restés soutenus et la passe n'est pas passée en
-mode étiage, il n'y a pas eu non plus de mise en place de battardage du débit
-d'appoint.
-Plusieurs interventions techniques ont eu lieu avec un problème de
-fonctionnement de la vanne intermédiaire le 26 avril, qui ont finalement été
-réglés en octobre novembre avec le remplacement des joints.
+Le fonctionnement de la passe en 2023 a été plutôt bon. 
+La passe a été lancée le 1er février après une crue, puis arrêtée 
+le 1er novembre avec la première crue automnale. La passe est en 
+effet fermée en débit de crue pour empêcher la descente d'objets 
+flottants et car la baisse de la ligne d'eau amont limite fortement les débits évacués.
+La crue printanière du 9 mars au 2 avril a perturbé le fonctionnement 
+de la passe mais sans entraîner d'arrêt. Il y a eu deux autres interruptions en cours de saison, 
+du 16 au 18 août pour changer la sonde de niveau du SAS, et du 31 août au 5 septembre 
+pour cause de submersion marine.
 
 \begin{figure}[htpb]
 \centering
@@ -1223,18 +1221,10 @@ de fonctionnement.}
 
 \paragraph{Fonctionnement du dispositif de comptage.}
 
-Le dispositif de comptage 
-a été mis en service le
-\Sexpr{vvv$ref_dc$date_debut} et arrêté le
-\Sexpr{vvv$ref_dc$date_fin} (Figure \ref{report_dc_2023}).
-Les arrêts techniques pendant la période de suivi sont relativement rares
-(Figure \ref{report_dc_1998_2023}). 
-La caméra a été déplacée lors
-du lavage des vitres ce qui entraine un décalage de l'image avec perte de la
-partie basse en Juillet (voir Figure \ref{report_dc_2023}). Les néons de la
-passe ont été remplacés par des néons à leds mais l'intervention a duré moins
-d'une journée (en août). La période d'arrêt du DC en octobre est liée à un défaut de
-la RAM de l'ordinateur qui a du être remplacée.
+Le dispositif de comptage a été mis en service le 6 février et arrêté le 3 novembre. 
+Un long arrêt technique est intervenu du 31 août au 5 octobre à la suite 
+d'une submersion marine qui a noyé le caisson lumineux et détruit les néons led.
+Le délai pour se procurer les nouveaux néons a été très long.
 
 \begin{figure}[htpb]
 \centering
@@ -2541,9 +2531,9 @@ ramada} remonte l’estuaire pour migrer en eau douce \citep{briand_suivi_2018b}
 Compte tenu des effectifs très importants de mulets franchissant le barrage
 d'Arzal chaque année, les comptages n'ont pas été effectués sur l'ensemble de la
 période de suivi historique de la passe. Ils ont été effectués en 1996 et
-1997, en 2013 et de 2015 à 2023. Lors des pics de migration, le comptage des
-mulets est effectué par lots (dizaine) et la taille des poissons est analysée
-sur un échantillon.
+1997, en 2013, 2005 et de 2013 à 2023. Lors des pics de migration, le comptage
+des mulets est effectué par lots de 10 individus en cas de forts passages, et la taille des poissons est analysée
+sur des échantillons hebdomadaires.
 La structure en
 taille des mulets présente à la fois des variations saisonnières et
 interannuelles (Figure \ref{figure_taille_mulets}). Les mulets les plus grands
@@ -2576,7 +2566,8 @@ ajusté sur les valeurs de taille (au centre modèle et intervalle de confiance
 
 Les effectifs de mulets de 2023
 (N=\Sexpr{format(vvv[["MUP"]][["NCY"]], digits=1, nsmall =0, big.mark="",scientific=FALSE)}) 
-sont comparables à ceux de la période 2014-2023 avec des variations entre des effectifs de 200~000 à 600~000 mulets.
+sont faibles comparés à ceux de la période 2014-2023 avec des variations entre
+des effectifs de 200~000 à 600~000 mulets.
 Les variations des effectifs de petits mulets sont en 
 grande partie liée à l'abondance des mulets de classe de taille de 200 à 300 mm
 \citep{lemonnier_dynamique_2019} (Tableau \ref{table_bilanannuel_mulets_0108}, Figure
@@ -2616,7 +2607,8 @@ dépend également du niveau mer avec une grande part des passages pour des nive
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{2023/bmm_horaires_maree} 
-\caption{Passage des mulets en fonction de l'heure et du niveau mer en
+\caption{Passage des mulets par pas de temps de 10 minutes en fonction de
+l'heure et du niveau mer en
 \Sexpr{CY}.}
 \label{horaires_maree_mulet}
 \end{figure}
@@ -3067,6 +3059,20 @@ indiceCY <- match(as.character(CY),names(somme_mup))
 vvv[["MUP"]][["N0108"]] <- as.data.frame(total[,c(1,2)])
 vvv[["MUP"]][["NCY0108"]] <- somme_mup[indiceCY]
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
+
+#test graphique Bilan_annuel_mup : effectif de l'année + période de migration
+res2 <-inner_join(restt,res)[!res$annee%in%c(2007,2008),c("annee","effectif","effectif_mont")]
+data_long <- tidyr::gather(res2, key = "type", value = "value", -annee)
+png(filename=str_c(imgwdy,"bilan_annuel_mup2.png"))
+ggplot(na.omit(data_long), aes(x = factor(annee), y = value, fill = type)) +
+		geom_bar(stat = "identity", position = "dodge") +
+		labs(	x = "Année",
+				y = "Effectif (mulet)",
+				fill = "Type d'effectif") +
+		scale_fill_manual(values = c(bleu_EV, orange_EV), labels = c("Effectif sur l'année", "Effectif sur la période")) +
+		theme_minimal()
+dev.off()
+
 @
 
 <<report_mig_mult_mulet, echo=FALSE, eval=FALSE,include=FALSE >>=
@@ -3348,10 +3354,10 @@ au barrage d'Arzal.}
 \end{figure}
 
 
-\rev{La comparaison des tendances mensuelles avec les migrations
+La comparaison des tendances mensuelles avec les migrations
 interannuelles montre qu'elles sont inférieures à la moyenne observée sur la
-période 1996-2020 (Figure \ref{barchart_bmi_lpm}, Tableau
-\ref{table_lpm_mois}).}
+période 1996-2022 (Figure \ref{barchart_bmi_lpm}, Tableau
+\ref{table_lpm_mois}).
 
 \begin{figure}[htpb]
 \centering
@@ -3369,9 +3375,10 @@ série interannuelle de données 1996-\Sexpr{CY-1}.}
 
 La migration des lamproies marines intervient entre mars et juin (Figure
 \ref{rmi_density_lpm}). En \Sexpr{CY}, la migration s'est faite essentiellement
-de mars à mai. \rev{Les premières migrations sont clairement plus précoces, et
-les migrations de février correspondent au maximum connu jusqu'alors 
-(Figures \ref{barchart_bmi_lpm}, \ref{plot_seasonal_lpm}).}
+de mars à mai. Les premières migrations sont plus précoces que ce que l'on pensait,
+et le suivi était souvent lancé trop tardivement avant 2021 
+(1ère quinzaine de mars entre 2010 et 2020) pour voir les premiers individus
+(Figures \ref{barchart_bmi_lpm}, \ref{plot_seasonal_lpm}).
 Ces résultats sont en accord avec l'examen des tendances de migration des
 lamproies marines en France par \citet{legrandContrastingTrendsSpecies2020} qui
 montre globalement une arrivée plus précoce dans les 30 dernières années. 
@@ -3399,20 +3406,18 @@ point la médiane. L'importance des effectifs est représentée par la couleur.}
 \label{plot_seasonal_lpm}
 \end{figure}
 
-\rev{La comparaison des structures en taille vidéo laisse
+La comparaison des structures en taille vidéo laisse
 paraître un accroissement depuis 2015. C’est à partir de 2019 qu’une nouvelle méthode de
-mesure a été appliquée : la taille a été mesurée relati‐
-vement à 9 sections de la vitre de comptage pour
+mesure a été appliquée : la taille a été mesurée relativement à 9 sections de la vitre de comptage pour
 prendre en compte les déformations de la lentille
 de la caméra. Or l’aumentation est observée depuis
-2015, elle ne peut donc pas être attribuée au change‐
-ment de méthode de mesure. L’augmentation de la
+2015, elle ne peut donc pas être attribuée au changement de méthode de mesure. L’augmentation de la
 taille des lamproies est donc un phénomène notable,
 comme pour les variations d’effectifs, les raisons de
 cette augmentation de taille ne sont pas connues, et un phénomène exactement
 similaire avait été rapportée sur la Loire (Marion Legrand, comm. pers.).
 Cependant, pour l'année 2023, comme pour l'année précédente, les tailles des
-lamproies sont en baisse par rapport aux années 2019, 2020 et 2021 (Figure \ref{size_lpm}).}
+lamproies sont en baisse par rapport aux années 2019, 2020 et 2021 (Figure \ref{size_lpm}).
 
 \begin{figure}[htpb]
 \centering
@@ -3739,7 +3744,7 @@ la liste rouge UICN.
 
 \Sexpr{vvv$ALA$NCY} aloses ont été comptées en
 \Sexpr{CY} (Figure
-\ref{tx_exploit} \ref{rmi_journalier_ala} et Tableau
+\ref{rmi_journalier_ala} et \ref{tx_exploit}  et Tableau
 \ref{table_bilanannuel_ala}).
 Cette migration place l'année \Sexpr{CY} au rang \Sexpr{vvv$ALA$rank}
 par rapport à l'ensemble des années de migration. En
@@ -3768,7 +3773,7 @@ interannuelle de données 1996-\Sexpr{CY-1}.}
 
 
 Globalement, les migrations sont inférieures à la
-moyenne interannuelle, sauf pour le mois de septembre (Figures
+moyenne interannuelle (Figures
 \ref{rmi_journalier_ala} et \ref{barchart_bmi_ala}, Tableau \ref{table_ala_mois}).
 
 \begin{figure}[htpb]
@@ -3788,11 +3793,11 @@ sont peut être légèrement plus petites (Figure \ref{size_alose}).
 La diminution de la taille moyenne en 2020 semblait cohérente avec un retour des
 premières aloses ayant fait l'objet de mesures de protection 5 ans auparavant en
 2015, et la relative rareté des grandes aloses correspondant à la période de
-surexploitation en 2012-2014. \rev{En 2021, les tailles avaient ré-augmenté,
-puis elles diminuent depuis 2022. Ces variations de taille moyennes
+surexploitation en 2012-2014. En 2021, les tailles avaient ré-augmenté,
+puis elles diminuent depuis 2022. Ces variations de tailles moyennes
 pourraient s'expliquer par des années pour lesquelles le succès reproducteur
 serait plus faible, ou par la contribution plus ou moins importante d'aloses
-provenant d'autres bassins.}
+provenant d'autres bassins.
 
 
 
@@ -3816,7 +3821,7 @@ particulièrement précoce (Figure \ref{plot_seasonal_ala}).
 \centering
 \includegraphics[width=0.49\textwidth]{2023/plot_seasonal_ala.png} 
 \caption{Saisonnalité de la migration des aloses, effectifs hebdomadaires. Les
-barres représentent le 5 ème et le 95 ème percentile de la migration. Le point
+barres représentent le 5 ème et le 95 ème percentile de la migration, le point
 la médiane. L'importance des effectifs est représentée par la couleur.}
 \label{plot_seasonal_ala}
 \end{figure}
@@ -3903,6 +3908,83 @@ plot(bMM_Arzal,plot.type="standard",
     type="h",
     silent=TRUE)
 dev.off()
+
+
+#####################
+# Horaires de passage des aloses
+######################
+mig <- bMM_Arzal@data
+mig <- mig %>% mutate(time=strftime(ope_date_debut, format="%H:%M:%S"),
+		date=as.Date(ope_date_debut))
+# ATTENTION RECOMPILER fun_date_extraction dans stacomiR il y avait une erreur
+
+fun_date_extraction=function(data, # tableau de donnees e importer
+		nom_coldt, # nom de la colonne
+		annee=TRUE,
+		mois=TRUE,
+		quinzaine=FALSE,
+		semaine=TRUE,
+		semaine_std=FALSE,
+		jour_an=FALSE,
+		jour_mois=TRUE,
+		heure=FALSE                           
+){
+	if (annee) data$annee <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%Y"))                        
+	if (mois) data$mois <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%m"))
+	# %b Abbreviated month name in the current locale. (Also matches full name on input.)
+	if (quinzaine) {
+		data$quinzaine=ceiling(as.numeric(strftime(as.POSIXlt(data[,nom_coldt]),
+								format="%W"))/2)
+		data$quinzaine <- as.character(data$quinzaine)
+		data$quinzaine[as.numeric(data$quinzaine)<10] <- paste("0", data$quinzaine[as.numeric(data$quinzaine)<10],sep="")
+		data$quinzaine <- as.factor(data$quinzaine)
+	}
+	if (semaine) data$semaine <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%W"))
+	#%W : Week of the year as decimal number (00e53) using Monday as the first day of week (and typically with the first Monday of the year as day 1 of week 1). The UK convention
+	if (jour_an) data$jour_365 <- strftime(as.POSIXlt(data[,nom_coldt]), format="%j")                          
+	if (jour_mois) data$jour_mois <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%d"))  
+	# %d :  Day of the month as decimal number (01e31).
+	if (heure) data$heure <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%H"))  
+	#%H     Hours as decimal number (00e23).    
+	if (semaine_std) data$semaine_std=lubridate::isoweek(as.POSIXlt(data[,nom_coldt]))
+	return(data)
+}    
+
+
+mig <-	fun_date_extraction(
+		data=mig,
+		nom_coldt="ope_date_debut", annee = FALSE, mois = TRUE,
+		quinzaine = FALSE, semaine = FALSE, semaine_std = FALSE,
+		jour_an = FALSE, jour_mois = TRUE, heure = TRUE)
+hhh <- mig %>% group_by(heure) %>% summarize(N=sum(value))
+png(file=str_c(imgwdy,"horaires_mulet.png"),7,7,units="in",res=300)
+g <- ggplot(hhh, aes(x = heure)) + 
+		geom_histogram(aes(y=N), width = 0.6, colour = NA,stat="identity") +
+		coord_polar(start=3*pi/4) +
+		theme_minimal() +	
+		ylab("Nombre") 
+print(g)
+dev.off()
+hhh <- mig %>% group_by(heure, mois) %>% summarize(N=sum(value))
+load(file=file.path(datawd,CY,"fonct_pass.Rdata"))	# ll
+mig$time <- strptime(strftime(mig$ope_date_debut, format="%Y-%m-%d %H:%M"),"%Y-%m-%d %H:%M")
+mig$timec <- as.POSIXct(strptime(strftime(mig$ope_date_debut, format="%H:%M:%S"),format="%H:%M:%S"))
+mige<-inner_join(mig, ll$dat,by="time")
+
+hhh<- mige%>%group_by(heure) %>% summarize(N=sum(value))
+
+png(file=str_c(imgwdy,"bmm_horaires_maree.png"),7,7,units="in",res=300)
+ggplot(mige)+
+		geom_point( aes(x=timec,y=niveau_mer_barrage,col=value))+	
+		scale_colour_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous"), 
+				breaks=c(0,10,100,1000,10000),trans = "log") +
+		scale_fill_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous"), 
+				breaks=c(0,10,100,1000,10000),trans = "log") +
+		scale_x_datetime(date_labels = "%H")+
+		xlab("Heure")+
+		theme_bw()
+dev.off()
+
 @
 
 <<struct_taille_ala, echo=FALSE, eval=FALSE,include=FALSE >>=
@@ -5408,7 +5490,7 @@ dev.off()
 
 Par sa situation avec le pied en eau salée et la tête en eau douce, la passe ne
 rencontre que des effectifs très faibles d'autres espèces. En \Sexpr{CY}, les
-espèces recensées sont peu
+espèces recensées sont assez
 nombreuses, silure, sandre, black bass, cyprinidés et brème (Figure
 \ref{autres_especes}). 
 La fréquentation des autres espèces depuis 2000 est illustrée de manière
@@ -5418,9 +5500,19 @@ graphique à la Figure \ref{autres_especes_2000_2023}.
 \centering
 \includegraphics[width=0.45\textwidth]{2023/autres_especes.png} 
 \caption{Effectif des autres espèces recensées en \Sexpr{CY} dans la passe,
-\textit{Abramis brama} brème, \textit{Sander lucioperca} sandre,
-\textit{Cyprinus} cyprinidés sans détermination (genre), \textit{Micropterus
-salmoides} black bass à grande bouche, \textit{Silurus glanis} silure.}
+\textit{Abramis brama} brème, 
+\textit{Ameiurus melas} poisson-chat,
+\textit{Sander lucioperca} sandre,
+\textit{Cyprinus} carpe (genre), \textit{Cyprinidae} cyprinidés sans détermination,
+\textit{Dichentrarchus labrax} bar commun,
+\textit{Esox lucius} brochet,
+\textit{Lampetra fluviatilis} lamproie fluviatile,
+\textit{Perca fluviatilis} perche commune,
+\textit{Rutilus rutilus} gardon,
+\textit{Salmo trutta fario} truite fario,
+\textit{Micropterus salmoides} black bass à grande bouche, 
+\textit{Silurus glanis} silure,
+\texit{Tinca tinca} tanche.}
 \label{autres_especes}
 \end{figure}
 
@@ -5532,11 +5624,13 @@ bilesp<-calcule(bilesp)
 png(file=str_c(imgwdy,"autres_especes.png"),8,8,units="in",res=300)
 ggplot(bilesp@calcdata, aes(x="",y=(Effectif / sum(Effectif))*100,fill=taxa_stage))+
     geom_bar(,width=1, color="white", stat = "identity",)+
-    ggthemes::scale_fill_tableau()+
+    ggthemes::scale_fill_tableau(palette="Tableau 20")+
     theme_void()+
     geom_text(aes(y = round(Effectif / sum(Effectif) * 100, 1), label = Effectif), 
         position = position_stack(vjust = 0.5), color = "white", size=6)+
-    coord_polar("y", start=0)
+    coord_polar("y", start=0) +
+	guides(fill = guide_legend(title = "Taxon :", title.theme = element_text(size = 12),
+					label.theme = element_text(size = 12)))
 dev.off()
 @
 
@@ -5934,29 +6028,160 @@ mulets. L'objectif est de faire ce calcul pour 2023 mais aussi pour les années
 précédentes.
 
 <<calcul_export_frederic_glanispomi, echo=FALSE, eval=FALSE,include=FALSE >>=
-begin_month <- 03
-end_month <- 05
+
 W = a * L^b # L en cm
 # https://fishbase.se/summary/Alosa-alosa.html
 
-va <- c("alosa_alosa"=0.0041,"petromyzon_marinus"=0.00208,"chelon_labrosus"=0.0089)
-vb <- c("alosa_alosa"=3.24,"petromyzon_marinus"=3,"chelon_labrosus"=3.03)
+vac <- c("Alosa"=0.0041,"Petromyzon marinus"=0.00208,"Chelon ramada"=0.0089)
+vbc <- c("Alosa"=3.24,"Petromyzon marinus"=3,"Chelon ramada"=3.03)
 
-weight <- function(species, L , va, vb ) {
-	if (any(L >100)) warning("taille > 100 êtes vous en mm ? La formule marche avec des cm")
+weight <- function(species, L , va=vac, vb=vbc ) {
+	if (any(L[!is.na(L)] >100)) warning("taille > 100 êtes vous en mm ? La formule marche avec des cm")
 	a <- va[species]
 	b <- vb[species]
 	W <- a * L^b
 }
 
+
+
 # récupère les abondances des poissons de mars à mai
 
-# récupère les structures en taille des poissons de mars à mai.
+## Lamproie -------------------------------------------------
+rmi <- new("report_mig_interannual")
+rmi <- choice_c(rmi,
+		dc=c(5),
+		taxa=c("Petromyzon marinus" ),
+		stage=c("11"),
+		start_year="1996",
+		end_year=CY,
+		silent=TRUE)
+rmi <- charge(rmi)
+rmi <- connect(rmi,check=TRUE,silent=FALSE)	
+rmi <- calcule(rmi)
 
+fn <- function (y) summary(rmi, y)[["5"]]
+res0 <- bind_rows(mapply(fn, 2018:2023, SIMPLIFY =FALSE))
+res0$tax_nom_latin = "Petromyzon marinus"
+
+## Aloses ---------------------------------------------
+rmi <- choice_c(rmi,
+		dc=c(5),
+		taxa=c("Alosa" ),
+		stage=c("11"),
+		start_year="1996",
+		end_year=CY,
+		silent=TRUE)
+rmi <- charge(rmi)
+rmi <- connect(rmi,check=TRUE,silent=FALSE)	
+rmi <- calcule(rmi)
+
+res2 <- bind_rows(mapply(fn, 2018:2023, SIMPLIFY =FALSE))
+res2$tax_nom_latin = "Alosa"
+
+
+## Mulets ---------------------------------------------------
+
+rmi <- choice_c(rmi,
+		dc=c(5),
+		taxa=c("2183" ),
+		stage=c("IND"),
+		start_year="1996",
+		end_year=CY,
+		silent=TRUE)
+rmi <- charge(rmi)
+rmi <- connect(rmi,check=TRUE,silent=FALSE)	
+rmi <- calcule(rmi)
+
+res3 <- bind_rows(mapply(fn, 2018:2023, SIMPLIFY =FALSE))
+res3$tax_nom_latin = "Chelon ramada"
+res <- rbind(res0,res2,res3)
+
+# récupère les structures en taille des poissons de mars à mai.
+b_carlot<-new("report_sample_char")
+b_carlot<-choice_c(b_carlot,
+		dc=c(5),
+		taxa=c("Petromyzon marinus", "Alosa","Chelon ramada"),
+		stage=c("11", "11", "IND"),
+		par=c("C001"),
+		horodatedebut=as.Date("2018-01-01"),
+		horodatefin=as.Date(str_c(CY+1,"-01-01")),
+		silent=FALSE)
+b_carlot <- charge(b_carlot)
+b_carlot <- connect(b_carlot)
+b_carlot <- calcule(b_carlot,silent=TRUE)
+plot(b_carlot,plot.type='2')
+
+tt <- b_carlot@data %>% group_by(annee,mois, tax_nom_latin) %>% summarize(taille_moyenne=mean(car_valeur_quantitatif), taille_sd = sd(car_valeur_quantitatif)) %>% ungroup()
 # convertit les tailles moyennes en poids
 
+tt$poids_moyen <- weight(species=tt$tax_nom_latin,L=tt$taille_moyenne/10)
+tt$poids_moyen_sup <- weight(species=tt$tax_nom_latin,L=tt$taille_moyenne/10 + 2*tt$taille_sd/10)
+tt$poids_moyen_inf <- weight(species=tt$tax_nom_latin,L=tt$taille_moyenne/10 - 2*tt$taille_sd/10)
 # calcule la biomasse des poissons
+tt <- killfactor(as.data.frame(tt))
 
+
+
+ggplot(tt) + geom_point(aes(x=mois, y= poids_moyen, col=annee)) +
+		geom_path(aes(x=mois,y=poids_moyen,group=annee, col=annee)) +
+		geom_errorbar(aes(x=mois,ymin=poids_moyen_sup, ymax=poids_moyen_inf,col=annee))+
+		facet_wrap(~tax_nom_latin, scale="free_y") +		
+		viridis::scale_colour_viridis(discrete=TRUE, direction = -1) +
+		theme_bw()
+
+ggplot(tt) + 
+		geom_errorbar(aes(x=mois,ymin=taille_moyenne-2*taille_sd, ymax=taille_moyenne+2*taille_sd,col=annee), alpha=0.5)+
+		geom_point(aes(x=mois, y= taille_moyenne, col=annee)) +
+		geom_path(aes(x=mois,y=taille_moyenne,group=annee, col=annee)) +
+		facet_wrap(~tax_nom_latin, scale="free_y")+		
+		viridis::scale_colour_viridis(discrete=TRUE, direction = -1) +
+		theme_bw()
+
+
+
+res <- res %>% rename("annee"="année")
+
+mois <- c("02","03","04","05","06","07","08","09","10","11","12")
+names(mois) <-  c("févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc.")
+res$mois <- unname(mois[res$mois])
+restt <- inner_join(res,tt, by=c("tax_nom_latin","annee","mois"))
+
+restt <- restt %>% rename("effectif"="valeur")
+restt$biomasse <- restt$effectif * restt$poids_moyen/1000
+restt$biomasse_sup <- restt$effectif * (restt$poids_moyen_sup)/1000
+restt$biomasse_inf <- restt$effectif * (restt$poids_moyen_inf)/1000
+
+ggplot(restt) + 
+		geom_errorbar(aes(x=mois,ymin=biomasse_inf, ymax=biomasse_sup,col=annee))+
+		geom_point(aes(x=mois, y= biomasse, col=annee)) +
+		geom_path(aes(x=mois,y=biomasse,group=annee, col=annee)) +
+		facet_wrap(~tax_nom_latin, scale="free_y")
+
+
+
+ggplot(restt) + geom_point(aes(x=mois, y= poids_moyen, col=annee)) +
+		geom_path(aes(x=mois,y=poids_moyen,group=annee, col=annee)) +
+		geom_errorbar(aes(x=mois,ymin=poids_moyen_sup, ymax=poids_moyen_inf,col=annee))+
+		facet_wrap(~tax_nom_latin, scale="free_y") +		
+		viridis::scale_colour_viridis(discrete=TRUE, direction = -1) +
+		theme_bw()
+
+ggplot(restt) + 
+		geom_errorbar(aes(x=mois,ymin=taille_moyenne-2*taille_sd, ymax=taille_moyenne+2*taille_sd,col=annee), alpha=0.5)+
+		geom_point(aes(x=mois, y= taille_moyenne, col=annee)) +
+		geom_path(aes(x=mois,y=taille_moyenne,group=annee, col=annee)) +
+		facet_wrap(~tax_nom_latin, scale="free_y")+		
+		viridis::scale_colour_viridis(discrete=TRUE, direction = -1) +
+		theme_bw()
+
+save(restt, file= str_c(datawd, "biomasse_Vilaine.Rdata"))
+load(file= str_c(datawd, "biomasse_Vilaine.Rdata"))
+
+restt %>% filter(mois %in% c("03","04","05","06")) %>% group_by(annee, tax_nom_latin) %>%
+		summarize(effectif = sum(effectif, na.rm =TRUE), 
+				biomasse=sum(biomasse, na.rm =TRUE),
+				biomasse_sup= sum(biomasse_sup, na.rm =TRUE),
+			    biomasse_inf=sum(biomasse_inf, na.rm =TRUE))
 @
 
 
