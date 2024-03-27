@@ -4364,9 +4364,9 @@ datmens <- data.frame("2016"=c("capture (nb)"=round(sum(datpech2016$nb)),
         "migration(06-07)"=NA),
     "2023"=c("capture (nb)"=0,
         "capture (kg)"=0,
-        "migration(03)"=bmi2022[["5"]][1,6],
-        "migration(04)"=bmi2022[["5"]][2,6],
-        "migration(05)"=bmi2022[["5"]][3,6],
+        "migration(03)"=bmi2023[["5"]][1,6],
+        "migration(04)"=bmi2023[["5"]][2,6],
+        "migration(05)"=bmi2023[["5"]][3,6],
         "migration(06-07)"=NA) 
 )
 save(datmens, file=str_c(datawdy,"datmens.Rdata"))
@@ -4799,8 +4799,8 @@ L'espèce est classée vulnérable en France sur la liste rouge UICN.
 \Sexpr{vvv$SAT$N[vvv$SAT$N$annee==CY,"effectif"]} saumons ont été comptés en
 \Sexpr{CY} (Figure \ref{barplot_report_annual_sat},  Tableau \ref{table_sat_mois}).
 Cette migration place l'année \Sexpr{CY} au \Sexpr{vvv$SAT$rank} ème rang
-par rapport à l'ensemble des années de migration (Figures
-\ref{table_bilanannuel_sat}, Tableau \ref{barchart_bmi_sat}).
+par rapport à l'ensemble des années de migration (Tableau
+\ref{table_bilanannuel_sat}, Figure \ref{barchart_bmi_sat}).
 
 \begin{figure}[htpb]
 \centering
@@ -4820,7 +4820,7 @@ série interannuelle de données 1996-\Sexpr{CY-1}.}
 
 \input{\Sexpr{vvv[["SAT"]][["path_y"]]}} % table bilan annuel 
 
-\input{\Sexpr{vvv[["SAT"]][["path"]]}} % table bilan lamproies pour l'année
+\input{\Sexpr{vvv[["SAT"]][["path"]]}} % table bilan pour l'année
 
 La migration des saumons intervient toute l'année avec un pic estival (Figure
 \ref{rmi_density_sat}). En \Sexpr{CY}, la migration s'est faite principalement
@@ -4835,7 +4835,7 @@ en juillet (Figure \ref{barchart_bmi_sat}).
 
 
 Les tailles des saumons mesurées au niveau de la passe d'Arzal sont présentées
-en Figure \ref{size_sat}. \rev{Aucune tendance particulière n'en ressort.}
+en Figure \ref{size_sat}. On remarque que les saumons fréquentant la Vilaine sont très majoritairement des castillons.
 
 \begin{figure}[htpb]
 \centering
@@ -5536,10 +5536,10 @@ graphique à la Figure \ref{autres_especes_2000_2023}.
 \end{figure}
 
 
-\rev{Les effectifs de silures recensés au niveau de la passe d'Arzal sont en très
-nette augmentation (Figure \ref{bilan_annuel_sil}). De même la tenances des
+Les effectifs de silures recensés au niveau de la passe d'Arzal sont en très
+nette augmentation (Figure \ref{bilan_annuel_sil}). De même, la tendances des
 tailles mesurées est à l'augmentation, même si pour l'année 2023 les silures
-étaient plus petits que les années précédentes (Figure \ref{size_sil}).}
+étaient plus petits que les années précédentes (Figure \ref{size_sil}).
 
 \begin{figure}[htpb]
 \centering
@@ -6023,7 +6023,7 @@ dev.off()
 \section{Annexes}
 
 Pour l'étude glanispomi, il est nécessaire de calculer la biomasse de poissons
-migrant sur la Vilaine pour les mois de mars à mai pour les aloses lamproies et
+migrant sur la Vilaine pour les mois de mars à mai pour les aloses, lamproies et
 mulets. L'objectif est de faire ce calcul pour 2023 mais aussi pour les années
 précédentes.
 
@@ -6189,8 +6189,8 @@ restt %>% filter(mois %in% c("03","04","05","06")) %>% group_by(annee, tax_nom_l
 
 La base de données du barrage collecte les informations relatives aux niveaux et
 au fonctionnement des vannes au pas de temps de 10 minutes. Le fichier des données extrait de la base de données du barrage
-contient \Sexpr{num(vvv$fonct_pass$nb_lignes)} lignes. A partir de ce dernier un
-script de traitement extrait les temps et les modes de fonctionnement de la
+contient \Sexpr{num(vvv$fonct_pass$nb_lignes)} lignes. A partir de ce dernier,
+un script de traitement extrait les temps et les modes de fonctionnement de la
 passe (Figure \ref{figure_schema_fonctionnement}). 
 Les sondes utilisées en
 référence ont parfois des valeurs manquantes,
@@ -6198,13 +6198,14 @@ référence ont parfois des valeurs manquantes,
  pour les niveaux aval (mer) et amont (Vilaine).
 Pour les niveaux mer, après correction, en utilisant l'une ou l'autre des
 sondes, le nombre de valeurs manquantes restantes pour lesquelles les deux sondes n'ont pas de
-valeur est de \Sexpr{num(vvv$fonct_pass$niveau_mer_manquant_final)}. En Vilaine,
-cette année la correction correspond à
-\Sexpr{num(vvv$fonct_pass$niveau_vilaine_manquant_final)} pour les niveaux aval et amont.
-Les corrections des niveaux de la mer
-\Sexpr{num(vvv$fonct_pass$pb_niveau_mer_inf_3.5)} \footnote{Suppression des valeurs
-inférieures à -3.5 m NGF.}, du sas aval \footnote{Le dernier bassin en aval de
-la passe, la différence de niveaux entre ce bassin et la mer conditionne le
+valeur est de \Sexpr{num(vvv$fonct_pass$niveau_mer_manquant_final)}. En Vilaine
+cette année, la correction correspond à
+\Sexpr{num(vvv$fonct_pass$niveau_vilaine_manquant_final)} lignes pour les
+niveaux aval et amont.
+Les corrections des niveaux de la mer\footnote{Suppression
+des valeurs inférieures à -3.5 m NGF.} correspondent à
+\Sexpr{num(vvv$fonct_pass$pb_niveau_mer_inf_3.5)} lignes, celles du sas aval \footnote{Le dernier
+bassin en aval de la passe, la différence de niveaux entre ce bassin et la mer conditionne le
 fonctionnement de la vanne aval, suppression des valeurs en dehors de la gamme
 [-1m,2.5m].} correspondent à \Sexpr{num(vvv$fonct_pass$pb_niveau_sas)} lignes et des
 dérives de codeur sur la vanne mer \footnote{Suppression des valeurs en dehors de la gamme
@@ -6351,12 +6352,12 @@ leds.\\
 2021 & Renforcement des structure du capteur de fin de course aval, Remplacement
 des joints de la vanne intermédiaire.\\
 2022 & Aucune modification particulière effectuée\\
-2023 & Installation d'un chauffage et d'un déshumidifacteur afin de préserver de
-matériel éléctronique de la passe à bassin. Changement des boîtiers
-électroniques des sondes de niveaux amont et aval du barrage.\\
+2023 & Remplacement des néons led du caisson lumineux. Changement de la sonde de niveau du SAS. Installation d’un chauffage et d’un déshumidifacteur afin de préserver de matériel électronique
+de la passe à bassin. Changement des boîtiers électroniques des sondes de
+niveaux amont et aval du barrage.\\
 \bottomrule
 \end{tabular}
-\caption{Entretien historique de la passe à poissons.}
+\caption{Entretien historique de la passe à bassins.}
 \label{table_entretien_passe}
 \end{table}
 
@@ -6428,7 +6429,7 @@ de la passe à bassins, 2008}\\
 \bigskip
 \paragraph{Remerciements}
 
-La passe fonctionne au quotidien grâce au travail d'entretien de suivi et
+La passe fonctionne au quotidien grâce au travail d'entretien, de suivi et
 d'intervention des barragistes : Alban Le Guen, Cyril Faucon, Johann Dahlem,
 Laurent Philippot, Thierry Besnard. Nous tenons à les remercier pour leur aide
 et leur disponibilité.
@@ -6502,8 +6503,7 @@ Migrateurs Rhône-Méditerranée (MRM)~:
     \Sexpr{num(vvv$TRM$NCY)} truites de mer (\textit{Salmo trutta trutta}),
     \Sexpr{num(vvv$SAT$NCY)} saumons (\textit{Salmo salar}) et
     \Sexpr{num(vvv$MUP$NCY)} mulets porcs (\textit{Chelon ramada}) ont été
-    comptabilisés à la passe d'Arzal. Le COVID n'a pas affecté le suivi de la
-    passe. \par
+    comptabilisés à la passe d'Arzal.  \par
         
    \vspace{8mm}
     
@@ -6520,8 +6520,8 @@ Migrateurs Rhône-Méditerranée (MRM)~:
     \Sexpr{num(vvv$LPM$NCY)} sea lampreys (\textit{Petromyzon marinus}), 
     \Sexpr{num(vvv$TRM$NCY)} sea trouts (\textit{Salmo trutta trutta}),
     \Sexpr{num(vvv$SAT$NCY)} salmons (\textit{Salmo salar}) 
-    and \Sexpr{num(vvv$MUP$NCY)} (\textit{Chelon ramada}) mulet have been counted
-    at the Arzal fishway. COVID did not induce any breakdown in monitoring. \par
+    and \Sexpr{num(vvv$MUP$NCY)} mulets (\textit{Chelon ramada}) have been
+    counted at the Arzal fishway. \par
 
    
 
