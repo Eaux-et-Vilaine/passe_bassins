@@ -135,3 +135,6 @@ image/any
 image/*.png~
 /table/
 /image/
+
+*.synctex
+
