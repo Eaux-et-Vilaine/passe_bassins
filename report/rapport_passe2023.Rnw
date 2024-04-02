@@ -2795,10 +2795,10 @@ plot(pacf(resid(g4m))) # pas bon, il faudrait utiliser un gamm, je vais pas donn
 g2mm <- gam(taille_mm ~ s(time,k=3),  data=dat)
 g4mm <- gam(taille_mm ~ s(yday,bs="cc", by=year,k=8)+s(time,k=3),  data=dat)
 g3mm <- gam(taille_mm ~ s(yday,bs="cc", by=year,k=8),  data=dat)
-g5mm <- gam(taille_mm ~ s(yday,bs="cc", k=8)+s(time,k=3),  data=dat)
+# g5mm <- gam(taille_mm ~ s(yday,bs="cc", by=year,k=8) + s(date,bs="re"),  data=dat) # random
 
 # model 3 is best g4mm
-anova(g3mm,g3mm,g4mm,g5mm, test="Chisq")
+anova(g3mm,g3mm,g4mm,, test="Chisq")
 
 
 #anova(g2mm,g4mm,test="Chisq")
