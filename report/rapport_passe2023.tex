@@ -591,10 +591,10 @@ ont été comptabilisées sur l'ensemble de l'année. Entre 1998 et 2012, seule 
 
 Ce rapport décrit le fonctionnement de la passe à fentes verticales du barrage
 et de son système de vidéosurveillance associé. Il fait également la synthèse des passages de 
-poissons migrateurs par la passe à bassins en 2023 \rev{ TODO 
+poissons migrateurs par la passe à bassins en 2023
 \footnote{la migration sur les passes à anguilles est traitée dans un autre rapport :
-\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EcGiQiXYob5AhBZwXXY2zk0B-mRcDpfq8uo0_f-1p4pCoA?e=3I4Nah}{Gestion
-de l'anguille sur le bassin versant de la Vilaine}.}.}
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ESZvGDLLuz9KiIVdrwVnVYoBQSDRPKLAm-CiNwjjwmFVjw?e=b6YyVl}{Gestion
+de l'anguille sur le bassin versant de la Vilaine}.}.
 
    
     
@@ -1053,8 +1053,9 @@ ajusté sur les valeurs de taille (au centre modèle et intervalle de confiance
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2023/bilan_annuel_mup} 
-\caption{Bilan annuel des migrations de mulets au barrage d'Arzal.}
+\includegraphics[width=0.45\textwidth]{2023/bilan_annuel_mup2} 
+\caption{Bilan annuel des migrations de mulets au barrage d'Arzal, pour
+l’année complète et pour la période de montaison jusqu’au 31 août.}
 \label{bilan_annuel_mup}
 \end{figure}
 
@@ -1782,7 +1783,7 @@ d'Arzal.}
 \section{Annexes}
 
 Pour l'étude glanispomi, il est nécessaire de calculer la biomasse de poissons
-migrant sur la Vilaine pour les mois de mars à mai pour les aloses lamproies et
+migrant sur la Vilaine pour les mois de mars à mai pour les aloses, lamproies et
 mulets. L'objectif est de faire ce calcul pour 2023 mais aussi pour les années
 précédentes.
 
@@ -1793,8 +1794,8 @@ précédentes.
 
 La base de données du barrage collecte les informations relatives aux niveaux et
 au fonctionnement des vannes au pas de temps de 10 minutes. Le fichier des données extrait de la base de données du barrage
-contient \textcolor{orange_EV}{\num{50622}} lignes. A partir de ce dernier un
-script de traitement extrait les temps et les modes de fonctionnement de la
+contient \textcolor{orange_EV}{\num{50622}} lignes. A partir de ce dernier,
+un script de traitement extrait les temps et les modes de fonctionnement de la
 passe (Figure \ref{figure_schema_fonctionnement}). 
 Les sondes utilisées en
 référence ont parfois des valeurs manquantes,
@@ -1802,13 +1803,14 @@ référence ont parfois des valeurs manquantes,
  pour les niveaux aval (mer) et amont (Vilaine).
 Pour les niveaux mer, après correction, en utilisant l'une ou l'autre des
 sondes, le nombre de valeurs manquantes restantes pour lesquelles les deux sondes n'ont pas de
-valeur est de \textcolor{orange_EV}{\num{37}}. En Vilaine,
-cette année la correction correspond à
-\textcolor{orange_EV}{\num{37}} pour les niveaux aval et amont.
-Les corrections des niveaux de la mer
-\textcolor{orange_EV}{\num{0}} \footnote{Suppression des valeurs
-inférieures à -3.5 m NGF.}, du sas aval \footnote{Le dernier bassin en aval de
-la passe, la différence de niveaux entre ce bassin et la mer conditionne le
+valeur est de \textcolor{orange_EV}{\num{37}}. En Vilaine
+cette année, la correction correspond à
+\textcolor{orange_EV}{\num{37}} lignes pour les
+niveaux aval et amont.
+Les corrections des niveaux de la mer\footnote{Suppression
+des valeurs inférieures à -3.5 m NGF.} correspondent à
+\textcolor{orange_EV}{\num{0}} lignes, celles du sas aval \footnote{Le dernier
+bassin en aval de la passe, la différence de niveaux entre ce bassin et la mer conditionne le
 fonctionnement de la vanne aval, suppression des valeurs en dehors de la gamme
 [-1m,2.5m].} correspondent à \textcolor{orange_EV}{\num{1398}} lignes et des
 dérives de codeur sur la vanne mer \footnote{Suppression des valeurs en dehors de la gamme
@@ -1955,12 +1957,12 @@ leds.\\
 2021 & Renforcement des structure du capteur de fin de course aval, Remplacement
 des joints de la vanne intermédiaire.\\
 2022 & Aucune modification particulière effectuée\\
-2023 & Installation d'un chauffage et d'un déshumidifacteur afin de préserver de
-matériel éléctronique de la passe à bassin. Changement des boîtiers
-électroniques des sondes de niveaux amont et aval du barrage.\\
+2023 & Remplacement des néons led du caisson lumineux. Changement de la sonde de niveau du SAS. Installation d’un chauffage et d’un déshumidifacteur afin de préserver de matériel électronique
+de la passe à bassin. Changement des boîtiers électroniques des sondes de
+niveaux amont et aval du barrage.\\
 \bottomrule
 \end{tabular}
-\caption{Entretien historique de la passe à poissons.}
+\caption{Entretien historique de la passe à bassins.}
 \label{table_entretien_passe}
 \end{table}
 
@@ -1980,10 +1982,10 @@ Versions précédentes des rapports annuels (table \ref{table_references}).
 Année & Rapport \\
 \midrule
 2023 &
-\href{TODO}{Suivi
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EUqlfhsKgqpMkzWSuEo9uRABXEw73VtgoVhM8t-C6zGTiQ?e=MuQwCG}{Suivi
 de la passe à bassins, 2022} \\
 2022 &
-\href{TODO}{Suivi
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EabAMF4YvrJJhxYU8-pm6JwBSLrjt05hvlhTO2kxb84Aag?e=yvfCUS}{Suivi
 de la passe à bassins, 2021} \\
 2021 &
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EX0SnyoGmBlMsO-6-Il8wugBCHYxha3l2A-5tA9yTCqwbg?e=XukC2d}{Suivi
@@ -2032,7 +2034,7 @@ de la passe à bassins, 2008}\\
 \bigskip
 \paragraph{Remerciements}
 
-La passe fonctionne au quotidien grâce au travail d'entretien de suivi et
+La passe fonctionne au quotidien grâce au travail d'entretien, de suivi et
 d'intervention des barragistes : Alban Le Guen, Cyril Faucon, Johann Dahlem,
 Laurent Philippot, Thierry Besnard. Nous tenons à les remercier pour leur aide
 et leur disponibilité.
@@ -2106,8 +2108,7 @@ Migrateurs Rhône-Méditerranée (MRM)~:
     \textcolor{orange_EV}{\num{-2}} truites de mer (\textit{Salmo trutta trutta}),
     \textcolor{orange_EV}{\num{16}} saumons (\textit{Salmo salar}) et
     \textcolor{orange_EV}{\num{102972}} mulets porcs (\textit{Chelon ramada}) ont été
-    comptabilisés à la passe d'Arzal. Le COVID n'a pas affecté le suivi de la
-    passe. \par
+    comptabilisés à la passe d'Arzal.  \par
         
    \vspace{8mm}
     
@@ -2124,8 +2125,8 @@ Migrateurs Rhône-Méditerranée (MRM)~:
     \textcolor{orange_EV}{\num{1150}} sea lampreys (\textit{Petromyzon marinus}), 
     \textcolor{orange_EV}{\num{-2}} sea trouts (\textit{Salmo trutta trutta}),
     \textcolor{orange_EV}{\num{16}} salmons (\textit{Salmo salar}) 
-    and \textcolor{orange_EV}{\num{102972}} (\textit{Chelon ramada}) mulet have been counted
-    at the Arzal fishway. COVID did not induce any breakdown in monitoring. \par
+    and \textcolor{orange_EV}{\num{102972}} mulets (\textit{Chelon ramada}) have been
+    counted at the Arzal fishway. \par
 
    
 

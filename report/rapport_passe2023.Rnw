@@ -836,10 +836,10 @@ ont été comptabilisées sur l'ensemble de l'année. Entre 1998 et 2012, seule 
 
 Ce rapport décrit le fonctionnement de la passe à fentes verticales du barrage
 et de son système de vidéosurveillance associé. Il fait également la synthèse des passages de 
-poissons migrateurs par la passe à bassins en 2023 \rev{ TODO 
+poissons migrateurs par la passe à bassins en 2023
 \footnote{la migration sur les passes à anguilles est traitée dans un autre rapport :
-\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EcGiQiXYob5AhBZwXXY2zk0B-mRcDpfq8uo0_f-1p4pCoA?e=3I4Nah}{Gestion
-de l'anguille sur le bassin versant de la Vilaine}.}.}
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ESZvGDLLuz9KiIVdrwVnVYoBQSDRPKLAm-CiNwjjwmFVjw?e=b6YyVl}{Gestion
+de l'anguille sur le bassin versant de la Vilaine}.}.
 
    
     
@@ -2559,8 +2559,9 @@ ajusté sur les valeurs de taille (au centre modèle et intervalle de confiance
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2023/bilan_annuel_mup} 
-\caption{Bilan annuel des migrations de mulets au barrage d'Arzal.}
+\includegraphics[width=0.45\textwidth]{2023/bilan_annuel_mup2} 
+\caption{Bilan annuel des migrations de mulets au barrage d'Arzal, pour
+l’année complète et pour la période de montaison jusqu’au 31 août.}
 \label{bilan_annuel_mup}
 \end{figure}
 
@@ -3064,7 +3065,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 res2 <-inner_join(restt,res)[!res$annee%in%c(2007,2008),c("annee","effectif","effectif_mont")]
 data_long <- tidyr::gather(res2, key = "type", value = "value", -annee)
 png(filename=str_c(imgwdy,"bilan_annuel_mup2.png"))
-ggplot(na.omit(data_long), aes(x = factor(annee), y = value, fill = type)) +
+ggplot(na.omit(data_long), aes(x = annee, y = value, fill = type)) +
 		geom_bar(stat = "identity", position = "dodge") +
 		labs(	x = "Année",
 				y = "Effectif (mulet)",
@@ -4093,10 +4094,10 @@ bmi<-charge(bmi,silent=TRUE)
 bmi<-connect(bmi,silent=FALSE, check=TRUE)
 bmi<-calcule(bmi)
 save(bmi,file=str_c(datawd,'bmiala2023.Rdata'))
-#load(file=str_c(datawd,'bmi2023.Rdata'))
+#load(file=str_c(datawd,'bmiala2023.Rdata'))
 #str(bmi)
 ####################
-# graphique de stacomi (2018 pas de captures)
+# graphique de stacomi
 ##########################
 plot(bmi, year_choice = CY, silent=TRUE)
 g=get("g_standard",envir_stacomi)
@@ -4320,18 +4321,26 @@ bmi2020 <- summary(bmi,year_choice=2020,silent=FALSE)
 bmi2021 <- summary(bmi,year_choice=2021,silent=FALSE)
 bmi2022 <- summary(bmi,year_choice=2022,silent=FALSE)
 bmi2023 <- summary(bmi,year_choice=2023,silent=FALSE)
+bmi2016[["5"]][is.na(bmi2016[["5"]])]<-0
+bmi2017[["5"]][is.na(bmi2017[["5"]])]<-0
+bmi2018[["5"]][is.na(bmi2018[["5"]])]<-0
+bmi2019[["5"]][is.na(bmi2019[["5"]])]<-0
+bmi2020[["5"]][is.na(bmi2020[["5"]])]<-0
+bmi2021[["5"]][is.na(bmi2021[["5"]])]<-0
+bmi2022[["5"]][is.na(bmi2022[["5"]])]<-0
+bmi2023[["5"]][is.na(bmi2023[["5"]])]<-0
 datmens <- data.frame("2016"=c("capture (nb)"=round(sum(datpech2016$nb)),
         "capture (kg)"=round(sum(datpech2016$capture/1000)),
         "migration(03)"=0,
-        "migration(04)"=bmi2016[["5"]][1,6],
-        "migration(05)"=bmi2016[["5"]][2,6],
-        "migration(06-07)"=bmi2016[["5"]][3,6]),
+        "migration(04)"=bmi2016[["5"]][2,6],
+        "migration(05)"=bmi2016[["5"]][3,6],
+        "migration(06-07)"=round(sum(bmi2016[["5"]][c(4,5),6]))),
     "2017"=c("capture (nb)"=round(sum(datpech2017$nb)),
         "capture (kg)"=round(sum(datpech2017$capture/1000)),
         "migration(03)"=bmi2017[["5"]][1,6],
         "migration(04)"=bmi2017[["5"]][2,6],
         "migration(05)"=bmi2017[["5"]][3,6],             
-        "migration(06-07)"=round(sum(bmi2018[["5"]][c(4,5),6]))),
+        "migration(06-07)"=round(sum(bmi2017[["5"]][c(4,5),6]))),
     "2018"=c("capture (nb)"=0,
         "capture (kg)"=0,
         "migration(03)"=0,
@@ -4343,31 +4352,31 @@ datmens <- data.frame("2016"=c("capture (nb)"=round(sum(datpech2016$nb)),
         "migration(03)"=bmi2019[["5"]][1,6],
         "migration(04)"=bmi2019[["5"]][2,6],
         "migration(05)"=bmi2019[["5"]][3,6],
-        "migration(06-07)"=NA),
+        "migration(06-07)"=round(sum(bmi2019[["5"]][c(3,4),6]))),
     "2020"=c("capture (nb)"=0,
         "capture (kg)"=0,
         "migration(03)"=bmi2020[["5"]][1,6],
         "migration(04)"=bmi2020[["5"]][2,6],
         "migration(05)"=bmi2020[["5"]][3,6],
-        "migration(06-07)"=NA),
+        "migration(06-07)"=round(sum(bmi2020[["5"]][c(3,4),6]))),
     "2021"=c("capture (nb)"=0,
         "capture (kg)"=0,
         "migration(03)"=bmi2021[["5"]][1,6],
         "migration(04)"=bmi2021[["5"]][2,6],
         "migration(05)"=bmi2021[["5"]][3,6],
-        "migration(06-07)"=NA), 
+        "migration(06-07)"=round(sum(bmi2021[["5"]][c(3,4),6]))), 
     "2022"=c("capture (nb)"=0,
         "capture (kg)"=0,
         "migration(03)"=bmi2022[["5"]][1,6],
         "migration(04)"=bmi2022[["5"]][2,6],
         "migration(05)"=bmi2022[["5"]][3,6],
-        "migration(06-07)"=NA),
+        "migration(06-07)"=round(sum(bmi2022[["5"]][c(3,4),6]))),
     "2023"=c("capture (nb)"=0,
         "capture (kg)"=0,
         "migration(03)"=bmi2023[["5"]][1,6],
         "migration(04)"=bmi2023[["5"]][2,6],
         "migration(05)"=bmi2023[["5"]][3,6],
-        "migration(06-07)"=NA) 
+        "migration(06-07)"=round(sum(bmi2023[["5"]][c(3,4),6]))) 
 )
 save(datmens, file=str_c(datawdy,"datmens.Rdata"))
 
@@ -6377,10 +6386,10 @@ Versions précédentes des rapports annuels (table \ref{table_references}).
 Année & Rapport \\
 \midrule
 2023 &
-\href{TODO}{Suivi
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EUqlfhsKgqpMkzWSuEo9uRABXEw73VtgoVhM8t-C6zGTiQ?e=MuQwCG}{Suivi
 de la passe à bassins, 2022} \\
 2022 &
-\href{TODO}{Suivi
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EabAMF4YvrJJhxYU8-pm6JwBSLrjt05hvlhTO2kxb84Aag?e=yvfCUS}{Suivi
 de la passe à bassins, 2021} \\
 2021 &
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EX0SnyoGmBlMsO-6-Il8wugBCHYxha3l2A-5tA9yTCqwbg?e=XukC2d}{Suivi
