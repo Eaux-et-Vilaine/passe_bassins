@@ -122,7 +122,7 @@ plot(GLM3)
 ```
 		
 ```{r treatmentssm, eval=TRUE,echo=FALSE} 
-file <- "\\\\srv-01\\EPTB\\12-PoleMAB\\Socle\\Migrateurs\\poissons\\suivi_pab\\2023\\Concat23_jusqua42849.txt"
+file <- "\\\\srv-01\\EPTB\\12-PoleMAB\\Socle\\Migrateurs\\poissons\\suivi_pab\\2024\\Concat24_jusqua24258.txt"
 #file <- "C:/workspace/pdata/traitement_stacomi/rapport_passe/data/2019/AZ20_0001-44765_corrige.SSM"
 # des erreurs dans le SSM avec des champs non fermés, il faut relire le fichier dans notepad++
 ssm <- read.table(file, quote = "\"", sep= " ")
@@ -146,7 +146,7 @@ hist(ssm$taillepixel)
 # Tailles en pixel sans zone
 table(ssm$taillepixel[ssm$remarque==""])
 #ssm$remarque <- stringi::stri_trans_general(ssm$remarque, "Latin-ASCII")
-# ssm[ssm$remarque=="" & ssm$taillepixel >0,"remarque"] <- 'mm5mm'
+# ssm[ssm$remarque=="" & ssm$taillepixel >0,"remarque"] <- 'mm2mm'
 # po1 avec taille (il ne doit pas y en avoir, il s'agit de 10 mulets)
 ssm[ssm$taillepixel>0&ssm$taxonvideo=='po1',]
 ssm[ssm$taillepixel>0&ssm$taxonvideo=='po1',"taxonvideo"]
@@ -220,8 +220,8 @@ ssmf <- ssm[,c("fichierVideo",
 				"distance",
 				"taille",
 				"remarque")]
-dir.create("C:/workspace/passe_bassins/data/2023/")
-file <- str_c("C:/workspace/passe_bassins/data/2023/fichiers_traite_2023.SSM")
+dir.create("C:/workspace/passe_bassins/data/2024/")
+file <- str_c("C:/workspace/passe_bassins/data/2024/fichiers_traite_2024.SSM")
 #  des erreurs dans le SSM avec des champs non fermés, il faut relire lefichier dans notepad++
 write.table(x=ssmf,row.names = FALSE,file=file, quote = 10, sep= " ")
 

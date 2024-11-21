@@ -579,7 +579,7 @@ load_package('hubeau')
 
 
 # l'annee en cours (c'est la valeur à changer en début de script
-CY <- 2023
+CY <- 2024
 # le repertoire contenant les données
 datawdy <- str_c(datawd,CY,"/")
 dir.create(datawdy,showWarnings = FALSE)
