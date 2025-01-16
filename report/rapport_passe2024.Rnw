@@ -4320,6 +4320,7 @@ bmi2020 <- summary(bmi,year_choice=2020,silent=FALSE)
 bmi2021 <- summary(bmi,year_choice=2021,silent=FALSE)
 bmi2022 <- summary(bmi,year_choice=2022,silent=FALSE)
 bmi2023 <- summary(bmi,year_choice=2023,silent=FALSE)
+bmi2024 <- summary(bmi,year_choice=2024,silent=FALSE)
 datmens <- data.frame("2016"=c("capture (nb)"=round(sum(datpech2016$nb)),
         "capture (kg)"=round(sum(datpech2016$capture/1000)),
         "migration(03)"=0,
@@ -4363,10 +4364,16 @@ datmens <- data.frame("2016"=c("capture (nb)"=round(sum(datpech2016$nb)),
         "migration(05)"=bmi2022[["5"]][3,6],
         "migration(06-07)"=NA),
     "2023"=c("capture (nb)"=0,
+		"capture (kg)"=0,
+		"migration(03)"=bmi2023[["5"]][1,6],
+		"migration(04)"=bmi2023[["5"]][2,6],
+		"migration(05)"=bmi2023[["5"]][3,6],
+		"migration(06-07)"=NA),
+    "2024"=c("capture (nb)"=0,
         "capture (kg)"=0,
-        "migration(03)"=bmi2023[["5"]][1,6],
-        "migration(04)"=bmi2023[["5"]][2,6],
-        "migration(05)"=bmi2023[["5"]][3,6],
+        "migration(03)"=bmi2024[["5"]][1,6],
+        "migration(04)"=bmi2024[["5"]][2,6],
+        "migration(05)"=bmi2024[["5"]][3,6],
         "migration(06-07)"=NA) 
 )
 save(datmens, file=str_c(datawdy,"datmens.Rdata"))
@@ -6355,6 +6362,7 @@ des joints de la vanne intermédiaire.\\
 2023 & Remplacement des néons led du caisson lumineux. Changement de la sonde de niveau du SAS. Installation d’un chauffage et d’un déshumidifacteur afin de préserver de matériel électronique
 de la passe à bassin. Changement des boîtiers électroniques des sondes de
 niveaux amont et aval du barrage.\\
+2024 & TODOTODO. Remplacement des flexibles corrodés de la vanne aval.\\
 \bottomrule
 \end{tabular}
 \caption{Entretien historique de la passe à bassins.}
