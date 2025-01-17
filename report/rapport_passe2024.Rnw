@@ -1810,15 +1810,15 @@ load(file=file.path(datawd,CY,"fonct_pass.Rdata"))	# ll
 
 ll <- calc_debit_passe(ll,vvv)
 data_DF <- ll$dat
-# 2023 pb de codeur pour la vanne aval
+
 
 # TODO update here
 png(filename=file.path(imgwd,CY,"detail_fonct_passe_1.png"),7,7,units="in",res=300)
-graph_DF_detail(data_DF, from="08/04/2023")
+graph_DF_detail(data_DF, from="08/04/2024")
 dev.off()
 
 png(filename=file.path(imgwd,CY,"detail_fonct_passe_2.png"),7,7,units="in",res=300)
-graph_DF_detail(data_DF=data_DF, from="15-05-2023", to="19-05-2023")
+graph_DF_detail(data_DF=data_DF, from="10-05-2024", to="19-05-2024")
 dev.off()
 
 ##############################################################
