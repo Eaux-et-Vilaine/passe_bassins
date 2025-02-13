@@ -388,7 +388,7 @@ keepaspectratio]{/2024/frontpage.png}%
 \begin{minipage}{0.28\textwidth}
 
 \par\sffamily\selectfont
-\vspace{4cm}
+\vspace{2cm}
 \Large 
     {\titlefont Suivi scientifique des migrations de poissons 
     de la passe à bassins du barrage d'Arzal.
@@ -427,7 +427,6 @@ keepaspectratio]{/2024/frontpage.png}%
 \large
 \color{bleu_EV}
 \leftskip=1cm
-Léa Patau\par
 Cédric Briand\par   
 Brice Sauvaget\par
 Gérard Eriau\par
@@ -468,9 +467,7 @@ Gérard Eriau\par
 \vspace{4mm}\noindent
 {\color{turquoise_EV}\rule{0.9\textwidth}{1.8pt}}\par
 \vspace{5mm}
-{\color{jaune_EV}{\titlefont \Large \itshape{Léa Patau, Brice Sauvaget,
-      Gérard Eriau,
-      Cédric Briand\par   }}}
+{\color{jaune_EV}{\titlefont \Large \itshape{Cédric Briand, Brice Sauvaget, Gérard Eriau\par   }}}
 \end{center}
 \end{minipage}
 
@@ -482,7 +479,7 @@ Gérard Eriau\par
 \vspace{2cm}
 \begin{minipage}{0.8\textwidth}
 \begin{center}
-\hspace{3cm}{\color{white}{\huge \itshape{Janvier 2024}}}
+\hspace{3cm}{\color{white}{\huge \itshape{Mars 2025}}}
 \end{center}
 \end{minipage}
 \restoregeometry
@@ -540,7 +537,7 @@ Sys.setenv(LANGUAGE = "fr")
 # ci dessous nettoye tout sauf mes deux password
 # attention de bien configurer bd_contmig_nat pour qu'il pointe vers la base bd_contmig_nat_iav
 obj <- ls(all=TRUE)
-obj <- obj[!obj%in%c("pois","passworddistant","passwordlocal","userdistant","hostdistant","umysql","hostmysql","pwdmysql")]
+obj <- obj[!obj%in%c("pois","passworddistant","passwordlocal","userdistant","hostdistant","umysql","hostmysql","pwdmysql","mainpass")]
 rm(list=obj) # nettoyage complet sauf passwords
 # fermeture de tous les graphiques
 graphics.off()
@@ -769,10 +766,10 @@ if (file.exists(file=str_c(datawdy,"vvv.Rdata"))){
 
 
 if (exists("userdistant") & exists("passworddistant") & exists("hostdistant")) {
-  if( !exists("pois")) pois <- getPass(msg="main password")
-  host <- decrypt_string(hostdistant,pois)
-  user <- decrypt_string(userdistant,pois)
-  password<- decrypt_string(passworddistant,pois)
+
+  host <- decrypt_string(hostdistant,mainpass)
+  user <- decrypt_string(userdistant,mainpass)
+  password<- decrypt_string(passworddistant,mainpass)
 } else {
   host <- getPass(msg="host")
   user <- getPass(msg="user")
@@ -816,15 +813,17 @@ stacomi(TRUE,sch="iav", datawd=datawd)
 L'estuaire de la Vilaine est limité à sa portion aval par le barrage d'Arzal,
 construit par l'IAV en 1970, et qui bloque l'onde de marée à 10 km de
 l'embouchure de l'estuaire.
-L'estuaire en amont, jusqu'à la limite historique de l'estuaire tital (barrages de Malon et de la Potinais à 70-80 km en amont) 
-a été transformé en rivière. Le plan d'eau ainsi créé a vu se développer de
-nouveaux usages dont les principaux sont la navigation et
-l'eau potable.
-Le barrage d'Arzal joue un rôle majeur dans la protection contre les crues de l'aval du bassin versant, 
-en empêchant les conjonctions de
-forts débits amont et d'importantes surcotes de marées.
+L'estuaire en amont, jusqu'à la limite historique de l'estuaire tital (barrages
+de la Potinais et de Malon, respectivement à 45 et 77 km en amont), a été
+transformé en rivière.
+Le plan d'eau ainsi créé a vu se développer de nouveaux usages dont les
+principaux sont la navigation et la production d'eau potable.
+Le barrage d'Arzal joue un rôle majeur dans la protection contre les crues 
+de l'aval du bassin versant, en empêchant les conjonctions de forts débits amont
+et d'importantes surcotes de marées.
 Ce barrage constitue ainsi une rupture nette entre des eaux saumâtres et douces. Il évacue le débit
 de la Vilaine qui avec 12400 km$^2$ couvre le tiers de la surface la Bretagne.
+
 Le barrage d'Arzal est un obstacle majeur à la circulation
 des poissons migrateurs. Entre 1970 et 1995, année de la mise en service de dispositifs de franchissements,
 leurs populations ont très fortement régressé sur le fleuve, voire même disparu.
@@ -837,8 +836,9 @@ ont été comptabilisées sur l'ensemble de l'année. Entre 1998 et 2012, seule 
 Ce rapport décrit le fonctionnement de la passe à fentes verticales du barrage
 et de son système de vidéosurveillance associé. Il fait également la synthèse des passages de 
 poissons migrateurs par la passe à bassins en 2024 \rev{ TODO 
-\footnote{la migration sur les passes à anguilles est traitée dans un autre rapport :
-\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EcGiQiXYob5AhBZwXXY2zk0B-mRcDpfq8uo0_f-1p4pCoA?e=3I4Nah}{Gestion
+\footnote{La migration sur les passes à anguilles est traitée dans un autre
+rapport :
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ER5GHvMhd7hIm7U0xgXtt5YBzTVgcGsewPAMu5IUjMxGKQ?e=oJfWao}{Gestion
 de l'anguille sur le bassin versant de la Vilaine}.}.}
 
    
@@ -851,9 +851,9 @@ de l'anguille sur le bassin versant de la Vilaine}.}.}
 L’ouvrage, édifié entre 1965 et 1970, est constitué d’une partie centrale de 160 mètres comprenant 5 vannes 
 et une écluse, et d’une digue en terre de 360 mètres (Photo
 \ref{photo_barrage}).
-Il bloque l’onde de marée à 12 kilomètres de l’embouchure et constitue une rupture nette entre le milieu estuarien 
-et le plan d’eau douce artificiellement créé à l’amont. 
-Le marnage à l’aval est de 7 mètres lors des grandes marées (Figure
+Il bloque l’onde de marée à 10 kilomètres de l’embouchure et constitue une
+rupture nette entre le milieu estuarien et le plan d’eau douce artificiellement créé à l’amont. 
+Le marnage à l’aval est de 6 mètres lors des grandes marées (Figure
 \ref{photo_barrage}).
 
 \begin{figure}[htpb]
@@ -868,8 +868,8 @@ Le marnage à l’aval est de 7 mètres lors des grandes marées (Figure
 \subsubsection{La passe à bassins}
 
 Deux passes ont été construites en 1995 sur le barrage. La première est un
-dispositif spécifique pour les anguilles composé de rampes de reptation plongeant dans l'estuaire et
-permettant aux anguillettes et aux civelles de grimper le long des rampes en
+dispositif spécifique pour les anguilles composé de deux rampes de reptation
+plongeant dans l'estuaire et permettant aux anguillettes et aux civelles de grimper le long des rampes en
 prenant appui sur des brosses, puis plus en amont d'un piège, un vivier de
 stockage dans lequel les anguilles tombent après avoir franchi la rampe.
 La deuxième est la passe à bassins successifs dont le suivi fait l'objet de ce
@@ -891,8 +891,8 @@ chambre de visualisation (3) (Figure \ref{figure_passe_bassins}).
 \label{figure_passe_bassins}
 \end{figure}
 
-Les paramètres hydrauliques de la passe conditionnent le passage des espèces migratrices : le courant doit être suffisant
-pour attirer le poisson vers l’entrée de la passe, mais pas trop puissant pour lui permettre de franchir les chutes
+Les paramètres hydrauliques de la passe à bassins conditionnent le passage des
+espèces migratrices : le courant doit être suffisant pour attirer le poisson vers l’entrée de la passe, mais pas trop puissant pour lui permettre de franchir les chutes
 qui s’établissent entre chaque bassin. Ces paramètres doivent rester compris dans une gamme de valeurs permettant 
 le franchissement des espèces que l’on désire faire passer. Ils dépendent étroitement du niveau d’eau amont et de
 la hauteur de chute qui s’établit en entrée de passe. Or, le niveau aval, lié à
@@ -902,7 +902,7 @@ le nombre de bassins (le nombre de marches d’escalier nécessaires pour franch
 conditions de course, d’ouverture et de fermeture des différentes vannes en
 fonction du niveau de la marée \citep{briand_suivi_1998}.
 La passe à bassins est franchissable par plusieurs espèces marines, avec les grands migrateurs
-(saumon, truite de mer, alose, lamproie, mulet, anguille jaune) et d’autres
+(saumon, truite de mer, aloses, lamproie, mulet, anguille jaune) et d’autres
 espèces dont les passages sont anecdotiques (bar, flet), mais également par des espèces d’eau douce dévalant en estuaire par l’écluse 
 ou par les vannes lors des épisodes de forts débits (silure, carpe, amour
 blanc, sandre, gardon, ablette, brème ...). 
@@ -916,10 +916,13 @@ Le rôle du barrage d’Arzal est de limiter au maximum les entrées d’eau sal
 située à l’interface de la mer et de l’eau douce, subit donc des contraintes liées aux marées.
 Un automate informatique gère les vannes aval et amont de la passe à bassins en fonction des niveaux d’eau de la mer
 et de la Vilaine. La passe fonctionne seulement quand le niveau de la mer est inférieur au niveau amont. 
-La contrainte de sécurité de 30 cm sert à empêcher les intrusions d’eau salée dans le plan d’eau amont. 
-La passe reste en fonctionnement à basse mer mais on considère qu’au-delà de 50 cm la chute à l’aval de la passe 
-n’est plus franchissable. Lorsque le niveau dans le dernier bassin à l’aval de la passe (Niveau SAS) 
-est situé 50 cm en dessus du niveau mer, la passe est considérée en dysfonctionnement hydraulique.
+Une contrainte de sécurité de 30 cm sert à empêcher les intrusions d’eau salée
+dans le plan d’eau amont.
+La passe reste en fonctionnement à basse mer mais on considère qu’au-delà de 50
+cm, la chute à l’aval de la passe n’est plus franchissable. Lorsque le niveau
+dans le dernier bassin à l’aval de la passe (Niveau SAS) est situé 50 cm en dessus du niveau mer, 
+la passe est considérée en dysfonctionnement hydraulique.
+
 \subsubsection{Catégories d'état de la passe à bassins}
 Les fonctionnements de la passe sont classifiés suivant les standards nationaux
 établis par le SANDRE dans le
@@ -1010,10 +1013,11 @@ niveaux entre la Vilaine et la mer supérieure à 0.3 m, elle est fermée quand 
 codeur de la vanne amont est à la cote 0.08 m, elle est ouverte pour toutes les
 autres valeurs.
 Un dysfonctionnement hydraulique est noté pour des valeurs de chute aval
-supérieures à 0.5 m (lors des basses mer). En cercles les types de
-fonctionnement du dispositif, 1 = Fonctionnement normal, 2 = arrêt normal dû au fonctionnement du dispositif, ici marée haute, 3 =
-arrêt pour maintenance, 4 = dysfonctionnement hydraulique, 5 pas de données. Le
-graphique est créé à partir du package DiagrammeR
+supérieures à 0.5 m (lors des basses mer). En cercles, les types de
+fonctionnement du dispositif, 1 = fonctionnement normal, 2 = arrêt normal dû au
+fonctionnement du dispositif, ici marée haute, 3 = arrêt pour maintenance, 4 =
+dysfonctionnement hydraulique, 5 = pas de données. Le graphique est créé à
+partir du package DiagrammeR
 \citep{Iannone_diagrammer_2019}.}
 \label{figure_schema_fonctionnement}
 \end{figure}
@@ -1023,9 +1027,10 @@ un arrêt à marée haute. Ainsi, les périodes d'arrêt technique de la passe s
 traduites en alternance de périodes d'arrêt technique, pendant lesquelles la
 passe est fermée alors que le niveau de la mer permettrait son ouverture, et des
 périodes d'arrêt normal liées au fonctionnement. Pour ces dernières en effet, en
-fonctionnement normal la passe aurait été fermée car le niveau de la mer s'approche à moins de 30 cm du niveau de la Vilaine ce qui
-aurait déclenché la fermeture de la vanne amont pour éviter les intrusions d'eau
-salée (Figure \ref{detail_fonct_passe_2} en annexe).
+fonctionnement normal la passe aurait été fermée car le niveau de la mer
+s'approche à moins de 30 cm du niveau de la Vilaine, ce qui aurait déclenché 
+la fermeture de la vanne amont pour éviter les intrusions d'eau salée (Figure
+\ref{detail_fonct_passe_2} en annexe).
 
 En dehors des périodes d'arrêt et lorsque les coefficients de marée dépassent
 70, la passe alterne entre des périodes où elle est fermée à marée haute, des
@@ -1042,21 +1047,25 @@ le débit dans le bassin aval de la passe, d'autre part l'arrêt de la passe
 à basse mer car les migrations sont nulles lorsque la passe est en
 dysfonctionnement hydraulique, et globalement les passages sont faibles
 lors des marées descendantes et à basse mer. Malgré la baisse de débit, nous
-considérons que la passe reste attractive car l'exutoire des tuyaux du siphon se situe près de l'entrée aval de la passe. 
-De plus, il n'est pas nécessaire de maintenir un débit d'attrait important pour
-que les poissons trouvent la source principale de l'eau douce s'écoulant dans l'estuaire dont la salinité
-est proche de l'eau de mer en absence de débit.
+considérons que la passe reste attractive car l'exutoire des tuyaux du siphon 
+se situe près de l'entrée de la passe. De plus, il n'est pas nécessaire de 
+maintenir un débit d'attrait important pour que les poissons trouvent la source
+principale de l'eau douce s'écoulant dans l'estuaire, et dont la salinité est 
+proche de l'eau de mer en absence de débit.
 
 
 
 \subsection{Système de suivi vidéo numérique}
 
 Avant leur sortie à l'amont de la passe, les poissons sont dirigés par un
-système de grille vers un couloir équipé de vitres. Un caisson de rétroéclairage
-permet de filmer les poissons en ombres chinoises. Le système d'enregistrement
-se compose d'une caméra, d'un ordinateur pour l'enregistrement (Figure
-\ref{photo:suivi_numerique}). Le système de comptage est basé sur un enregistrement numérique des passages de poissons réalisé à l’aide des logiciels SYSIPAP (Système de Surveillance Informatisée 
-des Passes à Poissons). Ce système fonctionne en deux phases :
+système de grille vers un couloir de 40 cm de large équipé de vitres. Un caisson
+de rétroéclairage permet de filmer les poissons en ombres chinoises. Le système 
+d'enregistrement se compose d'une caméra et d'un ordinateur pour
+l'enregistrement (Figure \ref{photo:suivi_numerique}). Le système de comptage 
+est basé sur un enregistrement numérique des passages de poissons réalisé à 
+l’aide des logiciels SYSIPAP (Système de Surveillance Informatisée des Passes 
+à Poissons). 
+Ce système fonctionne en deux phases :
 
 \begin{itemize}
 \item la première est une phase d'enregistrement sur le site de séquences vidéo
@@ -1081,6 +1090,7 @@ Le logiciel d'acquisition de séquences d'images WSEQ32 (Image
 lumineuse,
 \item	déclenchement d'enregistrement comprimé sur le disque dur d'un PC.
 \end{itemize}
+
 Les paramètres ajustables sont :
 \begin{enumerate}
 \item	le cycle de mesure,
@@ -1090,6 +1100,7 @@ composant l'écran,
 \item	la temporisation de l’alarme,
 \item	le nombre d’images enregistrées précédant la condition de déclenchement.
 \end{enumerate}
+
 
 \begin{figure}[htpb]
 \centering
@@ -1103,10 +1114,10 @@ composant l'écran,
 
 Le logiciel de dépouillement WPOIS32 (Figure \ref{image:wpois32}) fonctionne sur Arzal de
 manière manuelle, c'est-à-dire que la personne qui visionne les fichiers vidéo doit reconnaître
-les différentes espèces et rentrer les effectifs correspondant à l’aide de l’interface "choix espèce".
-Le résultat du dépouillement est un fichier texte comprenant la liste des événements enregistrés :
-espèce, montée ou descente, numéro de l’image de sortie, date et heure, taille
-en pixel et distance du poisson à la vitre.
+les différentes espèces et rentrer les effectifs correspondant à l’aide de
+l’interface "Choix espèce". Le résultat du dépouillement est un fichier texte
+comprenant la liste des événements enregistrés : espèce, montée ou descente,
+numéro de l’image de sortie, date et heure, taille en pixel et distance du poisson à la vitre.
 
 \begin{figure}[htpb]
 \centering
@@ -1123,36 +1134,28 @@ par l’écluse, voire par les vannes wagons lorsque le dénivelé est faible. M
 il ne l’est que dans certaines conditions et sur de courtes périodes.
 
 La gestion du barrage, liée aux contraintes hydrauliques amont (débit à évacuer) et aval (marée), 
-a une grande incidence sur la franchissabilité du barrage.
-Le débit du fleuve peut être évacué par des vannes wagons ou
-par des clapets flottants (volets) en surverse.
+a une grande incidence sur sa franchissabilité. Le débit du fleuve peut être
+évacué par des vannes wagons ou par des clapets flottants (volets) en surverse.
 En règle générale, la plus grande part du débit est évacuée de jour, par l’intermédiaire des vannes. 
 L’ouverture des volets la nuit permet de s’affranchir de la surveillance des vannes, 
 les volets flottants empêchant mécaniquement la remontée de l’eau de mer dans le
-plan d’eau amont. En période printanière quand les débits sont faibles et que
+plan d’eau amont. En période printanière, quand les débits sont faibles et que
 les volets fonctionnent, des bancs de mulets peuvent tenter de les franchir. Ce
 franchissement peut concerner plusieurs milliers d'individus dans la demie heure
 où les volets sont franchissables.
 
-Entre 2013 et 2020 nous avons observé grâce à un sonar multifaisceaux (DIDSON)
-des passages de lamproies marines sous les vannes lorsque les vitesses de courant ne sont pas élevées. Les effectifs recalculés peuvent être conséquents.
+Entre 2013 et 2023, nous avons observé grâce à un sonar multifaisceaux (Didson)
+des passages de lamproies marines sous les vannes lorsque les vitesses de courant 
+ne sont pas élevées, les effectifs recalculés pouvant être conséquents.
 Lorsque la marée monte jusqu’au niveau des volets, il arrive un moment où ils sont franchissables par des espèces
-ayant une bonne capacité de nage. Les chiffres donnés pour
-l’évaluation des stocks de migrateurs doivent donc être considérés comme un minimum.
+ayant une bonne capacité de nage. Les chiffres donnés pour l’évaluation des
+stocks de migrateurs doivent donc être considérés comme un minimum.
 
 \section{Résultats}
 \subsection{Fonctionnement de la passe à bassins}
 \paragraph{Résumé du fonctionnement.}
 
-Le fonctionnement de la passe en 2024 a été plutôt bon. 
-La passe a été lancée le 1er février après une crue, puis arrêtée 
-le 1er novembre avec la première crue automnale. La passe est en 
-effet fermée en débit de crue pour empêcher la descente d'objets 
-flottants et car la baisse de la ligne d'eau amont limite fortement les débits évacués.
-La crue printanière du 9 mars au 2 avril a perturbé le fonctionnement 
-de la passe mais sans entraîner d'arrêt. Il y a eu deux autres interruptions en cours de saison, 
-du 16 au 18 août pour changer la sonde de niveau du SAS, et du 31 août au 5 septembre 
-pour cause de submersion marine.
+Le fonctionnement de la passe en 2024 a été plutôt mauvais ...
 
 \begin{figure}[htpb]
 \centering
@@ -1649,6 +1652,7 @@ graph_DF_detail=function(data_DF, from, to){
 
 
 <<chargement_donnees_barrage,echo=FALSE,eval=FALSE,include=FALSE>>=
+
 library(RMySQL)
 library(getPass)
 library(safer)
@@ -1724,6 +1728,8 @@ res1 <-
     select(name,result)%>%
     unnest(col=c(result))
 
+
+
 ############################
 # PB HEURES ARZAL
 ############################
@@ -1734,12 +1740,14 @@ res1 <-
 
 res1 <- res1 %>%
     mutate("time"=as.POSIXct(strptime(HoroDate,tz="GMT",format="%Y-%m-%d %H:%M:%S")))
+head(res1$time)
+head(lubridate::with_tz(res1$time, tzone = "Europe/Paris"))
 attributes(res1$time)$tzone <- "Europe/Paris"
 res1 <- res1 %>%
     mutate("time"=time-as.difftime(1, units = "hours"))		
 
 
-
+res1 %>% filter(Horodate >'2024-21-05 00:00:00')
 # Check that all dates are rounded in SIVA
 #stopifnot( sum(lubridate::round_date(res1$time,"10 mins")!=res1$time)==0)
 
@@ -1812,7 +1820,6 @@ ll <- calc_debit_passe(ll,vvv)
 data_DF <- ll$dat
 
 
-# TODO update here
 png(filename=file.path(imgwd,CY,"detail_fonct_passe_1.png"),7,7,units="in",res=300)
 graph_DF_detail(data_DF, from="08/04/2024")
 dev.off()
@@ -2035,7 +2042,7 @@ g<-ggplot(tpp)+
         axis.text=element_text(colour="black"))
 print(g)
 dev.off()
-Sys.setenv(TZ="Europe/London")
+Sys.setenv(TZ="Europe/London") # GMT
 r_df_hist<-choice_c(r_df,
     1,
     horodatedebut="2003-01-01",
@@ -2436,11 +2443,11 @@ tail$tax<-as.factor(tail$tax)
 g0 <- glm(taille ~ annee, data= tail)
 pdev <- function(mod)(mod$null.deviance-deviance(mod))/mod$null.deviance
 x11()
-pdev(g0) # 0.032
+pdev(g0) # 0.07
 plot(g0)
 g1 <- glm(taille ~  annee*tax + mois*tax, data= tail )
 g1 <- glm(taille ~  annee + tax + annee:tax, data= tail)
-pdev(g1) #0.63
+pdev(g1) #0.65
 plot(g1)
 
 
@@ -2626,11 +2633,11 @@ d'Arzal.}
 \end{figure}
 \end{landscape}
 
-<<bilan_car_lots_mup, echo=FALSE, eval=FALSE, include=FALSE >>=
+<<bilan_car_lots_mup, echo=FALSE, eval=TRUE, include=FALSE >>=
 
 options(warn=-1)
 
-
+Sys.setenv(TZ="Europe/Paris")
 r_sample_char<-new("report_sample_char")
 # the following will load data for size, 
 # parameters 1786 (total size) C001 (size at video control)
@@ -2673,7 +2680,7 @@ options(warn=0)
 save(r_sample_char, file=str_c(datawdy,"r_sample_char_mulet.Rdata"))
 @
 
-<<modele_taille_mup, echo=FALSE, eval=FALSE, include=FALSE >>=
+<<modele_taille_mup, echo=FALSE, eval=TRUE, include=FALSE >>=
 load_package("mgcv")
 load_package("itsadug")
 load_package("visreg")
@@ -2792,7 +2799,7 @@ g3mm <- gam(taille_mm ~ s(yday,bs="cc", by=year,k=8),  data=dat)
 # g5mm <- gam(taille_mm ~ s(yday,bs="cc", by=year,k=8) + s(date,bs="re"),  data=dat) # random
 
 # model 3 is best g4mm
-anova(g3mm,g3mm,g4mm,, test="Chisq")
+anova(g3mm,g3mm,g4mm, test="Chisq")
 
 
 #anova(g2mm,g4mm,test="Chisq")
@@ -2869,7 +2876,7 @@ p1 <- ggarrange(g0, g1, labels=c("A", "B"),
 p2 <- ggarrange(g3, labels="C")
 p3 <- ggarrange(p1, p2, nrow=2, ncol=1)
 
-pdf(file.path(imgwd,CY,"graphe_taille_mulets.pdf"),width=8, height=8)
+pdf(file.path(imgwd,CY,"graphe_taille_mulets.pdf"),width=10, height=8)
 print(p3)
 dev.off()
 
@@ -2916,7 +2923,7 @@ save(vvv , file=file.path(datawd,CY,"vvv.Rdata"))
 
 
 
-<<bilan_annuels_mup, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<bilan_annuels_mup, echo=FALSE, eval=TRUE,include=FALSE >>=
 
 
 
@@ -3074,7 +3081,7 @@ dev.off()
 
 @
 
-<<report_mig_mult_mulet, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_mig_mult_mulet, echo=FALSE, eval=TRUE,include=FALSE >>=
 load_package("wesanderson")
 color_ope<-sample(c(mycolorramp1(10),mycolorramp2(10)),20)
 bMM_Arzal=new("report_mig_mult")
@@ -3166,6 +3173,7 @@ hhh<- mige%>%group_by(heure) %>% summarize(N=sum(value))
 png(file=str_c(imgwdy,"bmm_horaires_maree.png"),7,7,units="in",res=300)
 ggplot(mige)+
     geom_point( aes(x=timec,y=niveau_mer_barrage,col=value))+	
+	facet_wrap(~ per_tar_code) +
     scale_colour_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous"), 
         breaks=c(0,10,100,1000,10000),trans = "log") +
     scale_fill_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous"), 
@@ -3182,7 +3190,7 @@ dev.off()
 
 
 
-<<report_mig_internnual_mulet, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_mig_internnual_mulet, echo=FALSE, eval=TRUE,include=FALSE >>=
 ###########################################
 # Bilan interannuel de stacomi
 #########################################
@@ -3224,7 +3232,7 @@ g <- g+scale_x_datetime(name="date",
 print(g)
 dev.off()
 
-plot(bmi,plot.type="barchart", timesplit="mois", year_choice = CY)
+plot(bmi,plot.type="barchart", timesplit="mois", year_choice = CY, silent= TRUE)
 g <- get("g_barchart", envir=envir_stacomi)
 cols <- c("max" = "#012746","min" = "#6C3E00",">=moy" = "#327AB5", "<moy" = "#D29035","hist_mean"="black","hist_range"="grey","?"="#D26435")
 fills <- c("max" = "#043C6B","min" = "#6C3E00",">=moy" = "#558AB5", "<moy" = "#D2A25F","hist_mean"="black","hist_range"="grey","?"="#D26435")
@@ -3237,12 +3245,12 @@ print(g)
 dev.off()
 #============================================
 
-plot(bmi,plot.type="density",timesplit="semaine", year_choice=CY)
+plot(bmi,plot.type="density",timesplit="semaine", year_choice=CY, silent =TRUE)
 colrp <- colorRampPalette(colors=rev(c("#6D9A58","#0E2C00")))
 colrp1 <- colorRampPalette(colors=c("#6D9A58","#C6B130"))
 load_package("viridis")
 g <- get("g_density",envir=envir_stacomi)
-nb_annee <- length(unique(rmi@data$bjo_annee))
+nb_annee <- length(unique(bmi@data$bjo_annee))
 mycolorramp1 <- colorRampPalette(c("#011A2D","#4F7EA2"))
 mycolorramp2 <- colorRampPalette(c("#462800","#B68B52"))
 color_ope <- c(rev(mycolorramp1(10)),mycolorramp2(nb_annee-11),"#85A3BA")
@@ -3263,7 +3271,7 @@ dev.off()
 
 #============================================
 png(filename=str_c(imgwdy,"plot_seasonal_mup.png"),width=14,height=10,unit="cm",res=300)
-plot(bmi, plot.type="seasonal", timesplit="semaine", year_choice =CY, silent= FALSE) 
+plot(bmi, plot.type="seasonal", timesplit="semaine", year_choice =CY, silent= TRUE) 
 dev.off()
 
 # ====== Bilan mensuel ===============
@@ -3427,7 +3435,7 @@ différentes zones de la vitre.}
 \label{size_lpm}
 \end{figure}
 
-<<report_mig_mult_lpm, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_mig_mult_lpm, echo=FALSE, eval=TRUE,include=FALSE >>=
 # Lamproies --------------------------------------- 
 color_ope <- sample(c(mycolorramp1(10),mycolorramp2(10)),20)
 bMM_Arzal <- new("report_mig_mult")
@@ -3451,7 +3459,7 @@ plot(bMM_Arzal,plot.type="standard",
 dev.off()
 @
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-<<report_interannual_lpm, echo=FALSE, eval=FALSE, include=FALSE >>=
+<<report_interannual_lpm, echo=FALSE, eval=TRUE, include=FALSE >>=
 rmi <- new("report_mig_interannual")
 rmi <- choice_c(rmi,
     dc=c(5),
@@ -3529,7 +3537,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 
 
-<<report_annual_lpm, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_annual_lpm, echo=FALSE, eval=TRUE,include=FALSE >>=
 ###############################
 # Bilan annuel des migrations
 ###############################
@@ -3598,7 +3606,7 @@ vvv[["LPM"]][["total"]] <- total
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
-<<analyse_lpm, echo=FALSE, eval=FALSE, include=FALSE >>=
+<<analyse_lpm, echo=FALSE, eval=TRUE, include=FALSE >>=
 load(file=str_c(datawdy,"vvv.Rdata"))
 total <- vvv[["LPM"]][["total"]]
 fra <- readxl::read_excel(path=str_c(datawd,"comptage_frayere.xlsx")) %>% rename("site"="...1")
@@ -3670,7 +3678,7 @@ dev.off()
 
 @
 
-<<report_sample_char_lpm, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_sample_char_lpm, echo=FALSE, eval=TRUE,include=FALSE >>=
 library("stacomiR")
 
 # launching stacomi without selecting the scheme or interface
@@ -3879,7 +3887,7 @@ calcul.}
 \end{figure}
 \end{landscape}
 
-<<report_mig_mult_ala, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_mig_mult_ala, echo=FALSE, eval=TRUE,include=FALSE >>=
 
 
 
@@ -3986,7 +3994,7 @@ dev.off()
 
 @
 
-<<struct_taille_ala, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<struct_taille_ala, echo=FALSE, eval=TRUE,include=FALSE >>=
 
 
 load_package("boot")
@@ -4046,7 +4054,7 @@ dev.off()
 
 @
 
-<<donnees_capture, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<donnees_capture, echo=FALSE, eval=TRUE,include=FALSE >>=
 
 
 fundatpech <- function(year,poids_moyen=1680,nomfichier="capture_"){
@@ -4072,7 +4080,7 @@ datpech2016<-fundatpech("2016",1680)
 
 
 
-<<report_interannual_ala, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_interannual_ala, echo=FALSE, eval=TRUE,include=FALSE >>=
 
 ###########################################
 # Bilan interannuel de stacomi
@@ -4167,7 +4175,7 @@ print(xtmmm,
 @
 
 
-<<report_annual_ala, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_annual_ala, echo=FALSE, eval=TRUE,include=FALSE >>=
 ###############################
 # Bilan annuel des migrations
 ###############################
@@ -4851,7 +4859,7 @@ d'Arzal.}
 \label{size_sat}
 \end{figure}
 
-<<report_mig_mult_sat, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_mig_mult_sat, echo=FALSE, eval=TRUE,include=FALSE >>=
 color_ope<-sample(c(mycolorramp1(10),mycolorramp2(10)),20)
 bMM_Arzal <- new("report_mig_mult")
 bMM_Arzal <- choice_c(bMM_Arzal,
@@ -4876,7 +4884,7 @@ dev.off()
 @
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-<<report_interannual_sat, echo=FALSE, eval=FALSE, include=FALSE >>=
+<<report_interannual_sat, echo=FALSE, eval=TRUE, include=FALSE >>=
 rmi <- new("report_mig_interannual")
 rmi <- choice_c(rmi,
     dc=c(5),
@@ -4952,7 +4960,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
 
-<<report_annual_sat, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_annual_sat, echo=FALSE, eval=TRUE,include=FALSE >>=
 ###############################
 # Bilan annuel des migrations
 ###############################
@@ -5020,7 +5028,7 @@ vvv[["SAT"]][["maxrank"]] <- nrow(somme)
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
-<<report_sample_char_sat, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_sample_char_sat, echo=FALSE, eval=TRUE,include=FALSE >>=
 library("stacomiR")
 
 # launching stacomi without selecting the scheme or interface
@@ -5054,7 +5062,7 @@ dev.off()
 @
 
 
-<<report_interannual_trt, echo=FALSE, eval=FALSE, include=FALSE >>=
+<<report_interannual_trt, echo=FALSE, eval=TRUE, include=FALSE >>=
 # les trt sont traduites en Salmo au niveau genre dans la base : essais pour comprendre
 rmi <- new("report_mig_interannual")
 rmi <- choice_c(rmi,
@@ -5132,7 +5140,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 
 
-<<report_sample_char_trt, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_sample_char_trt, echo=FALSE, eval=TRUE,include=FALSE >>=
 library("stacomiR")
 
 # launching stacomi without selecting the scheme or interface
@@ -5259,7 +5267,7 @@ en Figure \ref{size_trm}.
 vidéocontrôle d'Arzal.}
 \label{size_trm}
 \end{figure}
-<<report_mig_mult_trm, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_mig_mult_trm, echo=FALSE, eval=TRUE,include=FALSE >>=
 color_ope<-sample(c(mycolorramp1(10),mycolorramp2(10)),20)
 bMM_Arzal <- new("report_mig_mult")
 bMM_Arzal <- choice_c(bMM_Arzal,
@@ -5315,7 +5323,7 @@ dev.off()
 @
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-<<report_interannual_trm, echo=FALSE, eval=FALSE, include=FALSE >>=
+<<report_interannual_trm, echo=FALSE, eval=TRUE, include=FALSE >>=
 rmi<-new("report_mig_interannual")
 rmi<-choice_c(rmi,
     dc=c(5),
@@ -5390,7 +5398,7 @@ vvv[["TRM"]][["path_y"]]<-path_y
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
-<<report_annual_trm, echo=FALSE, eval=FALSE, include=FALSE >>=
+<<report_annual_trm, echo=FALSE, eval=TRUE, include=FALSE >>=
 ###############################
 # Bilan annuel des migrations
 ###############################
@@ -5458,7 +5466,7 @@ vvv[["TRM"]][["maxrank"]]<-nrow(somme)
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
-<<report_sample_char_trm, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_sample_char_trm, echo=FALSE, eval=TRUE,include=FALSE >>=
 library("stacomiR")
 
 # launching stacomi without selecting the scheme or interface
@@ -5559,7 +5567,7 @@ d'Arzal.}
 \input{\Sexpr{vvv[["SIL"]][["path"]]}} % table bilan silures
 
 
-<<report_species, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_species, echo=FALSE, eval=TRUE,include=FALSE >>=
 bilesp <- new("report_species")
 # split is one of "none", "year", "week", "month
 # first load all taxa
@@ -5640,7 +5648,7 @@ ggplot(bilesp@calcdata, aes(x="",y=(Effectif / sum(Effectif))*100,fill=taxa_stag
 dev.off()
 @
 
-<<report_interannual_silurus, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_interannual_silurus, echo=FALSE, eval=TRUE,include=FALSE >>=
 rmi<-new("report_mig_interannual")
 rmi<-choice_c(rmi,
     dc=c(5),
@@ -5717,7 +5725,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 @
 
-<<report_annual_silurus, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_annual_silurus, echo=FALSE, eval=TRUE,include=FALSE >>=
 ###############################
 # Bilan annuel des migrations
 ###############################
@@ -5779,7 +5787,7 @@ indiceCY <- match(as.character(CY),names(somme))
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
-<<report_sample_char_silurus, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_sample_char_silurus, echo=FALSE, eval=TRUE,include=FALSE >>=
 library("stacomiR")
 
 # launching stacomi without selecting the scheme or interface
@@ -5815,7 +5823,7 @@ dev.off()
 @
 
 
-<<analyse_didson_silurus, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<analyse_didson_silurus, echo=FALSE, eval=TRUE,include=FALSE >>=
 library("stacomiR")
 
 # launching stacomi without selecting the scheme or interface
@@ -5849,7 +5857,7 @@ ggplot(r_sample_char@data) +
     theme_bw() 
 dev.off()
 @
-<<report_interannual_dicentrarchus, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_interannual_dicentrarchus, echo=FALSE, eval=TRUE,include=FALSE >>=
 rmi<-new("report_mig_interannual")
 rmi<-choice_c(rmi,
     dc=c(5),
@@ -5926,7 +5934,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 @
 
-<<report_annual_dicentrarchus, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_annual_dicentrarchus, echo=FALSE, eval=TRUE,include=FALSE >>=
 ###############################
 # Bilan annuel des migrations
 ###############################
@@ -5988,7 +5996,7 @@ indiceCY <- match(as.character(CY),names(somme))
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
-<<report_sample_char_dicentrarchus, echo=FALSE, eval=FALSE,include=FALSE >>=
+<<report_sample_char_dicentrarchus, echo=FALSE, eval=TRUE,include=FALSE >>=
 library("stacomiR")
 
 # launching stacomi without selecting the scheme or interface
@@ -6384,47 +6392,55 @@ Versions précédentes des rapports annuels (table \ref{table_references}).
 Année & Rapport \\
 \midrule
 2023 &
-\href{TODO}{Suivi
-de la passe à bassins, 2022} \\
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EYivEAGQThBKiYqQJJA_A6MBQnb0H1cLQzqHLQpH5bvEyw?e=Tkm3RY}{Suivi
+de la passe à bassins, 2023}\\
 2022 &
-\href{TODO}{Suivi
-de la passe à bassins, 2021} \\
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EUqlfhsKgqpMkzWSuEo9uRABXEw73VtgoVhM8t-C6zGTiQ?e=7w6tii}{Suivi
+de la passe à bassins, 2022}\\
 2021 &
-\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EX0SnyoGmBlMsO-6-Il8wugBCHYxha3l2A-5tA9yTCqwbg?e=XukC2d}{Suivi
-de la passe à bassins, 2020} \\
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ESot35-t3RFPo6Gc4X3NxkgBkvRkIochrpfMnuzpBCNZaw?e=c3Qbrv}{Suivi
+de la passe à bassins, 2021}\\
 2020 &
-\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EQl4smhm635FgMPzE9bFyxsB_9ZMmVLH34BJLfwieJKuUA?e=dtqKYE}{Suivi
-de la passe à bassins, 2019} \\
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EeLSKt0Q_qxMqW6p5D4-ZIwBBBTGqgeJwmOQfIjQ3AfdWw?e=woq9fI}{Suivi
+de la passe à bassins, 2020}\\
 2019 &
-\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ESlFdwgrzNZPjHy2CamDrh4Bd-wJB1BhJ-Hf19RuTZlpgw?e=3pPkHa}{Dynamique de la population de Mulet porc \textit{Chelon ramada} (Risso 1827) dans le bassin versant de la Vilaine}\\
-2019 & 
-\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EfsNAFGO4sRAoEb-9-SEERoBJAxYBJVWvF-9OVVryuF8QA?e=G5x6Ij}{Suivi
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EX0SnyoGmBlMsO-6-Il8wugBCHYxha3l2A-5tA9yTCqwbg?e=kNBHJd}{Suivi
+de la passe à bassins, 2019}\\
+2019 &
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/Eae-mGNEl0VHtdehKYfYHPcBwTXL4qV_AvuPRLJAa1eGuA?e=2cq3Bn}{Dynamique 
+de la population de Mulet porc \textit{Chelon ramada} (Risso, 1827) dans le
+bassin versant de la Vilaine}\\
+2018 & 
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EZddtXquW7NMjK-GwjxsDGoBD7BJw9gGTplSoalP8BHaEA?e=Tn5HXK}{Suivi
 de la passe à bassins, 2018}\\
-2018 &
-\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EddDt8hE-z5KvA3qWm8RiUYBiawsguFwtT101pmeEXjEiQ?e=TdLuRC}{Suivi
-de la passe à bassins, 2017}\\
 2017 &
-\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EZovsRks3WFKsse_rsnnqh0BAcwjBH5ofFK1pjdwtAe6Dw?e=sRP0k9}{Suivi
-de la passe à bassins, 2016}\\
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ETdJfcpV1pZMv6BapxKjUX4BLqwMqJy7txGuPWJv2aAYOg?e=lwXGLw}{Suivi
+de la passe à bassins, 2017}\\
 2016 &
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ES85jK5Bv0JMsTOjcf93iicB5a35QRyWhWUrSiF5qfdtog?e=ws3ARj}{Suivi
+de la passe à bassins, 2016}\\
+2015 &
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EUaIB9CdQItLkPTR0banFZYBv7DnfD7uNSezUSFVD9tfcw?e=ZAWC9t}{Suivi
 de la passe à bassins, 2015}\\
-2015 &
+2014 &
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EQCdJUAzgLlJpqe-HgXcbn4BvTlV7Xool5zCmmV-fZaolg?e=dvEObL}{Suivi
 de la passe à bassins, 2014}\\
-2014 &
+2013 &
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/Effnw5jtEPFHmxCcqlWiTBsB0Cm29yADN5bSREbOi1yTzA?e=YS1Ref}{Suivi
 de la passe à bassins, 2013}\\
-2013 &
+2012 &
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/Ed6J-KFKTc1EhcXyxox1eU4B86i9IYhY53FuP2ilW9TdhA?e=pagXSD}{Suivi
 de la passe à bassins, 2012}\\
-2012 &
+2011 &
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EWQJkGynJO9FkLtMc0evglwBhVC3k2ORqwqhA_ez-fecKQ?e=xaK6zo}{Suivi
 de la passe à bassins, 2011}\\
 2010 &
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ETcl4LTYbb5FqGalUwApPucBFInwPrGUdBV20pmuPfhkog?e=cfSoKj}{Suivi
+de la passe à bassins, 2010}\\
+2009 &
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ETTqqTILtm5OjioHyGGAsooBsGVP5CgR9fE-xCj-evifLA?e=2I4CbN}{Suivi
 de la passe à bassins, 2009}\\
-2009 &
+2008 &
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ESOYjucqRlRNm4hXNuO3-EgBBOTq0zMqmhq0u125J21Yxw?e=EbCzao}{Suivi
 de la passe à bassins, 2008}\\
 %

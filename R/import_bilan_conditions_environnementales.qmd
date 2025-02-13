@@ -225,5 +225,4 @@ SELECT
         env_org_code
 FROM 
           temp_cran_temperature") # 1717
-
 ```
