@@ -46,3 +46,7 @@ DELETE FROM t_lot_lot WHERE lot_ope_identifiant  IN (SELECT lot_ope_identifiant 
 DELETE FROM t_operation_ope 
 WHERE  ope_date_debut > '2023-01-01'
 AND ope_dic_identifiant = 5; --2964
+
+
+
+# 
