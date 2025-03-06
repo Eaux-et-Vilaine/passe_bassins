@@ -920,8 +920,8 @@ Une contrainte de sécurité de 30 cm sert à empêcher les intrusions d’eau s
 dans le plan d’eau amont.
 La passe reste en fonctionnement à basse mer mais on considère qu’au-delà de 50
 cm, la chute à l’aval de la passe n’est plus franchissable. Lorsque le niveau
-dans le dernier bassin à l’aval de la passe (Niveau SAS) est situé 50 cm en dessus du niveau mer, 
-la passe est considérée en dysfonctionnement hydraulique.
+dans le dernier bassin à l’aval de la passe (niveau sas) est situé 50 cm en
+dessus du niveau mer, la passe est considérée en dysfonctionnement hydraulique.
 
 \subsubsection{Catégories d'état de la passe à bassins}
 Les fonctionnements de la passe sont classifiés suivant les standards nationaux
@@ -1155,7 +1155,17 @@ stocks de migrateurs doivent donc être considérés comme un minimum.
 \subsection{Fonctionnement de la passe à bassins}
 \paragraph{Résumé du fonctionnement.}
 
-Le fonctionnement de la passe en 2024 a été plutôt mauvais ...
+Le fonctionnement de la passe en \Sexpr{CY} a été perturbé par les crues et plusieurs
+avaries techniques. Le lancement a eu lieu le 2 février, après un mois de
+janvier avec des forts débits. Trois crues ont ensuite perturbé le bon
+fonctionnement de la passe, avec près d'un mois et demi de fermeture mi-février,
+en mars et début avril. Les distributeurs de la vanne amont ont provoqué
+quelques arrêts, et ont été changé rapidement début avril. Plusieurs problèmes
+techniques ont nécessité des arrêts nocturnes sur quatre périodes entre juin et
+septembre, pour une durée cumulée d'un mois. Fin septembre, des fuites d'huile
+ont été détectées sur les flexibles des vérins de la porte aval, ce qui a
+entraîné l'arrêt de la passe du 26 septembre jusqu'à leur remplacement le 19
+décembre.
 
 \begin{figure}[htpb]
 \centering
@@ -1184,7 +1194,7 @@ par exemple le passage en mode étiage de 2016 à 2019 se traduit par une
 augmentation de la durée des dysfonctionnements
 (en orange \textcolor{orange_EV}{\rule[-0.2mm]{3mm}{2mm}}) ou par des arrêts
 nocturnes (en jaune \textcolor{jaune_EV}{\rule[-0.2mm]{3mm}{2mm}}). Les mêmes
-graphiques sont présentés pour la période 2003-2011 (Figure
+graphiques sont présentés pour la période 2003-\Sexpr{CY} (Figure
 \ref{report_df_2003_2024}) en mettant juste en avant les périodes où la passe est fonctionnelle
 (en bleu \textcolor{bleu_EV}{\rule[-0.2mm]{3mm}{2mm}}) et les périodes où elle
 ne l'est pas (en orange \textcolor{orange_EV}{\rule[-0.2mm]{3mm}{2mm}}).
@@ -1224,10 +1234,10 @@ de fonctionnement.}
 
 \paragraph{Fonctionnement du dispositif de comptage.}
 
-Le dispositif de comptage a été mis en service le 6 février et arrêté le 3 novembre. 
-Un long arrêt technique est intervenu du 31 août au 5 octobre à la suite 
-d'une submersion marine qui a noyé le caisson lumineux et détruit les néons led.
-Le délai pour se procurer les nouveaux néons a été très long.
+Le dispositif de comptage a été mis en service le 9 février et arrêté le 26
+septembre. Les seuls arrêts du suivi sont dus à trois extinctions du caisson
+lumineux entre le 12 et 15 février, pour une durée cumulée de 56 heures
+(Figure \ref{report_dc_2024}).
 
 \begin{figure}[htpb]
 \centering
@@ -2321,15 +2331,15 @@ DBI::dbExecute(req@connection, "INSERT INTO iav.tj_conditionenvironnementale_env
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Conditions environnementales}
 
-L'année \Sexpr{CY} a été marquée par des débits de crue en début et en
-fin d'année et des débits globalement plus importants que les débits de
+L'année \Sexpr{CY} a été marquée par des débits de crue au premier et au
+dernier trimestre, et globalement des débits bien supérieurs à ceux de
 référence de la banque hydro (Figure \ref{fig_debit}).
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{2024/fig_debit.png} 
-\caption{Débits de la Vilaine en \Sexpr{CY}. En bleu les débits mesurés au Pont
-de Cran, à l'aide d'une sonde à ultrasons, en orange les débits instantanés au
-barrage d'Arzal (volets et vannes). Chaque point représente la valeur moyenne calculée toute les
+\caption{Débits de la Vilaine en \Sexpr{CY}. En bleu = débits mesurés au
+Pont de Cran, à l'aide d'une sonde à ultrasons, en orange = débits
+instantanés au barrage d'Arzal (volets et vannes). Chaque point représente la valeur moyenne calculée toute les
 dix minutes, noter l'absence de débit par les volets et les vannes en période
 estivale. Les débits de référence mensuels moyens de la banque hydro au pont de
 Cran sont donnés en marron.}
@@ -2517,27 +2527,26 @@ donc à l'automne en avalaison sur les fleuves pour rejoindre le littoral.
 Il fait l'objet d'une exploitation par la pêche professionnelle en Vilaine, 
 et constitue après l'anguille la première espèce en effectif dans les comptages
 aux passes à poissons du barrage d'Arzal.
-En France les effectifs de mulet sont aujourd’hui en régression 
+En France, les effectifs de mulet sont aujourd’hui en régression 
 \citep{bartulovic_reproductive_2011}, l'espèce est néanmoins classée en
 préoccupation mineure sur la liste rouge de l'IUCN.
 Sur la Vilaine au barrage d’Arzal, parmi les mulets, seul \textit{Chelon
 ramada} remonte l’estuaire pour migrer en eau douce \citep{briand_suivi_2018b}.
- En effet, le passage des poissons entre le milieu estuarien et le milieu de
- rivière provoque une variation brutale de salinité entre l'eau estuarienne et l'eau douce, 
- que seule \textit{Chelon ramada} pourrait supporter à l’aller et au retour de migration
- \citep{briand_suivi_2018b}.
- La présence de la seule espèce euryhaline et le confinement à la zone estuarienne 
- des autres espèces communes en Bretagne \textit{Chelon labrosus} et \textit{Chelon aurata}
- est cependant à confirmer \citep{gautier_mulets_2005,trancart_analyse_2011}.}
- \end{minipage}}
+En effet, le passage des poissons entre le milieu estuarien et la rivière
+provoque une variation brutale de salinité que seule \textit{Chelon ramada} pourrait 
+supporter à l’aller et au retour de migration \citep{briand_suivi_2018b}.
+La présence de la seule espèce euryhaline, et le confinement à la zone
+estuarienne des autres espèces communes en Bretagne \textit{Chelon labrosus} et 
+\textit{Chelon aurata}, est cependant à confirmer
+\citep{gautier_mulets_2005,trancart_analyse_2011}.}
+\end{minipage}}
 \smallskip
-
 
 
 Compte tenu des effectifs très importants de mulets franchissant le barrage
 d'Arzal chaque année, les comptages n'ont pas été effectués sur l'ensemble de la
 période de suivi historique de la passe. Ils ont été effectués en 1996 et
-1997, en 2013, 2005 et de 2013 à 2024. Lors des pics de migration, le comptage
+1997, en 2005, et de 2013 à \Sexpr{CY}. Lors des pics de migration, le comptage
 des mulets est effectué par lots de 10 individus en cas de forts passages, et la taille des poissons est analysée
 sur des échantillons hebdomadaires.
 La structure en
@@ -2545,8 +2554,8 @@ taille des mulets présente à la fois des variations saisonnières et
 interannuelles (Figure \ref{figure_taille_mulets}). Les mulets les plus grands
 se présentent en tout début de saison, puis la taille des mulets diminue pour
 atteindre son minimum lors de l'été \citep{lemonnier_dynamique_2019}.
-Cette année comme en 2019 les mulets de petite taille, qui constituent une
-majeure partie des effectifs, ne sont pas présents, sans que le fonctionnement
+Cette année, comme en 2019, les mulets de petite taille qui constituent une
+majeure partie des effectifs ne sont pas présents, sans que le fonctionnement
 de la passe puisse expliquer cette absence.
 
 \begin{figure}[htpb]
@@ -2554,9 +2563,9 @@ de la passe puisse expliquer cette absence.
 \includegraphics[width=0.45\textwidth]{2024/graphe_taille_mulets.pdf} 
 \caption{Tendance saisonnière d'évolution des
 tailles de mulets depuis 2013. A. Graphiques de densités (distributions) des
-tailles par mois, en jaune mois estivaux, en violet mois printaniers, en rose
-automne. B. Graphique en violon et box-plot des tailles annuelles. C. Modèle gam
-ajusté sur les valeurs de taille (au centre modèle et intervalle de confiance
+tailles par mois, en violet = printemps, en jaune = mois estivaux, en
+rose = automne. B. Graphique en violon et box-plot des tailles annuelles. C.
+Modèle gam ajusté sur les valeurs de taille (au centre modèle et intervalle de confiance
  à 95 \%) les points correspondent à prédiction + résidus.}
 \label{figure_taille_mulets}
 \end{figure}
@@ -2580,7 +2589,7 @@ grande partie liée à l'abondance des mulets de classe de taille de 200 à 300 
 \ref{bilan_annuel_mup}).
 
 A partir de septembre, on note une augmentation des effectifs de mulets dans la
-passe (Figure \ref{rmi_journalier_mup}) et les bancs de mulets commencent à
+passe (Figure \ref{rmi_journalier_mup}) et des bancs commencent à
 descendre la Vilaine pour retourner en mer participer à leur reproduction
 annuelle. Les mulets peuvent alors faire des remontées dans la passe et la
 structure en taille des mulets réaugmente en général en fin de saison. Les
@@ -2588,18 +2597,17 @@ raisons de la remontée à l'automne des mulets dans la passe ne sont pas connue
 mais le passage brutal de l'eau douce à l'eau salée en estuaire nécessite
 probablement un temps d'adaptation pour effectuer la régulation osmotique.
 Ainsi, les chiffres de migration totale représentent probablement un biais dans
-l'interprétation de la taille de la population de mulets en Vilaine et un calcul
-du nombre de mulets migrant jusqu'au mois de septembre (exclu) est donné au
+l'interprétation de la taille de la population de mulets en Vilaine, et un
+calcul du nombre de mulets migrant jusqu'au mois de septembre (exclu) est donné au
 Tableau \ref{table_bilanannuel_mulets_0108}.
 
 
 %\input{\Sexpr{vvv[["MUP"]][["path"]]}} % table_bilanannuel_mulets
 \input{\Sexpr{vvv[["MUP"]][["path0108"]]}} % table_bilanannuel_mulets
 
-La migration des mulets
-est essentiellement diurne et matinale (Figure \ref{horaires_mulet}) et elle
-dépend également du niveau mer avec une grande part des passages pour des niveaux mer
->0m (Figure \ref{horaires_maree_mulet}).
+La migration des mulets est essentiellement diurne et matinale (Figure
+\ref{horaires_mulet}), et elle dépend également du niveau mer avec une grande
+part des passages pour des niveaux mer >0m (Figure \ref{horaires_maree_mulet}).
 
 \begin{figure}[htpb]
 \centering
@@ -2633,7 +2641,7 @@ d'Arzal.}
 \end{figure}
 \end{landscape}
 
-<<bilan_car_lots_mup, echo=FALSE, eval=TRUE, include=FALSE >>=
+<<bilan_car_lots_mup, echo=FALSE, eval=FALSE, include=FALSE >>=
 
 options(warn=-1)
 
@@ -2680,7 +2688,7 @@ options(warn=0)
 save(r_sample_char, file=str_c(datawdy,"r_sample_char_mulet.Rdata"))
 @
 
-<<modele_taille_mup, echo=FALSE, eval=TRUE, include=FALSE >>=
+<<modele_taille_mup, echo=FALSE, eval=FALSE, include=FALSE >>=
 load_package("mgcv")
 load_package("itsadug")
 load_package("visreg")
@@ -2923,7 +2931,7 @@ save(vvv , file=file.path(datawd,CY,"vvv.Rdata"))
 
 
 
-<<bilan_annuels_mup, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<bilan_annuels_mup, echo=FALSE, eval=FALSE,include=FALSE >>=
 
 
 
@@ -3081,7 +3089,7 @@ dev.off()
 
 @
 
-<<report_mig_mult_mulet, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<report_mig_mult_mulet, echo=FALSE, eval=FALSE,include=FALSE >>=
 load_package("wesanderson")
 color_ope<-sample(c(mycolorramp1(10),mycolorramp2(10)),20)
 bMM_Arzal=new("report_mig_mult")
@@ -3190,7 +3198,7 @@ dev.off()
 
 
 
-<<report_mig_internnual_mulet, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<report_mig_internnual_mulet, echo=FALSE, eval=FALSE,include=FALSE >>=
 ###########################################
 # Bilan interannuel de stacomi
 #########################################
@@ -3226,7 +3234,7 @@ g <- g+scale_x_datetime(name="date",
         date_labels="%d-%m"#,
     #limits=as.POSIXct(strptime(c("2000-03-15","2000-07-01"),format=,"%Y-%m-%d"))
     )+
-    ylab("Effectifs capturés ou montés dans la passe")+
+    ylab("Effectifs en migration dans la passe")+
     theme_bw()+ 
     theme(legend.key = element_blank())
 print(g)
@@ -3280,8 +3288,8 @@ mmm <- summary(bmi,silent=TRUE)$'5'
 mmm <- mmm[,-1]
 options(encoding = "UTF-8")
 colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2024)")
-xtmmm <- xtable(mmm,caption="Migrations mensuelles des mulets dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-        la période 1996-2024. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+xtmmm <- xtable(mmm,caption="Migrations mensuelles des mulets dans la passe à bassins du barrage d'Arzal. $N$ = nombre, * correspondent à
+        la période 1996-2024. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
     label="table_lpm_mois",
     digits=c(0,0,0,0,0,0),
     display = c("s","s","f","f", "f", "f"))
@@ -3328,28 +3336,26 @@ et ne sont donc pas à proprement parler des poissons. La lamproie marine est un
 Elle ne se reproduit qu'une seule fois en eau douce en mai-juin, avec un homing
 \footnote{\textcolor{bleu_EVf}{retour à la rivière de naissance}} faible.
 Les larves ammocètes vivent enfouies dans les sédiments et les litières pendant 5 à 7 ans.
-Après métamorphose, les lamproies dévalent en mer où elles vivent 1 à 2 ans en tant que parasite externe
-sur des poissons ou des mammifères.
+Après métamorphose, les smolts de lamproies dévalent en mer où elles vivent 1 à
+2 ans en tant que parasite externe sur des poissons ou des mammifères.
 Au niveau national, la tendance des abondances est à la baisse, surtout sur les
 sites qui étaient les plus fréquentés (Gironde, Loire), alors qu'en Bretagne, la chute est moins marquée. 
 La contribution de la Vilaine à l'échelle de la France, très faible aux débuts des années 2000, 
 est aujourd'hui non négligeable. Sur la Vilaine, les migrations de 2016 à 2019 
-ont été très mauvaises, mais les saisons 2020 et 2024 marque un retour à la
-normale.
+ont été très mauvaises, puis les saisons 2020 et 2023 marquaient un retour à la
+normale avant une nouvelle chute des effectifs cette année.
 L'espèce est classée en danger en France sur la liste rouge UICN.}
 \end{minipage}}
 \smallskip
 
 
-
 Les migrations de lamproies marine sur la Vilaine qui étaient en fort déclin
 après 2015 ont réaugmenté à un niveau proche du niveau historique
 (N=\Sexpr{num(vvv$LPM$N[match(2020,vvv$LPM$N$annee),1])}) en 2020.
-Cette année, les effectifs ont été de nouveau relativement faibles avec 
+Cette année, les effectifs ont été de nouveau faibles avec 
 \Sexpr{num(vvv$LPM$NCY)} lamproies marines (Figure \ref{barplot_report_annual_lpm}, Tableau \ref{table_bilanannuel_lpm}) ce qui place l'année au \Sexpr{num(vvv$LPM$rank)} ème rang sur les
 \Sexpr{num(nrow(vvv$LPM$N))} années de suivi à Arzal.
 Les raisons des variations d'effectif restent mal comprises.
-
 
 		
 \begin{figure}[htpb]
@@ -3363,7 +3369,7 @@ au barrage d'Arzal.}
 
 La comparaison des tendances mensuelles avec les migrations
 interannuelles montre qu'elles sont inférieures à la moyenne observée sur la
-période 1996-2022 (Figure \ref{barchart_bmi_lpm}, Tableau
+période 1996-\Sexpr{CY} (Figure \ref{barchart_bmi_lpm}, Tableau
 \ref{table_lpm_mois}).
 
 \begin{figure}[htpb]
@@ -3382,8 +3388,8 @@ série interannuelle de données 1996-\Sexpr{CY-1}.}
 
 La migration des lamproies marines intervient entre mars et juin (Figure
 \ref{rmi_density_lpm}). En \Sexpr{CY}, la migration s'est faite essentiellement
-de mars à mai. Les premières migrations sont plus précoces que ce que l'on pensait,
-et le suivi était souvent lancé trop tardivement avant 2021 
+d'avril à mai. Les premières migrations sont plus précoces que ce que l'on
+pensait, et le suivi était souvent lancé trop tardivement avant 2021 
 (1ère quinzaine de mars entre 2010 et 2020) pour voir les premiers individus
 (Figures \ref{barchart_bmi_lpm}, \ref{plot_seasonal_lpm}).
 Ces résultats sont en accord avec l'examen des tendances de migration des
@@ -3407,35 +3413,38 @@ par quinzaine sont cumulés.}
 \centering
 \includegraphics[width=0.49\textwidth]{2024/plot_seasonal_lpm.png} 
 \caption{Saisonnalité de la migration des lamproies marines, effectifs
-hebdomadaires. Les
-barres représentent le 5 ème et le 95 ème percentile de la migration. Le
-point la médiane. L'importance des effectifs est représentée par la couleur.}
+hebdomadaires. Les barres représentent le 5ème et le 95ème percentile de la
+migration, le point la médiane. L'importance des effectifs est représentée 
+par la couleur.}
 \label{plot_seasonal_lpm}
 \end{figure}
 
-La comparaison des structures en taille vidéo laisse
-paraître un accroissement depuis 2015. C’est à partir de 2019 qu’une nouvelle méthode de
-mesure a été appliquée : la taille a été mesurée relativement à 9 sections de la vitre de comptage pour
-prendre en compte les déformations de la lentille
-de la caméra. Or l’aumentation est observée depuis
-2015, elle ne peut donc pas être attribuée au changement de méthode de mesure. L’augmentation de la
-taille des lamproies est donc un phénomène notable,
-comme pour les variations d’effectifs, les raisons de
-cette augmentation de taille ne sont pas connues, et un phénomène exactement
+La comparaison des structures en taille vidéo laisse paraître un accroissement
+depuis 2015. C’est à partir de 2019 qu’une nouvelle méthode de mesure a été 
+appliquée : la taille a été mesurée relativement à 9 sections de la
+vitre de comptage pour prendre en compte les déformations de la lentille de la caméra. 
+Or, l’aumentation est observée depuis 2015, et ne peut donc pas être attribuée
+au changement de méthode de mesure. L’augmentation de la taille des lamproies
+est donc un phénomène notable, comme pour les variations d’effectifs, les raisons 
+de cette augmentation de taille ne sont pas connues, et un phénomène exactement
 similaire avait été rapportée sur la Loire (Marion Legrand, comm. pers.).
-Cependant, pour l'année 2024, comme pour l'année précédente, les tailles des
-lamproies sont en baisse par rapport aux années 2019, 2020 et 2021 (Figure \ref{size_lpm}).
+
+
+TRES PEU DE MESURES,voir si dd 2.5p gris est retrouvé
+Contrairement aux années 2022 et 2023, les tailles des lamproies en 2024 sont en
+baisse par rapport aux années 2019, 2020 et 2021 (Figure \ref{size_lpm}).
+
 
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{2024/size_lpm.png} 
 \caption{Comparaison des structure en taille des lamproies marines. Les tailles
-de 2019 et 2024 ont été calculées en prenant en compte la déformation des distances dans les
-différentes zones de la vitre.}
+de 2019 à \Sexpr{CY} ont été calculées en prenant en compte la déformation des 
+distances dans les différentes zones de la vitre.}
 \label{size_lpm}
 \end{figure}
 
-<<report_mig_mult_lpm, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<report_mig_mult_lpm, echo=FALSE, eval=FALSE,include=FALSE >>=
 # Lamproies --------------------------------------- 
 color_ope <- sample(c(mycolorramp1(10),mycolorramp2(10)),20)
 bMM_Arzal <- new("report_mig_mult")
@@ -3459,7 +3468,7 @@ plot(bMM_Arzal,plot.type="standard",
 dev.off()
 @
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-<<report_interannual_lpm, echo=FALSE, eval=TRUE, include=FALSE >>=
+<<report_interannual_lpm, echo=FALSE, eval=FALSE, include=FALSE >>=
 rmi <- new("report_mig_interannual")
 rmi <- choice_c(rmi,
     dc=c(5),
@@ -3513,8 +3522,8 @@ dev.off()
 mmm <- summary(rmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
 colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2024)")
-xtmmm <- xtable(mmm,caption="Migrations mensuelles des lamproies marines dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-        la période 1996-2024. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+xtmmm <- xtable(mmm,caption="Migrations mensuelles des lamproies marines dans la passe à bassins du barrage d'Arzal. $N$ = nombre, * correspondent à
+        la période 1996-2024. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
     label="table_lpm_mois",
     digits=c(0,0,0,0,0,0),
     display = c("s","s","f","f", "f", "f"))
@@ -3537,7 +3546,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 
 
-<<report_annual_lpm, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<report_annual_lpm, echo=FALSE, eval=FALSE,include=FALSE >>=
 ###############################
 # Bilan annuel des migrations
 ###############################
@@ -3606,7 +3615,7 @@ vvv[["LPM"]][["total"]] <- total
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
-<<analyse_lpm, echo=FALSE, eval=TRUE, include=FALSE >>=
+<<analyse_lpm, echo=FALSE, eval=FALSE, include=FALSE >>=
 load(file=str_c(datawdy,"vvv.Rdata"))
 total <- vvv[["LPM"]][["total"]]
 fra <- readxl::read_excel(path=str_c(datawd,"comptage_frayere.xlsx")) %>% rename("site"="...1")
@@ -3678,7 +3687,7 @@ dev.off()
 
 @
 
-<<report_sample_char_lpm, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<report_sample_char_lpm, echo=FALSE, eval=FALSE,include=FALSE >>=
 library("stacomiR")
 
 # launching stacomi without selecting the scheme or interface
@@ -3729,34 +3738,34 @@ dev.off()
 \fbox{\begin{minipage}[t]{0.48\textwidth}
 \par\small
 \titlefont\textcolor{bleu_EV}{Poisson migrateur amphihalin de la famille des
-Clupéidés (sardine …).
+Clupéidés (sardine, hareng …).
 La grande alose \textit{Alosa alosa} ne se reproduit généralement qu'une seule
-fois, en eau douce en mai-juin, souvent sur sa rivière d'origine ou dans un cours d'eau 
-proche géographiquement. Les alosons restent à proximité des frayères quelques mois 
+fois en eau douce, en mai-juin, souvent sur sa rivière d'origine ou dans un
+cours d'eau proche géographiquement. Les alosons restent à proximité des frayères quelques mois 
 avant de dévaler en automne vers l'estuaire, puis rapidement en mer pour une phase 
 de croissance d'environ 5 ans. Les femelles sont plus massives que les mâles et restent 
 généralement une année de plus en mer.
 Au niveau national, la tendance est à une chute très marquée, 
 surtout sur les sites qui étaient les plus fréquentés (Gironde, Loire).
-En Bretagne, la situation est plutôt à l'amélioration, et la Vilaine fait partie
-des principaux sites avec le Blavet et l'Aulne. Après la période 2012-2016 où 
-la pêche professionnelle estuarienne a fortement impacté la migration, on a
+En Bretagne, la situation était plutôt à l'amélioration, et la Vilaine faisait
+partie des principaux sites avec le Blavet et l'Aulne. Après la période 2012-2016 
+où la pêche professionnelle estuarienne a fortement impacté la migration, on a
 constaté un renforcement des effectifs sans toutefois jamais atteindre les
-valeurs historiques des années 2000. Les effectifs sont de nouveau en baisse sur
-la Vilaine. L'espèce est classée en danger critique d’extinction en France sur
-la liste rouge UICN.
+valeurs historiques des années 2000. Les effectifs sont de nouveau en baisse
+marquée sur la Vilaine. L'espèce est classée en danger critique d’extinction en
+France sur la liste rouge UICN.
 }
 \end{minipage}}
 \smallskip
 
 \Sexpr{vvv$ALA$NCY} aloses ont été comptées en
 \Sexpr{CY} (Figure
-\ref{rmi_journalier_ala} et \ref{tx_exploit}  et Tableau
+\ref{rmi_journalier_ala} et \ref{tx_exploit}, Tableau
 \ref{table_bilanannuel_ala}).
 Cette migration place l'année \Sexpr{CY} au rang \Sexpr{vvv$ALA$rank}
-par rapport à l'ensemble des années de migration. En
-vidéo comptage, il n'est pas possible de distinguer les deux espèces, grande
-alose \textit{Alosa alosa} et alose feinte \textit{Alosa fallax}.
+par rapport à l'ensemble des années de migration. En vidéo comptage, il n'est
+pas possible de distinguer les deux espèces, grande alose \textit{Alosa alosa} 
+et alose feinte \textit{Alosa fallax}.
 
 
 %\begin{figure}[htpb]
@@ -3779,8 +3788,7 @@ interannuelle de données 1996-\Sexpr{CY-1}.}
 \end{figure}
 
 
-Globalement, les migrations sont inférieures à la
-moyenne interannuelle (Figures
+Globalement, les migrations sont inférieures à la moyenne interannuelle (Figures
 \ref{rmi_journalier_ala} et \ref{barchart_bmi_ala}, Tableau \ref{table_ala_mois}).
 
 \begin{figure}[htpb]
@@ -3807,7 +3815,6 @@ serait plus faible, ou par la contribution plus ou moins importante d'aloses
 provenant d'autres bassins.
 
 
-
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{2024/size_alose.png}
@@ -3817,32 +3824,28 @@ du mois de passage.}
 \label{size_alose}
 \end{figure}
 
-
 Contrairement à l'année 2019, le début de la migration n'est pas
-particulièrement précoce (Figure \ref{plot_seasonal_ala}).
-
-
+particulièrement précoce depuis 2022 (Figure \ref{plot_seasonal_ala}).
 
 
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.49\textwidth]{2024/plot_seasonal_ala.png} 
 \caption{Saisonnalité de la migration des aloses, effectifs hebdomadaires. Les
-barres représentent le 5 ème et le 95 ème percentile de la migration, le point
+barres représentent le 5ème et le 95ème percentile de la migration, le point
 la médiane. L'importance des effectifs est représentée par la couleur.}
 \label{plot_seasonal_ala}
 \end{figure}
 
 Depuis 2018, on considère qu'il n'y a pas eu d'exploitation
 estuarienne de l'alose (Figure \ref{tx_exploit}). La gestion de la population d'aloses
-de Vilaine a fait l'objet d'un
-débat technique dans le cadre du Comité de gestion des poissons migrateurs de
-Bretagne.
+de Vilaine a fait l'objet d'un débat technique dans le cadre du Comité de
+gestion des poissons migrateurs de Bretagne.
 A partir des éléments collectés sur le bassin, et des données obtenues sur les
 bassins voisins, un objectif de gestion en biomasse a été défini. Le
 stock potentiel sur la Vilaine est estimé entre 50~000 aloses, pour
 le niveau actuel d'aménagement du bassin - c'est à dire un fort étagement
-par le barrage d'Arzal puis par les ouvrages de l'Oust et de la Vilaine- , et
+par le barrage d'Arzal puis par les ouvrages de l'Oust et de la Vilaine-, et
 100~000 aloses pour une rivière en conditions pristine, c'est à dire une
 rivière pour laquelle l'accès aux zones de frayères serait restauré. Une limite
 en biomasse, celle en-dessous de laquelle on estime qu'il pourrait y avoir un
@@ -3850,11 +3853,12 @@ risque accru de diminution du stock, est proposée à 15~000 aloses. En dessous 
 cette limite, la mortalité devrait être réduite pour remonter le stock à son
 niveau optimal. Une règle de gestion a été proposée pour la gestion des
 pêcheries. L'importance de l'aménagement des axes fluviaux pour l'accès aux
-zones de reproduction a également été mise en avant (Figure \ref{tx_exploit}).
+zones de reproduction a également été mis en avant (Figure \ref{tx_exploit}).
 
-La question de la prédation du silure, dont les effectifs
-sont en claire augmentation avec des tailles allant en s'accroissant, devra se poser l'année
-prochaine si les effectifs n'augmentent pas.
+MAJ !
+La question de la prédation du silure, dont les effectifs sont en claire
+augmentation avec des tailles allant en s'accroissant, devra se poser 
+l'année prochaine si les effectifs n'augmentent pas.
 
 
 \vfill
@@ -3876,9 +3880,9 @@ de 2015 à 2017, puis interdiction totale saisonnière de pêche à partir de 20
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.9\linewidth]{2024/preco_diagram.png} 
-\caption{Diagramme de précaution pour la gestion des aloses en Vilaine, 
-les données indiquent la position du stock par rapport à la règle de gestion proposée 
-par le groupe de travail du cogepomi sur les aloses. 
+\caption{Diagramme de précaution pour la gestion des aloses en Vilaine. Les
+données indiquent la position du stock par rapport à la règle de gestion proposée 
+par le groupe de travail du Cogepomi sur les aloses. 
 En abscisse, nombre de géniteurs par rapport à la cible de gestion, 
 en ordonnée, mortalité cumulée (taux instantané) de la pêcherie estuarienne. 
 Les données de la pêcherie fluviale, indisponibles, ne sont pas intégrées au
@@ -3887,7 +3891,7 @@ calcul.}
 \end{figure}
 \end{landscape}
 
-<<report_mig_mult_ala, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<report_mig_mult_ala, echo=FALSE, eval=FALSE,include=FALSE >>=
 
 
 
@@ -3994,7 +3998,7 @@ dev.off()
 
 @
 
-<<struct_taille_ala, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<struct_taille_ala, echo=FALSE, eval=FALSE,include=FALSE >>=
 
 
 load_package("boot")
@@ -4054,7 +4058,7 @@ dev.off()
 
 @
 
-<<donnees_capture, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<donnees_capture, echo=FALSE, eval=FALSE,include=FALSE >>=
 
 
 fundatpech <- function(year,poids_moyen=1680,nomfichier="capture_"){
@@ -4080,7 +4084,7 @@ datpech2016<-fundatpech("2016",1680)
 
 
 
-<<report_interannual_ala, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<report_interannual_ala, echo=FALSE, eval=FALSE,include=FALSE >>=
 
 ###########################################
 # Bilan interannuel de stacomi
@@ -4118,7 +4122,7 @@ g <- g+scale_x_datetime(name="date",
         date_minor_breaks="weeks", 
         date_labels="%d-%m",
         limits=as.POSIXct(strptime(c("2000-03-15","2000-07-01"),format=,"%Y-%m-%d")))+
-    ylab(iconv("Effectifs capturés ou montés dans la passe","UTF8"))+
+    ylab(iconv("Effectifs en migration dans la passe","UTF8"))+
     theme_bw()+ 
     theme(legend.key = element_blank())
 print(g)
@@ -4141,9 +4145,13 @@ plot(bmi,plot.type="density",timesplit="semaine", year_choice = CY, silent=TRUE)
 colrp<-colorRampPalette(colors=rev(c("#6D9A58","#0E2C00")))
 colrp1<-colorRampPalette(colors=c("#6D9A58","#C6B130"))
 load_package("viridis")
+len <- length(unique(bmi@data$bjo_annee))
+rp1 <- round(len/2)
+rp2 <- ifelse (is.odd(len), rp1+1,rp1)
+stopifnot(rp1+rp2==len)
 g<-get("g_density",envir=envir_stacomi)	
 g+
-    ggplot2::scale_fill_manual(values=c(colrp(12),colrp1(12)))
+    ggplot2::scale_fill_manual(values=c(colrp(rp1),colrp1(rp2)))
 
 
 #============================================
@@ -4156,8 +4164,8 @@ dev.off()
 mmm <- summary(bmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
 colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2024)")
-xtmmm<-xtable(mmm,caption="Migrations mensuelles des lamproies marines dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-        la période 1996-2024. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+xtmmm<-xtable(mmm,caption="Migrations mensuelles des lamproies marines dans la passe à bassins du barrage d'Arzal. $N$ = nombre, * correspondent à
+        la période 1996-2024. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
     label="table_lpm_mois",
     digits=c(0,0,0,0,0,0),
     display = c("s","s","f","f", "f", "f"))
@@ -4175,7 +4183,7 @@ print(xtmmm,
 @
 
 
-<<report_annual_ala, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<report_annual_ala, echo=FALSE, eval=FALSE,include=FALSE >>=
 ###############################
 # Bilan annuel des migrations
 ###############################
@@ -4798,19 +4806,20 @@ La reproduction a lieu en eau douce en novembre-janvier, avec un homing fort.
 Le jeune saumon (tacon) y reste 1 à 2 ans avant de se métamorphoser en smolt qui dévale 
 au printemps vers la mer pour une phase de croissance de 1 an (saumon de printemps) à 3 ans
 (saumon d'hiver). En général, la durée du séjour marin dépend de la rivière de retour : 
-plus la migration en eau douce sera longue, plus le saumon devra rester en
-mer pour accumuler des réserves qui lui permettront d'atteindre les frayères.
-En Bretagne, l'espèce est bien présente, dans la majorité des cours d'eau à
+plus la migration en eau douce sera longue, plus le saumon devra rester
+longtemps en mer pour accumuler des réserves qui lui permettront d'atteindre les
+frayères.
+En Bretagne, l'espèce est bien présente dans la majorité des cours d'eau, à
 l'exception de la Vilaine.
-Certaines rivières sont bien fréquentées, à l'image du Blavet et de l'Aulne. 
-Si historiquement la Vilaine accueillait beaucoup de saumons, les migrations 
-sont aujourd'hui très faibles.
+Certaines rivières sont bien fréquentées, à l'image du Blavet et de l'Aulne,
+mais la situation se dégrade ces dernières années. Si historiquement la Vilaine
+accueillait beaucoup de saumons, les migrations sont aujourd'hui très faibles.
 L'espèce est classée vulnérable en France sur la liste rouge UICN.
 }
 \end{minipage}}
 \smallskip
 
-\Sexpr{vvv$SAT$N[vvv$SAT$N$annee==CY,"effectif"]} saumons ont été comptés en
+\Sexpr{vvv$SAT$N[vvv$SAT$N$annee==CY,"effectif"]} saumon a été compté en
 \Sexpr{CY} (Figure \ref{barplot_report_annual_sat},  Tableau \ref{table_sat_mois}).
 Cette migration place l'année \Sexpr{CY} au \Sexpr{vvv$SAT$rank} ème rang
 par rapport à l'ensemble des années de migration (Tableau
@@ -4849,7 +4858,8 @@ en juillet (Figure \ref{barchart_bmi_sat}).
 
 
 Les tailles des saumons mesurées au niveau de la passe d'Arzal sont présentées
-en Figure \ref{size_sat}. On remarque que les saumons fréquentant la Vilaine sont très majoritairement des castillons.
+en Figure \ref{size_sat}. On remarque que les saumons fréquentant la Vilaine sont 
+très majoritairement des castillons.
 
 \begin{figure}[htpb]
 \centering
@@ -4859,7 +4869,7 @@ d'Arzal.}
 \label{size_sat}
 \end{figure}
 
-<<report_mig_mult_sat, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<report_mig_mult_sat, echo=FALSE, eval=FALSE,include=FALSE >>=
 color_ope<-sample(c(mycolorramp1(10),mycolorramp2(10)),20)
 bMM_Arzal <- new("report_mig_mult")
 bMM_Arzal <- choice_c(bMM_Arzal,
@@ -4884,7 +4894,7 @@ dev.off()
 @
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-<<report_interannual_sat, echo=FALSE, eval=TRUE, include=FALSE >>=
+<<report_interannual_sat, echo=FALSE, eval=FALSE, include=FALSE >>=
 rmi <- new("report_mig_interannual")
 rmi <- choice_c(rmi,
     dc=c(5),
@@ -4938,8 +4948,8 @@ dev.off()
 mmm <- summary(rmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
 colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2024)")
-xtmmm<-xtable(mmm,caption="Migrations mensuelles des saumons dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-        la période 1996-2024. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+xtmmm<-xtable(mmm,caption="Migrations mensuelles des saumons dans la passe à bassins du barrage d'Arzal. $N$ = nombre, * correspondent à
+        la période 1996-2024. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
     label="table_sat_mois",
     digits=c(0,0,0,0,0,0),
     display = c("s","s","f","f", "f", "f"))
@@ -4960,7 +4970,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
 
-<<report_annual_sat, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<report_annual_sat, echo=FALSE, eval=FALSE,include=FALSE >>=
 ###############################
 # Bilan annuel des migrations
 ###############################
@@ -5028,7 +5038,7 @@ vvv[["SAT"]][["maxrank"]] <- nrow(somme)
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
-<<report_sample_char_sat, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<report_sample_char_sat, echo=FALSE, eval=FALSE,include=FALSE >>=
 library("stacomiR")
 
 # launching stacomi without selecting the scheme or interface
@@ -5062,7 +5072,7 @@ dev.off()
 @
 
 
-<<report_interannual_trt, echo=FALSE, eval=TRUE, include=FALSE >>=
+<<report_interannual_trt, echo=FALSE, eval=FALSE, include=FALSE >>=
 # les trt sont traduites en Salmo au niveau genre dans la base : essais pour comprendre
 rmi <- new("report_mig_interannual")
 rmi <- choice_c(rmi,
@@ -5117,8 +5127,8 @@ dev.off()
 mmm <- summary(rmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
 colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2024)")
-xtmmm<-xtable(mmm,caption="Migrations mensuelles de truites dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-        la période 1996-2024. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+xtmmm<-xtable(mmm,caption="Migrations mensuelles de truites dans la passe à bassins du barrage d'Arzal. $N$ = nombre, * correspondent à
+        la période 1996-2024. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
     label="table_sat_genre_mois",
     digits=c(0,0,0,0,0,0),
     display = c("s","s","f","f", "f", "f"))
@@ -5140,7 +5150,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 
 
-<<report_sample_char_trt, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<report_sample_char_trt, echo=FALSE, eval=FALSE,include=FALSE >>=
 library("stacomiR")
 
 # launching stacomi without selecting the scheme or interface
@@ -5207,18 +5217,19 @@ Le séjour marin s'effectue à proximité des côtes françaises, avec des incur
 La durée de la phase marine est très variable, de quelques mois à 3 ans.
 Les adultes de cette espèce peuvent rester en rivière, aller grossir en mer ou grossir 
 en lac selon les contextes, ce qui définit trois écotypes distincts (truite fario, truite de mer et truite 
-lacustre). La truite est classée en statut quasi menacé (NT) en France sur la
-liste rouge UICN, il n'y a pas de classement pour les truites de mer mais elles sont
-peu présente en Bretagne.
+lacustre). 
 Sur la Vilaine, des alevinages de truites ont provoqué le passage d'environ 400 truites de mer en 1996,
 puis les effectifs ont chuté très rapidement, pour être anecdotiques ces dernières années.
+La truite est classée en statut quasi menacé (NT) en France sur la
+liste rouge UICN, il n'y a pas de classement pour les truites de mer mais elles sont
+peu présente en Bretagne.
 }}
 \end{minipage}}
 \smallskip
 
 %\Sexpr{vvv$TRM$N[vvv$TRM$N$annee==CY,"effectif"]} 
-Deux truites de mer dévalantes ont été %ont été
-comptées en \Sexpr{CY} (Figure \ref{barplot_report_annual_trm}) %,  Tableau
+Aucune truite de mer n'a été observée %ont été
+en \Sexpr{CY} (Figure \ref{barplot_report_annual_trm}). %,  Tableau
 %\ref{table_trm_mois}).
 \begin{figure}[htpb]
 \centering
@@ -5267,7 +5278,8 @@ en Figure \ref{size_trm}.
 vidéocontrôle d'Arzal.}
 \label{size_trm}
 \end{figure}
-<<report_mig_mult_trm, echo=FALSE, eval=TRUE,include=FALSE >>=
+
+<<report_mig_mult_trm, echo=FALSE, eval=FALSE,include=FALSE >>=
 color_ope<-sample(c(mycolorramp1(10),mycolorramp2(10)),20)
 bMM_Arzal <- new("report_mig_mult")
 bMM_Arzal <- choice_c(bMM_Arzal,
@@ -5294,8 +5306,6 @@ color=c(
 )
 if (nrow(bMM_Arzal@data)==0) {
   bM = new("report_mig")
-  if (!silent)
-    funout(gettextf("Running report_mig for year %s", Y, domain = "R-StacomiR"))
   bM = choice_c(
       bM,
       dc = 5,
@@ -5305,11 +5315,7 @@ if (nrow(bMM_Arzal@data)==0) {
       datefin=str_c(CY,"-12-31"))	
   bM <- charge(bM, silent = FALSE)
   bM <- connect(bM, silent = FALSE)
-  bM <- calcule(bM, silent = FALSE)
-  
-  
-  
-  stop("PAs de truites de mer cette année, supprimer le graphe")
+  bM <- calcule(bM, silent = FALSE)  
 }
 png(file=str_c(imgwdy,"bmm_trm.png"),7,7,units="in",res=300)
 plot(bMM_Arzal,plot.type="standard",
@@ -5323,7 +5329,7 @@ dev.off()
 @
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-<<report_interannual_trm, echo=FALSE, eval=TRUE, include=FALSE >>=
+<<report_interannual_trm, echo=FALSE, eval=FALSE, include=TRUE >>=
 rmi<-new("report_mig_interannual")
 rmi<-choice_c(rmi,
     dc=c(5),
@@ -5333,12 +5339,18 @@ rmi<-choice_c(rmi,
     end_year=CY,
     silent=TRUE)
 rmi<-charge(rmi)
-rmi<-connect(rmi,check=TRUE,silent=FALSE)	
+rmi<-connect(rmi,check=TRUE,silent=TRUE)	
 rmi<-calcule(rmi)
 rmi@data$bjo_valeur[rmi@data$bjo_valeur<0]<- -rmi@data$bjo_valeur[rmi@data$bjo_valeur<0]
 # utilisation de la méthode plot pour générer un graphique des densités
 # puis modification des couleurs du titre et de y
-plot(rmi, plot.type="density", silent=TRUE, year_choice = CY)
+tryCatch(plot(rmi, plot.type="density", silent=TRUE, year_choice = CY),
+		error=function(e) {
+			print(e)
+			cat(sprintf("reverting to %s \n", tail(unique(rmi@data$bjo_annee),1)))
+			plot(rmi, plot.type="density", silent=TRUE, year_choice = tail(unique(rmi@data$bjo_annee),1))
+		})
+			
 g<-get("g_density",envir=envir_stacomi)
 nb_annee<-length(unique(rmi@data$bjo_annee))
 mycolorramp <- colorRampPalette(c('#020731','#3862C6','#6E7587','#806641','#AE956D'))
@@ -5356,7 +5368,14 @@ g+ggplot2::scale_fill_manual(values=colors)+
         panel.grid.major.x = element_line(colour = "white"))
 dev.off()
 #============================================
-plot(rmi,plot.type="barchart",timesplit="mois", year_choice = CY, silent=TRUE)
+tryCatch(
+		plot(rmi,plot.type="barchart",timesplit="mois", year_choice = CY, silent=TRUE),
+		error=function(e) {
+			print(e)
+			cat(sprintf("reverting to %s \n", tail(unique(rmi@data$bjo_annee),1)))
+			plot(rmi,plot.type="barchart",timesplit="mois", year_choice = tail(unique(rmi@data$bjo_annee),1), silent = TRUE)
+		})
+
 g <- get("g_barchart",envir=envir_stacomi)
 cols <- c("max" = "#012746","min" = "#6C3E00",">=moy" = "#327AB5", "<moy" = "#D29035","hist_mean"="black","hist_range"="grey","?"="#D26435")
 fills <- c("max" = "#043C6B","min" = "#6C3E00",">=moy" = "#558AB5", "<moy" = "#D2A25F","hist_mean"="black","hist_range"="grey","?"="#D26435")
@@ -5377,8 +5396,8 @@ dev.off()
 mmm <- summary(rmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
 colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2024)")
-xtmmm<-xtable(mmm,caption="Migrations mensuelles des truites de mer dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-        la période 1996-2024. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+xtmmm<-xtable(mmm,caption="Migrations mensuelles des truites de mer dans la passe à bassins du barrage d'Arzal. $N$ = nombre, * correspondent à
+        la période 1996-2024. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
     label="table_trm_mois",
     digits=c(0,0,0,0,0,0),
     display = c("s","s","f","f", "f", "f"))
@@ -5398,7 +5417,7 @@ vvv[["TRM"]][["path_y"]]<-path_y
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
-<<report_annual_trm, echo=FALSE, eval=TRUE, include=FALSE >>=
+<<report_annual_trm, echo=FALSE, eval=FALSE, include=FALSE >>=
 ###############################
 # Bilan annuel des migrations
 ###############################
@@ -5466,7 +5485,7 @@ vvv[["TRM"]][["maxrank"]]<-nrow(somme)
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
-<<report_sample_char_trm, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<report_sample_char_trm, echo=FALSE, eval=FALSE,include=FALSE >>=
 library("stacomiR")
 
 # launching stacomi without selecting the scheme or interface
@@ -5504,20 +5523,20 @@ dev.off()
 
 Par sa situation avec le pied en eau salée et la tête en eau douce, la passe ne
 rencontre que des effectifs très faibles d'autres espèces. En \Sexpr{CY}, les
-espèces recensées sont assez
-nombreuses, silure, sandre, black bass, cyprinidés et brème (Figure
-\ref{autres_especes}). 
+espèces recensées sont assez nombreuses : silure, sandre, black bass, cyprinidés
+et brème (Figure \ref{autres_especes}). 
 La fréquentation des autres espèces depuis 2000 est illustrée de manière
 graphique à la Figure \ref{autres_especes_2000_2024}. 
 
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{2024/autres_especes.png} 
-\caption{Effectif des autres espèces recensées en \Sexpr{CY} dans la passe,
+\caption{Effectif des autres espèces recensées en \Sexpr{CY} dans la passe.
 \textit{Abramis brama} brème, 
 \textit{Ameiurus melas} poisson-chat,
 \textit{Sander lucioperca} sandre,
-\textit{Cyprinus} carpe (genre), \textit{Cyprinidae} cyprinidés sans détermination,
+\textit{Cyprinus carpio} carpe,
+\textit{Cyprinidae} cyprinidés sans détermination, 
 \textit{Dichentrarchus labrax} bar commun,
 \textit{Esox lucius} brochet,
 \textit{Lampetra fluviatilis} lamproie fluviatile,
@@ -5551,9 +5570,9 @@ graphique à la Figure \ref{autres_especes_2000_2024}.
 
 
 Les effectifs de silures recensés au niveau de la passe d'Arzal sont en très
-nette augmentation (Figure \ref{bilan_annuel_sil}). De même, la tendances des
-tailles mesurées est à l'augmentation, même si pour l'année 2024 les silures
-étaient plus petits que les années précédentes (Figure \ref{size_sil}).
+nette augmentation (Figure \ref{bilan_annuel_sil}). De même, la tendance des
+tailles mesurées est à l'augmentation, à l'exception des deux dernières années
+pour lesquelles on observe plus de silures de petite taille (Figure \ref{size_sil}).
 
 \begin{figure}[htpb]
 \centering
@@ -5567,7 +5586,7 @@ d'Arzal.}
 \input{\Sexpr{vvv[["SIL"]][["path"]]}} % table bilan silures
 
 
-<<report_species, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<report_species, echo=FALSE, eval=FALSE,include=FALSE >>=
 bilesp <- new("report_species")
 # split is one of "none", "year", "week", "month
 # first load all taxa
@@ -5648,7 +5667,7 @@ ggplot(bilesp@calcdata, aes(x="",y=(Effectif / sum(Effectif))*100,fill=taxa_stag
 dev.off()
 @
 
-<<report_interannual_silurus, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<report_interannual_silurus, echo=FALSE, eval=FALSE,include=FALSE >>=
 rmi<-new("report_mig_interannual")
 rmi<-choice_c(rmi,
     dc=c(5),
@@ -5702,8 +5721,8 @@ dev.off()
 mmm <- summary(rmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
 colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2024)")
-xtmmm<-xtable(mmm,caption="Migrations mensuelles des silures dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-        la période 1996-2024. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+xtmmm<-xtable(mmm,caption="Migrations mensuelles des silures dans la passe à bassins du barrage d'Arzal. $N$ = nombre, * correspondent à
+        la période 1996-2024. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
     label="table_trm_mois",
     digits=c(0,0,0,0,0,0),
     display = c("s","s","f","f", "f", "f"))
@@ -5725,7 +5744,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 @
 
-<<report_annual_silurus, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<report_annual_silurus, echo=FALSE, eval=FALSE,include=FALSE >>=
 ###############################
 # Bilan annuel des migrations
 ###############################
@@ -5787,13 +5806,8 @@ indiceCY <- match(as.character(CY),names(somme))
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
-<<report_sample_char_silurus, echo=FALSE, eval=TRUE,include=FALSE >>=
-library("stacomiR")
+<<report_sample_char_silurus, echo=FALSE, eval=FALSE,include=FALSE >>=
 
-# launching stacomi without selecting the scheme or interface
-stacomi(gr_interface=FALSE,
-    login_window=FALSE,
-    database_expected=TRUE)
 
 r_sample_char <- new("report_sample_char")
 r_sample_char <- choice_c(r_sample_char,
@@ -5823,13 +5837,8 @@ dev.off()
 @
 
 
-<<analyse_didson_silurus, echo=FALSE, eval=TRUE,include=FALSE >>=
-library("stacomiR")
+<<analyse_didson_silurus, echo=FALSE, eval=FALSE,include=FALSE >>=
 
-# launching stacomi without selecting the scheme or interface
-stacomi(gr_interface=FALSE,
-    login_window=FALSE,
-    database_expected=TRUE)
 
 r_sample_char <- new("report_sample_char")
 r_sample_char <- choice_c(r_sample_char,
@@ -5857,7 +5866,7 @@ ggplot(r_sample_char@data) +
     theme_bw() 
 dev.off()
 @
-<<report_interannual_dicentrarchus, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<report_interannual_dicentrarchus, echo=FALSE, eval=FALSE,include=FALSE >>=
 rmi<-new("report_mig_interannual")
 rmi<-choice_c(rmi,
     dc=c(5),
@@ -5867,7 +5876,7 @@ rmi<-choice_c(rmi,
     end_year=CY,
     silent=TRUE)
 rmi<-charge(rmi)
-rmi<-connect(rmi,check=TRUE,silent=FALSE)	
+rmi<-connect(rmi, check=TRUE, silent=TRUE)	
 rmi<-calcule(rmi)
 
 # utilisation de la méthode plot pour générer un graphique des densités
@@ -5911,8 +5920,8 @@ dev.off()
 mmm <- summary(rmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
 colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2024)")
-xtmmm<-xtable(mmm,caption="Migrations mensuelles des silures dans la passe à bassins du barrage d'Arzal, $N$ nombre, * correspondent à
-        la période 1996-2024. min* minimum mensuel, max* maximum mensuel, moyenne* moyenne des effectifs mensuels.",
+xtmmm<-xtable(mmm,caption="Migrations mensuelles des silures dans la passe à bassins du barrage d'Arzal. $N$ = nombre, * correspondent à
+        la période 1996-2024. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
     label="table_trm_mois",
     digits=c(0,0,0,0,0,0),
     display = c("s","s","f","f", "f", "f"))
@@ -5934,7 +5943,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 @
 
-<<report_annual_dicentrarchus, echo=FALSE, eval=TRUE,include=FALSE >>=
+<<report_annual_dicentrarchus, echo=FALSE, eval=TRUE, include=FALSE >>=
 ###############################
 # Bilan annuel des migrations
 ###############################
@@ -5996,13 +6005,8 @@ indiceCY <- match(as.character(CY),names(somme))
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
-<<report_sample_char_dicentrarchus, echo=FALSE, eval=TRUE,include=FALSE >>=
-library("stacomiR")
+<<report_sample_char_dicentrarchus, echo=FALSE, eval=FALSE, include=FALSE >>=
 
-# launching stacomi without selecting the scheme or interface
-stacomi(gr_interface=FALSE,
-    login_window=FALSE,
-    database_expected=TRUE)
 
 r_sample_char <- new("report_sample_char")
 r_sample_char <- choice_c(r_sample_char,
@@ -6036,10 +6040,11 @@ dev.off()
 \onecolumn
 \section{Annexes}
 
-Pour l'étude glanispomi, il est nécessaire de calculer la biomasse de poissons
-migrant sur la Vilaine pour les mois de mars à mai pour les aloses, lamproies et
-mulets. L'objectif est de faire ce calcul pour 2024 mais aussi pour les années
-précédentes.
+Pour l'étude Glanispomi, qui vise à mesurer la prédation exercée par le
+silure sur les poissons migrateurs, il est nécessaire de calculer la biomasse
+sur la Vilaine pour les mois de mars à mai, pour les aloses, lamproies marines
+et mulets. L'objectif est de faire ce calcul pour 2024 mais aussi pour les
+années précédentes.
 
 <<calcul_export_frederic_glanispomi, echo=FALSE, eval=FALSE,include=FALSE >>=
 
@@ -6202,12 +6207,12 @@ restt %>% filter(mois %in% c("03","04","05","06")) %>% group_by(annee, tax_nom_l
 \paragraph{Calculs extraits de la base de données du barrage.}
 
 La base de données du barrage collecte les informations relatives aux niveaux et
-au fonctionnement des vannes au pas de temps de 10 minutes. Le fichier des données extrait de la base de données du barrage
-contient \Sexpr{num(vvv$fonct_pass$nb_lignes)} lignes. A partir de ce dernier,
+au fonctionnement des vannes au pas de temps de 10 minutes. Le fichier des données 
+extrait de la base de données du barrage contient
+\Sexpr{num(vvv$fonct_pass$nb_lignes)} lignes \Sexpr{CY}. A partir de ce dernier,
 un script de traitement extrait les temps et les modes de fonctionnement de la
 passe (Figure \ref{figure_schema_fonctionnement}). 
-Les sondes utilisées en
-référence ont parfois des valeurs manquantes,
+Les sondes utilisées en référence ont parfois des valeurs manquantes,
  \Sexpr{num(vvv$fonct_pass$niveau_mer_barrage_manquant_rempl)} et \Sexpr{num(vvv$fonct_pass$niveau_vilaine_barrage_manquant_rempl)} respectivement 
  pour les niveaux aval (mer) et amont (Vilaine).
 Pour les niveaux mer, après correction, en utilisant l'une ou l'autre des
@@ -6219,9 +6224,9 @@ niveaux aval et amont.
 Les corrections des niveaux de la mer\footnote{Suppression
 des valeurs inférieures à -3.5 m NGF.} correspondent à
 \Sexpr{num(vvv$fonct_pass$pb_niveau_mer_inf_3.5)} lignes, celles du sas aval \footnote{Le dernier
-bassin en aval de la passe, la différence de niveaux entre ce bassin et la mer conditionne le
-fonctionnement de la vanne aval, suppression des valeurs en dehors de la gamme
-[-1m,2.5m].} correspondent à \Sexpr{num(vvv$fonct_pass$pb_niveau_sas)} lignes et des
+bassin en aval de la passe. La différence de niveaux entre ce bassin et la mer
+conditionne le fonctionnement de la vanne aval. Suppression des valeurs en
+dehors de la gamme [-1m,2.5m].} correspondent à \Sexpr{num(vvv$fonct_pass$pb_niveau_sas)} lignes et des
 dérives de codeur sur la vanne mer \footnote{Suppression des valeurs en dehors de la gamme
 [-1.72m,2.5m] correspondant à la course normale de la vanne.} à
 \Sexpr{num(vvv$fonct_pass$pb_hauteur_vanne_mer)} lignes. 
@@ -6234,15 +6239,15 @@ fonctionnement réintégré dans stacomiR comporte
 \includegraphics[width=\textwidth]{2024/detail_fonct_passe_2.png}
 \caption{Illustration du fonctionnement de la passe lors d'un fonctionnement
 normal en mai. A chaque cycle de marée, le niveau de la mer varie entre +2 m et
--2m environ (en noir). Le niveau Vilaine (.- bleu) varie peu et reste
-autour de 1m80. La vanne amont (en marron clair) s'ouvre  dès que le niveau mer
+-2m environ (- noir). Le niveau Vilaine (.- bleu) varie peu et reste
+autour de 1m90. La vanne amont (- marron) s'ouvre dès que le niveau mer
 descend 30 cm en dessous du niveau Vilaine, c'est l'entrée en régulation de la
-passe. La vanne aval (.... violets) ajuste le niveau du SAS (courbe bleue)
+passe. La vanne aval (... violet) ajuste le niveau du sas (- bleu)
 pour maintenir une chute constante à l'aval de la passe à l'aide d'une
 régulation par l'automate. 
- L'arrêt pour maintenance le 17 lors de la marée montante se traduit par une
- fermeture de la vanne amont (trait horizontal supplémentaire). L'état de la
- passe est calculée pour chaque période de 10 minutes (en bas).
+L'arrêt pour maintenance le 17 lors de la marée montante se traduit par une
+fermeture de la vanne amont (trait horizontal supplémentaire). L'état de la 
+passe est calculé pour chaque période de 10 minutes (en bas).
 }
 \label{detail_fonct_passe_2}
 \end{figure}
@@ -6252,11 +6257,11 @@ régulation par l'automate.
 \centering
 \includegraphics[width=0.8\textwidth]{2024/detail_fonct_passe_1.png}
 \caption{Illustration du fonctionnement de la passe après la remise en route
-de la passe en avril. En ordonnée, les niveaux mer (noir), vilaine
-(.-), sas (en bleu), niveau vanne mer (pointillés violet), niveau vanne Vilaine (ligne marron
-continue). L'état de la passe est calculée pour chaque période de 10 minutes (en bas).
-Les 10 et 11 après midi, la position basse de la vanne amont (vanne fermée)
-indique une fermeture de la passe.}
+de la passe en avril. En ordonnée, les niveaux mer (- noir), vilaine
+(.- bleu), sas (- bleu), niveau vanne mer (... violet), niveau vanne amont
+(- marron). L'état de la passe est calculée pour chaque période de 10 minutes (en bas).
+Jusqu'au 12 avril en milieu de journée, la position basse de la vanne amont
+(vanne fermée) indique que la passe est fermée.}
 \label{detail_fonct_passe_1}
 \end{figure}
 
@@ -6282,13 +6287,13 @@ aberrantes et prise en compte du noyage aval de la passe.}
 \centering
 \includegraphics[width=0.9\textwidth]{2024/report_df_annee.png} 
 \caption{Bilan du fonctionnement de la passe lors de l'année 2024. En orange
-il est possible de suivre les périodes de haute mer où la passe est fermée, les
+\textcolor{jaune_EV}{\rule[-0.2mm]{3mm}{2mm}} il est possible de suivre les 
+périodes de haute mer où la passe est fermée, les
 périodes où les bandes sont les plus larges correspondent à des périodes de
 vives eaux et également en hiver aux périodes où la gestion de la
-Vilaine est plus réduite. Les arrêts nocturnes de la passe sont visibles en mai
-- juin - juillet. En septembre et octobre, le passage en "mode étiage" réduit la
-durée de fonctionnement de la passe aux quelques heures qui précèdent la marée
-haute. En hiver, en période de crue, la passe est à l'arrêt.}
+Vilaine est plus réduite. Les arrêts nocturnes sont visibles de juin à
+septembre (\textcolor{jaune_EV}{\rule[-0.2mm]{3mm}{2mm}}).
+En hiver et au printemps, en période de crue, la passe est à l'arrêt.}
 \label{report_df_annee}
 \end{figure}
 
@@ -6330,7 +6335,6 @@ journaliers et fonctionnement des dispositifs de franchissement et de comptage.}
 
 
 
-
 \paragraph{Entretien de la passe}
 L'historique des modifications effectuées depuis la mise en service de
 la passe à bassins est décrit au Tableau \ref{table_entretien_passe}.
@@ -6347,9 +6351,9 @@ prématuré de la centrale hydraulique aval.\\
 2005 & Changement du système vidéo, remplacement par un système
 numérique. \\
 2005 & Changement de la vanne aval (corrosion).\\
-2010 &  Remplacement des têtes des vérins aval corrodées par des têtes en
+2010 & Remplacement des têtes des vérins aval corrodées par des têtes en
 inox.\\
-2011 & Modernisation des armoires électrique amont et aval,
+2011 & Modernisation des armoires électriques amont et aval,
 reprogrammation des automatismes.\\
 2012 & Pose d'une vanne montée sur poulie sur le canal de débit d'appoint
 pour faciliter la réouverture rapide du canal, et favoriser la gestion
@@ -6361,15 +6365,17 @@ luminaires, prises \ldots{}).\\
 2016 & Réparation du caisson lumineux après plusieurs submersions. Etude
 de la possibilité d'installer un caisson étanche avec un éclairage par
 leds.\\
-2017-18 & Rénovation des vérins de la porte aval.\\
-2020 & Changement de pièces sur les vérins de la porte aval.\\
-2021 & Renforcement des structure du capteur de fin de course aval, Remplacement
+2017-18 & Rénovation des vérins de la vanne aval.\\
+2020 & Changement de pièces sur les vérins de la vanne aval.\\
+2021 & Renforcement des structure du capteur de fin de course aval. Remplacement
 des joints de la vanne intermédiaire.\\
-2022 & Aucune modification particulière effectuée\\
-2023 & Remplacement des néons led du caisson lumineux. Changement de la sonde de niveau du SAS. Installation d’un chauffage et d’un déshumidifacteur afin de préserver de matériel électronique
-de la passe à bassin. Changement des boîtiers électroniques des sondes de
-niveaux amont et aval du barrage.\\
-2024 & TODOTODO. Remplacement des flexibles corrodés de la vanne aval.\\
+2022 & Aucune modification particulière effectuée.\\
+2023 & Remplacement des néons led du caisson lumineux. Changement de la sonde 
+de niveau du sas. Installation d’un chauffage et d’un déshumidifacteur afin de 
+préserver le matériel électronique du local de la passe à bassins. Changement
+des boîtiers électroniques des sondes de niveaux amont et aval du barrage.\\
+2024 & Remplacement des distributeurs de la vanne amont. Remplacement des
+flexibles corrodés sur les vérins de la vanne aval.\\
 \bottomrule
 \end{tabular}
 \caption{Entretien historique de la passe à bassins.}
@@ -6464,6 +6470,10 @@ et leur disponibilité.
 Observatoire des poissons migrateurs en Bretagne~:
 \href{http://www.observatoire-poissons-migrateurs-bretagne.fr}{{http://www.observatoire-poissons-migrateurs-bretagne.fr}}
 
+Observatoire de l’Environnement en Bretagne~:
+\href{https://bretagne-environnement.fr/tableau-de-bord/peuplements-piscicoles-des-cours-deau-bretons}{{
+https://bretagne-environnement.fr/tableau-de-bord/peuplements-piscicoles-des-cours-deau-bretons}}
+
 Association Loire Grands Migrateurs (LOGRAMI)~:
 \href{http://www.logrami.fr}{{http://www.logrami.fr}}
 
@@ -6476,7 +6486,7 @@ Cellule Migrateurs Charente Seudre (MIGADO)~:
 Saumon-Rhin~:   
 \href{https://www.saumon-rhin.com/}{{https://www.saumon-rhin.com/}}
 
-Fédération de pêche de la Somme ~: 
+Fédération de pêche de la Somme~: 
 \href{https://peche80.com/}{{https://peche80.com/}}
 
 Seine-Normandie Migrateurs (SEINORMIG)~:    
@@ -6490,7 +6500,6 @@ Migrateurs Adour (MIGRADOUR)~:
 
 Migrateurs Rhône-Méditerranée (MRM)~:            
 \href{https://www.migrateursrhonemediterranee.org/}{{https://www.migrateursrhonemediterranee.org/}}
-
 
 
 %\twocolumn
@@ -6514,19 +6523,19 @@ Migrateurs Rhône-Méditerranée (MRM)~:
 
  \vspace{8mm}
     
- Ce rapport présente le bilan de suivi de la passe à bassins d'Arzal en
+ Ce rapport présente le bilan du suivi de la passe à bassins d'Arzal en
     \Sexpr{num(CY)}. Il détaille le fonctionnement de la passe, de son système
     d'enregistrement vidéo, ainsi que les effectifs annuels des principales
-    espèces ayant transité par la passe du barrage d'Arzal à l'estuaire de la
-    Vilaine. En \Sexpr{num(CY)}, 
+    espèces ayant transité par la passe à l'estuaire de la Vilaine. 
+    En \Sexpr{num(CY)}, 
     \Sexpr{num(vvv$ALA$NCY)} aloses (\textit{Alosa
     Sp.}), 
     \Sexpr{num(vvv$LPM$NCY)} lamproies marines (\textit{Petromyzon
     marinus}), 
-    \Sexpr{num(vvv$TRM$NCY)} truites de mer (\textit{Salmo trutta trutta}),
-    \Sexpr{num(vvv$SAT$NCY)} saumons (\textit{Salmo salar}) et
-    \Sexpr{num(vvv$MUP$NCY)} mulets porcs (\textit{Chelon ramada}) ont été
-    comptabilisés à la passe d'Arzal.  \par
+    \Sexpr{num(vvv$TRM$NCY)} truite de mer (\textit{Salmo trutta trutta}),
+    \Sexpr{num(vvv$SAT$NCY)} saumon (\textit{Salmo salar}) et
+    \Sexpr{num(vvv$MUP$NCY)} mulets porcs (\textit{Chelon ramada}) 
+    ont été comptabilisés.  \par
         
    \vspace{8mm}
     
@@ -6536,24 +6545,22 @@ Migrateurs Rhône-Méditerranée (MRM)~:
   
     This report presents the monitoring of the pool fishway at Arzal in
     \Sexpr{num(CY)}. It details the operation of the fishway and it's recording video
-    device, along with the annual number of the main species crossing the Arzal
-    Dam in the Vilaine esturay.
+    device, along with the annual number of the main species crossing the dam in the Vilaine estuary.
     In \Sexpr{num(CY)}, 
     \Sexpr{num(vvv$ALA$NCY)} shads (\textit{Alosa Sp.}),
     \Sexpr{num(vvv$LPM$NCY)} sea lampreys (\textit{Petromyzon marinus}), 
-    \Sexpr{num(vvv$TRM$NCY)} sea trouts (\textit{Salmo trutta trutta}),
-    \Sexpr{num(vvv$SAT$NCY)} salmons (\textit{Salmo salar}) 
-    and \Sexpr{num(vvv$MUP$NCY)} mulets (\textit{Chelon ramada}) have been
-    counted at the Arzal fishway. \par
+    \Sexpr{num(vvv$TRM$NCY)} sea trout (\textit{Salmo trutta trutta}),
+    \Sexpr{num(vvv$SAT$NCY)} salmon (\textit{Salmo salar}) 
+    and \Sexpr{num(vvv$MUP$NCY)} mulets (\textit{Chelon ramada}) 
+    have been counted. \par
 
    
-
     \vspace{8mm}
     \textbf{Mots clés:}\par
      \textit{mulet, lamproie marine, alose, stacomi}\par 
     \vspace{8mm}    
      \textbf{\textit{Keywords:}}\par
-     \textit{mulet, lamprey, shad, stacomi}  
+     \textit{mulet, sea lamprey, shad, stacomi}  
 \end{tcolorbox}
 
 
