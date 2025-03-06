@@ -1,0 +1,228 @@
+---
+title: "Import des données environnementales"
+subtitle: "DIASPARA WP3.2 working document"
+author: "Briand Cédric, Sauvaget Brice"
+date: last-modified
+date-format: "DD-MM-YYYY"
+description: "Requêtes sur l'état de la base et import de fichiers"
+format:
+ html:
+  self-contained: true
+  fontcolor: black
+  toc: true
+  toc-location: left
+  toc-title: Résumé
+  toc-depth: 3
+reference-location: document
+---
+
+
+
+
+```{r init}
+#| echo: FALSE
+#| warning: FALSE
+#| message: FALSE
+#| results: 'hide'
+
+#if (!grepl("montepomi", getwd())) {
+
+if (Sys.info()[["user"]] == 'cedric.briand'){
+setwd("C:/workspace/passe_bassins/R")
+}
+
+
+
+datawd<-"C:/workspace/passe_bassins/data/"
+
+
+
+Sys.setenv(LANGUAGE = "fr")
+
+load_package <- function(x)
+{
+  if (!is.character(x)) stop("Package should be a string")
+  if (!require(x,character.only = TRUE))
+  {
+    install.packages(x, lib=.libPaths()[1],repos="http://cran.us.r-project.org", dep=TRUE)
+    if(!require(x,character.only = TRUE)) stop("Package not found")
+  }
+}
+
+
+load_package('magrittr')
+load_package('Hmisc')
+load_package('xtable')
+load_package('stacomirtools')
+load_package("stringr")
+load_package("stargazer")
+load_package('lubridate')
+load_package('reshape2')
+load_package('dplyr')
+load_package('readxl')
+load_package('stacomiR')
+load_package('tables')
+load_package('colorspace')
+load_package('RPostgres')
+load_package('glue')
+load_package('getPass')
+load_package('stringr')
+load_package('hubeau')
+load_package("DBI")
+load_package("knitr")
+load_package("kableExtra")
+load_package("DT")
+
+CY <- 2024
+# le repertoire contenant les données
+datawdy <- str_c(datawd,CY,"/")
+dir.create(datawdy,showWarnings = FALSE)
+datawdym1 <- str_c(datawd,CY-1,"/")
+# le repertoire contenant mes images (très important pour sweave)
+imgwd <- "C:/workspace/passe_bassins/image/"
+# le répertoire contenant les tableaux en latex
+tabwd <- "C:/workspace/passe_bassins/table/"
+# en vrai les données annuelles sont dans des sous répertoires par année
+imgwdy <- str_c(imgwd,CY,"/")
+dir.create(imgwdy, showWarnings = FALSE)
+tabwdy <- str_c(tabwd,CY,"/")
+dir.create(tabwdy, showWarnings = FALSE)
+
+
+
+#bleufonce <- rgb(4, 60, 107, 255, maxColorValue = 255)
+bleu_EV <- rgb(0, 33, 143, 255, maxColorValue = 255)
+bleu_EV <- "#00218f"
+turquoise_EV <- "#00C9C4"
+orange_EV <- "#ff7557"
+jaune_EV <- "#ffb428"
+marron <- rgb(70, 40, 0, 255, maxColorValue = 255)
+bleu_EVf <- "#001350"
+jaune_EVf <- "#AD7000"
+orange_EVf <- "#b2513c"
+bleu_clair_EV <- "#33b5ff"
+turquoise_EVf <- "#007873"
+
+
+
+
+col <- c("#17364E","moccasin","#B68B52","#765223","grey")
+image(1:length(col), 1, as.matrix(1:length(col)), 
+    col=col,
+    xlab="", ylab = "", xaxt = "n", yaxt = "n", bty = "n")
+
+
+
+
+###########################
+# définition du thème de couleurs
+###########################
+color=c(
+    "#052945",#working
+    "#ECDAC0",#stopped
+    bleu_EV,#normal "#3071A2"
+    turquoise_EV, # arret ponctuel
+    orange_EV,# arret maintenance "#462800"
+    jaune_EV,#dysfunction "#B68B52"
+    "#A66F24", # inconnu
+    "#012746",#eff
+    "#6C3E00",#weight
+    "blue",
+    "blue"
+)
+
+if (exists("userdistant") & exists("passworddistant") & exists("hostdistant") & exists("mainpass")) {
+  if( !exists("pois")) pois <- mainpass
+  host <- decrypt_string(hostdistant,pois)
+  user <- decrypt_string(userdistant,pois)
+  password<- decrypt_string(passworddistant,pois)
+} else {
+  host <- getPass(msg="host")
+  user <- getPass(msg="user")
+  password <- getPass(msg="password")
+}
+
+options(list(
+        stacomiR.dbname = "bd_contmig_nat_iav",
+        stacomiR.host = host,
+        stacomiR.port = "5432",
+        stacomiR.user = user,
+        stacomiR.password = password,
+        stacomiR.printqueries =FALSE
+    ))
+stacomi(TRUE,sch="iav", datawd=datawd)
+
+```
+
+
+Ci dessous Brice a travaillé sur les données de température en corrigeant les valeurs
+abérrantes, on supprime ce qui est dans la base et on ré-écrit tout.
+
+```{r}
+envwd <- "T:\\12-PoleMAB\\Socle\\Migrateurs\\ressource\\suivi_abiotique\\temperatures\\"
+list.files(envwd)
+filecran <- file.path(envwd,"vilaine_cran_corde2_2020_2024.csv")
+dat <- read.csv2(filecran)
+dat$temp_cran <- as.numeric(dat$temp_cran)
+dat$date <- as.Date(strptime(dat$date, format = "%d/%m/%Y"))
+#plot(dat)
+
+
+# On va voir ce qu'on a en base
+
+con <- dbConnect(RPostgres::Postgres(), dbname="bd_contmig_nat_iav", host=host, port=5432, user=user, password=password)
+DBI::dbGetQuery(con, "SELECT distinct stm_libelle FROM iav.tj_stationmesure_stm
+            join iav.tj_conditionenvironnementale_env on env_stm_identifiant = stm_identifiant;")
+
+datbase <- DBI::dbGetQuery(con, "SELECT * FROM iav.tj_stationmesure_stm
+            join iav.tj_conditionenvironnementale_env on env_stm_identifiant = stm_identifiant
+            WHERE stm_libelle = 'temp_cran2';")
+
+maxdate <- DBI::dbGetQuery(con, "SELECT max(env_date_debut) FROM iav.tj_stationmesure_stm
+            join iav.tj_conditionenvironnementale_env on env_stm_identifiant = stm_identifiant
+            WHERE stm_libelle = 'temp_cran2';")      
+mindate <- DBI::dbGetQuery(con, "SELECT min(env_date_debut) FROM iav.tj_stationmesure_stm
+            join iav.tj_conditionenvironnementale_env on env_stm_identifiant = stm_identifiant
+            WHERE stm_libelle = 'temp_cran2';")
+min(dat$date)  # "2020-01-01"
+
+# on peut tout virer
+
+DBI::dbExecute(con, "DELETE FROM iav.tj_conditionenvironnementale_env WHERE env_stm_identifiant=22") # 1081
+
+station <- dbGetQuery(con,glue("SELECT * FROM iav.tj_stationmesure_stm"))
+tj_ce <- dat %>% arrange(date)  %>%
+    mutate(env_stm_identifiant = 22) %>%
+   rename(env_valeur_quantitatif="temp_cran") %>%
+  rename(env_date_debut = date)  %>%
+    mutate(env_org_code="IAV",
+        env_date_fin=env_date_debut+1,
+        env_methode_obtention = "MESURE"
+    ) %>%
+    filter(!is.na(env_valeur_quantitatif)) %>%
+    #filter(station!="temp_air_arz") %>%
+    select( env_date_debut,
+        env_date_fin,
+        env_methode_obtention,
+        env_valeur_quantitatif,
+        env_stm_identifiant,
+        env_org_code
+    )
+dbWriteTable(con, "temp_cran_temperature", tj_ce)
+dbExecute(con, "INSERT INTO iav.tj_conditionenvironnementale_env (
+env_date_debut,
+        env_date_fin,
+        env_methode_obtention,
+        env_valeur_quantitatif,
+        env_stm_identifiant,
+        env_org_code)
+SELECT 
+        env_date_debut,
+        env_date_fin,
+        env_methode_obtention,
+        env_valeur_quantitatif,
+        env_stm_identifiant,
+        env_org_code
+FROM 
+          temp_cran_temperature") # 1717
+```
