@@ -123,6 +123,8 @@ table-figures-exponent=1}
 \definecolor{turquoise_EVf}{RGB}{0,120,115}
 \definecolor{orange_EVf}{RGB}{178,81,60}
 \definecolor{bleu_clair_EV}{RGB}{51,181,255}
+\definecolor{vert_clair_BGM}{RGB}{118, 198, 199}
+\definecolor{vert_fonce_BGM}{RGB}{5, 70, 88}
 \hypersetup{
 colorlinks=true, 
 linkcolor=orange_EVf, 
@@ -380,59 +382,42 @@ pdfkeywords={passe} {lamproies} {alose} {stacomi}
 \vfill
 \includegraphics[%width=\paperwidth,
 height=\paperheight,%
-keepaspectratio]{/2024/frontpage.png}%
+keepaspectratio]{frontpage.pdf}%
 %\vfill
 }}}%
-
-\hfill%
-\begin{minipage}{0.28\textwidth}
-
+\begin{minipage}{0.8\textwidth}
+\vspace{11cm}
 \par\sffamily\selectfont
-\vspace{2cm}
-\Large 
+\Large \textbf{
     {\titlefont Suivi scientifique des migrations de poissons 
-    de la passe à bassins du barrage d'Arzal.
-    Rapport 2024.}\\
-\vspace{2cm}
-
+    de la passe à bassins du barrage d'Arzal (Vilaine).
+    \color{vert_clair_BGM} Rapport 2024.}} \par  
+ \vspace{0.5cm}
+\centering{\Large{\color{vert_fonce_BGM}{\titlefont
+Cédric Briand, Brice Sauvaget, Gérard Eriau \par}}}
+ \vspace{0.5cm}
+ \color{black}{\large{\titlefont Date d'édition :}}
+\qquad \color{vert_clair_BGM}\large{\titlefont Mars 2025}
+\end{minipage}
+%
+\begin{minipage}{0.28\textwidth}
 \includegraphics[width=\textwidth]{/logo_EV} 
 \end{minipage}
-\vfill
-\vspace{1.5cm}
-\hfill%
+%
 \begin{minipage}{0.28\textwidth}
-\textbf{
-{\titlefont Date d'édition :\\}}
-\qquad \color{orange_EV}
-\Large
-{\titlefont Mars 2024}
-\vspace{2cm}
-
+\centering{\textbf{Réalisé avec le concours de} : \par} 
 \end{minipage}
-
-       
-    
-\hfill{ %
-\begin{minipage}{0.28\textwidth}
-\textbf{Réalisé avec le concours de} : \par
-\vspace{1cm}
+\hfill{
+\begin{minipage}{0.4\textwidth}
 % le logo de l'agence doit au moins faire 25 mm de haut      
 \centering{\includegraphics[height=20mm]{/logo_agence.png}} 
 \includegraphics[height=20mm]{/logo_region_bretagne.png}
 \end{minipage}
-}%  
-\vfill
-\hfill{ %
-\begin{minipage}{0.3\textwidth}
-\large
-\color{bleu_EV}
-\leftskip=1cm
-Cédric Briand\par   
-Brice Sauvaget\par
-Gérard Eriau\par
-\vspace{1cm}
-\end{minipage}
-}% 
+}
+
+         
+
+
 \endgroup
 \end{titlepage}
 
@@ -521,6 +506,7 @@ opts_knit$set(eval=FALSE, message=FALSE, warnings=FALSE, error=FALSE)
 #  To get the right result running straight you need to convert each string
 # using iconv("Année","UTF-8")
 Sys.setenv(LANGUAGE = "fr")
+Sys.setenv(TZ="Europe/Paris")
 #######################################################################"
 # dans le fichier "C:\Program Files\R\R-3.3.2\etc\Rprofile.site" 
 # je stocke mes password admin qui sont chargés au lancement des sessiosn R
@@ -554,6 +540,11 @@ load_package <- function(x)
     if(!require(x,character.only = TRUE)) stop("Package not found")
   }
 }
+remotes::install_gitlab(
+    "stacomi/stacomir",
+    host = "forgemia.inra.fr"
+)
+1
 load_package('getPass')
 load_package('magrittr')
 load_package('Hmisc')
@@ -1165,7 +1156,7 @@ techniques ont nécessité des arrêts nocturnes sur quatre périodes entre juin
 septembre, pour une durée cumulée d'un mois. Fin septembre, des fuites d'huile
 ont été détectées sur les flexibles des vérins de la porte aval, ce qui a
 entraîné l'arrêt de la passe du 26 septembre jusqu'à leur remplacement le 19
-décembre.
+décembre (Figure \ref{report_df_annee} en annexe).
 
 \begin{figure}[htpb]
 \centering
@@ -1741,23 +1732,34 @@ res1 <-
 
 
 ############################
-# PB HEURES ARZAL
+# PB HEURES ARZAL (ce n'est pas bon, seulement après 20
 ############################
 
-# GMT is UTC, it blocks conversion to summer time, like the dam but with one hour delay
-# I want the date in France time so I first convert to "Europe/Paris" and remove one hour to all dates
-# This way the difference is zero in winter and one in summer like the dam
+# The dam was in GMT+1 before 2016
+# When converting from GMT we need to correct one hour delay between GMT
+# and the true value which is at GMT + 1. To get to GMT we need to remove 
+# one hour
 
+
+# this just reads the time as CEST
+#strptime("2024-04-08 08:00:00",tz = "Europe/Paris",format="%Y-%m-%d %H:%M:%S")
+# this one will shift 2 hours
+#lubridate::with_tz(
+#  lubridate::ymd_hms("2024-04-08 08:00:00",tz="GMT"),
+#   tzone = "Europe/Paris")
+# before 2016 -------------
+if (CY <=2015) {
 res1 <- res1 %>%
-    mutate("time"=as.POSIXct(strptime(HoroDate,tz="GMT",format="%Y-%m-%d %H:%M:%S")))
-head(res1$time)
-head(lubridate::with_tz(res1$time, tzone = "Europe/Paris"))
-attributes(res1$time)$tzone <- "Europe/Paris"
-res1 <- res1 %>%
-    mutate("time"=time-as.difftime(1, units = "hours"))		
-
-
-res1 %>% filter(Horodate >'2024-21-05 00:00:00')
+    mutate(time = as.POSIXct(strptime(HoroDate,tz="GMT",format="%Y-%m-%d %H:%M:%S")) - 
+            as.difftime(1, units = "hours"),
+        time=lubridate::with_tz(time, tzone = "Europe/Paris")) 
+ # this convert to the new time (the absolute time is still the same)
+    # use force_tz otherwise when the tz is wrong
+} else {
+  res1 <- res1 %>%
+      mutate(time = as.POSIXct(strptime(HoroDate,tz = "Europe/Paris",format="%Y-%m-%d %H:%M:%S")))
+}
+tz(res1$time)
 # Check that all dates are rounded in SIVA
 #stopifnot( sum(lubridate::round_date(res1$time,"10 mins")!=res1$time)==0)
 
@@ -1838,6 +1840,8 @@ png(filename=file.path(imgwd,CY,"detail_fonct_passe_2.png"),7,7,units="in",res=3
 graph_DF_detail(data_DF=data_DF, from="10-05-2024", to="19-05-2024")
 dev.off()
 
+
+graph_DF_detail(data_DF, from="08/04/2024", to="09/04/2024")
 ##############################################################
 # Graph des temps de fonctionnement
 ############################################################
@@ -1965,6 +1969,14 @@ res <- dbGetQuery(req@connection,glue("SELECT * FROM iav.t_periodefonctdispositi
 if (nrow(res)!=0){
   cat('Attention il y a déjà des données dans la base')	
 }
+
+dbExecute(req@connection,glue("DELETE FROM iav.t_periodefonctdispositif_per 
+            WHERE per_dis_identifiant=1
+            AND extract(year from per_date_debut)={CY}") )
+
+
+
+
 # ATTENTION ECRITURE EN BASE !!!!
 con <- dbConnect(RPostgres::Postgres(), dbname="bd_contmig_nat_iav",host=host,port=5432,user=user, password=password)
 load(file=file.path(datawd,CY,"fonct_pass.Rdata"))
@@ -1973,7 +1985,7 @@ DBI::dbExecute(con, "DROP TABLE IF EXISTS t_periodefonctdispositif_per_temp")
 DBI::dbWriteTable(req@connection, "t_periodefonctdispositif_per_temp", ll$t_periodefonctdispositif_per,overwrite=TRUE)
 # Il y a des valeurs nulles dans per_etat_fonctionnement, or il ne peut être nul, par défaut je mets TRUE
 # Il y a une erreur 
-DBI::dbExecute(req@connection, "DELETE FROM  t_periodefonctdispositif_per_temp where per_date_fin < per_date_debut")
+#DBI::dbExecute(req@connection, "DELETE FROM  t_periodefonctdispositif_per_temp where per_date_fin < per_date_debut")
 DBI::dbExecute(req@connection, "INSERT INTO iav.t_periodefonctdispositif_per (
         per_dis_identifiant
         ,per_date_debut
@@ -1989,7 +2001,7 @@ DBI::dbExecute(req@connection, "INSERT INTO iav.t_periodefonctdispositif_per (
         , coalesce(per_etat_fonctionnement,1)::boolean
         , per_tar_code
         ,'IAV' as per_org_code
-        FROM t_periodefonctdispositif_per_temp") #2772
+        FROM t_periodefonctdispositif_per_temp") #2129
 
 # PETITES CORRECTIONS SUR LES OVERLAPS.....
 
@@ -2020,7 +2032,7 @@ r_df<-choice_c(r_df,
     horodatedebut="2024-01-01",
     horodatefin="2024-12-31",
     silent=TRUE)
-Sys.setenv(TZ='GMT')
+#Sys.setenv(TZ='GMT')
 r_df<-connect(r_df)
 
 # normalement on doit pouvoir sortir ça directement dans le chunk calcul_debit_passe
@@ -2040,6 +2052,7 @@ g<-ggplot(tpp)+
     scale_colour_manual("type",values=c("1"=bleu_EVf,"2"=turquoise_EVf,"3"=jaune_EVf,"4"=orange_EVf,"5"="black"),
         labels = gettext("Normal oper.","Operational stop","Stop","Dysfunct.","Unknown",domain="R-stacomiR"))+		
     ylab("Heure")+
+    scale_x_datetime() +
     theme(
         plot.background = element_rect(fill ="white"),
         panel.background = element_rect(fill="white"),
@@ -2052,7 +2065,7 @@ g<-ggplot(tpp)+
         axis.text=element_text(colour="black"))
 print(g)
 dev.off()
-Sys.setenv(TZ="Europe/London") # GMT
+#Sys.setenv(TZ="Europe/London") # GMT
 r_df_hist<-choice_c(r_df,
     1,
     horodatedebut="2003-01-01",
@@ -2310,6 +2323,12 @@ con <- dbConnect(RPostgres::Postgres(), dbname="bd_contmig_nat_iav", host=host, 
 # ATTENTION ECRITURE EN BASE !!!!
 
 DBI::dbWriteTable(req@connection, "tj_conditionenvironnementale_env_temp", tj_ce, overwrite=TRUE)
+
+dbExecute(req@connection,glue("DELETE FROM  iav.tj_conditionenvironnementale_env 
+            WHERE env_stm_identifiant in (6, 21, 22, 19, 24, 25)
+            AND extract(year from env_date_debut)={CY}") ) # 346
+
+
 DBI::dbExecute(req@connection, "INSERT INTO iav.tj_conditionenvironnementale_env (
         env_date_debut
         ,env_date_fin
@@ -2323,7 +2342,7 @@ DBI::dbExecute(req@connection, "INSERT INTO iav.tj_conditionenvironnementale_env
         ,env_valeur_quantitatif
         ,env_stm_identifiant
         ,env_org_code
-        FROM tj_conditionenvironnementale_env_temp") #2012 (2021) 2309 (2022)
+        FROM tj_conditionenvironnementale_env_temp") #2012 (2021) 2309 (2022) 1982 (2024)
 
 
 @
@@ -2645,7 +2664,7 @@ d'Arzal.}
 
 options(warn=-1)
 
-Sys.setenv(TZ="Europe/Paris")
+
 r_sample_char<-new("report_sample_char")
 # the following will load data for size, 
 # parameters 1786 (total size) C001 (size at video control)
@@ -3119,73 +3138,55 @@ dev.off()
 # Horaires de passage
 ######################
 mig <- bMM_Arzal@data
-mig <- mig %>% mutate(time=strftime(ope_date_debut, format="%H:%M:%S"),
+mig <- mig %>% mutate(
     date=as.Date(ope_date_debut))
-# ATTENTION RECOMPILER fun_date_extraction dans stacomiR il y avait une erreur
-
-fun_date_extraction=function(data, # tableau de donnees e importer
-    nom_coldt, # nom de la colonne
-    annee=TRUE,
-    mois=TRUE,
-    quinzaine=FALSE,
-    semaine=TRUE,
-    semaine_std=FALSE,
-    jour_an=FALSE,
-    jour_mois=TRUE,
-    heure=FALSE                           
-){
-  if (annee) data$annee <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%Y"))                        
-  if (mois) data$mois <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%m"))
-  # %b Abbreviated month name in the current locale. (Also matches full name on input.)
-  if (quinzaine) {
-    data$quinzaine=ceiling(as.numeric(strftime(as.POSIXlt(data[,nom_coldt]),
-                format="%W"))/2)
-    data$quinzaine <- as.character(data$quinzaine)
-    data$quinzaine[as.numeric(data$quinzaine)<10] <- paste("0", data$quinzaine[as.numeric(data$quinzaine)<10],sep="")
-    data$quinzaine <- as.factor(data$quinzaine)
-  }
-  if (semaine) data$semaine <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%W"))
-  #%W : Week of the year as decimal number (00e53) using Monday as the first day of week (and typically with the first Monday of the year as day 1 of week 1). The UK convention
-  if (jour_an) data$jour_365 <- strftime(as.POSIXlt(data[,nom_coldt]), format="%j")                          
-  if (jour_mois) data$jour_mois <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%d"))  
-  # %d :  Day of the month as decimal number (01e31).
-  if (heure) data$heure <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%H"))  
-  #%H     Hours as decimal number (00e23).    
-  if (semaine_std) data$semaine_std=lubridate::isoweek(as.POSIXlt(data[,nom_coldt]))
-  return(data)
-}    
 
 
-mig <-	fun_date_extraction(
+mig <-	stacomiR::fun_date_extraction(
     data=mig,
     nom_coldt="ope_date_debut", annee = FALSE, mois = TRUE,
     quinzaine = FALSE, semaine = FALSE, semaine_std = FALSE,
-    jour_an = FALSE, jour_mois = TRUE, heure = TRUE)
-hhh <- mig %>% group_by(heure) %>% summarize(N=sum(value))
-png(file=str_c(imgwdy,"horaires_mulet.png"),7,7,units="in",res=300)
+    jour_an = FALSE, 
+    jour_mois = TRUE,
+    heure = TRUE)
+hhh <- mig %>% group_by(heure) %>% dplyr::summarize(N=sum(value))
+png(file=str_c(imgwdy,"horaires_mulet.png"),7 ,7, units="in",res=300)
 g <- ggplot(hhh, aes(x = heure)) + 
-    geom_histogram(aes(y=N), width = 0.6, colour = NA,stat="identity") +
-    coord_polar(start=3*pi/4) +
+    geom_histogram(aes(y=N), width = 0.6, colour = NA, stat="identity") +
+    coord_polar(start = 3*pi/4) +
     theme_minimal() +	
     ylab("Nombre") 
 print(g)
 dev.off()
-hhh <- mig %>% group_by(heure, mois) %>% summarize(N=sum(value))
-load(file=file.path(datawd,CY,"fonct_pass.Rdata"))	# ll
-mig$time <- strptime(strftime(mig$ope_date_debut, format="%Y-%m-%d %H:%M"),"%Y-%m-%d %H:%M")
-mig$timec <- as.POSIXct(strptime(strftime(mig$ope_date_debut, format="%H:%M:%S"),format="%H:%M:%S"))
-mige<-inner_join(mig, ll$dat,by="time")
+# hhh <- mig %>% group_by(heure, mois) %>% dplyr::summarize(N = sum(value))
+load(file=file.path(datawd, CY, "fonct_pass.Rdata"))	# ll
+mig$time <- force_tz(strptime(strftime(mig$ope_date_debut, format="%Y-%m-%d %H:%M"), "%Y-%m-%d %H:%M"), tz = "Europe/Paris")
+mig$timec <- force_tz(as.POSIXct(strptime(strftime(mig$ope_date_debut, format="%H:%M:%S"), format="%H:%M:%S")), "Europe/Paris") # no date
+ll$dat$time <- with_tz(ll$dat$time, "Europe/Paris")
 
-hhh<- mige%>%group_by(heure) %>% summarize(N=sum(value))
+mige <- inner_join(mig, ll$dat, by="time")
+
+hhh<- mige %>% group_by(heure) %>% dplyr::summarize(N=sum(value))
 
 png(file=str_c(imgwdy,"bmm_horaires_maree.png"),7,7,units="in",res=300)
+mige %>% mutate(heure = as.numeric(heure)) %>%
+ggplot()+
+    geom_point( aes(x=heure,y=niveau_mer_barrage,col=value))+	
+	facet_wrap(~ per_tar_code) +
+    scale_colour_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous")) +
+    scale_fill_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous")) +
+    scale_x_continuous(breaks=c(6,12,18), minor_breaks=seq(0:23)) +
+    xlab("Heure")+
+    theme_bw()
+dev.off()
+
+
+png(file=str_c(imgwdy,"bmm_horaires_mareebis.png"),7,7,units="in",res=300)
 ggplot(mige)+
     geom_point( aes(x=timec,y=niveau_mer_barrage,col=value))+	
-	facet_wrap(~ per_tar_code) +
-    scale_colour_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous"), 
-        breaks=c(0,10,100,1000,10000),trans = "log") +
-    scale_fill_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous"), 
-        breaks=c(0,10,100,1000,10000),trans = "log") +
+    facet_wrap(~ per_tar_code) +
+    scale_colour_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous")) +
+    scale_fill_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous")) +    
     scale_x_datetime(date_labels = "%H")+
     xlab("Heure")+
     theme_bw()
@@ -3430,9 +3431,11 @@ de cette augmentation de taille ne sont pas connues, et un phénomène exactemen
 similaire avait été rapportée sur la Loire (Marion Legrand, comm. pers.).
 
 
-TRES PEU DE MESURES,voir si dd 2.5p gris est retrouvé
-Contrairement aux années 2022 et 2023, les tailles des lamproies en 2024 sont en
-baisse par rapport aux années 2019, 2020 et 2021 (Figure \ref{size_lpm}).
+Après un pic de taille dans les années 2020 et 2020, puis une baisse en 2022
+et 2023 les tailles des lamproies reviennent à des valeurs plus importantes,
+mais elles n'ont été échantillonnées qu'en début de saison (perte d'un disque dur lors 
+des mesures de taille) (Figure
+\ref{size_lpm}).
 
 
 \begin{figure}[htpb]
@@ -3709,7 +3712,7 @@ plot(r_sample_char,plot.type="1",silent=TRUE)
 
 g<-get("g1",envir=envir_stacomi)
 png(filename=str_c(imgwdy,"size_lpm.png"))
-g+ggplot2::xlab("taille video (mm)")+
+g + ggplot2::xlab("taille video (mm)")+
     ggplot2::ylab("annee")+
     theme(axis.title.x=element_blank(),
         axis.text.x=element_blank(),
@@ -3855,10 +3858,10 @@ niveau optimal. Une règle de gestion a été proposée pour la gestion des
 pêcheries. L'importance de l'aménagement des axes fluviaux pour l'accès aux
 zones de reproduction a également été mis en avant (Figure \ref{tx_exploit}).
 
-MAJ !
 La question de la prédation du silure, dont les effectifs sont en claire
-augmentation avec des tailles allant en s'accroissant, devra se poser 
-l'année prochaine si les effectifs n'augmentent pas.
+augmentation avec des tailles allant en s'accroissant doit se poser, avec celle
+de la régulation de cette espèce.
+
 
 
 \vfill
@@ -5144,7 +5147,7 @@ print(xtmmm,
 #include.rownames = FALSE => OK set as global options
 )
 #vvv[["LPM"]]<- list()# normalement vient du rapport de l'années précédente
-vvv[["SAT"]][["path_y"]]<-path_y
+vvv[["TRM"]][["path_y"]]<-path_y
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
@@ -5169,7 +5172,7 @@ r_sample_char <- calcule(r_sample_char,silent=TRUE)
 
 
 
-png(filename=str_c(imgwdy,"size_sat.png"))
+png(filename=str_c(imgwdy,"size_trm.png"))
 ggplot(r_sample_char@data) +
     geom_boxplot(aes(x=annee,y=car_valeur_quantitatif), outlier.alpha = 0) +
     ggplot2::ylab("taille video (mm)")+
@@ -6286,14 +6289,15 @@ aberrantes et prise en compte du noyage aval de la passe.}
 \begin{figure}[hp]
 \centering
 \includegraphics[width=0.9\textwidth]{2024/report_df_annee.png} 
-\caption{Bilan du fonctionnement de la passe lors de l'année 2024. En orange
-\textcolor{jaune_EV}{\rule[-0.2mm]{3mm}{2mm}} il est possible de suivre les 
+\caption{Bilan du fonctionnement de la passe (dispositif de franchissement) lors
+de l'année 2024.
+En orange \textcolor{jaune_EV}{\rule[-0.2mm]{3mm}{2mm}} il est possible de suivre les 
 périodes de haute mer où la passe est fermée, les
 périodes où les bandes sont les plus larges correspondent à des périodes de
 vives eaux et également en hiver aux périodes où la gestion de la
-Vilaine est plus réduite. Les arrêts nocturnes sont visibles de juin à
-septembre (\textcolor{jaune_EV}{\rule[-0.2mm]{3mm}{2mm}}).
-En hiver et au printemps, en période de crue, la passe est à l'arrêt.}
+Vilaine est plus réduite. Les arrêts 
+(\textcolor{jaune_EV}{\rule[-0.2mm]{3mm}{2mm}}) sont visibles
+au début et à la fin de l'année.}
 \label{report_df_annee}
 \end{figure}
 
@@ -6573,7 +6577,7 @@ Migrateurs Rhône-Méditerranée (MRM)~:
 \noindent Rapport \LaTeX \par
 packages R : \vspace{1mm}
 
-StacomiR \colcitep{turquoise_EV}{briand_stacomir_2017}\par
+StacomiR \col{turquoise_EV}\citep{briand_stacomir_2017}\par
 \LaTeX \ :Hmisc, xtable, stargazer, tables, knitr \par
 graphiques : stacomiR, ggplot2, lattice, ggthemr, packcircles, colorspace\par
 traitements : stringr, lubridate, reshape2, dplyr\par
