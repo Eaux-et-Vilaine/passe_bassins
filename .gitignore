@@ -130,11 +130,11 @@ image/2019
 image/2020
 image/2021
 image/2022
-image/any
+image/*/*
 
 image/*.png~
 /table/
-/image/
+
 
 *.synctex
 
