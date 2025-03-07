@@ -111,7 +111,8 @@ inst/doc
 *.bbl
 *.log
 *.out
-*.pdf
+/*.pdf
+/report/*.pdf
 *.bcf
 *.synctex.gz
 *.run.xml
