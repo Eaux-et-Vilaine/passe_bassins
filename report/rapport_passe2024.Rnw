@@ -540,11 +540,11 @@ load_package <- function(x)
     if(!require(x,character.only = TRUE)) stop("Package not found")
   }
 }
-remotes::install_gitlab(
-    "stacomi/stacomir",
-    host = "forgemia.inra.fr"
-)
-1
+#remotes::install_gitlab(
+#    "stacomi/stacomir",
+#    host = "forgemia.inra.fr"
+#)
+
 load_package('getPass')
 load_package('magrittr')
 load_package('Hmisc')
@@ -564,6 +564,7 @@ load_package('glue')
 load_package('getPass')
 load_package('stringr')
 load_package('hubeau')
+load_package('ggplot2')
 
 
 # l'annee en cours (c'est la valeur à changer en début de script
@@ -809,7 +810,7 @@ de la Potinais et de Malon, respectivement à 45 et 77 km en amont), a été
 transformé en rivière.
 Le plan d'eau ainsi créé a vu se développer de nouveaux usages dont les
 principaux sont la navigation et la production d'eau potable.
-Le barrage d'Arzal joue un rôle majeur dans la protection contre les crues 
+Le barrage d'Arzal protège contre les crues 
 de l'aval du bassin versant, en empêchant les conjonctions de forts débits amont
 et d'importantes surcotes de marées.
 Ce barrage constitue ainsi une rupture nette entre des eaux saumâtres et douces. Il évacue le débit
@@ -826,11 +827,11 @@ ont été comptabilisées sur l'ensemble de l'année. Entre 1998 et 2012, seule 
 
 Ce rapport décrit le fonctionnement de la passe à fentes verticales du barrage
 et de son système de vidéosurveillance associé. Il fait également la synthèse des passages de 
-poissons migrateurs par la passe à bassins en 2024 \rev{ TODO 
+poissons migrateurs par la passe à bassins en 2024
 \footnote{La migration sur les passes à anguilles est traitée dans un autre
 rapport :
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ER5GHvMhd7hIm7U0xgXtt5YBzTVgcGsewPAMu5IUjMxGKQ?e=oJfWao}{Gestion
-de l'anguille sur le bassin versant de la Vilaine}.}.}
+de l'anguille sur le bassin versant de la Vilaine}.}
 
    
     
@@ -2639,7 +2640,7 @@ part des passages pour des niveaux mer >0m (Figure \ref{horaires_maree_mulet}).
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/bmm_horaires_maree} 
+\includegraphics[width=0.45\textwidth]{2024/bmm_horaires_maree_mup} 
 \caption{Passage des mulets par pas de temps de 10 minutes en fonction de
 l'heure et du niveau mer en
 \Sexpr{CY}.}
@@ -3109,6 +3110,9 @@ dev.off()
 @
 
 <<report_mig_mult_mulet, echo=FALSE, eval=FALSE,include=FALSE >>=
+fixme <- function(data, nom_coldt){
+  data[,{{nom_coldt}}] <- lubridate::force_tz(data[,{{nom_coldt}}], "Europe/Paris")
+}
 load_package("wesanderson")
 color_ope<-sample(c(mycolorramp1(10),mycolorramp2(10)),20)
 bMM_Arzal=new("report_mig_mult")
@@ -3122,6 +3126,45 @@ bMM_Arzal <- charge(bMM_Arzal)
 bMM_Arzal <- connect(bMM_Arzal)
 bMM_Arzal <- calcule(bMM_Arzal)
 color_ope<-sample(c(mycolorramp1(10),mycolorramp2(10)),20)
+
+Sys.timezone()
+# ATTENTION RECOMPILER fun_date_extraction dans stacomiR il y avait une erreur
+# ATTENTION CETTE FONCTION CHANGE LE TZ EN CEST ET C'EST TRES IMPORTANT
+
+fun_date_extraction=function(data, # tableau de donnees e importer
+		nom_coldt, # nom de la colonne
+		annee=TRUE,
+		mois=TRUE,
+		quinzaine=FALSE,
+		semaine=TRUE,
+		semaine_std=FALSE,
+		jour_an=FALSE,
+		jour_mois=TRUE,
+		heure=FALSE                           
+){
+  warning(sprintf('%s converted to tz "Europe/Paris"', nom_coldt))
+  data[,{{nom_coldt}}] <- lubridate::force_tz(data[,{{nom_coldt}}], "Europe/Paris")
+ 	if (annee) data$annee <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%Y"))                        
+	if (mois) data$mois <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%m"))
+	# %b Abbreviated month name in the current locale. (Also matches full name on input.)
+	if (quinzaine) {
+		data$quinzaine=ceiling(as.numeric(strftime(as.POSIXlt(data[,nom_coldt]),
+								format="%W"))/2)
+		data$quinzaine <- as.character(data$quinzaine)
+		data$quinzaine[as.numeric(data$quinzaine)<10] <- paste("0", data$quinzaine[as.numeric(data$quinzaine)<10],sep="")
+		data$quinzaine <- as.factor(data$quinzaine)
+	}
+	if (semaine) data$semaine <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%W"))
+	#%W : Week of the year as decimal number (00e53) using Monday as the first day of week (and typically with the first Monday of the year as day 1 of week 1). The UK convention
+	if (jour_an) data$jour_365 <- strftime(as.POSIXlt(data[,nom_coldt]), format="%j")                          
+	if (jour_mois) data$jour_mois <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%d"))  
+	# %d :  Day of the month as decimal number (01e31).
+	if (heure) data$heure <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%H"))  
+	#%H     Hours as decimal number (00e23).    
+	if (semaine_std) data$semaine_std=lubridate::isoweek(as.POSIXlt(data[,nom_coldt]))
+	return(data)
+}  
+tz(bMM_Arzal@data$ope_date_debut) # UTC
 # par("din") # pour voir la taille de la fenetre graphique
 png(file=str_c(imgwdy,"bmm_mulet.png"),7,7,units="in",res=300)
 plot(bMM_Arzal,plot.type="standard",
@@ -3142,13 +3185,14 @@ mig <- mig %>% mutate(
     date=as.Date(ope_date_debut))
 
 
-mig <-	stacomiR::fun_date_extraction(
+mig <-	fun_date_extraction(
     data=mig,
     nom_coldt="ope_date_debut", annee = FALSE, mois = TRUE,
     quinzaine = FALSE, semaine = FALSE, semaine_std = FALSE,
     jour_an = FALSE, 
     jour_mois = TRUE,
     heure = TRUE)
+tz(mig$ope_date_debut)    
 hhh <- mig %>% group_by(heure) %>% dplyr::summarize(N=sum(value))
 png(file=str_c(imgwdy,"horaires_mulet.png"),7 ,7, units="in",res=300)
 g <- ggplot(hhh, aes(x = heure)) + 
@@ -3160,28 +3204,30 @@ print(g)
 dev.off()
 # hhh <- mig %>% group_by(heure, mois) %>% dplyr::summarize(N = sum(value))
 load(file=file.path(datawd, CY, "fonct_pass.Rdata"))	# ll
-mig$time <- force_tz(strptime(strftime(mig$ope_date_debut, format="%Y-%m-%d %H:%M"), "%Y-%m-%d %H:%M"), tz = "Europe/Paris")
-mig$timec <- force_tz(as.POSIXct(strptime(strftime(mig$ope_date_debut, format="%H:%M:%S"), format="%H:%M:%S")), "Europe/Paris") # no date
-ll$dat$time <- with_tz(ll$dat$time, "Europe/Paris")
+mig$time <- strptime(strftime(mig$ope_date_debut, format="%Y-%m-%d %H:%M"),"%Y-%m-%d %H:%M")
+mig$timec <- as.POSIXct(strptime(strftime(mig$ope_date_debut, format="%H:%M:%S"), format="%H:%M:%S"))
 
+ll$dat$time <- with_tz(ll$dat$time, "Europe/Paris")
+#      ope_identifiant lot_identifiant      ope_date_debut        ope_date_fin
+#         2407          308885          483074 2024-09-19 06:40:00 2024-09-19 06:50:00
 mige <- inner_join(mig, ll$dat, by="time")
 
 hhh<- mige %>% group_by(heure) %>% dplyr::summarize(N=sum(value))
 
-png(file=str_c(imgwdy,"bmm_horaires_maree.png"),7,7,units="in",res=300)
+png(file=str_c(imgwdy,"bmm_horaires_maree_mup.png"),7,7,units="in",res=300)
 mige %>% mutate(heure = as.numeric(heure)) %>%
+mutate(value = abs(value)) %>%
 ggplot()+
-    geom_point( aes(x=heure,y=niveau_mer_barrage,col=value))+	
-	facet_wrap(~ per_tar_code) +
-    scale_colour_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous")) +
-    scale_fill_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous")) +
+    geom_point( aes(x=heure,y=niveau_mer_barrage,col=value))+		
+    scale_colour_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous"), trans="log1p", breaks=c(0,1,10,100,1000,3000)) +
+    scale_fill_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous"), trans="log1p", breaks=c(0,1,10,100,1000,3000)) +
     scale_x_continuous(breaks=c(6,12,18), minor_breaks=seq(0:23)) +
     xlab("Heure")+
     theme_bw()
 dev.off()
 
 
-png(file=str_c(imgwdy,"bmm_horaires_mareebis.png"),7,7,units="in",res=300)
+png(file=str_c(imgwdy,"bmm_horaires_mareebismup.png"),7,7,units="in",res=300)
 ggplot(mige)+
     geom_point( aes(x=timec,y=niveau_mer_barrage,col=value))+	
     facet_wrap(~ per_tar_code) +
@@ -3863,6 +3909,15 @@ augmentation avec des tailles allant en s'accroissant doit se poser, avec celle
 de la régulation de cette espèce.
 
 
+\begin{figure}[htpb]
+\centering
+\includegraphics[width=0.45\textwidth]{2024/bmm_horaires_maree_ala} 
+\caption{Passage des aloses par pas de temps de 10 minutes en fonction de
+l'heure et du niveau mer en
+\Sexpr{CY}.}
+\label{horaires_maree_ala}
+\end{figure}
+
 
 \vfill
 \begin{figure}[pbt]
@@ -3927,42 +3982,10 @@ dev.off()
 #####################
 # Horaires de passage des aloses
 ######################
-mig <- bMM_Arzal@data
-mig <- mig %>% mutate(time=strftime(ope_date_debut, format="%H:%M:%S"),
+mig <- bMM_Arzal@data |>
+mutate(time = strftime(ope_date_debut, format="%H:%M:%S"),
 		date=as.Date(ope_date_debut))
-# ATTENTION RECOMPILER fun_date_extraction dans stacomiR il y avait une erreur
-
-fun_date_extraction=function(data, # tableau de donnees e importer
-		nom_coldt, # nom de la colonne
-		annee=TRUE,
-		mois=TRUE,
-		quinzaine=FALSE,
-		semaine=TRUE,
-		semaine_std=FALSE,
-		jour_an=FALSE,
-		jour_mois=TRUE,
-		heure=FALSE                           
-){
-	if (annee) data$annee <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%Y"))                        
-	if (mois) data$mois <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%m"))
-	# %b Abbreviated month name in the current locale. (Also matches full name on input.)
-	if (quinzaine) {
-		data$quinzaine=ceiling(as.numeric(strftime(as.POSIXlt(data[,nom_coldt]),
-								format="%W"))/2)
-		data$quinzaine <- as.character(data$quinzaine)
-		data$quinzaine[as.numeric(data$quinzaine)<10] <- paste("0", data$quinzaine[as.numeric(data$quinzaine)<10],sep="")
-		data$quinzaine <- as.factor(data$quinzaine)
-	}
-	if (semaine) data$semaine <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%W"))
-	#%W : Week of the year as decimal number (00e53) using Monday as the first day of week (and typically with the first Monday of the year as day 1 of week 1). The UK convention
-	if (jour_an) data$jour_365 <- strftime(as.POSIXlt(data[,nom_coldt]), format="%j")                          
-	if (jour_mois) data$jour_mois <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%d"))  
-	# %d :  Day of the month as decimal number (01e31).
-	if (heure) data$heure <- as.factor(strftime(as.POSIXlt(data[,nom_coldt]), format="%H"))  
-	#%H     Hours as decimal number (00e23).    
-	if (semaine_std) data$semaine_std=lubridate::isoweek(as.POSIXlt(data[,nom_coldt]))
-	return(data)
-}    
+  
 
 
 mig <-	fun_date_extraction(
@@ -3982,18 +4005,17 @@ dev.off()
 hhh <- mig %>% group_by(heure, mois) %>% summarize(N=sum(value))
 load(file=file.path(datawd,CY,"fonct_pass.Rdata"))	# ll
 mig$time <- strptime(strftime(mig$ope_date_debut, format="%Y-%m-%d %H:%M"),"%Y-%m-%d %H:%M")
-mig$timec <- as.POSIXct(strptime(strftime(mig$ope_date_debut, format="%H:%M:%S"),format="%H:%M:%S"))
-mige<-inner_join(mig, ll$dat,by="time")
+mig$timec <- as.POSIXct(strptime(strftime(mig$ope_date_debut, format="%H:%M:%S"), format="%H:%M:%S"))
 
+mige<-inner_join(mig, ll$dat,by="time")
+tz(ll$dat$time)
 hhh<- mige%>%group_by(heure) %>% summarize(N=sum(value))
 
-png(file=str_c(imgwdy,"bmm_horaires_maree.png"),7,7,units="in",res=300)
+png(file=str_c(imgwdy,"bmm_horaires_maree_ala.png"),7,7,units="in",res=300)
 ggplot(mige)+
-		geom_point( aes(x=timec,y=niveau_mer_barrage,col=value))+	
-		scale_colour_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous"), 
-				breaks=c(0,10,100,1000,10000),trans = "log") +
-		scale_fill_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous"), 
-				breaks=c(0,10,100,1000,10000),trans = "log") +
+		geom_jitter( aes(x=timec,y=niveau_mer_barrage,col=value))+
+		scale_colour_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous")) +
+		scale_fill_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous")) +
 		scale_x_datetime(date_labels = "%H")+
 		xlab("Heure")+
 		theme_bw()
@@ -4442,8 +4464,8 @@ save(vvv, file=str_c(datawdy,"vvv.Rdata"))
 
 
 dat <- data.frame("annee"=2002:2024,
-    "effectif_capture"=c(177,127,60,293,360,93,134,82,549,376,2499,2994,2633,1330,271,1009,0,0,0,0,0,0),
-    "poids_capture"=c(rep(NA,10),4112,4993,4105,2617,456,1707,0,0,0,0,0,0))
+    "effectif_capture"=c(177,127,60,293,360,93,134,82,549,376,2499,2994,2633,1330,271,1009,0,0,0,0,0,0,0),
+    "poids_capture"=c(rep(NA,10),4112,4993,4105,2617,456,1707,0,0,0,0,0,0,0))
 dat$poids_capture/dat$effectif_capture
 #dat$effectif_capture=round(1000*dat$capture/poids)
 # Il ne semble pas que le poids moyen ait augmenté à Arzal en 2015

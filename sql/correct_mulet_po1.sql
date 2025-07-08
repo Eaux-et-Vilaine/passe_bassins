@@ -15,3 +15,12 @@ JOIN iav.t_operation_ope ON ope_identifiant = lot_ope_identifiant
 where lot_tax_code='2031'
 GROUP BY extract('year' FROM ope_date_debut)
 
+
+
+SELECT ope_commentaires,
+ lot_commentaires FROM iav.t_operation_ope 
+JOIN iav.t_lot_lot ON lot_ope_identifiant = ope_identifiant
+WHERE ope_dic_identifiant = 5
+AND lot_tax_code='2183'
+AND extract('year' FROM ope_date_debut) = 2024
+
