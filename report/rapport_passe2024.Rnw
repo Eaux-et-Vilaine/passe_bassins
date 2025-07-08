@@ -1863,6 +1863,9 @@ resdeb <- lm1$residuals
 index <- !(is.na(data_DF$debit_passe_recalcule)|is.na(data_DF$delta_sas_vanne) )
 data_DF$resdeb <- NA
 data_DF$resdeb[index] <- resdeb 
+
+
+data_DF$debit_passe_recalcule[data_DF$debit_passe_recalcule>3.5] <- NA
 png(filename=file.path(imgwd,CY,"debit_passe_calcul.png"),7,7,units="in",res=300)
 plot(data_DF$time,
     data_DF$debit_passe_recalcule,
@@ -3440,7 +3443,7 @@ pensait, et le suivi était souvent lancé trop tardivement avant 2021
 (1ère quinzaine de mars entre 2010 et 2020) pour voir les premiers individus
 (Figures \ref{barchart_bmi_lpm}, \ref{plot_seasonal_lpm}).
 Ces résultats sont en accord avec l'examen des tendances de migration des
-lamproies marines en France par \citet{legrandContrastingTrendsSpecies2020} qui
+lamproies marines en France par \citet{legrand_ContrastingTrendsSpecies_2020} qui
 montre globalement une arrivée plus précoce dans les 30 dernières années. 
 Les dates de première arrivée (correspondant à l'arrivée de 5 \% des
 effectifs annuels), arrivée médiane (quand 50 \% des lamproies ont migré) et
@@ -4427,7 +4430,7 @@ save(datmens, file=str_c(datawdy,"datmens.Rdata"))
 datmens2 <- as.data.frame(t(datmens))
 rownames(datmens2) <- gsub("X","",rownames(datmens2))
 xtala <- xtable(datmens2,
-    caption=str_c("Migrations mensuelles par la passe à bassins du barrage d'Arzal entre 2016 et", CY,
+    caption=str_c("Migrations mensuelles d'aloses par la passe à bassins du barrage d'Arzal entre 2016 et ", CY,
 			", et captures professionnelles en estuaire."
 	),
     label="table_ala_mois",
@@ -4845,7 +4848,7 @@ L'espèce est classée vulnérable en France sur la liste rouge UICN.
 \smallskip
 
 \Sexpr{vvv$SAT$N[vvv$SAT$N$annee==CY,"effectif"]} saumon a été compté en
-\Sexpr{CY} (Figure \ref{barplot_report_annual_sat},  Tableau \ref{table_sat_mois}).
+\Sexpr{CY} (Figure \ref{barplot_report_annual_sat},  Tableau \ref{table_bilanannuel_sat}).
 Cette migration place l'année \Sexpr{CY} au \Sexpr{vvv$SAT$rank} ème rang
 par rapport à l'ensemble des années de migration (Tableau
 \ref{table_bilanannuel_sat}, Figure \ref{barchart_bmi_sat}).
