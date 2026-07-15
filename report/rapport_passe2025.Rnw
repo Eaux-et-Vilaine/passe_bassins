@@ -132,7 +132,7 @@ citecolor=orange_EV,
 filecolor=bleu_EV, 
 urlcolor=bleu_EV, 
 pdftitle= {Suivi scientifique des migrations de poissons de la passe à bassins
-du barrage d'Arzal, Rapport 2024)}, 
+du barrage d'Arzal, Rapport 2025)}, 
 pdfauthor={Brice Sauvaget},
 pdfsubject={mulet}, 
 pdfkeywords={passe} {lamproies} {alose} {stacomi}
@@ -237,7 +237,7 @@ pdfkeywords={passe} {lamproies} {alose} {stacomi}
 \fancyhf{} \fancyfoot[C]{\sffamily\normalsize\thepage} % Font setting for
 % the page number in the header
 \fancyhead[LE,RO]{\sffamily \rightmark}
-\fancyhead[LO,RE]{\slshape \normalsize Rapport passe à bassins 2024}
+\fancyhead[LO,RE]{\slshape \normalsize Rapport passe à bassins 2025}
 
 
 
@@ -391,7 +391,7 @@ keepaspectratio]{frontpage.pdf}%
 \Large \textbf{
     {\titlefont Suivi scientifique des migrations de poissons 
     de la passe à bassins du barrage d'Arzal (Vilaine).
-    \color{vert_clair_BGM} Rapport 2024.}} \par  
+    \color{vert_clair_BGM} Rapport 2025.}} \par  
  \vspace{0.5cm}
 \centering{\Large{\color{vert_fonce_BGM}{\titlefont
 Cédric Briand, Brice Sauvaget, Gérard Eriau \par}}}
@@ -448,7 +448,7 @@ Cédric Briand, Brice Sauvaget, Gérard Eriau \par}}}
     de la passe à bassins du barrage d'Arzal,\\
     }}
 \bigskip
-{\titlefont  \LARGE rapport 2024\par }
+{\titlefont  \LARGE rapport 2025\par }
 \vspace{4mm}\noindent
 {\color{turquoise_EV}\rule{0.9\textwidth}{1.8pt}}\par
 \vspace{5mm}
@@ -568,7 +568,7 @@ load_package('ggplot2')
 
 
 # l'annee en cours (c'est la valeur à changer en début de script
-CY <- 2024
+CY <- 2025
 # le repertoire contenant les données
 datawdy <- str_c(datawd,CY,"/")
 dir.create(datawdy,showWarnings = FALSE)
@@ -827,7 +827,7 @@ ont été comptabilisées sur l'ensemble de l'année. Entre 1998 et 2012, seule 
 
 Ce rapport décrit le fonctionnement de la passe à fentes verticales du barrage
 et de son système de vidéosurveillance associé. Il fait également la synthèse des passages de 
-poissons migrateurs par la passe à bassins en 2024 \rev{ TODO 
+poissons migrateurs par la passe à bassins en 2025 \rev{ TODO 
 \footnote{La migration sur les passes à anguilles est traitée dans un autre
 rapport :
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ER5GHvMhd7hIm7U0xgXtt5YBzTVgcGsewPAMu5IUjMxGKQ?e=oJfWao}{Gestion
@@ -1161,7 +1161,7 @@ décembre (Figure \ref{report_df_annee} en annexe).
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/fonctionnement_passe.png}
+\includegraphics[width=0.45\textwidth]{2025/fonctionnement_passe.png}
 \caption{Fonctionnement de la passe en \Sexpr{CY}, niveaux Vilaine, mer, sas
 (dernier bassin en aval de la passe), et niveau de la vanne aval. Chaque point correspond aux niveaux
 enregistrés lors d'une période de 10 minutes. Les données ont été corrigées des
@@ -1178,7 +1178,7 @@ partir de ces niveaux, dont le détail est présenté en annexe (Figures
 de la passe est calculé par période de 10 minutes (Figure \ref{report_df_annee}
 en annexe).
 
-En Figure \ref{report_df_fct_2003_2024}, l'analyse des durées mensuelles
+En Figure \ref{report_df_fct_2003_2025}, l'analyse des durées mensuelles
 cumulées de chaque type de fonctionnement permet de se donner une idée des
 périodes auxquelles la passe a été arrêtée (en orange
 \textcolor{orange_EV}{\rule[-0.2mm]{3mm}{2mm}}), mais également des périodes où elle a fonctionné de manière plus limitée, 
@@ -1187,7 +1187,7 @@ augmentation de la durée des dysfonctionnements
 (en orange \textcolor{orange_EV}{\rule[-0.2mm]{3mm}{2mm}}) ou par des arrêts
 nocturnes (en jaune \textcolor{jaune_EV}{\rule[-0.2mm]{3mm}{2mm}}). Les mêmes
 graphiques sont présentés pour la période 2003-\Sexpr{CY} (Figure
-\ref{report_df_2003_2024}) en mettant juste en avant les périodes où la passe est fonctionnelle
+\ref{report_df_2003_2025}) en mettant juste en avant les périodes où la passe est fonctionnelle
 (en bleu \textcolor{bleu_EV}{\rule[-0.2mm]{3mm}{2mm}}) et les périodes où elle
 ne l'est pas (en orange \textcolor{orange_EV}{\rule[-0.2mm]{3mm}{2mm}}).
 
@@ -1198,7 +1198,7 @@ compte des corrections de valeurs abérrantes et du coefficient de noyage de la 
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/debit_passe_comp.png}
+\includegraphics[width=0.45\textwidth]{2025/debit_passe_comp.png}
 \caption{Débits de la passe en \Sexpr{CY}. Débits produits par l'automate du
 barrage et recalculés en prenant compte du noyage de la chute à l'aval et des
 valeurs abérrantes de niveaux.}
@@ -1208,19 +1208,19 @@ valeurs abérrantes de niveaux.}
 %
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/report_df_fct_2003_2024.png}
-\caption{Fonctionnement de la passe de 2003 à 2024, avec les détails par type
+\includegraphics[width=0.45\textwidth]{2025/report_df_fct_2003_2025.png}
+\caption{Fonctionnement de la passe de 2003 à 2025, avec les détails par type
 de fonctionnement.}
-\label{report_df_fct_2003_2024}
+\label{report_df_fct_2003_2025}
 \end{figure}%
 %
 
 %
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/report_df_2003_2024.png}
-\caption{Fonctionnement de la passe de 2003 à 2024.}
-\label{report_df_2003_2024}
+\includegraphics[width=0.45\textwidth]{2025/report_df_2003_2025.png}
+\caption{Fonctionnement de la passe de 2003 à 2025.}
+\label{report_df_2003_2025}
 \end{figure}%
 %
 
@@ -1229,20 +1229,20 @@ de fonctionnement.}
 Le dispositif de comptage a été mis en service le 9 février et arrêté le 26
 septembre. Les seuls arrêts du suivi sont dus à trois extinctions du caisson
 lumineux entre le 12 et 15 février, pour une durée cumulée de 56 heures
-(Figure \ref{report_dc_2024}).
+(Figure \ref{report_dc_2025}).
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/report_dc_2024.png} 
+\includegraphics[width=0.45\textwidth]{2025/report_dc_2025.png} 
 \caption{Bilan du fonctionnement du dispositif de comptage en \Sexpr{CY}.}
-\label{report_dc_2024}
+\label{report_dc_2025}
 \end{figure}
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/report_dc_1998_2024.png} 
-\caption{Bilan du fonctionnement du dispositif de comptage de 1998 à 2024.}
-\label{report_dc_1998_2024}
+\includegraphics[width=0.45\textwidth]{2025/report_dc_1998_2025.png} 
+\caption{Bilan du fonctionnement du dispositif de comptage de 1998 à 2025.}
+\label{report_dc_1998_2025}
 \end{figure}
 
 <<fonctions_passe, echo=FALSE, eval=TRUE ,include=FALSE>>=
@@ -1670,8 +1670,12 @@ pois <- getPass(msg="Main password")
 # I need to pass all arguments from table to the function otherwise crashes ...
 
 
-con <-dbConnect(RMySQL::MySQL(), dbname = "archive_IAV", username = decrypt_string(umysql,pois),
-    password = decrypt_string(pwdmysql,pois),host=decrypt_string(hostmysql,pois))
+con <-dbConnect(RMySQL::MySQL(), 
+dbname = "archive_IAV", 
+username = decrypt_string(umysql,pois),
+    password = decrypt_string(pwdmysql,pois),
+	host = decrypt_string(hostmysql,pois),
+	 port = 3306)
 df<- tribble(
     ~name, ~table, ~tag,
     "niveau_mer_passe","b_passeapoisson_niveaumer",   0,
@@ -1694,7 +1698,14 @@ end <-str_c("'",CY+1,"-01-01 00:00:00'")
 res <- getdata(con,.df=df,start,end)
 
 save(res, file=file.path(datawd,CY,"res.Rdata"))
-
+poolsiva <- pool::dbPool(
+    drv = RMySQL::MySQL(),
+    dbname = "archive_IAV",
+    host = decrypt_string(hostmysql,pois),
+    username = decrypt_string(umysql,pois),
+    password = decrypt_string(pwdmysql,pois),
+    port=3306
+)
 @
 
 
@@ -1743,10 +1754,10 @@ res1 <-
 
 
 # this just reads the time as CEST
-#strptime("2024-04-08 08:00:00",tz = "Europe/Paris",format="%Y-%m-%d %H:%M:%S")
+#strptime("2025-04-08 08:00:00",tz = "Europe/Paris",format="%Y-%m-%d %H:%M:%S")
 # this one will shift 2 hours
 #lubridate::with_tz(
-#  lubridate::ymd_hms("2024-04-08 08:00:00",tz="GMT"),
+#  lubridate::ymd_hms("2025-04-08 08:00:00",tz="GMT"),
 #   tzone = "Europe/Paris")
 # before 2016 -------------
 if (CY <=2015) {
@@ -2030,14 +2041,14 @@ DBI::dbExecute(req@connection, "INSERT INTO iav.t_periodefonctdispositif_per (
 r_df=new("report_df")
 r_df<-choice_c(r_df,
     1,
-    horodatedebut="2024-01-01",
-    horodatefin="2024-12-31",
+    horodatedebut="2025-01-01",
+    horodatefin="2025-12-31",
     silent=TRUE)
 #Sys.setenv(TZ='GMT')
 r_df<-connect(r_df)
 
 # normalement on doit pouvoir sortir ça directement dans le chunk calcul_debit_passe
-# mais ici j'ai fait des modifications manuelles en sql/traitementç2024
+# mais ici j'ai fait des modifications manuelles en sql/traitementç2025
 #png(filename=file.path(imgwd,CY,"temps_fonctionnement_passe.png"),7,7,units="in",res=300)
 #g <- graph_DF(r_df@data)
 #print(g)
@@ -2076,7 +2087,7 @@ r_df_hist<-connect(r_df_hist)
 
 # Je fais rentrer tout le graphe sur une demie colonne ça rend bien.
 
-png(filename=paste0(imgwdy,"report_df_2003_2024.png"),width=6,height=12, units="in",res=300)
+png(filename=paste0(imgwdy,"report_df_2003_2025.png"),width=6,height=12, units="in",res=300)
 plot(r_df_hist,plot.type=1,
     color_type_oper = 	c(
         "Fonc normal" = bleu_EV,
@@ -2089,7 +2100,7 @@ plot(r_df_hist,plot.type=1,
         "FALSE"=orange_EV))
 dev.off()
 
-png(filename=paste0(imgwdy,"report_df_fct_2003_2024.png"),width=6,height=12, units="in",res=300)
+png(filename=paste0(imgwdy,"report_df_fct_2003_2025.png"),width=6,height=12, units="in",res=300)
 plot(r_df_hist,plot.type=2,
     color_type_oper = 	c(
         "Fonc normal" = bleu_EV,
@@ -2104,13 +2115,13 @@ dev.off()
 r_df_2<-choice_c(r_df,
     1,
     horodatedebut="2011-01-01",
-    horodatefin="2024-12-31",
+    horodatefin="2025-12-31",
     silent=TRUE)
 r_df_2<-connect(r_df_2)
 
 
 # attention très très long
-#png(filename=paste0(imgwdy,"report_df_2011_2024.png"),width=8,height=12, units="in",res=300)
+#png(filename=paste0(imgwdy,"report_df_2011_2025.png"),width=8,height=12, units="in",res=300)
 #plot(r_df_2,plot.type=1,
 #		color_type_oper = 	c(
 #				"Fonc normal" = bleu_EV,
@@ -2123,7 +2134,7 @@ r_df_2<-connect(r_df_2)
 #				"FALSE"=orange_EV))
 #dev.off()
 #
-#png(filename=paste0(imgwdy,"report_df_fct_2011_2024.png"),width=8,height=12, units="in",res=300)
+#png(filename=paste0(imgwdy,"report_df_fct_2011_2025.png"),width=8,height=12, units="in",res=300)
 #plot(r_df_2,plot.type=2,
 #		color_type_oper = 	c(
 #				"Fonc normal" = bleu_EV,
@@ -2157,7 +2168,7 @@ plot(r_dc1,plot.type="1",
     color_etat=c("TRUE"=turquoise_EV, 
         "FALSE"=jaune_EV)) 
 g_report_dc_1=get('g_report_dc_1',envir_stacomi)
-png(filename=paste0(imgwdy,"report_dc_1998_2024.png"),width=6,height=12, units="in",res=300)
+png(filename=paste0(imgwdy,"report_dc_1998_2025.png"),width=6,height=12, units="in",res=300)
 g_report_dc_1 +
     theme(strip.background = element_rect(colour = "grey", fill = "grey20")		
     ) + 
@@ -2228,8 +2239,8 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 #
 #get_temperature_chronique(
 #    code_station = "04216000",
-#    date_debut_mesure = "2024-01-01",
-#    date_fin_mesure="2024-12-31",
+#    date_debut_mesure = "2025-01-01",
+#    date_fin_mesure="2025-12-31",
 #    fields = paste("code_station,date_mesure_temp,heure_mesure_temp,resultat,symbole_unite")
 #)
 # 04214295     ARON à GRAND-FOUGERAY
@@ -2343,7 +2354,7 @@ DBI::dbExecute(req@connection, "INSERT INTO iav.tj_conditionenvironnementale_env
         ,env_valeur_quantitatif
         ,env_stm_identifiant
         ,env_org_code
-        FROM tj_conditionenvironnementale_env_temp") #2012 (2021) 2309 (2022) 1982 (2024)
+        FROM tj_conditionenvironnementale_env_temp") #2012 (2021) 2309 (2022) 1982 (2024) (2025)
 
 
 @
@@ -2356,7 +2367,7 @@ dernier trimestre, et globalement des débits bien supérieurs à ceux de
 référence de la banque hydro (Figure \ref{fig_debit}).
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/fig_debit.png} 
+\includegraphics[width=0.45\textwidth]{2025/fig_debit.png} 
 \caption{Débits de la Vilaine en \Sexpr{CY}. En bleu = débits mesurés au
 Pont de Cran, à l'aide d'une sonde à ultrasons, en orange = débits
 instantanés au barrage d'Arzal (volets et vannes). Chaque point représente la valeur moyenne calculée toute les
@@ -2426,7 +2437,7 @@ req<- new("RequeteDB")
 req <- connect(req)
 res <- dbGetQuery(req@connection,glue("SELECT lot_identifiant, lot_commentaires 
             FROM iav.t_operation_ope JOIN iav.t_lot_lot on lot_ope_identifiant=ope_identifiant 
-            WHERE (ope_date_debut, ope_date_fin) overlaps ('2007-01-01'::timestamp without time zone, '2024-12-31 23:59:59'::timestamp without time zone)  
+            WHERE (ope_date_debut, ope_date_fin) overlaps ('2007-01-01'::timestamp without time zone, '2025-12-31 23:59:59'::timestamp without time zone)  
             AND ope_dic_identifiant in('5') 
             AND lot_tax_code in ('2038','2055','2234','2183','2014','2220','2224') 
             AND lot_std_code in ('11','AGJ','IND') 
@@ -2580,7 +2591,7 @@ de la passe puisse expliquer cette absence.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/graphe_taille_mulets.pdf} 
+\includegraphics[width=0.45\textwidth]{2025/graphe_taille_mulets.pdf} 
 \caption{Tendance saisonnière d'évolution des
 tailles de mulets depuis 2013. A. Graphiques de densités (distributions) des
 tailles par mois, en violet = printemps, en jaune = mois estivaux, en
@@ -2594,14 +2605,14 @@ Modèle gam ajusté sur les valeurs de taille (au centre modèle et intervalle d
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/bilan_annuel_mup} 
+\includegraphics[width=0.45\textwidth]{2025/bilan_annuel_mup} 
 \caption{Bilan annuel des migrations de mulets au barrage d'Arzal.}
 \label{bilan_annuel_mup}
 \end{figure}
 
-Les effectifs de mulets de 2024
+Les effectifs de mulets de 2025
 (N=\Sexpr{format(vvv[["MUP"]][["NCY"]], digits=1, nsmall =0, big.mark="",scientific=FALSE)}) 
-sont faibles comparés à ceux de la période 2014-2024 avec des variations entre
+sont faibles comparés à ceux de la période 2014-2025 avec des variations entre
 des effectifs de 200~000 à 600~000 mulets.
 Les variations des effectifs de petits mulets sont en 
 grande partie liée à l'abondance des mulets de classe de taille de 200 à 300 mm
@@ -2631,7 +2642,7 @@ part des passages pour des niveaux mer >0m (Figure \ref{horaires_maree_mulet}).
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/horaires_mulet} 
+\includegraphics[width=0.45\textwidth]{2025/horaires_mulet} 
 \caption{Horaires de migration des mulets en \Sexpr{CY}.}
 \label{horaires_mulet}
 \end{figure}
@@ -2640,7 +2651,7 @@ part des passages pour des niveaux mer >0m (Figure \ref{horaires_maree_mulet}).
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/bmm_horaires_maree_mup} 
+\includegraphics[width=0.45\textwidth]{2025/bmm_horaires_maree_mup} 
 \caption{Passage des mulets par pas de temps de 10 minutes en fonction de
 l'heure et du niveau mer en
 \Sexpr{CY}.}
@@ -2654,7 +2665,7 @@ l'heure et du niveau mer en
 \begin{landscape}
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.9\linewidth,keepaspectratio]{2024/rmi_journalier_mup.png} 
+\includegraphics[width=0.9\linewidth,keepaspectratio]{2025/rmi_journalier_mup.png} 
 \caption{Bilan annuel des migrations de mulets \textit{Chelon ramada} au barrage
 d'Arzal.}
 \label{rmi_journalier_mup}
@@ -2914,7 +2925,7 @@ dev.off()
 # creation du tableau de prédiction
 pred <-
     data.frame("date"=
-            as.POSIXct(seq(from=as.POSIXct(dmy("01012013")), to = as.POSIXct(dmy("30072024")), by="1 day")))
+            as.POSIXct(seq(from=as.POSIXct(dmy("01012013")), to = as.POSIXct(dmy("30072025")), by="1 day")))
 pred <- fndate(pred)
 pred <- pred[pred$yday>59&pred$yday<319,]
 pred <- pred[pred$year!="2014",]
@@ -2976,7 +2987,7 @@ xtbilA<-stacomiR::xtable(bilA,
 )
 
 # below not run but one can create a file as following
-save(bilA, file= str_c("bilAmup",CY,".Rdata"))
+save(bilA, file= file.path(datawd,CY,str_c("bilAmup",CY,".Rdata")))
 #load(file= str_c("bilAmup",CY,".Rdata"))
 path=file.path(tabwdy,
     paste(paste(bilA@dc@dc_selected,collapse="_"),"_",
@@ -3245,7 +3256,8 @@ dev.off()
 
 
 
-<<report_mig_internnual_mulet, echo=FALSE, eval=FALSE,include=FALSE >>=
+
+<<report_mig_interannual_mulet, echo=FALSE, eval=FALSE,include=FALSE >>=
 ###########################################
 # Bilan interannuel de stacomi
 #########################################
@@ -3263,8 +3275,8 @@ bmi <- choice_c(bmi,
 bmi <- charge(bmi,silent=TRUE)
 bmi <- connect(bmi,silent=FALSE)
 bmi <- calcule(bmi)
-#save(bmi,file=str_c(datawd,'bmimup2024.Rdata'))
-#load(file=str_c(datawd,'bmi2024.Rdata'))
+#save(bmi,file=str_c(datawd,'bmimup2025.Rdata'))
+#load(file=str_c(datawd,'bmi2025.Rdata'))
 #str(bmi)
 
 plot(bmi, year_choice = CY, silent=TRUE)
@@ -3334,9 +3346,9 @@ dev.off()
 mmm <- summary(bmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
 options(encoding = "UTF-8")
-colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2024)")
+colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2025)")
 xtmmm <- xtable(mmm,caption="Migrations mensuelles des mulets dans la passe à bassins du barrage d'Arzal. $N$ = nombre, * correspondent à
-        la période 1996-2024. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
+        la période 1996-2025. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
     label="table_lpm_mois",
     digits=c(0,0,0,0,0,0),
     display = c("s","s","f","f", "f", "f"))
@@ -3407,7 +3419,7 @@ Les raisons des variations d'effectif restent mal comprises.
 		
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/barplot_report_annual_lpm.png} 
+\includegraphics[width=0.45\textwidth]{2025/barplot_report_annual_lpm.png} 
 \caption{Histogramme des effectifs annuels de lamproies marines comptabilisés
 au barrage d'Arzal.}
 \label{barplot_report_annual_lpm}
@@ -3421,7 +3433,7 @@ période 1996-\Sexpr{CY} (Figure \ref{barchart_bmi_lpm}, Tableau
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/barchart_bmi_lpm.png} 
+\includegraphics[width=0.45\textwidth]{2025/barchart_bmi_lpm.png} 
 \caption{Comparaison de la migration de lamproies marines de \Sexpr{CY} avec la
 série interannuelle de données 1996-\Sexpr{CY-1}.}
 \label{barchart_bmi_lpm}
@@ -3449,7 +3461,7 @@ lamproie.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/rmi_density_lpm.png} 
+\includegraphics[width=0.45\textwidth]{2025/rmi_density_lpm.png} 
 \caption{Saisonnalité de la migration des lamproies marines, les pourcentages
 par quinzaine sont cumulés.}
 \label{rmi_density_lpm}
@@ -3458,7 +3470,7 @@ par quinzaine sont cumulés.}
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.49\textwidth]{2024/plot_seasonal_lpm.png} 
+\includegraphics[width=0.49\textwidth]{2025/plot_seasonal_lpm.png} 
 \caption{Saisonnalité de la migration des lamproies marines, effectifs
 hebdomadaires. Les barres représentent le 5ème et le 95ème percentile de la
 migration, le point la médiane. L'importance des effectifs est représentée 
@@ -3486,7 +3498,7 @@ des mesures de taille) (Figure
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/size_lpm.png} 
+\includegraphics[width=0.45\textwidth]{2025/size_lpm.png} 
 \caption{Comparaison des structure en taille des lamproies marines. Les tailles
 de 2019 à \Sexpr{CY} ont été calculées en prenant en compte la déformation des 
 distances dans les différentes zones de la vitre.}
@@ -3570,9 +3582,9 @@ dev.off()
 
 mmm <- summary(rmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
-colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2024)")
+colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2025)")
 xtmmm <- xtable(mmm,caption="Migrations mensuelles des lamproies marines dans la passe à bassins du barrage d'Arzal. $N$ = nombre, * correspondent à
-        la période 1996-2024. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
+        la période 1996-2025. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
     label="table_lpm_mois",
     digits=c(0,0,0,0,0,0),
     display = c("s","s","f","f", "f", "f"))
@@ -3819,7 +3831,7 @@ et alose feinte \textit{Alosa fallax}.
 
 %\begin{figure}[htpb]
 %\centering
-%\includegraphics[width=0.45\textwidth]{2024/bilan_annuel_ala.png} 
+%\includegraphics[width=0.45\textwidth]{2025/bilan_annuel_ala.png} 
 %\caption{Histogramme des effectifs annuels d'aloses comptabilisés
 %au barrage d'Arzal.}
 %\label{bilan_annuel_ala}
@@ -3830,7 +3842,7 @@ et alose feinte \textit{Alosa fallax}.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/rmi_journalier_ala.png} 
+\includegraphics[width=0.45\textwidth]{2025/rmi_journalier_ala.png} 
 \caption{Comparaison de la migration d'aloses de \Sexpr{CY} avec la série
 interannuelle de données 1996-\Sexpr{CY-1}.}
 \label{rmi_journalier_ala}
@@ -3842,7 +3854,7 @@ Globalement, les migrations sont inférieures à la moyenne interannuelle (Figur
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/barchart_bmi_ala.png} 
+\includegraphics[width=0.45\textwidth]{2025/barchart_bmi_ala.png} 
 \caption{Comparaison de la migration d'aloses de \Sexpr{CY} avec la série
 interannuelle de données 1996-\Sexpr{CY-1}.}
 \label{barchart_bmi_ala}
@@ -3852,7 +3864,7 @@ La comparaison des structures en taille vidéo de cette année laisse apparaîtr
 une forte diminution de la taille moyenne après une tendance sur plusieurs
 années à l'augmentation.
 A compter de 2019, la taille a été mesurée relativement à 9 zones de la vitre de
-comptage pour prendre en compte les déformations de la lentille de la caméra. Ainsi les tailles avant 2019 et 2024
+comptage pour prendre en compte les déformations de la lentille de la caméra. Ainsi les tailles avant 2019 et 2025
 sont peut être légèrement plus petites (Figure \ref{size_alose}).
 La diminution de la taille moyenne en 2020 semblait cohérente avec un retour des
 premières aloses ayant fait l'objet de mesures de protection 5 ans auparavant en
@@ -3866,7 +3878,7 @@ provenant d'autres bassins.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/size_alose.png}
+\includegraphics[width=0.45\textwidth]{2025/size_alose.png}
 \caption{Taille des aloses mesurées à Arzal. Densité (graphique en violon),
 moyenne et +- 2 fois l'écart type (en bleu foncé). La couleur des points dépend
 du mois de passage.}
@@ -3879,7 +3891,7 @@ particulièrement précoce depuis 2022 (Figure \ref{plot_seasonal_ala}).
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.49\textwidth]{2024/plot_seasonal_ala.png} 
+\includegraphics[width=0.49\textwidth]{2025/plot_seasonal_ala.png} 
 \caption{Saisonnalité de la migration des aloses, effectifs hebdomadaires. Les
 barres représentent le 5ème et le 95ème percentile de la migration, le point
 la médiane. L'importance des effectifs est représentée par la couleur.}
@@ -3911,7 +3923,7 @@ de la régulation de cette espèce.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/bmm_horaires_maree_ala} 
+\includegraphics[width=0.45\textwidth]{2025/bmm_horaires_maree_ala} 
 \caption{Passage des aloses par pas de temps de 10 minutes en fonction de
 l'heure et du niveau mer en
 \Sexpr{CY}.}
@@ -3922,7 +3934,7 @@ l'heure et du niveau mer en
 \vfill
 \begin{figure}[pbt]
 \centering
-\includegraphics[width=0.5\textwidth]{2024/tx_exploit.png} 
+\includegraphics[width=0.5\textwidth]{2025/tx_exploit.png} 
 \caption{Migration et taux d'exploitation des aloses en estuaire de Vilaine,
 illustration de l'effet des mesures prises à partir de 2015 pour limiter
 l'exploitation de l'espèce en estuaire. Interdictions par zones et saisonnières
@@ -3937,7 +3949,7 @@ de 2015 à 2017, puis interdiction totale saisonnière de pêche à partir de 20
 \begin{landscape}
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.9\linewidth]{2024/preco_diagram.png} 
+\includegraphics[width=0.9\linewidth]{2025/preco_diagram.png} 
 \caption{Diagramme de précaution pour la gestion des aloses en Vilaine. Les
 données indiquent la position du stock par rapport à la règle de gestion proposée 
 par le groupe de travail du Cogepomi sur les aloses. 
@@ -4128,8 +4140,8 @@ bmi<-choice_c(bmi,
 bmi<-charge(bmi,silent=TRUE)
 bmi<-connect(bmi,silent=FALSE, check=TRUE)
 bmi<-calcule(bmi)
-save(bmi,file=str_c(datawd,'bmiala2024.Rdata'))
-#load(file=str_c(datawd,'bmi2024.Rdata'))
+save(bmi,file=str_c(datawd,'bmiala2025.Rdata'))
+#load(file=str_c(datawd,'bmi2025.Rdata'))
 #str(bmi)
 ####################
 # graphique de stacomi (2018 pas de captures)
@@ -4188,9 +4200,9 @@ dev.off()
 
 mmm <- summary(bmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
-colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2024)")
+colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2025)")
 xtmmm<-xtable(mmm,caption="Migrations mensuelles des lamproies marines dans la passe à bassins du barrage d'Arzal. $N$ = nombre, * correspondent à
-        la période 1996-2024. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
+        la période 1996-2025. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
     label="table_lpm_mois",
     digits=c(0,0,0,0,0,0),
     display = c("s","s","f","f", "f", "f"))
@@ -4218,7 +4230,7 @@ ra<-choice_c(ra,
     taxa=c("Alosa"),
     stage=c("11"),
     start_year=1996,
-    end_year=2024,
+    end_year=2025,
     silent=TRUE)
 
 
@@ -4361,6 +4373,7 @@ bmi2021 <- summary(bmi,year_choice=2021,silent=FALSE)
 bmi2022 <- summary(bmi,year_choice=2022,silent=FALSE)
 bmi2023 <- summary(bmi,year_choice=2023,silent=FALSE)
 bmi2024 <- summary(bmi,year_choice=2024,silent=FALSE)
+bmi2025 <- summary(bmi,year_choice=2025,silent=FALSE)
 datmens <- data.frame("2016"=c("capture (nb)"=round(sum(datpech2016$nb)),
         "capture (kg)"=round(sum(datpech2016$capture/1000)),
         "migration(03)"=0,
@@ -4414,6 +4427,12 @@ datmens <- data.frame("2016"=c("capture (nb)"=round(sum(datpech2016$nb)),
         "migration(03)"=bmi2024[["5"]][1,6],
         "migration(04)"=bmi2024[["5"]][2,6],
         "migration(05)"=bmi2024[["5"]][3,6],
+        "migration(06-07)"=NA),
+    "2025"=c("capture (nb)"=0,
+        "capture (kg)"=0,
+        "migration(03)"=bmi2025[["5"]][1,6],
+        "migration(04)"=bmi2025[["5"]][2,6],
+        "migration(05)"=bmi2025[["5"]][3,6],
         "migration(06-07)"=NA) 
 )
 save(datmens, file=str_c(datawdy,"datmens.Rdata"))
@@ -4463,7 +4482,7 @@ save(vvv, file=str_c(datawdy,"vvv.Rdata"))
 #############################
 
 
-dat <- data.frame("annee"=2002:2024,
+dat <- data.frame("annee"=2002:2025,
     "effectif_capture"=c(177,127,60,293,360,93,134,82,549,376,2499,2994,2633,1330,271,1009,0,0,0,0,0,0,0),
     "poids_capture"=c(rep(NA,10),4112,4993,4105,2617,456,1707,0,0,0,0,0,0,0))
 dat$poids_capture/dat$effectif_capture
@@ -4584,7 +4603,7 @@ dev.off()
 ##Rpred=alpha3*N^d/(beta3^d+N^d)
 #
 #ala<-rbind(ala[1:5,],ala)
-#ala$annee<-1991:2024
+#ala$annee<-1991:2025
 len <- length(ala$annee)
 #ala$migration[1:5]<-0
 #mean(ala$migration[6:7]) # 111
@@ -4852,7 +4871,7 @@ par rapport à l'ensemble des années de migration (Tableau
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/barplot_report_annual_sat.png} 
+\includegraphics[width=0.45\textwidth]{2025/barplot_report_annual_sat.png} 
 \caption{Histogramme des effectifs annuels de saumons comptabilisés
 au barrage d'Arzal.}
 \label{barplot_report_annual_sat}
@@ -4860,7 +4879,7 @@ au barrage d'Arzal.}
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/barchart_bmi_sat.png} 
+\includegraphics[width=0.45\textwidth]{2025/barchart_bmi_sat.png} 
 \caption{Comparaison de la migration de saumons de \Sexpr{CY} avec la
 série interannuelle de données 1996-\Sexpr{CY-1}.}
 \label{barchart_bmi_sat}
@@ -4876,7 +4895,7 @@ en juillet (Figure \ref{barchart_bmi_sat}).
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/rmi_density_sat.png} 
+\includegraphics[width=0.45\textwidth]{2025/rmi_density_sat.png} 
 \caption{Saisonnalité des migrations de saumons atlantiques sur la Vilaine.}
 \label{rmi_density_sat}
 \end{figure}
@@ -4888,7 +4907,7 @@ très majoritairement des castillons.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/size_sat.png} 
+\includegraphics[width=0.45\textwidth]{2025/size_sat.png} 
 \caption{Taille des saumons mesurés au niveau du dispositif de vidéocontrôle
 d'Arzal.}
 \label{size_sat}
@@ -4972,9 +4991,9 @@ dev.off()
 
 mmm <- summary(rmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
-colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2024)")
+colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2025)")
 xtmmm<-xtable(mmm,caption="Migrations mensuelles des saumons dans la passe à bassins du barrage d'Arzal. $N$ = nombre, * correspondent à
-        la période 1996-2024. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
+        la période 1996-2025. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
     label="table_sat_mois",
     digits=c(0,0,0,0,0,0),
     display = c("s","s","f","f", "f", "f"))
@@ -5151,9 +5170,9 @@ dev.off()
 
 mmm <- summary(rmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
-colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2024)")
+colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2025)")
 xtmmm<-xtable(mmm,caption="Migrations mensuelles de truites dans la passe à bassins du barrage d'Arzal. $N$ = nombre, * correspondent à
-        la période 1996-2024. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
+        la période 1996-2025. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
     label="table_sat_genre_mois",
     digits=c(0,0,0,0,0,0),
     display = c("s","s","f","f", "f", "f"))
@@ -5258,7 +5277,7 @@ en \Sexpr{CY} (Figure \ref{barplot_report_annual_trm}). %,  Tableau
 %\ref{table_trm_mois}).
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/barplot_report_annual_trm.png} 
+\includegraphics[width=0.45\textwidth]{2025/barplot_report_annual_trm.png} 
 \caption{Histogramme des effectifs annuels de truites de mer comptabilisés
 au barrage d'Arzal.}
 \label{barplot_report_annual_trm}
@@ -5269,7 +5288,7 @@ au barrage d'Arzal.}
 
 %\begin{figure}[htpb]
 %\centering
-%\includegraphics[width=0.45\textwidth]{2024/barchart_bmi_trm.png} 
+%\includegraphics[width=0.45\textwidth]{2025/barchart_bmi_trm.png} 
 %\caption{Comparaison de la migration de truite de mer de \Sexpr{CY} avec la
 %série interannuelle de données 1996-\Sexpr{CY-1}.}
 %\label{barchart_bmi_trm}
@@ -5287,7 +5306,7 @@ La migration des truites de mer intervient toute l'année avec un pic estival
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/rmi_density_trm.png} 
+\includegraphics[width=0.45\textwidth]{2025/rmi_density_trm.png} 
 \caption{Saisonnalité des migrations de truites de mer sur la Vilaine.}
 \label{rmi_density_trm}
 \end{figure}
@@ -5298,7 +5317,7 @@ en Figure \ref{size_trm}.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/size_trm.png} 
+\includegraphics[width=0.45\textwidth]{2025/size_trm.png} 
 \caption{Taille des truites de mer mesurées au niveau du dispositif de
 vidéocontrôle d'Arzal.}
 \label{size_trm}
@@ -5420,9 +5439,9 @@ dev.off()
 
 mmm <- summary(rmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
-colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2024)")
+colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2025)")
 xtmmm<-xtable(mmm,caption="Migrations mensuelles des truites de mer dans la passe à bassins du barrage d'Arzal. $N$ = nombre, * correspondent à
-        la période 1996-2024. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
+        la période 1996-2025. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
     label="table_trm_mois",
     digits=c(0,0,0,0,0,0),
     display = c("s","s","f","f", "f", "f"))
@@ -5551,11 +5570,11 @@ rencontre que des effectifs très faibles d'autres espèces. En \Sexpr{CY}, les
 espèces recensées sont assez nombreuses : silure, sandre, black bass, cyprinidés
 et brème (Figure \ref{autres_especes}). 
 La fréquentation des autres espèces depuis 2000 est illustrée de manière
-graphique à la Figure \ref{autres_especes_2000_2024}. 
+graphique à la Figure \ref{autres_especes_2000_2025}. 
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/autres_especes.png} 
+\includegraphics[width=0.45\textwidth]{2025/autres_especes.png} 
 \caption{Effectif des autres espèces recensées en \Sexpr{CY} dans la passe.
 \textit{Abramis brama} brème, 
 \textit{Ameiurus melas} poisson-chat,
@@ -5578,16 +5597,16 @@ graphique à la Figure \ref{autres_especes_2000_2024}.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/autres_especes_2000_2024.png} 
+\includegraphics[width=0.45\textwidth]{2025/autres_especes_2000_2025.png} 
 \caption{Effectif des autres espèces rencontrées dans la passe d'Arzal depuis
 2000.}
-\label{autres_especes_2000_2024}
+\label{autres_especes_2000_2025}
 \end{figure}
 
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/bilan_annuel_sil.png} 
+\includegraphics[width=0.45\textwidth]{2025/bilan_annuel_sil.png} 
 \caption{Effectif des silures ayant migré par la passe d'Arzal depuis
 2000.}
 \label{bilan_annuel_sil}
@@ -5601,7 +5620,7 @@ pour lesquelles on observe plus de silures de petite taille (Figure \ref{size_si
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2024/size_sil.png} 
+\includegraphics[width=0.45\textwidth]{2025/size_sil.png} 
 \caption{Taille des silures mesurés au niveau du dispositif de vidéocontrôle
 d'Arzal.}
 \label{size_sil}
@@ -5666,7 +5685,7 @@ png(file=str_c(imgwdy,"autres_especes_2000_",CY,".png"),8,8,units="in",res=300)
 print(g)
 dev.off()
 #############
-# Bilan des espèces 2024
+# Bilan des espèces 2025
 ###############
 
 bilesp<-choice_c(bilesp,
@@ -5745,9 +5764,9 @@ dev.off()
 
 mmm <- summary(rmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
-colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2024)")
+colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2025)")
 xtmmm<-xtable(mmm,caption="Migrations mensuelles des silures dans la passe à bassins du barrage d'Arzal. $N$ = nombre, * correspondent à
-        la période 1996-2024. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
+        la période 1996-2025. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
     label="table_trm_mois",
     digits=c(0,0,0,0,0,0),
     display = c("s","s","f","f", "f", "f"))
@@ -5944,9 +5963,9 @@ dev.off()
 
 mmm <- summary(rmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
-colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2024)")
+colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2025)")
 xtmmm<-xtable(mmm,caption="Migrations mensuelles des silures dans la passe à bassins du barrage d'Arzal. $N$ = nombre, * correspondent à
-        la période 1996-2024. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
+        la période 1996-2025. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
     label="table_trm_mois",
     digits=c(0,0,0,0,0,0),
     display = c("s","s","f","f", "f", "f"))
@@ -6068,7 +6087,7 @@ dev.off()
 Pour l'étude Glanispomi, qui vise à mesurer la prédation exercée par le
 silure sur les poissons migrateurs, il est nécessaire de calculer la biomasse
 sur la Vilaine pour les mois de mars à mai, pour les aloses, lamproies marines
-et mulets. L'objectif est de faire ce calcul pour 2024 mais aussi pour les
+et mulets. L'objectif est de faire ce calcul pour 2025 mais aussi pour les
 années précédentes.
 
 <<calcul_export_frederic_glanispomi, echo=FALSE, eval=FALSE,include=FALSE >>=
@@ -6104,7 +6123,7 @@ rmi <- connect(rmi,check=TRUE,silent=FALSE)
 rmi <- calcule(rmi)
 
 fn <- function (y) summary(rmi, y)[["5"]]
-res0 <- bind_rows(mapply(fn, 2018:2024, SIMPLIFY =FALSE))
+res0 <- bind_rows(mapply(fn, 2018:2025, SIMPLIFY =FALSE))
 res0$tax_nom_latin = "Petromyzon marinus"
 
 ## Aloses ---------------------------------------------
@@ -6119,7 +6138,7 @@ rmi <- charge(rmi)
 rmi <- connect(rmi,check=TRUE,silent=FALSE)	
 rmi <- calcule(rmi)
 
-res2 <- bind_rows(mapply(fn, 2018:2024, SIMPLIFY =FALSE))
+res2 <- bind_rows(mapply(fn, 2018:2025, SIMPLIFY =FALSE))
 res2$tax_nom_latin = "Alosa"
 
 
@@ -6136,7 +6155,7 @@ rmi <- charge(rmi)
 rmi <- connect(rmi,check=TRUE,silent=FALSE)	
 rmi <- calcule(rmi)
 
-res3 <- bind_rows(mapply(fn, 2018:2024, SIMPLIFY =FALSE))
+res3 <- bind_rows(mapply(fn, 2018:2025, SIMPLIFY =FALSE))
 res3$tax_nom_latin = "Chelon ramada"
 res <- rbind(res0,res2,res3)
 
@@ -6261,7 +6280,7 @@ fonctionnement réintégré dans stacomiR comporte
 \Sexpr{num(vvv$fonct_pass$nb_lignes_t_periodefonct)} lignes.
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=\textwidth]{2024/detail_fonct_passe_2.png}
+\includegraphics[width=\textwidth]{2025/detail_fonct_passe_2.png}
 \caption{Illustration du fonctionnement de la passe lors d'un fonctionnement
 normal en mai. A chaque cycle de marée, le niveau de la mer varie entre +2 m et
 -2m environ (- noir). Le niveau Vilaine (.- bleu) varie peu et reste
@@ -6280,7 +6299,7 @@ passe est calculé pour chaque période de 10 minutes (en bas).
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.8\textwidth]{2024/detail_fonct_passe_1.png}
+\includegraphics[width=0.8\textwidth]{2025/detail_fonct_passe_1.png}
 \caption{Illustration du fonctionnement de la passe après la remise en route
 de la passe en avril. En ordonnée, les niveaux mer (- noir), vilaine
 (.- bleu), sas (- bleu), niveau vanne mer (... violet), niveau vanne amont
@@ -6293,16 +6312,16 @@ Jusqu'au 12 avril en milieu de journée, la position basse de la vanne amont
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.6\textwidth]{2024/debit_passe_mesure.png}
-\caption{Débit calculé dans la passe en 2024, mesures de l'automate du barrage.}
+\includegraphics[width=0.6\textwidth]{2025/debit_passe_mesure.png}
+\caption{Débit calculé dans la passe en 2025, mesures de l'automate du barrage.}
 \label{debit_passe_mesure}
 \end{figure}
 
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.6\textwidth]{2024/debit_passe_calcul.png}
-\caption{Débit recalculé dans la passe en 2024, après correction des valeurs
+\includegraphics[width=0.6\textwidth]{2025/debit_passe_calcul.png}
+\caption{Débit recalculé dans la passe en 2025, après correction des valeurs
 aberrantes et prise en compte du noyage aval de la passe.}
 \label{debit_passe_calcul}
 \end{figure}
@@ -6310,9 +6329,9 @@ aberrantes et prise en compte du noyage aval de la passe.}
 
 \begin{figure}[hp]
 \centering
-\includegraphics[width=0.9\textwidth]{2024/report_df_annee.png} 
+\includegraphics[width=0.9\textwidth]{2025/report_df_annee.png} 
 \caption{Bilan du fonctionnement de la passe (dispositif de franchissement) lors
-de l'année 2024.
+de l'année 2025.
 En orange \textcolor{jaune_EV}{\rule[-0.2mm]{3mm}{2mm}} il est possible de suivre les 
 périodes de haute mer où la passe est fermée, les
 périodes où les bandes sont les plus larges correspondent à des périodes de
@@ -6325,7 +6344,7 @@ au début et à la fin de l'année.}
 
 %\begin{figure}[hp]
 %\centering
-%\includegraphics[width=0.95\textwidth]{2024/report_df_fct_2003_2010.png} 
+%\includegraphics[width=0.95\textwidth]{2025/report_df_fct_2003_2010.png} 
 %\caption{Bilan mensuel du fonctionnement de la passe à bassins d'Arzal de 2003
 %à 2010.}
 %\label{report_df_fct_2003_2010}
@@ -6336,16 +6355,16 @@ au début et à la fin de l'année.}
 
 \begin{figure}[hp]
 \centering
-\includegraphics[width=\textwidth]{2024/bmm_alose.png}
-\caption{Bilan de la migration des aloses en 2024. Effectifs journaliers et
+\includegraphics[width=\textwidth]{2025/bmm_alose.png}
+\caption{Bilan de la migration des aloses en 2025. Effectifs journaliers et
 fonctionnement des dispositifs de franchissement et de comptage.}
 \label{bmm_alose}
 \end{figure}
 
 \begin{figure}[hp]
 \centering
-\includegraphics[width=\textwidth]{2024/bmm_mulet.png}
-\caption{Bilan de la migration des mulets en 2024. Effectifs journaliers et
+\includegraphics[width=\textwidth]{2025/bmm_mulet.png}
+\caption{Bilan de la migration des mulets en 2025. Effectifs journaliers et
 fonctionnement des dispositifs de franchissement et de comptage.}
 \label{bmm_mulet}
 \end{figure}
@@ -6353,8 +6372,8 @@ fonctionnement des dispositifs de franchissement et de comptage.}
 
 \begin{figure}[hp]
 \centering
-\includegraphics[width=\textwidth]{2024/bmm_lpm.png}
-\caption{Bilan de la migration des lamproies marines en 2024. Effectifs
+\includegraphics[width=\textwidth]{2025/bmm_lpm.png}
+\caption{Bilan de la migration des lamproies marines en 2025. Effectifs
 journaliers et fonctionnement des dispositifs de franchissement et de comptage.}
 \label{bmm_lpm}
 \end{figure}
@@ -6400,8 +6419,9 @@ des joints de la vanne intermédiaire.\\
 de niveau du sas. Installation d’un chauffage et d’un déshumidifacteur afin de 
 préserver le matériel électronique du local de la passe à bassins. Changement
 des boîtiers électroniques des sondes de niveaux amont et aval du barrage.\\
-2024 & Remplacement des distributeurs de la vanne amont. Remplacement des
+2025 & Remplacement des distributeurs de la vanne amont. Remplacement des
 flexibles corrodés sur les vérins de la vanne aval.\\
+2025 & Réparation des fins de courses de la vanne aval.\\
 \bottomrule
 \end{tabular}
 \caption{Entretien historique de la passe à bassins.}
@@ -6486,7 +6506,7 @@ de la passe à bassins, 2008}\\
 
 La passe fonctionne au quotidien grâce au travail d'entretien, de suivi et
 d'intervention des barragistes : Alban Le Guen, Cyril Faucon, Johann Dahlem,
-Laurent Philippot, Thierry Besnard. Nous tenons à les remercier pour leur aide
+Laurent Philippot. Nous tenons à les remercier pour leur aide
 et leur disponibilité.
 \bigskip
 

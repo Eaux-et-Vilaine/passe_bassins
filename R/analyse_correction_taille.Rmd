@@ -27,7 +27,7 @@ if (exists("userdistant") & exists("passworddistant") & exists("hostdistant")) {
 	pool <- dbPool(
 			drv = Postgres(),
 			dbname = "bd_contmig_nat_iav",
-			host =  decrypt_string(hostdistant,mainpass),
+			host =  decrypt_string(hostmercureinternal,mainpass),
 			user = decrypt_string(userdistant,mainpass),
 			password = decrypt_string(passworddistant,mainpass)
 	)
@@ -39,7 +39,7 @@ poolReturn(conn)
 #poolClose(pool)
 
 
-	host <- decrypt_string(hostdistant,mainpass)
+	host <- decrypt_string(hostmercureinternal,mainpass)
 	user <- decrypt_string(userdistant,mainpass)
 	password <- decrypt_string(passworddistant,mainpass)
 
@@ -122,7 +122,7 @@ plot(GLM3)
 ```
 		
 ```{r treatmentssm, eval=TRUE,echo=FALSE} 
-file <- "\\\\srv-01\\EPTB\\12-PoleMAB\\Socle\\Migrateurs\\poissons\\suivi_pab\\2024\\Concat24_jusqua24258.txt"
+file <- "\\\\srv-01\\EPTB\\12-PoleMAB\\Socle\\Migrateurs\\poissons\\suivi_pab\\2025\\Concat25_jusqua56499_verif ok 130226.txt"
 #file <- "C:/workspace/pdata/traitement_stacomi/rapport_passe/data/2019/AZ20_0001-44765_corrige.SSM"
 # des erreurs dans le SSM avec des champs non fermés, il faut relire le fichier dans notepad++
 ssm <- read.table(file, quote = "\"", sep= " ")
@@ -148,8 +148,8 @@ table(ssm$taillepixel[ssm$remarque==""])
 #ssm$remarque <- stringi::stri_trans_general(ssm$remarque, "Latin-ASCII")
 # ssm[ssm$remarque=="" & ssm$taillepixel >0,"remarque"] <- 'mm2mm'
 # po1 avec taille (il ne doit pas y en avoir, il s'agit de 10 mulets)
-ssm[ssm$taillepixel>0&ssm$taxonvideo=='po1',]
-ssm[ssm$taillepixel>0&ssm$taxonvideo=='po1',"taxonvideo"]
+ssm[ssm$taillepixel>0 & ssm$taxonvideo == 'po1',]
+ssm[ssm$taillepixel>0 & ssm$taxonvideo == 'po1',"taxonvideo"]
 
 
 
@@ -181,7 +181,7 @@ ssm$taille <- round(ssm$taille)
 ssm$taillepixel[ssm$taillepixel=="0"] <- NA
 
 # check des tailles
-ssm[ssm$taille>1000& !is.na(ssm$taille),]
+ssm[ssm$taille > 1000 & !is.na(ssm$taille),]
 # correction 2022 d'une taille sur les bars
 # ssm[ssm$taxonvideo=='bar' & ssm$taille>1000 &!is.na(ssm$taille) ,"taillepixel"] <- 87
 
@@ -220,8 +220,8 @@ ssmf <- ssm[,c("fichierVideo",
 				"distance",
 				"taille",
 				"remarque")]
-dir.create("C:/workspace/passe_bassins/data/2024/")
-file <- str_c("C:/workspace/passe_bassins/data/2024/fichiers_traite_2024.SSM")
+dir.create("C:/workspace/passe_bassins/data/2025/")
+file <- str_c("C:/workspace/passe_bassins/data/2025/fichiers_traite_2025.SSM")
 #  des erreurs dans le SSM avec des champs non fermés, il faut relire lefichier dans notepad++
 write.table(x=ssmf,row.names = FALSE,file=file, quote = 10, sep= " ")
 
@@ -633,7 +633,7 @@ Anova(GLM3,type="II")
 #con <- dbConnect(
 #		drv = dbDriver("PostgreSQL"),
 #		dbname = "bd_contmig_nat_iav",
-#		host = "185.135.126.250",
+#		host = "db.mercure.eaux-et-vilaine.bzh",
 #		user = usr,
 #		password = pwd
 #)

@@ -5642,19 +5642,54 @@ ggplot(bilesp@calcdata, aes(x="",y=(Effectif / sum(Effectif))*100,fill=taxa_stag
 					label.theme = element_text(size = 12)))
 dev.off()
 @
-
-<<report_interannual_silurus, echo=FALSE, eval=FALSE,include=FALSE >>=
-rmi<-new("report_mig_interannual")
-rmi<-choice_c(rmi,
+<<report_mig_mult_silurus, echo=FALSE, eval=FALSE,include=FALSE >>=
+color_ope<-sample(c(mycolorramp1(10),mycolorramp2(10)),20)
+bMM_Arzal <- new("report_mig_mult")
+bMM_Arzal <- choice_c(bMM_Arzal,
     dc=c(5),
     taxa=c("Silurus glanis"),
     stage=c("IND"),
-    start_year="1996",
-    end_year=CY,
+    datedebut=str_c(CY,"-01-01"),
+    datefin=str_c(CY,"-12-31"))
+bMM_Arzal <- charge(bMM_Arzal)
+bMM_Arzal <- connect(bMM_Arzal)
+bMM_Arzal <- calcule(bMM_Arzal)
+color=c(
+    "#052945",#working
+    "#ECDAC0",#stopped
+    "#3071A2",#normal
+    "#462800",#maintenance
+    "#B68B52",#dysfunction
+    "#FFC26E",
+    "#A66F24",
+    "#012746",#mesure
+    "#29A570",#calcule
+    "#B67B2D", #expert
+    "#4F7EA2" # ponctuel
+)
+
+png(file=str_c(imgwdy,"bmm_silurus.png"),7,7,units="in",res=300)
+plot(bMM_Arzal,plot.type="standard",
+    color=color,
+    color_ope=color_ope,
+    main=str_c("Effectif de silures ", CY),
+    cex.main=1.1,		
+    type="h",
     silent=TRUE)
-rmi<-charge(rmi)
-rmi<-connect(rmi,check=TRUE,silent=FALSE)	
-rmi<-calcule(rmi)
+dev.off()
+@
+<<report_interannual_silurus, echo=FALSE, eval=FALSE,include=FALSE >>=
+rmi <- new("report_mig_interannual")
+rmi <- choice_c(rmi,
+    dc=c(5),
+    taxa=c("Silurus glanis"),
+    stage=c("IND"),
+    start_year="2023",
+    end_year=2024,
+    silent=FALSE)
+rmi <- charge(rmi)
+rmi <- connect(rmi, check = FALSE, silent = FALSE)	
+rmi <- calcule(rmi)
 
 # utilisation de la méthode plot pour générer un graphique des densités
 # puis modification des couleurs du titre et de y
