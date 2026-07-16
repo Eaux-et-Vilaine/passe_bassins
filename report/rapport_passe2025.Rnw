@@ -397,7 +397,7 @@ keepaspectratio]{frontpage.pdf}%
 Cédric Briand, Brice Sauvaget, Gérard Eriau \par}}}
  \vspace{0.5cm}
  \color{black}{\large{\titlefont Date d'édition :}}
-\qquad \color{vert_clair_BGM}\large{\titlefont Mars 2025}
+\qquad \color{vert_clair_BGM}\large{\titlefont Juillet 2026}
 \end{minipage}
 %
 \begin{minipage}{0.28\textwidth}
