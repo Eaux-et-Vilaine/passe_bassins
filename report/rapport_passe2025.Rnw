@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 
 %%   L'encodage de ce fichier doit être UTF-8
-%%	 lancer avec Knitr + Xelatex
+%%	 lancer avec Knitr + Xelatex + biber
 %%   Liste des choses à faire pour mettre à jour le rapport en nouvelle version
 %%   voir issue #1 https://github.com/Eaux-et-Vilaine/passe_bassins/issues/1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -464,7 +464,7 @@ Cédric Briand, Brice Sauvaget, Gérard Eriau \par}}}
 \vspace{2cm}
 \begin{minipage}{0.8\textwidth}
 \begin{center}
-\hspace{3cm}{\color{white}{\huge \itshape{Mars 2025}}}
+\hspace{3cm}{\color{white}{\huge \itshape{Juillet 2025}}}
 \end{center}
 \end{minipage}
 \restoregeometry
@@ -1147,17 +1147,21 @@ stocks de migrateurs doivent donc être considérés comme un minimum.
 \subsection{Fonctionnement de la passe à bassins}
 \paragraph{Résumé du fonctionnement.}
 
-Le fonctionnement de la passe en \Sexpr{CY} a été perturbé par les crues et plusieurs
-avaries techniques. Le lancement a eu lieu le 2 février, après un mois de
-janvier avec des forts débits. Trois crues ont ensuite perturbé le bon
-fonctionnement de la passe, avec près d'un mois et demi de fermeture mi-février,
-en mars et début avril. Les distributeurs de la vanne amont ont provoqué
-quelques arrêts, et ont été changé rapidement début avril. Plusieurs problèmes
-techniques ont nécessité des arrêts nocturnes sur quatre périodes entre juin et
-septembre, pour une durée cumulée d'un mois. Fin septembre, des fuites d'huile
-ont été détectées sur les flexibles des vérins de la porte aval, ce qui a
+Le fonctionnement de la passe en \Sexpr{CY} a été perturbé la grande crue de
+janvier - février et par les travaux sur les siphons et les gabions. 
+Le lancement a eu lieu le 17 février, à ce stade, les travaux des gabions ne
+sont pas terminés, et les support des siphons ont été posés mais pas les coudes
+finaux.
+Le 19 février la passe est arrêtée en journée pour les siphons, elle sera
+ensuite arrêtée du 24/02 au 07/03. En mai des problèmes techniques conduisent
+au changement du fin de course haut de la vanne amont. En mai et en juin la
+passe est manoeuvrée en fermeture à basse mer pour capturer les lamproies dans
+le cadre de l'étude INRAe HALAMEAUP. Plusieurs problèmes techniques ont
+nécessité des arrêts nocturnes sur quatre périodes entre juin et septembre, pour une durée cumulée d'un mois. Fin septembre, des fuites d'huile ont été détectées sur les flexibles des vérins de la porte aval, ce qui a
 entraîné l'arrêt de la passe du 26 septembre jusqu'à leur remplacement le 19
 décembre (Figure \ref{report_df_annee} en annexe).
+De fin décembre à début janvier une intervention technique pour modifier une
+pièce de contrôle hydraulique des vérins.
 
 \begin{figure}[htpb]
 \centering
@@ -2552,13 +2556,13 @@ Il fait l'objet d'une exploitation par la pêche professionnelle en Vilaine,
 et constitue après l'anguille la première espèce en effectif dans les comptages
 aux passes à poissons du barrage d'Arzal.
 En France, les effectifs de mulet sont aujourd’hui en régression 
-\citep{bartulovic_reproductive_2011}, l'espèce est néanmoins classée en
+\citep{briand_stacomir_2017}, l'espèce est néanmoins classée en
 préoccupation mineure sur la liste rouge de l'IUCN.
 Sur la Vilaine au barrage d’Arzal, parmi les mulets, seul \textit{Chelon
-ramada} remonte l’estuaire pour migrer en eau douce \citep{briand_suivi_2018b}.
+ramada} remonte l’estuaire pour migrer en eau douce \citep{briand_suivi_2018}.
 En effet, le passage des poissons entre le milieu estuarien et la rivière
 provoque une variation brutale de salinité que seule \textit{Chelon ramada} pourrait 
-supporter à l’aller et au retour de migration \citep{briand_suivi_2018b}.
+supporter à l’aller et au retour de migration \citep{briand_suivi_2018}.
 La présence de la seule espèce euryhaline, et le confinement à la zone
 estuarienne des autres espèces communes en Bretagne \textit{Chelon labrosus} et 
 \textit{Chelon aurata}, est cependant à confirmer
@@ -2578,9 +2582,6 @@ taille des mulets présente à la fois des variations saisonnières et
 interannuelles (Figure \ref{figure_taille_mulets}). Les mulets les plus grands
 se présentent en tout début de saison, puis la taille des mulets diminue pour
 atteindre son minimum lors de l'été \citep{lemonnier_dynamique_2019}.
-Cette année, comme en 2019, les mulets de petite taille qui constituent une
-majeure partie des effectifs ne sont pas présents, sans que le fonctionnement
-de la passe puisse expliquer cette absence.
 
 \begin{figure}[htpb]
 \centering
@@ -3421,8 +3422,8 @@ au barrage d'Arzal.}
 
 La comparaison des tendances mensuelles avec les migrations
 interannuelles montre qu'elles sont inférieures à la moyenne observée sur la
-période 1996-\Sexpr{CY} (Figure \ref{barchart_bmi_lpm}, Tableau
-\ref{table_lpm_mois}).
+période 1996-\Sexpr{CY}, elles sont même à leur minimum observé en mars (probablement du fait des arrêts de la passe) 
+et mai (Figure \ref{barchart_bmi_lpm}, Tableau \ref{table_lpm_mois}).
 
 \begin{figure}[htpb]
 \centering
@@ -3445,7 +3446,7 @@ pensait, et le suivi était souvent lancé trop tardivement avant 2021
 (1ère quinzaine de mars entre 2010 et 2020) pour voir les premiers individus
 (Figures \ref{barchart_bmi_lpm}, \ref{plot_seasonal_lpm}).
 Ces résultats sont en accord avec l'examen des tendances de migration des
-lamproies marines en France par \citet{legrandContrastingTrendsSpecies2020} qui
+lamproies marines en France par \citet{legrand_contrasting_2020} qui
 montre globalement une arrivée plus précoce dans les 30 dernières années. 
 Les dates de première arrivée (correspondant à l'arrivée de 5 \% des
 effectifs annuels), arrivée médiane (quand 50 \% des lamproies ont migré) et
@@ -3483,9 +3484,7 @@ similaire avait été rapportée sur la Loire (Marion Legrand, comm. pers.).
 
 
 Après un pic de taille dans les années 2020 et 2020, puis une baisse en 2022
-et 2023 les tailles des lamproies reviennent à des valeurs plus importantes,
-mais elles n'ont été échantillonnées qu'en début de saison (perte d'un disque dur lors 
-des mesures de taille) (Figure
+et 2023 les tailles des lamproies se stabilisent.  (Figure
 \ref{size_lpm}).
 
 
@@ -3817,9 +3816,9 @@ France sur la liste rouge UICN.
 \ref{rmi_journalier_ala} et \ref{tx_exploit}, Tableau
 \ref{table_bilanannuel_ala}).
 Cette migration place l'année \Sexpr{CY} au rang \Sexpr{vvv$ALA$rank}
-par rapport à l'ensemble des années de migration. En vidéo comptage, il n'est
-pas possible de distinguer les deux espèces, grande alose \textit{Alosa alosa} 
-et alose feinte \textit{Alosa fallax}.
+par rapport à l'ensemble des années de migration, avec une augmentation marquée
+par rapport aux années 2018-2024. En vidéo comptage, il n'est pas possible de
+distinguer les deux espèces, grande alose \textit{Alosa alosa} et alose feinte \textit{Alosa fallax}.
 
 
 %\begin{figure}[htpb]
@@ -4439,8 +4438,8 @@ save(datmens, file=str_c(datawdy,"datmens.Rdata"))
 datmens2 <- as.data.frame(t(datmens))
 rownames(datmens2) <- gsub("X","",rownames(datmens2))
 xtala <- xtable(datmens2,
-    caption=str_c("Migrations mensuelles par la passe à bassins du barrage d'Arzal entre 2016 et", CY,
-			", et captures professionnelles en estuaire."
+    caption=str_c("Migrations mensuelles par la passe à bassins du barrage d'Arzal entre 2016 et ", CY,
+			", et captures de la pêche professionnelle en estuaire."
 	),
     label="table_ala_mois",
     digits=c(0,0,0,0,0,0,0),
@@ -4860,7 +4859,9 @@ L'espèce est classée vulnérable en France sur la liste rouge UICN.
 \Sexpr{CY} (Figure \ref{barplot_report_annual_sat},  Tableau \ref{table_sat_mois}).
 Cette migration place l'année \Sexpr{CY} au \Sexpr{vvv$SAT$rank} ème rang
 par rapport à l'ensemble des années de migration (Tableau
-\ref{table_bilanannuel_sat}, Figure \ref{barchart_bmi_sat}).
+\ref{table_bilanannuel_sat}, Figure \ref{barchart_bmi_sat}). 
+La Vilaine reflète l'effondrement des retours de Saumons constaté en Bretagne et
+dans la partie sud de l'aire de répartition.
 
 \begin{figure}[htpb]
 \centering
@@ -4883,8 +4884,8 @@ série interannuelle de données 1996-\Sexpr{CY-1}.}
 \input{\Sexpr{vvv[["SAT"]][["path"]]}} % table bilan pour l'année
 
 La migration des saumons intervient toute l'année avec un pic estival (Figure
-\ref{rmi_density_sat}). En \Sexpr{CY}, la migration s'est faite principalement
-en juillet (Figure \ref{barchart_bmi_sat}).
+\ref{rmi_density_sat}). En \Sexpr{CY}, la migration s'est faite
+en juillet et août (Figure \ref{barchart_bmi_sat}).
 
 \begin{figure}[htpb]
 \centering
@@ -5265,7 +5266,7 @@ peu présente en Bretagne.
 \smallskip
 
 %\Sexpr{vvv$TRM$N[vvv$TRM$N$annee==CY,"effectif"]} 
-Aucune truite de mer n'a été observée %ont été
+Seule une truite de mer a été observée %ont été
 en \Sexpr{CY} (Figure \ref{barplot_report_annual_trm}). %,  Tableau
 %\ref{table_trm_mois}).
 \begin{figure}[htpb]
@@ -5564,6 +5565,8 @@ espèces recensées sont assez nombreuses : silure, sandre, black bass, cyprinid
 et brème (Figure \ref{autres_especes}). 
 La fréquentation des autres espèces depuis 2000 est illustrée de manière
 graphique à la Figure \ref{autres_especes_2000_2025}. 
+Les effectifs de bars qui utilisent la passe pour chasser sont en très nette
+augmentation  Figure \ref{barchart_bmi_bar}. 
 
 \begin{figure}[htpb]
 \centering
@@ -5597,13 +5600,16 @@ graphique à la Figure \ref{autres_especes_2000_2025}.
 \end{figure}
 
 
+
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{2025/bilan_annuel_sil.png} 
-\caption{Effectif des silures ayant migré par la passe d'Arzal depuis
-2000.}
-\label{bilan_annuel_sil}
+\includegraphics[width=0.45\textwidth]{2025/barchart_bmi_bar.png} 
+\caption{Effectifs mensuels de bars au droit de la vitre en \Sexpr{CY} et
+comparaison aux valeurs historiques .}
+\label{barchart_bmi_bar}
 \end{figure}
+
+\input{\Sexpr{vvv[["BAR"]][["path"]]}} % table bilan bars
 
 
 Les effectifs de silures recensés au niveau de la passe d'Arzal sont en très
@@ -5619,9 +5625,15 @@ d'Arzal.}
 \label{size_sil}
 \end{figure}
 
+\begin{figure}[htpb]
+\centering
+\includegraphics[width=0.45\textwidth]{2025/bilan_annuel_sil.png} 
+\caption{Effectif des silures ayant migré par la passe d'Arzal depuis
+2000.}
+\label{bilan_annuel_sil}
+\end{figure}
 
 \input{\Sexpr{vvv[["SIL"]][["path"]]}} % table bilan silures
-
 
 <<report_species, echo=FALSE, eval=FALSE,include=FALSE >>=
 bilesp <- new("report_species")
@@ -5925,7 +5937,7 @@ mycolorramp <- colorRampPalette(c('#020731','#3862C6','#6E7587','#806641','#AE95
 
 colors<-rev(mycolorramp(nb_annee))
 #============================================
-png(filename=str_c(imgwdy,"rmi_density_dicentrarchus.png"))
+png(filename=str_c(imgwdy,"rmi_density_bar.png"))
 g+ggplot2::scale_fill_manual(values=colors)+
     ggplot2::ggtitle("")+
     theme(
@@ -5944,7 +5956,7 @@ g <- g+scale_colour_manual(name=CY,values=cols,limits=c("min","max","<moy",">=mo
 g <- g+scale_fill_manual(name=CY,values=fills,limits=c("min","max","<moy",">=moy","hist_mean","hist_range","?"))
 g <- g+ggtitle("")
 #============================================
-png(filename=str_c(imgwdy,"barchart_bmi_dcentrarchus.png"))
+png(filename=str_c(imgwdy,"barchart_bmi_bar.png"))
 print(g)
 dev.off()
 #============================================
