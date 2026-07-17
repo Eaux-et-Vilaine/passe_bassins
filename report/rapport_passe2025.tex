@@ -1056,7 +1056,7 @@ Modèle gam ajusté sur les valeurs de taille (au centre modèle et intervalle d
 \end{figure}
 
 Les effectifs de mulets de 2025
-(N=119752) 
+(N=126937) 
 sont faibles comparés à ceux de la période 2014-2025 avec des variations entre
 des effectifs de 200~000 à 600~000 mulets.
 Les variations des effectifs de petits mulets sont en 
@@ -1180,7 +1180,7 @@ Les migrations de lamproies marine sur la Vilaine qui étaient en fort déclin
 après 2015 ont réaugmenté à un niveau proche du niveau historique
 (N=\textcolor{orange_EV}{\num{3111}}) en 2020.
 Cette année, les effectifs ont été de nouveau faibles avec 
-\textcolor{orange_EV}{\num{739}} lamproies marines (Figure \ref{barplot_report_annual_lpm}, Tableau \ref{table_bilanannuel_lpm}) ce qui place l'année au \textcolor{orange_EV}{\num{16}} ème rang sur les
+\textcolor{orange_EV}{\num{747}} lamproies marines (Figure \ref{barplot_report_annual_lpm}, Tableau \ref{table_bilanannuel_lpm}) ce qui place l'année au \textcolor{orange_EV}{\num{16}} ème rang sur les
 \textcolor{orange_EV}{\num{30}} années de suivi à Arzal.
 Les raisons des variations d'effectif restent mal comprises.
 
@@ -1326,7 +1326,7 @@ France sur la liste rouge UICN.
 \end{minipage}}
 \smallskip
 
-1381 aloses ont été comptées en
+1402 aloses ont été comptées en
 2025 (Figure
 \ref{rmi_journalier_ala} et \ref{tx_exploit}, Tableau
 \ref{table_bilanannuel_ala}).
@@ -1526,9 +1526,9 @@ L'espèce est classée vulnérable en France sur la liste rouge UICN.
 \end{minipage}}
 \smallskip
 
-0 saumon a été compté en
+3 saumon a été compté en
 2025 (Figure \ref{barplot_report_annual_sat},  Tableau \ref{table_sat_mois}).
-Cette migration place l'année 2025 au 27 ème rang
+Cette migration place l'année 2025 au 18 ème rang
 par rapport à l'ensemble des années de migration (Tableau
 \ref{table_bilanannuel_sat}, Figure \ref{barchart_bmi_sat}).
 
@@ -1803,31 +1803,31 @@ années précédentes.
 La base de données du barrage collecte les informations relatives aux niveaux et
 au fonctionnement des vannes au pas de temps de 10 minutes. Le fichier des données 
 extrait de la base de données du barrage contient
- lignes 2025. A partir de ce dernier,
+\textcolor{orange_EV}{\num{51440}} lignes 2025. A partir de ce dernier,
 un script de traitement extrait les temps et les modes de fonctionnement de la
 passe (Figure \ref{figure_schema_fonctionnement}). 
 Les sondes utilisées en référence ont parfois des valeurs manquantes,
-  et  respectivement 
+ \textcolor{orange_EV}{\num{1}} et \textcolor{orange_EV}{\num{1}} respectivement 
  pour les niveaux aval (mer) et amont (Vilaine).
 Pour les niveaux mer, après correction, en utilisant l'une ou l'autre des
 sondes, le nombre de valeurs manquantes restantes pour lesquelles les deux sondes n'ont pas de
-valeur est de . En Vilaine
+valeur est de \textcolor{orange_EV}{\num{1}}. En Vilaine
 cette année, la correction correspond à
- lignes pour les
+\textcolor{orange_EV}{\num{2}} lignes pour les
 niveaux aval et amont.
 Les corrections des niveaux de la mer\footnote{Suppression
 des valeurs inférieures à -3.5 m NGF.} correspondent à
- lignes, celles du sas aval \footnote{Le dernier
+\textcolor{orange_EV}{\num{0}} lignes, celles du sas aval \footnote{Le dernier
 bassin en aval de la passe. La différence de niveaux entre ce bassin et la mer
 conditionne le fonctionnement de la vanne aval. Suppression des valeurs en
-dehors de la gamme [-1m,2.5m].} correspondent à  lignes et des
+dehors de la gamme [-1m,2.5m].} correspondent à \textcolor{orange_EV}{\num{972}} lignes et des
 dérives de codeur sur la vanne mer \footnote{Suppression des valeurs en dehors de la gamme
 [-1.72m,2.5m] correspondant à la course normale de la vanne.} à
- lignes. 
-Au final  lignes manquent des données permettant de
+\textcolor{orange_EV}{\num{2}} lignes. 
+Au final \textcolor{orange_EV}{\num{52}} lignes manquent des données permettant de
 calculer le fonctionnement de la passe (Figure \ref{figure_fonctionnement_passe}). Le fichier de calcul des temps de
 fonctionnement réintégré dans stacomiR comporte
- lignes.
+\textcolor{orange_EV}{\num{2462}} lignes.
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=\textwidth]{2025/detail_fonct_passe_2.png}
@@ -2124,13 +2124,13 @@ Migrateurs Rhône-Méditerranée (MRM)~:
     d'enregistrement vidéo, ainsi que les effectifs annuels des principales
     espèces ayant transité par la passe à l'estuaire de la Vilaine. 
     En \textcolor{orange_EV}{\num{2025}}, 
-    \textcolor{orange_EV}{\num{1381}} aloses (\textit{Alosa
+    \textcolor{orange_EV}{\num{1402}} aloses (\textit{Alosa
     Sp.}), 
-    \textcolor{orange_EV}{\num{739}} lamproies marines (\textit{Petromyzon
+    \textcolor{orange_EV}{\num{747}} lamproies marines (\textit{Petromyzon
     marinus}), 
-    \textcolor{orange_EV}{\num{0}} truite de mer (\textit{Salmo trutta trutta}),
-    \textcolor{orange_EV}{\num{0}} saumon (\textit{Salmo salar}) et
-    \textcolor{orange_EV}{\num{119752}} mulets porcs (\textit{Chelon ramada}) 
+    \textcolor{orange_EV}{\num{1}} truite de mer (\textit{Salmo trutta trutta}),
+    \textcolor{orange_EV}{\num{3}} saumon (\textit{Salmo salar}) et
+    \textcolor{orange_EV}{\num{126937}} mulets porcs (\textit{Chelon ramada}) 
     ont été comptabilisés.  \par
         
    \vspace{8mm}
@@ -2143,11 +2143,11 @@ Migrateurs Rhône-Méditerranée (MRM)~:
     \textcolor{orange_EV}{\num{2025}}. It details the operation of the fishway and it's recording video
     device, along with the annual number of the main species crossing the dam in the Vilaine estuary.
     In \textcolor{orange_EV}{\num{2025}}, 
-    \textcolor{orange_EV}{\num{1381}} shads (\textit{Alosa Sp.}),
-    \textcolor{orange_EV}{\num{739}} sea lampreys (\textit{Petromyzon marinus}), 
-    \textcolor{orange_EV}{\num{0}} sea trout (\textit{Salmo trutta trutta}),
-    \textcolor{orange_EV}{\num{0}} salmon (\textit{Salmo salar}) 
-    and \textcolor{orange_EV}{\num{119752}} mulets (\textit{Chelon ramada}) 
+    \textcolor{orange_EV}{\num{1402}} shads (\textit{Alosa Sp.}),
+    \textcolor{orange_EV}{\num{747}} sea lampreys (\textit{Petromyzon marinus}), 
+    \textcolor{orange_EV}{\num{1}} sea trout (\textit{Salmo trutta trutta}),
+    \textcolor{orange_EV}{\num{3}} salmon (\textit{Salmo salar}) 
+    and \textcolor{orange_EV}{\num{126937}} mulets (\textit{Chelon ramada}) 
     have been counted. \par
 
    

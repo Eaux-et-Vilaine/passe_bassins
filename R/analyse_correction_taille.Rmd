@@ -27,7 +27,7 @@ if (exists("userdistant") & exists("passworddistant") & exists("hostdistant")) {
 	pool <- dbPool(
 			drv = Postgres(),
 			dbname = "bd_contmig_nat_iav",
-			host =  decrypt_string(hostmercureinternal,mainpass),
+			host =  "10.1.128.16",
 			user = decrypt_string(userdistant,mainpass),
 			password = decrypt_string(passworddistant,mainpass)
 	)
@@ -39,9 +39,9 @@ poolReturn(conn)
 #poolClose(pool)
 
 
-	host <- decrypt_string(hostmercureinternal,mainpass)
-	user <- decrypt_string(userdistant,mainpass)
-	password <- decrypt_string(passworddistant,mainpass)
+host <- "10.1.128.16"
+user <- decrypt_string(userdistant,mainpass)
+password <- decrypt_string(passworddistant,mainpass)
 
 options(list(
 				stacomiR.dbname = "bd_contmig_nat_iav",

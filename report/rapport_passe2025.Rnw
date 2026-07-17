@@ -977,13 +977,13 @@ edge_list<-create_edge_df(
 
 
 igraph1 <- create_graph()
-igraph2 <- igraph1%>%
+igraph2 <- igraph1|>
     add_nodes_from_table(table = node_list, 
         type_col=type,
         label_col=label) 
-#igraph2 %>% get_node_df()
+#igraph2 |> get_node_df()
 # Add the edges to the graph
-i_graph_3 <-igraph2 %>%
+i_graph_3 <-igraph2 |>
     add_edges_from_table(
         table = edge_list,
         from_col = from,
@@ -1299,8 +1299,8 @@ pastequery <- function(table,name,tag,start,end){
 getdata <- function(con,.df,start,end){
   .df$start <- start
   .df$end <- end
-  .df <- .df %>% mutate(.,"query"=pmap_chr(.,.f= pastequery))
-  .df <- .df %>% add_column(result=list(rep(list(),nrow(.df))))
+  .df <- .df |> mutate(.,"query"=pmap_chr(.,.f= pastequery))
+  .df <- .df |> add_column(result=list(rep(list(),nrow(.df))))
   for (i in 1:nrow(.df)){
     cat("query for ",.df$table[i],"\n")
     rs <- dbSendQuery(conn=con,statement=.df$query[i])
@@ -1435,14 +1435,14 @@ calc_fonct_pass <- function(dat, per_dis_identifiant=1, vvv){
   # CAS 3 la vanne Vilaine est fermée, la passe est fermée mais c'est pas pour une raison de maintenance
   # La vanne aval ou la vanne amont peuvent être fermées
   
-  dat[dat$hauteur_vanne_vilaine==-0.2 & is.na(dat$per_etat_fonctionnement), 
+  dat[dat$hauteur_vanne_vilaine==-0.2 & is.na(dat$per_etat_fonctionnement) & !is.na(dat$hauteur_vanne_vilaine), 
       "per_tar_code"] <- 3
-  dat[dat$hauteur_vanne_vilaine==-0.2 & is.na(dat$per_etat_fonctionnement), 
+  dat[dat$hauteur_vanne_vilaine==-0.2 & is.na(dat$per_etat_fonctionnement) & !is.na(dat$hauteur_vanne_vilaine), 
       "per_etat_fonctionnement"] <- FALSE
   
-  dat[dat$hauteur_vanne_mer==1.72 & is.na(dat$per_etat_fonctionnement), 
+  dat[dat$hauteur_vanne_mer==1.72 & is.na(dat$per_etat_fonctionnement)& !is.na(dat$hauteur_vanne_mer), 
       "per_tar_code"] <- 3
-  dat[dat$hauteur_vanne_mer==1.72 & is.na(dat$per_etat_fonctionnement), 
+  dat[dat$hauteur_vanne_mer==1.72 & is.na(dat$per_etat_fonctionnement)& !is.na(dat$hauteur_vanne_mer), 
       "per_etat_fonctionnement"] <- FALSE
   
   
@@ -1625,7 +1625,7 @@ graph_DF_detail=function(data_DF, from, to){
     to <- parse_date_time(to, orders = c("dmy", "ymd"))
     cat("to parsed to ", strftime(to, "%d-%m-%Y"))
   }
-  data_DFw <- data_DF %>% filter(time<to & time> from)
+  data_DFw <- data_DF |> filter(time<to & time> from)
   
   data_DFw$per_tar_code <- as.factor(data_DFw$per_tar_code)	
   
@@ -1668,12 +1668,12 @@ pois <- getPass(msg="Main password")
 
 # Why do I need to include name ? 
 # I need to pass all arguments from table to the function otherwise crashes ...
-
+# from the server works with no password
 
 con <-dbConnect(RMySQL::MySQL(), 
 dbname = "archive_IAV", 
 username = decrypt_string(umysql,pois),
-    password = decrypt_string(pwdmysql,pois),
+    #password = decrypt_string(pwdmysql,pois),
 	host = decrypt_string(hostmysql,pois),
 	 port = 3306)
 df<- tribble(
@@ -1698,14 +1698,7 @@ end <-str_c("'",CY+1,"-01-01 00:00:00'")
 res <- getdata(con,.df=df,start,end)
 
 save(res, file=file.path(datawd,CY,"res.Rdata"))
-poolsiva <- pool::dbPool(
-    drv = RMySQL::MySQL(),
-    dbname = "archive_IAV",
-    host = decrypt_string(hostmysql,pois),
-    username = decrypt_string(umysql,pois),
-    password = decrypt_string(pwdmysql,pois),
-    port=3306
-)
+
 @
 
 
@@ -1737,8 +1730,8 @@ library(tidyverse)
 #.. ..$ valeur  : num  -0.434 -0.374 -0.255 -0.188 -0.121 -0.094 -0.008 0.049 0.086 0.122 ...
 
 res1 <-
-    res %>% # drop the columns I no longer need
-    select(name,result)%>%
+    res |> # drop the columns I no longer need
+    select(name,result)|>
     unnest(col=c(result))
 
 
@@ -1761,14 +1754,14 @@ res1 <-
 #   tzone = "Europe/Paris")
 # before 2016 -------------
 if (CY <=2015) {
-res1 <- res1 %>%
+res1 <- res1 |>
     mutate(time = as.POSIXct(strptime(HoroDate,tz="GMT",format="%Y-%m-%d %H:%M:%S")) - 
             as.difftime(1, units = "hours"),
         time=lubridate::with_tz(time, tzone = "Europe/Paris")) 
  # this convert to the new time (the absolute time is still the same)
     # use force_tz otherwise when the tz is wrong
 } else {
-  res1 <- res1 %>%
+  res1 <- res1 |>
       mutate(time = as.POSIXct(strptime(HoroDate,tz = "Europe/Paris",format="%Y-%m-%d %H:%M:%S")))
 }
 tz(res1$time)
@@ -1776,8 +1769,9 @@ tz(res1$time)
 #stopifnot( sum(lubridate::round_date(res1$time,"10 mins")!=res1$time)==0)
 
 
-data_DF_init <- res1 %>% select(name,time,valeur)%>%
-    pivot_wider(names_from=name,values_from=valeur) %>%
+data_DF_init <- res1 |> 
+    select(name,time,valeur)|>
+    pivot_wider(names_from=name,values_from=valeur) |>
     arrange(time)
 
 # problèmes de codeur sur vanne aval ou le sas (pas possibel d'avoir 2.8 m de charge sur vanne aval)
@@ -1907,7 +1901,7 @@ print(qp)
 ################################################
 
 #jour de l'annee
-data_DF_jour <- data_DF %>% group_by(jour) %>% 
+data_DF_jour <- data_DF |> group_by(jour) |> 
     summarise(debit_jour_recalcul = sum(debit_passe_recalcule*600),
         debit_jour_automate = sum(debit_passe*600))
 
@@ -1922,7 +1916,7 @@ barplot(data_DF_jour$debit_jour_recalcul)
 seqdate=seq(from=ledebut,to=lafin,by="day")
 #seqdate=seqdate[1:366]
 table_jour <- data.frame("seqdate"=seqdate)
-table_jour <- left_join(table_jour%>% mutate(jour=strftime(seqdate,"%j")), 
+table_jour <- left_join(table_jour|> mutate(jour=strftime(seqdate,"%j")), 
     data_DF_jour,
     by="jour")
 
@@ -2013,7 +2007,7 @@ DBI::dbExecute(req@connection, "INSERT INTO iav.t_periodefonctdispositif_per (
         , coalesce(per_etat_fonctionnement,1)::boolean
         , per_tar_code
         ,'IAV' as per_org_code
-        FROM t_periodefonctdispositif_per_temp") #2129
+        FROM t_periodefonctdispositif_per_temp") #2462
 
 # PETITES CORRECTIONS SUR LES OVERLAPS.....
 
@@ -2214,14 +2208,14 @@ plot(r_dc3,plot.type="3",
 dev.off()
 vvv$ref_dc <- list()
 vvv$ref_dc$date_debut <- strftime(
-    (r_dc3@data%>%
-      filter(per_etat_fonctionnement==1)%>%
+    (r_dc3@data|>
+      filter(per_etat_fonctionnement==1)|>
       pull(per_date_debut))
         [1],"%d/%m/%Y")
 vvv$ref_dc$date_fin <- strftime(
-    (r_dc3@data%>%
-      filter(per_etat_fonctionnement==1)%>%
-      arrange(desc(per_date_debut))%>%
+    (r_dc3@data|>
+      filter(per_etat_fonctionnement==1)|>
+      arrange(desc(per_date_debut))|>
       pull(per_date_fin))
         [1],"%d/%m/%Y")
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
@@ -2251,14 +2245,14 @@ aron <- get_temperature_chronique(
     fields = paste("code_station,date_mesure_temp,heure_mesure_temp,resultat,symbole_unite")
 )
 # données journalières,  %T>% sort le graphique mais passe à la ligne suivante
-hubeau_aronj <- aron %>% mutate(
+hubeau_aronj <- aron |> mutate(
         date = lubridate::ymd(date_mesure_temp),
         horodate_mesure_temp=lubridate::ymd_hms(str_c(date_mesure_temp," ",heure_mesure_temp)),
     #jour=strftime(as.POSIXlt(date), "%j")
     ) %T>%
-    with(.,plot(horodate_mesure_temp,resultat)) %>% 
-    group_by(date, date_mesure_temp, code_station) %>% 
-    summarise(resultat=mean(resultat, na.rm=TRUE),.groups="drop") %>%
+    with(.,plot(horodate_mesure_temp,resultat)) |> 
+    group_by(date, date_mesure_temp, code_station) |> 
+    summarise(resultat=mean(resultat, na.rm=TRUE),.groups="drop") |>
     rename(temp_aron = resultat) 
 
 # this one uses an exposition pipe    
@@ -2281,7 +2275,7 @@ dat$date <- as.Date(dat$time)
 plot(dat$temperature_corde1_cran)
 points(dat$temperature_corde2_cran, col="red")
 # calcul des moyennes journalières
-datj <- dat %>% group_by(date) %>% summarise(
+datj <- dat |> group_by(date) |> summarise(
     niveau_vil = mean(niveau_vilaine_barrage, na.rm=TRUE),
     temp_cran1 = mean(temperature_corde1_cran, na.rm=TRUE),
     temp_cran2 = mean(temperature_corde2_cran, na.rm=TRUE),
@@ -2290,13 +2284,13 @@ datj <- dat %>% group_by(date) %>% summarise(
     debit_arzal = mean(debit_vilaine_estime, na.rm=TRUE), .groups="drop"
 )
 datj <- left_join(datj, 
-    hubeau_aronj %>% select(date, temp_aron), by="date")
+    hubeau_aronj |> select(date, temp_aron), by="date")
 # graph des temperatures
-datj %>% select(date, temp_cran1,temp_cran2, temp_air_arz, temp_aron) %>%
+datj |> select(date, temp_cran1,temp_cran2, temp_air_arz, temp_aron) |>
     tidyr::pivot_longer(cols=!date, names_to="station",values_to="temperature") %T>%
     {print(ggplot(data=., aes(x=date,y=temperature,col=station)) + geom_point())}
 # tous
-datjl <- datj %>%
+datjl <- datj |>
     tidyr::pivot_longer(cols=!date, names_to="station",values_to="env_valeur_quantitatif") 
 # vérifions les données déjà inscrites cette année en base dans la table tj_stationmesure_stm
 req<- new("RequeteDB")
@@ -2311,14 +2305,14 @@ if (nrow(res)!=0){
 
 #ecriture en base --------------------------------------------------------
 station <- dbGetQuery(req@connection,glue("SELECT * FROM iav.tj_stationmesure_stm"))
-tj_ce <- datjl %>% arrange(date) %>% filter(date>=as.Date(str_c(CY,"-01-01"))) %>%
-    left_join(station,by=c("station"="stm_libelle")) %>%
+tj_ce <- datjl |> arrange(date) |> filter(date>=as.Date(str_c(CY,"-01-01"))) |>
+    left_join(station,by=c("station"="stm_libelle")) |>
     mutate(env_org_code="IAV",
         env_date_fin=date+1,
         env_methode_obtention = "MESURE"
-    ) %>%
-    filter(!is.na(env_valeur_quantitatif)) %>%
-    #filter(station!="temp_air_arz") %>%
+    ) |>
+    filter(!is.na(env_valeur_quantitatif)) |>
+    #filter(station!="temp_air_arz") |>
     select( env_date_debut=date,
         env_date_fin,
         env_methode_obtention,
@@ -2338,8 +2332,7 @@ DBI::dbWriteTable(req@connection, "tj_conditionenvironnementale_env_temp", tj_ce
 
 dbExecute(req@connection,glue("DELETE FROM  iav.tj_conditionenvironnementale_env 
             WHERE env_stm_identifiant in (6, 21, 22, 19, 24, 25)
-            AND extract(year from env_date_debut)={CY}") ) # 346
-
+            AND extract(year from env_date_debut)={CY}") ) # 0
 
 DBI::dbExecute(req@connection, "INSERT INTO iav.tj_conditionenvironnementale_env (
         env_date_debut
@@ -2354,7 +2347,7 @@ DBI::dbExecute(req@connection, "INSERT INTO iav.tj_conditionenvironnementale_env
         ,env_valeur_quantitatif
         ,env_stm_identifiant
         ,env_org_code
-        FROM tj_conditionenvironnementale_env_temp") #2012 (2021) 2309 (2022) 1982 (2024) (2025)
+        FROM tj_conditionenvironnementale_env_temp") #2012 (2021) 2309 (2022) 1982 (2024) 2382 (2025)
 
 
 @
@@ -2433,15 +2426,15 @@ r_sample_char <- calcule(r_sample_char, silent=TRUE)
 # récupération des distances au sein des commentaires de lots
 
 
-req<- new("RequeteDB")
-req <- connect(req)
-res <- dbGetQuery(req@connection,glue("SELECT lot_identifiant, lot_commentaires 
-            FROM iav.t_operation_ope JOIN iav.t_lot_lot on lot_ope_identifiant=ope_identifiant 
-            WHERE (ope_date_debut, ope_date_fin) overlaps ('2007-01-01'::timestamp without time zone, '2025-12-31 23:59:59'::timestamp without time zone)  
-            AND ope_dic_identifiant in('5') 
-            AND lot_tax_code in ('2038','2055','2234','2183','2014','2220','2224') 
-            AND lot_std_code in ('11','AGJ','IND') 
-            ;"))
+#req<- new("RequeteDB")
+#req <- connect(req)
+#res <- dbGetQuery(req@connection,glue("SELECT lot_identifiant, lot_commentaires 
+#            FROM iav.t_operation_ope JOIN iav.t_lot_lot on lot_ope_identifiant=ope_identifiant 
+#            WHERE (ope_date_debut, ope_date_fin) overlaps ('2007-01-01'::timestamp without time zone, '2025-12-31 23:59:59'::timestamp without time zone)  
+#            AND ope_dic_identifiant in('5') 
+#            AND lot_tax_code in ('2038','2055','2234','2183','2014','2220','2224') 
+#            AND lot_std_code in ('11','AGJ','IND') 
+#            ;"))
 
 #x11()
 
@@ -2471,9 +2464,9 @@ options(warn=0)
 unique(tail$car_par_code)
 unique(tail$car_methode_obtention)
 
-tail <- tail %>% 
+tail <- tail |> 
     select (date= ope_date_debut, stade=lot_std_code,tax = tax_nom_latin,std_libelle, 
-        taille= car_valeur_quantitatif, annee, mois, quinzaine, semaine,jour_365) %>%
+        taille= car_valeur_quantitatif, annee, mois, quinzaine, semaine,jour_365) |>
     mutate(annee=as.factor(annee)
     )
 tail <- tail[!(tail$tax=="Dicentrarchus labrax"&(tail$taille>1000 |tail$taille<200)),]
@@ -2756,11 +2749,11 @@ dat <- rename(dat, taille_mm=car_valeur_quantitatif)
 ###########################################"
 # Quel est l'écart type moyen des tailles de mulets journalières
 ############################################
-(allsd <- dat %>%
-      group_by(date) %>%                                           # groupe par date
-      summarize(sd=sd(taille_mm, na.rm=TRUE)) %>%                  # ecart type
-      ungroup() %>%                                                # degroupe
-      pull(sd) %>%                                                 # calcule ecart type
+(allsd <- dat |>
+      group_by(date) |>                                           # groupe par date
+      summarize(sd=sd(taille_mm, na.rm=TRUE)) |>                  # ecart type
+      ungroup() |>                                                # degroupe
+      pull(sd) |>                                                 # calcule ecart type
       mean(na.rm=TRUE))                                            # moyenne de l'écart type
 
 ###################################
@@ -3192,7 +3185,7 @@ dev.off()
 # Horaires de passage
 ######################
 mig <- bMM_Arzal@data
-mig <- mig %>% mutate(
+mig <- mig |> mutate(
     date=as.Date(ope_date_debut))
 
 
@@ -3204,7 +3197,7 @@ mig <-	fun_date_extraction(
     jour_mois = TRUE,
     heure = TRUE)
 tz(mig$ope_date_debut)    
-hhh <- mig %>% group_by(heure) %>% dplyr::summarize(N=sum(value))
+hhh <- mig |> group_by(heure) |> dplyr::summarize(N=sum(value))
 png(file=str_c(imgwdy,"horaires_mulet.png"),7 ,7, units="in",res=300)
 g <- ggplot(hhh, aes(x = heure)) + 
     geom_histogram(aes(y=N), width = 0.6, colour = NA, stat="identity") +
@@ -3213,7 +3206,7 @@ g <- ggplot(hhh, aes(x = heure)) +
     ylab("Nombre") 
 print(g)
 dev.off()
-# hhh <- mig %>% group_by(heure, mois) %>% dplyr::summarize(N = sum(value))
+# hhh <- mig |> group_by(heure, mois) |> dplyr::summarize(N = sum(value))
 load(file=file.path(datawd, CY, "fonct_pass.Rdata"))	# ll
 mig$time <- strptime(strftime(mig$ope_date_debut, format="%Y-%m-%d %H:%M"),"%Y-%m-%d %H:%M")
 mig$timec <- as.POSIXct(strptime(strftime(mig$ope_date_debut, format="%H:%M:%S"), format="%H:%M:%S"))
@@ -3223,11 +3216,11 @@ ll$dat$time <- with_tz(ll$dat$time, "Europe/Paris")
 #         2407          308885          483074 2024-09-19 06:40:00 2024-09-19 06:50:00
 mige <- inner_join(mig, ll$dat, by="time")
 
-hhh<- mige %>% group_by(heure) %>% dplyr::summarize(N=sum(value))
+hhh<- mige |> group_by(heure) |> dplyr::summarize(N=sum(value))
 
 png(file=str_c(imgwdy,"bmm_horaires_maree_mup.png"),7,7,units="in",res=300)
-mige %>% mutate(heure = as.numeric(heure)) %>%
-mutate(value = abs(value)) %>%
+mige |> mutate(heure = as.numeric(heure)) |>
+mutate(value = abs(value)) |>
 ggplot()+
     geom_point( aes(x=heure,y=niveau_mer_barrage,col=value))+		
     scale_colour_gradientn(colors=wesanderson::wes_palette("Zissou1", n = 5, type="continuous"), trans="log1p", breaks=c(0,1,10,100,1000,3000)) +
@@ -3679,17 +3672,17 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 <<analyse_lpm, echo=FALSE, eval=FALSE, include=FALSE >>=
 load(file=str_c(datawdy,"vvv.Rdata"))
 total <- vvv[["LPM"]][["total"]]
-fra <- readxl::read_excel(path=str_c(datawd,"comptage_frayere.xlsx")) %>% rename("site"="...1")
-fras <- fra %>% rowwise() %>% 
-    mutate(total = sum(c_across(where(is.numeric)),na.rm=TRUE)) %>% select(site, total)
-frat <- fra %>%  summarise(across(where(is.numeric),  sum, na.rm=TRUE)) %>%
+fra <- readxl::read_excel(path=str_c(datawd,"comptage_frayere.xlsx")) |> rename("site"="...1")
+fras <- fra |> rowwise() |> 
+    mutate(total = sum(c_across(where(is.numeric)),na.rm=TRUE)) |> select(site, total)
+frat <- fra |>  summarise(across(where(is.numeric),  sum, na.rm=TRUE)) |>
     tidyr::pivot_longer(cols=everything(), names_to = "annee", values_to = "observee", names_transform =as.numeric)
-fram <- fra %>% tidyr::pivot_longer(cols=2:ncol(.),
+fram <- fra |> tidyr::pivot_longer(cols=2:ncol(.),
         names_to = "annee",
         values_to = "observee",
-        names_transform =as.numeric) %>%
-    mutate(observee=2*observee)  %>%
-    filter(annee !=2007)%>%
+        names_transform =as.numeric) |>
+    mutate(observee=2*observee)  |>
+    filter(annee !=2007)|>
     mutate(annee =as.factor(annee),
         ) 
 
@@ -3697,12 +3690,12 @@ fram <- fra %>% tidyr::pivot_longer(cols=2:ncol(.),
 # prediction à l'aide d'un modèle binomial
 # graphique des sorties
 png(filename=str_c(imgwdy, "frayere.png"))
-fraf <- fram %>% tidyr::complete() %>%
-    mutate(corrigee=predict(gnb<<- MASS::glm.nb(observee~site+annee, data=fram), newdata=., type="response")) %>%
-    group_by(annee) %>% summarize(observee=sum(observee, na.rm=TRUE), corrigee= sum(corrigee, na.rm=TRUE)) %>%
-    mutate(annee=as.numeric(as.character(annee))) %>%
-    ungroup() %>%
-    right_join(frat%>%select(annee), by="annee")%>%
+fraf <- fram |> tidyr::complete() |>
+    mutate(corrigee=predict(gnb<<- MASS::glm.nb(observee~site+annee, data=fram), newdata=., type="response")) |>
+    group_by(annee) |> summarize(observee=sum(observee, na.rm=TRUE), corrigee= sum(corrigee, na.rm=TRUE)) |>
+    mutate(annee=as.numeric(as.character(annee))) |>
+    ungroup() |>
+    right_join(frat|>select(annee), by="annee")|>
     tidyr::pivot_longer(cols=2:ncol(.),
         names_to = "type",
         values_to = "nombre") %T>%
@@ -3720,9 +3713,9 @@ fraf <- fram %>% tidyr::complete() %>%
 dev.off()
 
 png(filename=str_c(imgwdy, "proportion_frayere.png"),4,4,units="in",res=300)
-prop <- total %>% select(effectif, annee) %>% 
-    left_join(fraf%>% tidyr::pivot_wider(id_cols="annee",names_from="type",values_from="nombre")) %>%
-    mutate(prop=round(effectif/corrigee,2)) %>%
+prop <- total |> select(effectif, annee) |> 
+    left_join(fraf|> tidyr::pivot_wider(id_cols="annee",names_from="type",values_from="nombre")) |>
+    mutate(prop=round(effectif/corrigee,2)) |>
     mutate(prop =ifelse(prop>10,NA ,prop),
         prop=ifelse(prop<0.001, NA,prop)) %T>%
     {print(gsub1 <<- ggplot(.)+
@@ -3733,8 +3726,8 @@ prop <- total %>% select(effectif, annee) %>%
 dev.off()
 
 png(filename=str_c(imgwdy, "comp_frayere_arzal.png"), 7,7,units="in",res=300)
-prop%>% dplyr::select(annee, effectif, corrigee) %>%
-    rename("comptage Arzal"=effectif) %>%
+prop|> dplyr::select(annee, effectif, corrigee) |>
+    rename("comptage Arzal"=effectif) |>
     tidyr::pivot_longer(cols=2:ncol(.),
         names_to = "type",
         values_to = "nombre") %T>%
@@ -4005,7 +3998,7 @@ mig <-	fun_date_extraction(
 		nom_coldt="ope_date_debut", annee = FALSE, mois = TRUE,
 		quinzaine = FALSE, semaine = FALSE, semaine_std = FALSE,
 		jour_an = FALSE, jour_mois = TRUE, heure = TRUE)
-hhh <- mig %>% group_by(heure) %>% summarize(N=sum(value))
+hhh <- mig |> group_by(heure) |> summarize(N=sum(value))
 png(file=str_c(imgwdy,"horaires_mulet.png"),7,7,units="in",res=300)
 g <- ggplot(hhh, aes(x = heure)) + 
 		geom_histogram(aes(y=N), width = 0.6, colour = NA,stat="identity") +
@@ -4014,14 +4007,14 @@ g <- ggplot(hhh, aes(x = heure)) +
 		ylab("Nombre") 
 print(g)
 dev.off()
-hhh <- mig %>% group_by(heure, mois) %>% summarize(N=sum(value))
+hhh <- mig |> group_by(heure, mois) |> summarize(N=sum(value))
 load(file=file.path(datawd,CY,"fonct_pass.Rdata"))	# ll
 mig$time <- strptime(strftime(mig$ope_date_debut, format="%Y-%m-%d %H:%M"),"%Y-%m-%d %H:%M")
 mig$timec <- as.POSIXct(strptime(strftime(mig$ope_date_debut, format="%H:%M:%S"), format="%H:%M:%S"))
 
 mige<-inner_join(mig, ll$dat,by="time")
 tz(ll$dat$time)
-hhh<- mige%>%group_by(heure) %>% summarize(N=sum(value))
+hhh<- mige|>group_by(heure) |> summarize(N=sum(value))
 
 png(file=str_c(imgwdy,"bmm_horaires_maree_ala.png"),7,7,units="in",res=300)
 ggplot(mige)+
@@ -4104,7 +4097,7 @@ fundatpech <- function(year,poids_moyen=1680,nomfichier="capture_"){
   datpech<-datpech[!is.na(datpech$gisement),]
   #str(datpech)
   datpech<-stacomirtools::killfactor(datpech)
-  datpech<-as.data.frame(select(datpech,date,Pecheur,Poids)%>%group_by(date)%>%summarize(capture=sum(Poids)))
+  datpech<-as.data.frame(select(datpech,date,Pecheur,Poids)|>group_by(date)|>summarize(capture=sum(Poids)))
   datpech$date=parse_date_time(datpech$date,"%d/%m/%Y")
   datpech<-datpech[order(datpech$date),]	
   datpech$nb=datpech$capture/poids_moyen
@@ -4355,7 +4348,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 #######################################
 
 
-# 1 => lancer le breport interannual
+# 1 => lancer le report interannual
 # 2 => lancer donnees capture pour récupérer les données concernant la pêche
 # ci dessous si relancé sélectionner la bonne année
 #tapply(datpech2016$nb,lubridate::month(datpech2016$date),function(X)round(sum(X)))
@@ -4363,7 +4356,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # ATTENTION BIEN LIRE IL FAUT SELECTIONNER A LA MAIN LES ANNEES COMME CI DESSOUS
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-load(file=str_c(datawd,'bmiala2023.Rdata'))
+load(file=str_c(datawd,'bmiala2025.Rdata'))
 bmi2016 <- summary(bmi,year_choice=2016,silent=FALSE) 
 bmi2017 <- summary(bmi,year_choice=2017,silent=FALSE)
 bmi2018 <- summary(bmi,year_choice=2018,silent=FALSE) 
@@ -4483,8 +4476,8 @@ save(vvv, file=str_c(datawdy,"vvv.Rdata"))
 
 
 dat <- data.frame("annee"=2002:2025,
-    "effectif_capture"=c(177,127,60,293,360,93,134,82,549,376,2499,2994,2633,1330,271,1009,0,0,0,0,0,0,0),
-    "poids_capture"=c(rep(NA,10),4112,4993,4105,2617,456,1707,0,0,0,0,0,0,0))
+    "effectif_capture"=c(177,127,60,293,360,93,134,82,549,376,2499,2994,2633,1330,271,1009,0,0,0,0,0,0,0,0),
+    "poids_capture"=c(rep(NA,10),4112,4993,4105,2617,456,1707,0,0,0,0,0,0,0,0))
 dat$poids_capture/dat$effectif_capture
 #dat$effectif_capture=round(1000*dat$capture/poids)
 # Il ne semble pas que le poids moyen ait augmenté à Arzal en 2015
@@ -5964,7 +5957,7 @@ dev.off()
 mmm <- summary(rmi,silent=TRUE)$'5' 
 mmm <- mmm[,-1]
 colnames(mmm) <- c("Mois", "Min*", "Moyenne*", "Max*", "N (2025)")
-xtmmm<-xtable(mmm,caption="Migrations mensuelles des silures dans la passe à bassins du barrage d'Arzal. $N$ = nombre, * correspondent à
+xtmmm<-xtable(mmm,caption="Migrations mensuelles des bars dans la passe à bassins du barrage d'Arzal. $N$ = nombre, * correspondent à
         la période 1996-2025. min* = minimum mensuel, max* = maximum mensuel, moyenne* = moyenne des effectifs mensuels.",
     label="table_trm_mois",
     digits=c(0,0,0,0,0,0),
@@ -6002,9 +5995,9 @@ ra<-choice_c(ra,
 ra <- connect(ra,silent=FALSE)
 
 xtra<-stacomiR::xtable(ra,
-    caption="Silures observés dans la passe à bassins du barrage
+    caption="bars observés dans la passe à bassins du barrage
         d'Arzal (passe à fentes verticales).",
-    label="table_bilanannuel_sil",
+    label="table_bilanannuel_bar",
     dc_name=c("P. bassins")		
 )
 # below not run but one can create a file as following
@@ -6022,7 +6015,7 @@ print(xtra,
     file=path,
     add.to.row= list(pos=list(0),
         command=				
-            "\\multicolumn{2}{c}{\\textit{Silurus glanis}}  \\\\
+            "\\multicolumn{2}{c}{\\textit{Dicentrarchus labrax}}  \\\\
             \\multicolumn{2}{c}{Indéterminé} \\\\"),		
     include.rownames = TRUE,
     include.colnames = FALSE,
@@ -6174,7 +6167,7 @@ b_carlot <- connect(b_carlot)
 b_carlot <- calcule(b_carlot,silent=TRUE)
 plot(b_carlot,plot.type='2')
 
-tt <- b_carlot@data %>% group_by(annee,mois, tax_nom_latin) %>% summarize(taille_moyenne=mean(car_valeur_quantitatif), taille_sd = sd(car_valeur_quantitatif)) %>% ungroup()
+tt <- b_carlot@data |> group_by(annee,mois, tax_nom_latin) |> summarize(taille_moyenne=mean(car_valeur_quantitatif), taille_sd = sd(car_valeur_quantitatif)) |> ungroup()
 # convertit les tailles moyennes en poids
 
 tt$poids_moyen <- weight(species=tt$tax_nom_latin,L=tt$taille_moyenne/10)
@@ -6202,14 +6195,14 @@ ggplot(tt) +
 
 
 
-res <- res %>% rename("annee"="année")
+res <- res |> rename("annee"="année")
 
 mois <- c("02","03","04","05","06","07","08","09","10","11","12")
 names(mois) <-  c("févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc.")
 res$mois <- unname(mois[res$mois])
 restt <- inner_join(res,tt, by=c("tax_nom_latin","annee","mois"))
 
-restt <- restt %>% rename("effectif"="valeur")
+restt <- restt |> rename("effectif"="valeur")
 restt$biomasse <- restt$effectif * restt$poids_moyen/1000
 restt$biomasse_sup <- restt$effectif * (restt$poids_moyen_sup)/1000
 restt$biomasse_inf <- restt$effectif * (restt$poids_moyen_inf)/1000
@@ -6240,7 +6233,7 @@ ggplot(restt) +
 save(restt, file= str_c(datawd, "biomasse_Vilaine.Rdata"))
 load(file= str_c(datawd, "biomasse_Vilaine.Rdata"))
 
-restt %>% filter(mois %in% c("03","04","05","06")) %>% group_by(annee, tax_nom_latin) %>%
+restt |> filter(mois %in% c("03","04","05","06")) |> group_by(annee, tax_nom_latin) |>
 		summarize(effectif = sum(effectif, na.rm =TRUE), 
 				biomasse=sum(biomasse, na.rm =TRUE),
 				biomasse_sup= sum(biomasse_sup, na.rm =TRUE),
