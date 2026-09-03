@@ -397,7 +397,7 @@ keepaspectratio]{frontpage.pdf}%
 Cédric Briand, Brice Sauvaget, Gérard Eriau \par}}}
  \vspace{0.5cm}
  \color{black}{\large{\titlefont Date d'édition :}}
-\qquad \color{vert_clair_BGM}\large{\titlefont Juillet 2026}
+\qquad \color{vert_clair_BGM}\large{\titlefont Août 2026}
 \end{minipage}
 %
 \begin{minipage}{0.28\textwidth}
@@ -464,7 +464,7 @@ Cédric Briand, Brice Sauvaget, Gérard Eriau \par}}}
 \vspace{2cm}
 \begin{minipage}{0.8\textwidth}
 \begin{center}
-\hspace{3cm}{\color{white}{\huge \itshape{Juillet 2025}}}
+\hspace{3cm}{\color{white}{\huge \itshape{Août 2025}}}
 \end{center}
 \end{minipage}
 \restoregeometry
@@ -827,7 +827,7 @@ ont été comptabilisées sur l'ensemble de l'année. Entre 1998 et 2012, seule 
 
 Ce rapport décrit le fonctionnement de la passe à fentes verticales du barrage
 et de son système de vidéosurveillance associé. Il fait également la synthèse des passages de 
-poissons migrateurs par la passe à bassins en 2025 \rev{ TODO 
+poissons migrateurs par la passe à bassins en 2025 \rev{  
 \footnote{La migration sur les passes à anguilles est traitée dans un autre
 rapport :
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ER5GHvMhd7hIm7U0xgXtt5YBzTVgcGsewPAMu5IUjMxGKQ?e=oJfWao}{Gestion
@@ -860,7 +860,7 @@ Le marnage à l’aval est de 6 mètres lors des grandes marées (Figure
 \subsubsection{La passe à bassins}
 
 Deux passes ont été construites en 1995 sur le barrage. La première est un
-dispositif spécifique pour les anguilles composé de deux rampes de reptation
+dispositif spécifique pour les anguilles composé de trois rampes de reptation
 plongeant dans l'estuaire et permettant aux anguillettes et aux civelles de grimper le long des rampes en
 prenant appui sur des brosses, puis plus en amont d'un piège, un vivier de
 stockage dans lequel les anguilles tombent après avoir franchi la rampe.
@@ -1056,7 +1056,9 @@ d'enregistrement se compose d'une caméra et d'un ordinateur pour
 l'enregistrement (Figure \ref{photo:suivi_numerique}). Le système de comptage 
 est basé sur un enregistrement numérique des passages de poissons réalisé à 
 l’aide des logiciels SYSIPAP (Système de Surveillance Informatisée des Passes 
-à Poissons). 
+à Poissons).
+
+
 Ce système fonctionne en deux phases :
 
 \begin{itemize}
@@ -1082,6 +1084,7 @@ Le logiciel d'acquisition de séquences d'images WSEQ32 (Image
 lumineuse,
 \item	déclenchement d'enregistrement comprimé sur le disque dur d'un PC.
 \end{itemize}
+
 
 Les paramètres ajustables sont :
 \begin{enumerate}
@@ -1147,21 +1150,17 @@ stocks de migrateurs doivent donc être considérés comme un minimum.
 \subsection{Fonctionnement de la passe à bassins}
 \paragraph{Résumé du fonctionnement.}
 
-Le fonctionnement de la passe en \Sexpr{CY} a été perturbé la grande crue de
-janvier - février et par les travaux sur les siphons et les gabions. 
-Le lancement a eu lieu le 17 février, à ce stade, les travaux des gabions ne
-sont pas terminés, et les support des siphons ont été posés mais pas les coudes
-finaux.
-Le 19 février la passe est arrêtée en journée pour les siphons, elle sera
-ensuite arrêtée du 24/02 au 07/03. En mai des problèmes techniques conduisent
-au changement du fin de course haut de la vanne amont. En mai et en juin la
-passe est manoeuvrée en fermeture à basse mer pour capturer les lamproies dans
-le cadre de l'étude INRAe HALAMEAUP. Plusieurs problèmes techniques ont
-nécessité des arrêts nocturnes sur quatre périodes entre juin et septembre, pour une durée cumulée d'un mois. Fin septembre, des fuites d'huile ont été détectées sur les flexibles des vérins de la porte aval, ce qui a
-entraîné l'arrêt de la passe du 26 septembre jusqu'à leur remplacement le 19
-décembre (Figure \ref{report_df_annee} en annexe).
-De fin décembre à début janvier une intervention technique pour modifier une
-pièce de contrôle hydraulique des vérins.
+Le fonctionnement de la passe en \Sexpr{CY} a été perturbé par la grande crue de
+janvier - février et par les travaux sur les gabions et les siphons.
+La passe a été relancée le 18 février, à ce stade, les travaux des
+gabions ne sont pas terminés, et les support des siphons ont été posés mais pas les coudes
+finaux. Le 19 février, la passe est arrêtée en journée pour intervenir sur les
+siphons, elle sera ensuite arrêtée du 26/02 au 06/03 pour cause de crue. En
+avril et mai, des problèmes techniques conduisent au changement des fins de
+course de la vanne amont. En mai et juin, la passe est manoeuvrée en fermeture à 
+basse mer pour capturer des lamproies marines dans le cadre de l'étude INRAE
+HALAMEAUP. Du 24/12 au 03/03/26, une panne sur le distributeur hydraulique de la
+vanne intermédiaire a entraîné l'arrêt de la passe (Figure \ref{report_df_annee} en annexe).
 
 \begin{figure}[htpb]
 \centering
@@ -1182,6 +1181,9 @@ partir de ces niveaux, dont le détail est présenté en annexe (Figures
 de la passe est calculé par période de 10 minutes (Figure \ref{report_df_annee}
 en annexe).
 
+La passe a été batardée le 4 juillet, mise en mode étiage du 05/08 au 04/09,
+puis débatardée le 21 octobre (Figure \ref{debit_passe_comp}).
+
 En Figure \ref{report_df_fct_2003_2025}, l'analyse des durées mensuelles
 cumulées de chaque type de fonctionnement permet de se donner une idée des
 périodes auxquelles la passe a été arrêtée (en orange
@@ -1190,7 +1192,7 @@ par exemple le passage en mode étiage de 2016 à 2019 se traduit par une
 augmentation de la durée des dysfonctionnements
 (en orange \textcolor{orange_EV}{\rule[-0.2mm]{3mm}{2mm}}) ou par des arrêts
 nocturnes (en jaune \textcolor{jaune_EV}{\rule[-0.2mm]{3mm}{2mm}}). Les mêmes
-graphiques sont présentés pour la période 2003-\Sexpr{CY} (Figure
+graphiques sont présentés pour la période 2002-\Sexpr{CY} (Figure
 \ref{report_df_2003_2025}) en mettant juste en avant les périodes où la passe est fonctionnelle
 (en bleu \textcolor{bleu_EV}{\rule[-0.2mm]{3mm}{2mm}}) et les périodes où elle
 ne l'est pas (en orange \textcolor{orange_EV}{\rule[-0.2mm]{3mm}{2mm}}).
@@ -1213,7 +1215,7 @@ valeurs abérrantes de niveaux.}
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{2025/report_df_fct_2003_2025.png}
-\caption{Fonctionnement de la passe de 2003 à 2025, avec les détails par type
+\caption{Fonctionnement de la passe de 2002 à 2025, avec les détails par type
 de fonctionnement.}
 \label{report_df_fct_2003_2025}
 \end{figure}%
@@ -1223,17 +1225,15 @@ de fonctionnement.}
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{2025/report_df_2003_2025.png}
-\caption{Fonctionnement de la passe de 2003 à 2025.}
+\caption{Fonctionnement de la passe de 2002 à 2025.}
 \label{report_df_2003_2025}
 \end{figure}%
 %
 
 \paragraph{Fonctionnement du dispositif de comptage.}
 
-Le dispositif de comptage a été mis en service le 9 février et arrêté le 26
-septembre. Les seuls arrêts du suivi sont dus à trois extinctions du caisson
-lumineux entre le 12 et 15 février, pour une durée cumulée de 56 heures
-(Figure \ref{report_dc_2025}).
+Le dispositif de comptage a été mis en service le 18 février et arrêté le 17
+décembre, sans interruption de fonctionnement (Figure \ref{report_dc_2025}).
 
 \begin{figure}[htpb]
 \centering
@@ -2359,9 +2359,8 @@ DBI::dbExecute(req@connection, "INSERT INTO iav.tj_conditionenvironnementale_env
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Conditions environnementales}
 
-L'année \Sexpr{CY} a été marquée par des débits de crue au premier et au
-dernier trimestre, et globalement des débits bien supérieurs à ceux de
-référence de la banque hydro (Figure \ref{fig_debit}).
+L'année \Sexpr{CY} a été marquée par des débits de crue très importants au
+premier trimestre, et forts en décembre (Figure \ref{fig_debit}).
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{2025/fig_debit.png} 
@@ -2574,12 +2573,11 @@ estuarienne des autres espèces communes en Bretagne \textit{Chelon labrosus} et
 Compte tenu des effectifs très importants de mulets franchissant le barrage
 d'Arzal chaque année, les comptages n'ont pas été effectués sur l'ensemble de la
 période de suivi historique de la passe. Ils ont été effectués en 1996 et
-1997, en 2005, et de 2013 à \Sexpr{CY}. Lors des pics de migration, le comptage
-des mulets est effectué par lots de 10 individus en cas de forts passages, et la taille des poissons est analysée
-sur des échantillons hebdomadaires.
-La structure en
-taille des mulets présente à la fois des variations saisonnières et
-interannuelles (Figure \ref{figure_taille_mulets}). Les mulets les plus grands
+1997, en 2005, et depuis 2013. Lors des pics de migration, le comptage
+des mulets est effectué par lots de 10 individus en cas de forts passages, 
+et la taille des poissons est analysée sur des échantillons hebdomadaires.
+La structure en taille des mulets présente à la fois des variations saisonnières
+et interannuelles (Figure \ref{figure_taille_mulets}). Les mulets les plus grands
 se présentent en tout début de saison, puis la taille des mulets diminue pour
 atteindre son minimum lors de l'été \citep{lemonnier_dynamique_2019}.
 
@@ -2623,7 +2621,7 @@ mais le passage brutal de l'eau douce à l'eau salée en estuaire nécessite
 probablement un temps d'adaptation pour effectuer la régulation osmotique.
 Ainsi, les chiffres de migration totale représentent probablement un biais dans
 l'interprétation de la taille de la population de mulets en Vilaine, et un
-calcul du nombre de mulets migrant jusqu'au mois de septembre (exclu) est donné au
+calcul du nombre de mulets migrant jusqu'au mois d'août (inclu) est donné au
 Tableau \ref{table_bilanannuel_mulets_0108}.
 
 
@@ -3403,8 +3401,8 @@ L'espèce est classée en danger en France sur la liste rouge UICN.}
 
 
 Les migrations de lamproies marine sur la Vilaine qui étaient en fort déclin
-après 2015 ont réaugmenté à un niveau proche du niveau historique
-(N=\Sexpr{num(vvv$LPM$N[match(2020,vvv$LPM$N$annee),1])}) en 2020.
+après 2015 ont réaugmenté à un niveau proche du niveau historique en 2020
+(N=\Sexpr{num(vvv$LPM$N[match(2020,vvv$LPM$N$annee),1])}).
 Cette année, les effectifs ont été de nouveau faibles avec 
 \Sexpr{num(vvv$LPM$NCY)} lamproies marines (Figure \ref{barplot_report_annual_lpm}, Tableau \ref{table_bilanannuel_lpm}) ce qui place l'année au \Sexpr{num(vvv$LPM$rank)} ème rang sur les
 \Sexpr{num(nrow(vvv$LPM$N))} années de suivi à Arzal.
@@ -3422,8 +3420,9 @@ au barrage d'Arzal.}
 
 La comparaison des tendances mensuelles avec les migrations
 interannuelles montre qu'elles sont inférieures à la moyenne observée sur la
-période 1996-\Sexpr{CY}, elles sont même à leur minimum observé en mars (probablement du fait des arrêts de la passe) 
-et mai (Figure \ref{barchart_bmi_lpm}, Tableau \ref{table_lpm_mois}).
+période 1996-\Sexpr{CY-1}, à l'exception du mois d'avril. Elles sont proches de
+la moyenne en mars, très faibles et mai, puis quasi inexistantes ensuite
+(Figure \ref{barchart_bmi_lpm}, Tableau \ref{table_lpm_mois}).
 
 \begin{figure}[htpb]
 \centering
@@ -3441,7 +3440,7 @@ série interannuelle de données 1996-\Sexpr{CY-1}.}
 
 La migration des lamproies marines intervient entre mars et juin (Figure
 \ref{rmi_density_lpm}). En \Sexpr{CY}, la migration s'est faite essentiellement
-d'avril à mai. Les premières migrations sont plus précoces que ce que l'on
+en avril. Les premières migrations sont plus précoces que ce que l'on
 pensait, et le suivi était souvent lancé trop tardivement avant 2021 
 (1ère quinzaine de mars entre 2010 et 2020) pour voir les premiers individus
 (Figures \ref{barchart_bmi_lpm}, \ref{plot_seasonal_lpm}).
@@ -3473,27 +3472,27 @@ par la couleur.}
 \end{figure}
 
 La comparaison des structures en taille vidéo laisse paraître un accroissement
-depuis 2015. C’est à partir de 2019 qu’une nouvelle méthode de mesure a été 
-appliquée : la taille a été mesurée relativement à 9 sections de la
+de taille depuis 2017. C’est à partir de 2019 qu’une nouvelle méthode de mesure
+a été appliquée : la taille a été mesurée relativement à 9 sections de la
 vitre de comptage pour prendre en compte les déformations de la lentille de la caméra. 
-Or, l’aumentation est observée depuis 2015, et ne peut donc pas être attribuée
+Or, l’augmentation est observée depuis 2017, et ne peut donc pas être attribuée
 au changement de méthode de mesure. L’augmentation de la taille des lamproies
 est donc un phénomène notable, comme pour les variations d’effectifs, les raisons 
 de cette augmentation de taille ne sont pas connues, et un phénomène exactement
 similaire avait été rapportée sur la Loire (Marion Legrand, comm. pers.).
 
 
-Après un pic de taille dans les années 2020 et 2020, puis une baisse en 2022
-et 2023 les tailles des lamproies se stabilisent.  (Figure
-\ref{size_lpm}).
+Après un pic de taille en 2020 et 2021, la taille baisse en 2022
+et 2023, remonte en 2024, puis baisse à nouveau en 2025 tout en restant
+au niveau de 2017 (Figure \ref{size_lpm}).
 
 
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{2025/size_lpm.png} 
-\caption{Comparaison des structure en taille des lamproies marines. Les tailles
-de 2019 à \Sexpr{CY} ont été calculées en prenant en compte la déformation des 
-distances dans les différentes zones de la vitre.}
+\caption{Comparaison des structure en taille des lamproies marines. Depuis 2019,
+les tailles ont été calculées en prenant en compte la déformation des distances
+dans les différentes zones de la vitre.}
 \label{size_lpm}
 \end{figure}
 
@@ -3817,7 +3816,7 @@ France sur la liste rouge UICN.
 \ref{table_bilanannuel_ala}).
 Cette migration place l'année \Sexpr{CY} au rang \Sexpr{vvv$ALA$rank}
 par rapport à l'ensemble des années de migration, avec une augmentation marquée
-par rapport aux années 2018-2024. En vidéo comptage, il n'est pas possible de
+par rapport aux années 2021-2024. En vidéo comptage, il n'est pas possible de
 distinguer les deux espèces, grande alose \textit{Alosa alosa} et alose feinte \textit{Alosa fallax}.
 
 
@@ -3841,8 +3840,9 @@ interannuelle de données 1996-\Sexpr{CY-1}.}
 \end{figure}
 
 
-Globalement, les migrations sont inférieures à la moyenne interannuelle (Figures
-\ref{rmi_journalier_ala} et \ref{barchart_bmi_ala}, Tableau \ref{table_ala_mois}).
+Globalement, les migrations sont inférieures à la moyenne interannuelle, à
+l'excpetion de la première quinzaine d'avril (Figures \ref{rmi_journalier_ala}
+et \ref{barchart_bmi_ala}, Tableau \ref{table_ala_mois}).
 
 \begin{figure}[htpb]
 \centering
@@ -3853,17 +3853,16 @@ interannuelle de données 1996-\Sexpr{CY-1}.}
 \end{figure}
 
 La comparaison des structures en taille vidéo de cette année laisse apparaître
-une forte diminution de la taille moyenne après une tendance sur plusieurs
-années à l'augmentation.
+une augmentation de la taille moyenne après 3 années avec des petits individus.
 A compter de 2019, la taille a été mesurée relativement à 9 zones de la vitre de
-comptage pour prendre en compte les déformations de la lentille de la caméra. Ainsi les tailles avant 2019 et 2025
-sont peut être légèrement plus petites (Figure \ref{size_alose}).
+comptage pour prendre en compte les déformations de la lentille de la caméra.
+Ainsi les tailles avant 2019 sont peut être légèrement plus petites (Figure \ref{size_alose}).
 La diminution de la taille moyenne en 2020 semblait cohérente avec un retour des
 premières aloses ayant fait l'objet de mesures de protection 5 ans auparavant en
 2015, et la relative rareté des grandes aloses correspondant à la période de
 surexploitation en 2012-2014. En 2021, les tailles avaient ré-augmenté,
-puis elles diminuent depuis 2022. Ces variations de tailles moyennes
-pourraient s'expliquer par des années pour lesquelles le succès reproducteur
+puis atteint des niveaux assez bas de 2022 à 2024. Ces variations de tailles
+moyennes pourraient s'expliquer par des années pour lesquelles le succès reproducteur
 serait plus faible, ou par la contribution plus ou moins importante d'aloses
 provenant d'autres bassins.
 
@@ -3877,8 +3876,9 @@ du mois de passage.}
 \label{size_alose}
 \end{figure}
 
-Contrairement à l'année 2019, le début de la migration n'est pas
-particulièrement précoce depuis 2022 (Figure \ref{plot_seasonal_ala}).
+Les premières aloses ont été observées assez tôt, à la mi-mars, et
+la moitié de la migration était déjà réalisée début avril, ce qui en fait
+l'année la plus précoce avec 2014 (Figure \ref{plot_seasonal_ala}).
 
 
 \begin{figure}[htpb]
@@ -3898,7 +3898,7 @@ A partir des éléments collectés sur le bassin, et des données obtenues sur l
 bassins voisins, un objectif de gestion en biomasse a été défini. Le
 stock potentiel sur la Vilaine est estimé entre 50~000 aloses, pour
 le niveau actuel d'aménagement du bassin - c'est à dire un fort étagement
-par le barrage d'Arzal puis par les ouvrages de l'Oust et de la Vilaine-, et
+par le barrage d'Arzal puis par les ouvrages de l'Oust et de la Vilaine -, et
 100~000 aloses pour une rivière en conditions pristine, c'est à dire une
 rivière pour laquelle l'accès aux zones de frayères serait restauré. Une limite
 en biomasse, celle en-dessous de laquelle on estime qu'il pourrait y avoir un
@@ -3909,16 +3909,15 @@ pêcheries. L'importance de l'aménagement des axes fluviaux pour l'accès aux
 zones de reproduction a également été mis en avant (Figure \ref{tx_exploit}).
 
 La question de la prédation du silure, dont les effectifs sont en claire
-augmentation avec des tailles allant en s'accroissant doit se poser, avec celle
+augmentation avec des tailles allant en s'accroissant, doit se poser, avec celle
 de la régulation de cette espèce.
 
 
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{2025/bmm_horaires_maree_ala} 
-\caption{Passage des aloses par pas de temps de 10 minutes en fonction de
-l'heure et du niveau mer en
-\Sexpr{CY}.}
+\caption{Passage des aloses en \Sexpr{CY}, par pas de temps de 10 minutes en
+fonction de l'heure et du niveau mer.}
 \label{horaires_maree_ala}
 \end{figure}
 
@@ -4883,9 +4882,10 @@ série interannuelle de données 1996-\Sexpr{CY-1}.}
 
 \input{\Sexpr{vvv[["SAT"]][["path"]]}} % table bilan pour l'année
 
-La migration des saumons intervient toute l'année avec un pic estival (Figure
-\ref{rmi_density_sat}). En \Sexpr{CY}, la migration s'est faite
-en juillet et août (Figure \ref{barchart_bmi_sat}).
+La migration des saumons était très majoritairement centrée sur le mois de juin
+jusqu'au début des années 2010, puis elle s'est décalé sur juillet et août
+ensuite, comme c'est le cas en \Sexpr{CY} (Figures \ref{rmi_density_sat} et
+\ref{barchart_bmi_sat}).
 
 \begin{figure}[htpb]
 \centering
@@ -4896,8 +4896,8 @@ en juillet et août (Figure \ref{barchart_bmi_sat}).
 
 
 Les tailles des saumons mesurées au niveau de la passe d'Arzal sont présentées
-en Figure \ref{size_sat}. On remarque que les saumons fréquentant la Vilaine sont 
-très majoritairement des castillons.
+en Figure \ref{size_sat}. On remarque que les saumons fréquentant la Vilaine
+depuis 2000 sont très majoritairement des castillons.
 
 \begin{figure}[htpb]
 \centering
@@ -5561,12 +5561,16 @@ dev.off()
 
 Par sa situation avec le pied en eau salée et la tête en eau douce, la passe ne
 rencontre que des effectifs très faibles d'autres espèces. En \Sexpr{CY}, les
-espèces recensées sont assez nombreuses : silure, sandre, black bass, cyprinidés
-et brème (Figure \ref{autres_especes}). 
+espèces recensées sont assez nombreuses : silure, sandre, black bass,
+brème et cyprinidés (Figure \ref{autres_especes}).
 La fréquentation des autres espèces depuis 2000 est illustrée de manière
 graphique à la Figure \ref{autres_especes_2000_2025}. 
-Les effectifs de bars qui utilisent la passe pour chasser sont en très nette
-augmentation  Figure \ref{barchart_bmi_bar}. 
+
+
+Les effectifs de bars, qui utilisent la passe pour chasser et parfois migrer en
+eau douce, sont en nette augmentation depuis le début de leur dénombrement
+en 2022 (Figure \ref{barchart_bmi_bar}, Tableau \ref{table_bilanannuel_bar}).
+L'espèce était peu présente les années précédentes, et même absente avant 2010.
 
 \begin{figure}[htpb]
 \centering
@@ -5574,16 +5578,16 @@ augmentation  Figure \ref{barchart_bmi_bar}.
 \caption{Effectif des autres espèces recensées en \Sexpr{CY} dans la passe.
 \textit{Abramis brama} brème, 
 \textit{Ameiurus melas} poisson-chat,
-\textit{Sander lucioperca} sandre,
 \textit{Cyprinus carpio} carpe,
 \textit{Cyprinidae} cyprinidés sans détermination, 
 \textit{Dichentrarchus labrax} bar commun,
 \textit{Esox lucius} brochet,
 \textit{Lampetra fluviatilis} lamproie fluviatile,
+\textit{Micropterus salmoides} black bass à grande bouche, 
 \textit{Perca fluviatilis} perche commune,
 \textit{Rutilus rutilus} gardon,
 \textit{Salmo trutta fario} truite fario,
-\textit{Micropterus salmoides} black bass à grande bouche, 
+\textit{Sander lucioperca} sandre,
 \textit{Silurus glanis} silure,
 \texit{Tinca tinca} tanche.}
 \label{autres_especes}
@@ -5605,17 +5609,18 @@ augmentation  Figure \ref{barchart_bmi_bar}.
 \centering
 \includegraphics[width=0.45\textwidth]{2025/barchart_bmi_bar.png} 
 \caption{Effectifs mensuels de bars au droit de la vitre en \Sexpr{CY} et
-comparaison aux valeurs historiques .}
+comparaison aux valeurs historiques.}
 \label{barchart_bmi_bar}
 \end{figure}
 
 \input{\Sexpr{vvv[["BAR"]][["path"]]}} % table bilan bars
 
 
-Les effectifs de silures recensés au niveau de la passe d'Arzal sont en très
-nette augmentation (Figure \ref{bilan_annuel_sil}). De même, la tendance des
-tailles mesurées est à l'augmentation, à l'exception des deux dernières années
-pour lesquelles on observe plus de silures de petite taille (Figure \ref{size_sil}).
+Les effectifs de silures recensés au niveau de la passe d'Arzal sont assez
+stables depuis 2018 (Figure \ref{bilan_annuel_sil}). De même, la tendance des
+tailles mesurées était à l'augmentation jusqu'en 2022, puis elle semble se
+stabiliser après une année 2023 marquées par un retour de plus d'individus de
+petite taille (Figure \ref{size_sil}).
 
 \begin{figure}[htpb]
 \centering
@@ -5629,7 +5634,7 @@ d'Arzal.}
 \centering
 \includegraphics[width=0.45\textwidth]{2025/bilan_annuel_sil.png} 
 \caption{Effectif des silures ayant migré par la passe d'Arzal depuis
-2000.}
+1996.}
 \label{bilan_annuel_sil}
 \end{figure}
 
@@ -6007,7 +6012,7 @@ ra<-choice_c(ra,
 ra <- connect(ra,silent=FALSE)
 
 xtra<-stacomiR::xtable(ra,
-    caption="bars observés dans la passe à bassins du barrage
+    caption="Bars observés dans la passe à bassins du barrage
         d'Arzal (passe à fentes verticales).",
     label="table_bilanannuel_bar",
     dc_name=c("P. bassins")		
@@ -6258,8 +6263,8 @@ restt |> filter(mois %in% c("03","04","05","06")) |> group_by(annee, tax_nom_lat
 La base de données du barrage collecte les informations relatives aux niveaux et
 au fonctionnement des vannes au pas de temps de 10 minutes. Le fichier des données 
 extrait de la base de données du barrage contient
-\Sexpr{num(vvv$fonct_pass$nb_lignes)} lignes \Sexpr{CY}. A partir de ce dernier,
-un script de traitement extrait les temps et les modes de fonctionnement de la
+\Sexpr{num(vvv$fonct_pass$nb_lignes)} lignes pour l'année \Sexpr{CY}. A partir
+de ce dernier, un script de traitement extrait les temps et les modes de fonctionnement de la
 passe (Figure \ref{figure_schema_fonctionnement}). 
 Les sondes utilisées en référence ont parfois des valeurs manquantes,
  \Sexpr{num(vvv$fonct_pass$niveau_mer_barrage_manquant_rempl)} et \Sexpr{num(vvv$fonct_pass$niveau_vilaine_barrage_manquant_rempl)} respectivement 
@@ -6424,9 +6429,10 @@ des joints de la vanne intermédiaire.\\
 de niveau du sas. Installation d’un chauffage et d’un déshumidifacteur afin de 
 préserver le matériel électronique du local de la passe à bassins. Changement
 des boîtiers électroniques des sondes de niveaux amont et aval du barrage.\\
-2025 & Remplacement des distributeurs de la vanne amont. Remplacement des
+2024 & Remplacement des distributeurs de la vanne amont. Remplacement des
 flexibles corrodés sur les vérins de la vanne aval.\\
-2025 & Réparation des fins de courses de la vanne aval.\\
+2025 & Remise à neuf des gabions aval et des siphons. Réparation des fins
+de courses de la vanne amont.\\
 \bottomrule
 \end{tabular}
 \caption{Entretien historique de la passe à bassins.}
@@ -6448,6 +6454,9 @@ Versions précédentes des rapports annuels (table \ref{table_references}).
 \toprule
 Année & Rapport \\
 \midrule
+2024 &
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/IQBVsT9_BeqASbWz-IilJEz3AUCBlAPxvKa5Flsk1U2XHMo?e=WSiWpH}{Suivi
+de la passe à bassins, 2024}\\
 2023 &
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EYivEAGQThBKiYqQJJA_A6MBQnb0H1cLQzqHLQpH5bvEyw?e=Tkm3RY}{Suivi
 de la passe à bassins, 2023}\\
@@ -6510,8 +6519,8 @@ de la passe à bassins, 2008}\\
 \paragraph{Remerciements}
 
 La passe fonctionne au quotidien grâce au travail d'entretien, de suivi et
-d'intervention des barragistes : Alban Le Guen, Cyril Faucon, Johann Dahlem,
-Laurent Philippot. Nous tenons à les remercier pour leur aide
+d'intervention des barragistes : Alban Le Guen, Clément Guillemot, Cyril Faucon,
+Johann Dahlem et Laurent Philippot. Nous tenons à les remercier pour leur aide
 et leur disponibilité.
 \bigskip
 
@@ -6525,6 +6534,15 @@ Observatoire de l’Environnement en Bretagne~:
 \href{https://bretagne-environnement.fr/tableau-de-bord/peuplements-piscicoles-des-cours-deau-bretons}{{
 https://bretagne-environnement.fr/tableau-de-bord/peuplements-piscicoles-des-cours-deau-bretons}}
 
+Rhin Meuse Migrateurs (R2M)~: 
+\href{https://www.saumon-rhin.com/}{{https://www.rm-migrateurs.fr/}}
+
+Fédération de pêche de la Somme~: 
+\href{https://peche80.com/}{{https://peche80.com/}}
+
+Seine-Normandie Migrateurs (SEINORMIG)~:    
+\href{https://www.seinormigr.fr/}{{https://www.seinormigr.fr/}}
+
 Association Loire Grands Migrateurs (LOGRAMI)~:
 \href{http://www.logrami.fr}{{http://www.logrami.fr}}
 
@@ -6534,23 +6552,14 @@ Migrateurs Garonne Dordogne Charente Seudre (MIGADO)~:
 Cellule Migrateurs Charente Seudre (MIGADO)~:
 \href{http://www.migrateurs-charenteseudre.fr}{{http://www.migrateurs-charenteseudre.fr}}
 
-Saumon-Rhin~:   
-\href{https://www.saumon-rhin.com/}{{https://www.saumon-rhin.com/}}
-
-Fédération de pêche de la Somme~: 
-\href{https://peche80.com/}{{https://peche80.com/}}
-
-Seine-Normandie Migrateurs (SEINORMIG)~:    
-\href{https://www.seinormigr.fr/}{{https://www.seinormigr.fr/}}
-
-Stations de suivi INRAe-OFB~:      
-\href{https://bretagne-environnement.fr/bresle---oir---scorff---nivelle-trois-decennies-observations-recherche-poissons-migrateurs}{{https://bretagne-environnement.fr/bresle---oir---scorff---nivelle-trois-decennies-observations-recherche-poissons-migrateurs}}
-
 Migrateurs Adour (MIGRADOUR)~:                          
 \href{https://www.migradour.com/activite/site-index-soustons/}{{https://www.migradour.com/activite/site-index-soustons/}}
 
 Migrateurs Rhône-Méditerranée (MRM)~:            
 \href{https://www.migrateursrhonemediterranee.org/}{{https://www.migrateursrhonemediterranee.org/}}
+
+Stations de suivi INRAe-OFB~:      
+\href{https://bretagne-environnement.fr/bresle---oir---scorff---nivelle-trois-decennies-observations-recherche-poissons-migrateurs}{{https://bretagne-environnement.fr/bresle---oir---scorff---nivelle-trois-decennies-observations-recherche-poissons-migrateurs}}
 
 
 %\twocolumn
