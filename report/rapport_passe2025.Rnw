@@ -565,6 +565,7 @@ load_package('getPass')
 load_package('stringr')
 load_package('hubeau')
 load_package('ggplot2')
+load_package('ggrepel')
 
 
 # l'annee en cours (c'est la valeur à changer en début de script
@@ -1843,11 +1844,11 @@ data_DF <- ll$dat
 
 
 png(filename=file.path(imgwd,CY,"detail_fonct_passe_1.png"),7,7,units="in",res=300)
-graph_DF_detail(data_DF, from="08/04/2024")
+graph_DF_detail(data_DF, from="18/04/2025", to="25-04-2025")
 dev.off()
 
 png(filename=file.path(imgwd,CY,"detail_fonct_passe_2.png"),7,7,units="in",res=300)
-graph_DF_detail(data_DF=data_DF, from="10-05-2024", to="19-05-2024")
+graph_DF_detail(data_DF=data_DF, from="01-03-2025", to="19-03-2025")
 dev.off()
 
 
@@ -4565,21 +4566,42 @@ g<-ggplot(ala2)+geom_bar(aes(x=annee,y=effectif,fill=source),stat="identity")+yl
         #legend.background = element_rect(colour = NA, fill = 'white'),
         legend.position = c(.2, .8))
 print(g)
-
 dev.off()
-png(file=str_c(imgwdy,"tx_exploit.png"),15,10,units="cm",res=300)
-g<-ggplot(ala2)+geom_bar(aes(x=annee,y=effectif,fill=source),stat="identity")+ylim(0,5000)+
-    scale_fill_manual("source",values=c("migration"=bleu_EV,"effectif_capture"=orange_EV))+
-    geom_text(aes(x=annee,y=textpos,label=tx_exploitation),data=ala,size=3) +
-    theme_bw() +
-    theme(#text= element_text(size = 12, colour = 'white'),
-        legend.box =NULL,
-        #legend.key = element_rect(colour = NA, fill = 'white'),
-        #legend.text = element_text(size = 12, colour = 'black'),
-        #legend.background = element_rect(colour = NA, fill = 'white'),
-        legend.position = c(.2, .8))
-print(g)
 
+png(file=str_c(imgwdy,"tx_exploit.png"),15,10,units="cm",res=300)
+g <- ggplot(ala2) +
+  geom_bar(
+    aes(x = annee, y = effectif, fill = source),
+    stat = "identity"
+  ) +
+  ylim(0, 5000) +
+  scale_fill_manual(
+    "source",
+    values = c(
+      "migration" = bleu_EV,
+      "effectif_capture" = orange_EV
+    )
+  ) +
+  ggrepel::geom_text_repel(
+    data = ala,
+    aes(
+      x = annee,
+      y = textpos,
+      label = tx_exploitation
+    ),
+	angle = 90,
+    size = 3,
+    direction = "y",
+    segment.color = "grey50",
+    max.overlaps = Inf,
+	force = 2,
+    nudge_y = 100) +
+  theme_bw() +
+  theme(
+    legend.box = NULL,
+    legend.position = c(.2, .8)
+  )
+print(g)
 dev.off()
 # Données historiques sur l'Alose
 #dat19=data.frame("annee"=c(1885,1887:1896),source="effectif_capture","effectif"=c(2440,1480,500,790,1090,814,870,372,53,44,10),"migration"=NA)
@@ -4704,7 +4726,7 @@ df<-background(Aminimum,Amaximum,Bminimum,Bmaximum)
 precodataf <- ala[12:len,c("annee","effectif_total","tx_exploitation")]
 precodataf$tx_exploitation<-as.numeric(gsub("%","",precodataf$tx_exploitation))/100
 precodataf$A=-log(precodataf[,"tx_exploitation"])
-load_package("ggrepel")
+
 # All labels should be to the right of 3.
 x_limitsu <- c(5000, NA)
 x_limitsl <- c(NA, 1000)
@@ -5101,14 +5123,17 @@ r_sample_char <- calcule(r_sample_char,silent=TRUE)
 
 png(filename=str_c(imgwdy,"size_sat.png"))
 ggplot(r_sample_char@data) +
-    geom_boxplot(aes(x=annee,y=car_valeur_quantitatif), outlier.alpha = 0) +
-    ggplot2::ylab("taille video (mm)")+
-    ggplot2::xlab("annee")+
-    geom_jitter(aes(x=annee,y=car_valeur_quantitatif),col=bleu_EV,
-        width = 0.2,
-        height = 0.2,
-        alpha=0.5)+
-    theme_bw()
+		geom_boxplot(aes(x=annee,y=car_valeur_quantitatif), outlier.alpha = 0) +
+		ggplot2::ylab("taille video (mm)")+
+		ggplot2::xlab("annee")+
+		geom_jitter(aes(x=annee,y=car_valeur_quantitatif),col=bleu_EV,
+				width = 0.2,
+				height = 0.2,
+				alpha=0.5)+
+		theme_bw() +
+		theme(
+				axis.text.x = element_text(angle = 45, hjust = 1)
+		)
 dev.off()
 @
 
@@ -6000,7 +6025,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 @
 
-<<report_annual_dicentrarchus, echo=FALSE, eval=TRUE, include=FALSE >>=
+<<report_annual_dicentrarchus, echo=FALSE, eval=FALSE, include=FALSE >>=
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Bilan annuel des migrations
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -6013,10 +6038,10 @@ ra<-choice_c(ra,
     end_year=CY,
     silent=TRUE)
 ra <- connect(ra,silent=FALSE)
-
+ra@data <- ra@data[ra@data$annee>2021,]
 xtra<-stacomiR::xtable(ra,
     caption="Bars observés dans la passe à bassins du barrage
-        d'Arzal (passe à fentes verticales).",
+        d'Arzal (passe à fentes verticales). Les comptages ont commencé en 2022.",
     label="table_bilanannuel_bar",
     dc_name=c("P. bassins")
 )
@@ -6291,21 +6316,25 @@ Au final \Sexpr{num(vvv$fonct_pass$pb_na)} lignes manquent des données permetta
 calculer le fonctionnement de la passe (Figure \ref{figure_fonctionnement_passe}). Le fichier de calcul des temps de
 fonctionnement réintégré dans stacomiR comporte
 \Sexpr{num(vvv$fonct_pass$nb_lignes_t_periodefonct)} lignes.
+
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=\textwidth]{2025/detail_fonct_passe_2.png}
-\caption{Illustration du fonctionnement de la passe lors d'un fonctionnement
-normal en mai. A chaque cycle de marée, le niveau de la mer varie entre +2 m et
--2m environ (- noir). Le niveau Vilaine (.- bleu) varie peu et reste
+\caption{Illustration du fonctionnement de la passe lors des manip halameaup en
+Avril.
+A chaque cycle de marée, le niveau de la mer varie entre +2 m et -2m environ (- noir). Le niveau Vilaine (.- bleu) varie peu et reste
 autour de 1m90. La vanne amont (- marron) s'ouvre dès que le niveau mer
 descend 30 cm en dessous du niveau Vilaine, c'est l'entrée en régulation de la
 passe. La vanne aval (... violet) ajuste le niveau du sas (- bleu)
 pour maintenir une chute constante à l'aval de la passe à l'aide d'une
 régulation par l'automate.
-L'arrêt pour maintenance le 17 lors de la marée montante se traduit par une
-fermeture de la vanne amont (trait horizontal supplémentaire). L'état de la
-passe est calculé pour chaque période de 10 minutes (en bas).
-}
+Les arrêts ponctuels pour la manip provoquent une fermeture de la vanne amont
+lors des basses mer. La passe est vidée pour aller chercher les Lamproies dans
+les nasses. L'état de la passe est calculé pour chaque période de 10 minutes (en bas).
+Le 22 l'absence de régulation sur la vanne aval (les pointillés bleus de la
+vanne aval ne descendent plus et le niveau dans le sas reste haut) conditionnent
+le calcul d'arrêt pour maintenance, les fermetures de la vanne amont à basse
+mer, les 23 et 24 entrainent d'autres arrêts pour maintenance.}
 \label{detail_fonct_passe_2}
 \end{figure}
 
@@ -6314,11 +6343,11 @@ passe est calculé pour chaque période de 10 minutes (en bas).
 \centering
 \includegraphics[width=0.8\textwidth]{2025/detail_fonct_passe_1.png}
 \caption{Illustration du fonctionnement de la passe après la remise en route
-de la passe en avril. En ordonnée, les niveaux mer (- noir), vilaine
+de la passe en mars. En ordonnée, les niveaux mer (- noir), vilaine
 (.- bleu), sas (- bleu), niveau vanne mer (... violet), niveau vanne amont
 (- marron). L'état de la passe est calculée pour chaque période de 10 minutes (en bas).
-Jusqu'au 12 avril en milieu de journée, la position basse de la vanne amont
-(vanne fermée) indique que la passe est fermée.}
+La passe rouvre après une crue et des travaux le 06 mars. D'autres arrêts sont
+observés le 14 mars (défauts de fin de course sur la vanne amont...)}
 \label{detail_fonct_passe_1}
 \end{figure}
 
@@ -6350,7 +6379,7 @@ périodes de haute mer où la passe est fermée, les
 périodes où les bandes sont les plus larges correspondent à des périodes de
 vives eaux et également en hiver aux périodes où la gestion de la
 Vilaine est plus réduite. Les arrêts
-(\textcolor{jaune_EV}{\rule[-0.2mm]{3mm}{2mm}}) sont visibles
+(\textcolor{turquoise_EV}{\rule[-0.2mm]{3mm}{2mm}}) sont visibles
 au début et à la fin de l'année.}
 \label{report_df_annee}
 \end{figure}
@@ -6636,13 +6665,16 @@ Stations de suivi INRAe-OFB~:
 \noindent Rapport \LaTeX \par
 packages R : \vspace{1mm}
 
-StacomiR \col{turquoise_EV}\citep{briand_stacomir_2017}\par
+StacomiR 
+\color{bleu_clair_EV}
+\citep{briand_stacomir_2017}\par
 \LaTeX \ :Hmisc, xtable, stargazer, tables, knitr \par
 graphiques : stacomiR, ggplot2, lattice, ggthemr, packcircles, colorspace\par
 traitements : stringr, lubridate, reshape2, dplyr\par
 diagrammes : diagrammeR \\
 base : readxl, RPostgres, DBI, stacomirtools\par
 \vspace{1mm}
+\color{turquoise_EV}
 Dernière compilation : le \today\par
 \Sexpr{sanitize(print(version["version.string"]))}\par
 \noindent\hrulefill\par

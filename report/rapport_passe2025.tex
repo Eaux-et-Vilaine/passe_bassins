@@ -1848,21 +1848,25 @@ Au final \textcolor{orange_EV}{\num{52}} lignes manquent des données permettant
 calculer le fonctionnement de la passe (Figure \ref{figure_fonctionnement_passe}). Le fichier de calcul des temps de
 fonctionnement réintégré dans stacomiR comporte
 \textcolor{orange_EV}{\num{2462}} lignes.
+
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=\textwidth]{2025/detail_fonct_passe_2.png}
-\caption{Illustration du fonctionnement de la passe lors d'un fonctionnement
-normal en mai. A chaque cycle de marée, le niveau de la mer varie entre +2 m et
--2m environ (- noir). Le niveau Vilaine (.- bleu) varie peu et reste
+\caption{Illustration du fonctionnement de la passe lors des manip halameaup en
+Avril.
+A chaque cycle de marée, le niveau de la mer varie entre +2 m et -2m environ (- noir). Le niveau Vilaine (.- bleu) varie peu et reste
 autour de 1m90. La vanne amont (- marron) s'ouvre dès que le niveau mer
 descend 30 cm en dessous du niveau Vilaine, c'est l'entrée en régulation de la
 passe. La vanne aval (... violet) ajuste le niveau du sas (- bleu)
 pour maintenir une chute constante à l'aval de la passe à l'aide d'une
 régulation par l'automate.
-L'arrêt pour maintenance le 17 lors de la marée montante se traduit par une
-fermeture de la vanne amont (trait horizontal supplémentaire). L'état de la
-passe est calculé pour chaque période de 10 minutes (en bas).
-}
+Les arrêts ponctuels pour la manip provoquent une fermeture de la vanne amont
+lors des basses mer. La passe est vidée pour aller chercher les Lamproies dans
+les nasses. L'état de la passe est calculé pour chaque période de 10 minutes (en bas).
+Le 22 l'absence de régulation sur la vanne aval (les pointillés bleus de la
+vanne aval ne descendent plus et le niveau dans le sas reste haut) conditionnent
+le calcul d'arrêt pour maintenance, les fermetures de la vanne amont à basse
+mer, les 23 et 24 entrainent d'autres arrêts pour maintenance.}
 \label{detail_fonct_passe_2}
 \end{figure}
 
@@ -1871,11 +1875,11 @@ passe est calculé pour chaque période de 10 minutes (en bas).
 \centering
 \includegraphics[width=0.8\textwidth]{2025/detail_fonct_passe_1.png}
 \caption{Illustration du fonctionnement de la passe après la remise en route
-de la passe en avril. En ordonnée, les niveaux mer (- noir), vilaine
+de la passe en mars. En ordonnée, les niveaux mer (- noir), vilaine
 (.- bleu), sas (- bleu), niveau vanne mer (... violet), niveau vanne amont
 (- marron). L'état de la passe est calculée pour chaque période de 10 minutes (en bas).
-Jusqu'au 12 avril en milieu de journée, la position basse de la vanne amont
-(vanne fermée) indique que la passe est fermée.}
+La passe rouvre après une crue et des travaux le 06 mars. D'autres arrêts sont
+observés le 14 mars (défauts de fin de course sur la vanne amont...)}
 \label{detail_fonct_passe_1}
 \end{figure}
 
@@ -1907,7 +1911,7 @@ périodes de haute mer où la passe est fermée, les
 périodes où les bandes sont les plus larges correspondent à des périodes de
 vives eaux et également en hiver aux périodes où la gestion de la
 Vilaine est plus réduite. Les arrêts
-(\textcolor{jaune_EV}{\rule[-0.2mm]{3mm}{2mm}}) sont visibles
+(\textcolor{turquoise_EV}{\rule[-0.2mm]{3mm}{2mm}}) sont visibles
 au début et à la fin de l'année.}
 \label{report_df_annee}
 \end{figure}
@@ -2193,13 +2197,16 @@ Stations de suivi INRAe-OFB~:
 \noindent Rapport \LaTeX \par
 packages R : \vspace{1mm}
 
-StacomiR \col{turquoise_EV}\citep{briand_stacomir_2017}\par
+StacomiR 
+\color{bleu_clair_EV}
+\citep{briand_stacomir_2017}\par
 \LaTeX \ :Hmisc, xtable, stargazer, tables, knitr \par
 graphiques : stacomiR, ggplot2, lattice, ggthemr, packcircles, colorspace\par
 traitements : stringr, lubridate, reshape2, dplyr\par
 diagrammes : diagrammeR \\
 base : readxl, RPostgres, DBI, stacomirtools\par
 \vspace{1mm}
+\color{turquoise_EV}
 Dernière compilation : le \today\par
 R version 4.4.3 (2025-02-28 ucrt)\par
 \noindent\hrulefill\par
