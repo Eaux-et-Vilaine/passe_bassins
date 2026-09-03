@@ -26,7 +26,7 @@
 %\SweaveOpts{pdf=TRUE, echo=FALSE, fig=FALSE, eps=FALSE, tidy=T, width=4,
 %height=4, keep.source=TRUE}
 %% Input and language packages.
-\usepackage[UTF8]{inputenc} %encodage du fichier source
+\usepackage[UTF-8]{inputenc} %encodage du fichier source
 \usepackage[T1]{fontenc}  %gestion des accents (pour les pdf)
 \usepackage{aeguill} % guillemets
 %\usepackage[english]{babel}
@@ -827,7 +827,7 @@ ont été comptabilisées sur l'ensemble de l'année. Entre 1998 et 2012, seule 
 
 Ce rapport décrit le fonctionnement de la passe à fentes verticales du barrage
 et de son système de vidéosurveillance associé. Il fait également la synthèse des passages de
-poissons migrateurs par la passe à bassins en 2025 \rev{
+poissons migrateurs par la passe à bassins en 2025 
 \footnote{La migration sur les passes à anguilles est traitée dans un autre
 rapport :
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/IQByFprhrt2pTowh53k53SD6ASxL7ibVFXkpiAGLdeZ91LI?e=d4jCE3}{Gestion
@@ -1741,7 +1741,7 @@ res1 <-
 
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-# PB HEURES ARZAL (ce n'est pas bon, seulement après 20 --------
+# pb heures arzal (ce n'est pas bon, seulement après 20 --------
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # The dam was in GMT+1 before 2016
@@ -2664,6 +2664,9 @@ d'Arzal.}
 \end{figure}
 \end{landscape}
 
+
+
+
 <<bilan_car_lots_mup, echo=FALSE, eval=FALSE, include=FALSE >>=
 
 options(warn=-1)
@@ -3052,11 +3055,11 @@ res <- dbGetQuery(req@connection,glue("select sum(lot_effectif) as effectif_mont
             ) as tmp
             GROUP BY annee, ope_dic_identifiant, lot_tax_code, lot_std_code"
     ))
-load(file= str_c("bilAmup",CY,".Rdata"))
+load(file= file.path(datawd,CY,str_c("bilAmup",CY,".Rdata")))
 res <- res[,c(1,2)]
 restt<-bilA@data
 
-res2 <-inner_join(restt,res)[!res$annee%in%c(2007,2008),c("annee","effectif","effectif_mont")]
+res2 <-inner_join(restt,res[!res$annee%in%c(2007,2008),])[,c("annee","effectif","effectif_mont")]
 colnames(res2) <- c("Année","N annuel","N 01-08")
 bilA@data <- res
 options(encoding = "UTF-8")
